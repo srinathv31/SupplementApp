@@ -24,10 +24,10 @@ export default function JournalEntryModal({ setJournalVisible, journalVisible }:
                 <Text style={styles.modalText}>Today's Journal</Text>
                 <JournalTextEntry/>
                 <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => setJournalVisible(!journalVisible)}
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setJournalVisible(!journalVisible)}
                 >
-                <Text style={styles.textStyle}>Close Journal</Text>
+                  <Text style={styles.textStyle}>Close Journal</Text>
                 </Pressable>
             </View>
             </View>
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
       margin: 20,
       backgroundColor: "white",
       borderRadius: 20,
-      padding: 135,
+      paddingBottom: 15,
+      paddingTop: 15,
       alignItems: "center",
       shadowColor: "#000",
       shadowOffset: {

@@ -1,12 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
 
 import React, { useState } from 'react';
 import {
@@ -30,6 +21,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import JournalButton from './components/JournalEntry/JournalButton';
 import JournalEntryModal from './components/JournalEntry/JournalEntryModal';
+import HomePage from './screens/HomePage';
 
 const Section: React.FC<{
   title: string;
@@ -74,30 +66,16 @@ const App = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={backgroundStyle}>
-        <Header />
         <View
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <JournalEntryModal
+          
+          <HomePage
             setJournalVisible={setJournalVisible}
             journalVisible={journalVisible}
-          ></JournalEntryModal>
-          <Section title="This is an edit">
-            <JournalButton
-              setJournalVisible={setJournalVisible}
-            ></JournalButton>
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+          ></HomePage>
+          
         </View>
       </ScrollView>
     </SafeAreaView>
