@@ -8,8 +8,10 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  Modal,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -26,6 +28,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import JournalButton from './components/JournalEntry/JournalButton';
+import JournalEntryModal from './components/JournalEntry/JournalEntryModal';
 
 const Section: React.FC<{
   title: string;
@@ -62,6 +66,8 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [journalVisible, setJournalVisible] = useState<boolean>(false);
+
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -73,9 +79,14 @@ const App = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <JournalEntryModal
+            setJournalVisible={setJournalVisible}
+            journalVisible={journalVisible}
+          ></JournalEntryModal>
           <Section title="This is an edit">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            <JournalButton
+              setJournalVisible={setJournalVisible}
+            ></JournalButton>
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
