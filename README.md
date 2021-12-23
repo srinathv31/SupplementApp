@@ -1,4 +1,4 @@
-# SupplementApp
+# Project Asceplius
 The Supplement app which acts as a encyclopedia of supplements. Along with a supplement tracker.
 
 # To simulate
