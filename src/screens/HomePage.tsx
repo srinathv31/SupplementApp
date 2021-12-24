@@ -1,6 +1,10 @@
 // Source Imports
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Divider from "../components/Design/Divider";
+import DailySupplementWindow from "../components/HomePage/DailySupplementWindow";
+import ExploreWindow from "../components/HomePage/ExploreWindow";
+import HeaderWindow from "../components/HomePage/HeaderWindow";
 import JournalButton from "../components/JournalEntry/JournalButton";
 import JournalEntryModal from "../components/JournalEntry/JournalEntryModal";
 
@@ -13,40 +17,18 @@ export default function HomePage({ setJournalVisible, journalVisible }: {
 }): JSX.Element {
     return(
       <View>
-        <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-            <JournalButton
-                setJournalVisible={setJournalVisible}
-            ></JournalButton>
-            <Text style={styles.sectionTitle}>Home Page</Text>
-            <JournalEntryModal
-                setJournalVisible={setJournalVisible}
-                journalVisible={journalVisible}
-            ></JournalEntryModal>
-            <JournalButton
-                setJournalVisible={setJournalVisible}
-            ></JournalButton>
-        </View>
-        <View style={{flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "orange", height: "35%", borderRadius: 10, padding: 10, margin: 10}}>
-          <Text style={{fontSize: 22, fontWeight: "600"}}>Explore</Text>
-          <Text>Supplement</Text>
-          <Text>Info</Text>
-        </View>
-        <View style={{backgroundColor: "white", minHeight: 1, width: "95%", alignSelf: "center"}}></View>
-        <View style={{flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "orange", height: "10%", borderRadius: 10, padding: 10, margin: 10, marginBottom: 5, marginLeft: 25, marginRight: 25}}>
-          <Text style={{fontSize: 18, fontWeight: "600"}}>7:00AM: Recommended Supplement</Text>
-        </View>
-        <View style={{flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "orange", height: "10%", borderRadius: 10, padding: 10, margin: 5, marginLeft: 25, marginRight: 25}}>
-          <Text style={{fontSize: 18, fontWeight: "600"}}>10:00AM: Recommended Supplement</Text>
-        </View>
+        <HeaderWindow
+          setJournalVisible={setJournalVisible}
+          journalVisible={journalVisible}
+        ></HeaderWindow>
+        <ExploreWindow></ExploreWindow>
+        <Divider></Divider>
+        <DailySupplementWindow></DailySupplementWindow>
       </View>
     );
 }
 
 const styles = StyleSheet.create({
-    sectionContainer: {
-      marginTop: 32,
-      paddingHorizontal: 24,
-    },
     sectionTitle: {
       fontSize: 24,
       fontWeight: '600',
@@ -54,13 +36,5 @@ const styles = StyleSheet.create({
       padding: 10,
       margin: 12,
       color: "white"
-    },
-    sectionDescription: {
-      marginTop: 8,
-      fontSize: 18,
-      fontWeight: '400',
-    },
-    highlight: {
-      fontWeight: '700',
-    },
+    }
 });

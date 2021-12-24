@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // Component Imports
 
 // Design Imports
+import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
 export default function BottomMenuTab(): JSX.Element {
     const [showButtons, setShowButons] = useState<boolean>(false);
@@ -17,7 +18,7 @@ export default function BottomMenuTab(): JSX.Element {
         // Will change fadeAnim value to 1 in 5 seconds
         Animated.timing(fadeAnim, {
             toValue: 1,
-            duration: 500,
+            duration: 300,
             useNativeDriver: false
         }).start();
     };
@@ -25,7 +26,7 @@ export default function BottomMenuTab(): JSX.Element {
         // Will change fadeAnim value to 0 in 3 seconds
         Animated.timing(fadeAnim, {
             toValue: 0,
-            duration: 300,
+            duration: 200,
             useNativeDriver: false
         }).start();
       };
@@ -37,14 +38,14 @@ export default function BottomMenuTab(): JSX.Element {
     return(
         <View>
             <Animated.View style={{opacity: fadeAnim}}>
-                <View style={{flexDirection: "row", justifyContent: "space-evenly"}}>
-                        <Icon name="pill" size={30} color="white"/>
+                <View style={BottomMenuTabStyles.secondaryButtonRow}>
+                    <Icon name="pill" size={30} color="white"/>
                     <Icon name="emoticon-happy-outline" size={30} color="white"/>
                     <Icon name="silverware-fork-knife" size={30} color="white"/>
                     <Icon name="weight-lifter" size={30} color="white" onPress={() => console.log('hello')}/>
                 </View>
             </Animated.View>
-            <View style={{flexDirection: "row", justifyContent: "space-around"}}>
+            <View style={BottomMenuTabStyles.mainButtonRow}>
                 <Icon name="pill" size={30} color="white" style={{opacity: showButtons ? 0.5 : 1 }}/>
                 <Icon onPress={buttonHandle}
                 name="plus-box-outline" size={30} color="white"/>
