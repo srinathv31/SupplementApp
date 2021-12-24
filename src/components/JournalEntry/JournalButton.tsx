@@ -1,6 +1,7 @@
 // Source Imports
 import React from 'react';
 import { Button } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // Component Imports
 
@@ -10,9 +11,11 @@ export default function JournalButton( { setJournalVisible }: {
     setJournalVisible: (j: boolean) => void
 }): JSX.Element {
     return(
-        <Button
+        <Icon
+        style={{padding: 10,
+            margin: 12}}
             onPress={() => setJournalVisible(true)}
-            title='Start Journal'
+            name="create-outline" size={30} color="white"
         />
     );
 }
