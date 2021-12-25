@@ -19,11 +19,13 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import MonthView from './components/Calendar/MonthView';
 import JournalButton from './components/JournalEntry/JournalButton';
 import JournalEntryModal from './components/JournalEntry/JournalEntryModal';
 import BottomMenuTab from './components/Menus/BottomMenuTab';
 import SupplementModal from './components/SupplementViews/SupplementModal';
 import Supplement from './interfaces/Supplement';
+import CalendarPage from './screens/CalendarPage';
 import HomePage from './screens/HomePage';
 import SupplementInfoPage from './screens/SupplementInfoPage';
 
@@ -48,22 +50,25 @@ const App = () => {
         
         <View style={{ flex: 1, opacity: (suppModalVisible === true || journalVisible === true) ? 0.5 : 1 }}>
           <View style={{ flex: 1 }}>
-          <SupplementModal
-            setSuppModalVisible={setSuppModalVisible}
-            suppModalVisible={suppModalVisible}
-            setDailyList={setDailyList}
-            dailyList={dailyList}
-          ></SupplementModal>
-          { visiblePage === "1" && <HomePage
-              setJournalVisible={setJournalVisible}
-              journalVisible={journalVisible}
+            <SupplementModal
+              setSuppModalVisible={setSuppModalVisible}
+              suppModalVisible={suppModalVisible}
               setDailyList={setDailyList}
               dailyList={dailyList}
-            ></HomePage> }
+            ></SupplementModal>
+            { visiblePage === "1" && <HomePage
+                setJournalVisible={setJournalVisible}
+                journalVisible={journalVisible}
+                setDailyList={setDailyList}
+                dailyList={dailyList}
+                setVisiblePage={setVisiblePage}
+              ></HomePage> }
             { visiblePage === "2" && <SupplementInfoPage
               setDailyList={setDailyList}
               dailyList={dailyList}
             ></SupplementInfoPage> }
+            { visiblePage === "3" && <CalendarPage
+            ></CalendarPage> }
           </View>
           <View style={{ flex: 2, justifyContent: "flex-end", maxHeight: "10%" }}>
             <BottomMenuTab

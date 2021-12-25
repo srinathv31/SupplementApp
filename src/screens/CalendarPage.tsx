@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { Text } from "react-native";
+import MonthView from "../components/Calendar/MonthView";
 
 // Component Imports
 
@@ -8,6 +9,6 @@ import { Text } from "react-native";
 
 export default function CalendarPage(): JSX.Element {
     return(
-        <Text>Calendar</Text>
+        <MonthView></MonthView>
     );
 }

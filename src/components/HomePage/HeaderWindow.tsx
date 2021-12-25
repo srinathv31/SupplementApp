@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import CalendarButton from "../Calendar/CalendarButton";
 import JournalButton from "../JournalEntry/JournalButton";
 import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 
@@ -9,14 +10,15 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setJournalVisible, journalVisible }: {
-    setJournalVisible: (j: boolean) => void, journalVisible: boolean
+export default function HeaderWindow({ setJournalVisible, journalVisible, setVisiblePage }: {
+    setJournalVisible: (j: boolean) => void, journalVisible: boolean,
+    setVisiblePage: (v: string) => void
 }): JSX.Element {
     return(
         <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-            <JournalButton
-                setJournalVisible={setJournalVisible}
-            ></JournalButton>
+            <CalendarButton
+                setVisiblePage={setVisiblePage}
+            ></CalendarButton>
             <Text style={styles.sectionTitle}>Home Page</Text>
             <JournalEntryModal
                 setJournalVisible={setJournalVisible}

@@ -39,7 +39,7 @@ export default function BottomMenuTab({ setVisiblePage, setSuppModalVisible }: {
     }
 
     return(
-        <View>
+        <View style={{zIndex: 100}}>
             <Animated.View style={{opacity: fadeAnim}}>
                 <View style={BottomMenuTabStyles.secondaryButtonRow}>
                     <Icon onPress={() => setSuppModalVisible(true)}

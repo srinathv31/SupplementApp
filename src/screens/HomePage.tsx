@@ -13,15 +13,17 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function HomePage({ setJournalVisible, journalVisible, setDailyList, dailyList }: {
+export default function HomePage({ setJournalVisible, journalVisible, setDailyList, dailyList, setVisiblePage }: {
     setJournalVisible: (j: boolean) => void, journalVisible: boolean,
-    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>
+    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>,
+    setVisiblePage: (v: string) => void
 }): JSX.Element {
     return(
       <View>
         <HeaderWindow
           setJournalVisible={setJournalVisible}
           journalVisible={journalVisible}
+          setVisiblePage={setVisiblePage}
         ></HeaderWindow>
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>
