@@ -8,9 +8,10 @@ import SupplementListView from "./SupplementListView";
 
 // Design Imports
 
-export default function SupplementModal({ setSuppModalVisible, suppModalVisible, setDailyList, dailyList }: {
+export default function SupplementModal({ setSuppModalVisible, suppModalVisible, setSupplementMap, supplementMap, daySelected }: {
     setSuppModalVisible: (s: boolean) => void, suppModalVisible: boolean,
-    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>
+    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    daySelected: string
 }): JSX.Element {
     return(
         <Modal
@@ -25,10 +26,11 @@ export default function SupplementModal({ setSuppModalVisible, suppModalVisible,
             <View style={styles.modalView}>
                 <Text style={styles.modalText}>Supplement List</Text>
                 <SupplementListView
-                  setDailyList={setDailyList}
-                  dailyList={dailyList}
+                  setSupplementMap={setSupplementMap}
+                  supplementMap={supplementMap}
                   fontSizeNumber={18}
                   query={""}
+                  daySelected={daySelected}
                 ></SupplementListView>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}

@@ -13,9 +13,9 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function HomePage({ setJournalVisible, journalVisible, setDailyList, dailyList, setVisiblePage, daySelected }: {
+export default function HomePage({ setJournalVisible, journalVisible, setSupplementMap, supplementMap, setVisiblePage, daySelected }: {
     setJournalVisible: (j: boolean) => void, journalVisible: boolean,
-    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>,
+    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     setVisiblePage: (v: string) => void,
     daySelected: string
 }): JSX.Element {
@@ -30,8 +30,8 @@ export default function HomePage({ setJournalVisible, journalVisible, setDailyLi
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>
         <DailySupplementWindow
-          setDailyList={setDailyList}
-          dailyList={dailyList}
+          setSupplementMap={setSupplementMap}
+          supplementMap={supplementMap}
           daySelected={daySelected}
         ></DailySupplementWindow>
       </View>

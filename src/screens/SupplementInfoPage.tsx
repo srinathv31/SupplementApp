@@ -10,8 +10,8 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function SupplementInfoPage({ setDailyList, dailyList, daySelected }: {
-    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>,
+export default function SupplementInfoPage({ setSupplementMap, supplementMap, daySelected }: {
+    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     daySelected: string
 }): JSX.Element {
     const [query, setQuery] = useState<string>("");
@@ -23,8 +23,8 @@ export default function SupplementInfoPage({ setDailyList, dailyList, daySelecte
                 query={query}
             ></SearchBar>
             <SupplementListView
-                setDailyList={setDailyList}
-                dailyList={dailyList}
+                setSupplementMap={setSupplementMap}
+                supplementMap={supplementMap}
                 fontSizeNumber={24}
                 query={query}
                 daySelected={daySelected}

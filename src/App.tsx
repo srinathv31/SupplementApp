@@ -39,14 +39,14 @@ const App = () => {
   };
 
   const [visiblePage, setVisiblePage] = useState<string>("1");
-  const [dailyList, setDailyList] = useState<Record<string, Supplement[]>>({});
+  const [supplementMap, setSupplementMap] = useState<Record<string, Supplement[]>>({});
   const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 
   const [journalVisible, setJournalVisible] = useState<boolean>(false);
   const [suppModalVisible, setSuppModalVisible] = useState<boolean>(false);
 
   console.log(daySelected);
-  console.log(dailyList);
+  console.log(supplementMap);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#0B172A"}}>
@@ -58,20 +58,21 @@ const App = () => {
             <SupplementModal
               setSuppModalVisible={setSuppModalVisible}
               suppModalVisible={suppModalVisible}
-              setDailyList={setDailyList}
-              dailyList={dailyList}
+              setSupplementMap={setSupplementMap}
+              supplementMap={supplementMap}
+              daySelected={daySelected}
             ></SupplementModal>
             { visiblePage === "1" && <HomePage
                 setJournalVisible={setJournalVisible}
                 journalVisible={journalVisible}
-                setDailyList={setDailyList}
-                dailyList={dailyList}
+                setSupplementMap={setSupplementMap}
+                supplementMap={supplementMap}
                 setVisiblePage={setVisiblePage}
                 daySelected={daySelected}
               ></HomePage> }
             { visiblePage === "2" && <SupplementInfoPage
-              setDailyList={setDailyList}
-              dailyList={dailyList}
+              setSupplementMap={setSupplementMap}
+              supplementMap={supplementMap}
               daySelected={daySelected}
             ></SupplementInfoPage> }
             { visiblePage === "3" && <CalendarPage

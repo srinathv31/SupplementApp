@@ -8,16 +8,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Design Imports
 
-export default function DailySupplementWindow({ setDailyList, dailyList, daySelected }: {
-    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>,
+export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected }: {
+    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     daySelected: string
 }): JSX.Element {
 
     function removeSupplement(item: Supplement) {
-        let dailyListCopy = {...dailyList};
+        let supplementMapCopy = {...supplementMap};
 
-        dailyListCopy[daySelected] = dailyListCopy[daySelected].filter(listItem => listItem !== item);
-        setDailyList(dailyListCopy);
+        supplementMapCopy[daySelected] = supplementMapCopy[daySelected].filter(listItem => listItem !== item);
+        setSupplementMap(supplementMapCopy);
     }
 
     return(
@@ -31,7 +31,7 @@ export default function DailySupplementWindow({ setDailyList, dailyList, daySele
         // </>
         <View style={{alignSelf: "center"}}>
             <FlatList
-                data={dailyList[daySelected]}
+                data={supplementMap[daySelected]}
                 renderItem={({ item }) => (
                     <TouchableHighlight
                       key={item.name}
