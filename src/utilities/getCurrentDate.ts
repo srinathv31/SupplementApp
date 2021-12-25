@@ -1,5 +1,5 @@
 
-export default function getCurrentDate() {
+export default function getCurrentDate(): string {
     const currentDate = new Date();
 
     const day = ""+currentDate.getDate();

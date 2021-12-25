@@ -8,17 +8,22 @@ import Supplement from "../../interfaces/Supplement";
 
 // Design Imports
 
-export default function SupplementListView({ setDailyList, dailyList, fontSizeNumber, query }: {
+export default function SupplementListView({ setDailyList, dailyList, fontSizeNumber, query, daySelected }: {
     setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>,
     fontSizeNumber: number,
-    query: string
+    query: string,
+    daySelected: string
 }): JSX.Element {
 
     function addSupplement(item: Supplement) {
         const dailyListCopy = {...dailyList};
         
-        dailyListCopy["12/23"].push(item);
-        Object.values(dailyListCopy["12/23"]).forEach( supplement => {
+        if (dailyListCopy[daySelected] === undefined){
+            dailyListCopy[daySelected] = [];
+        }
+        
+        dailyListCopy[daySelected].push(item);
+        Object.values(dailyListCopy[daySelected]).forEach( supplement => {
             if (supplement === item) {
                 supplement.time = "7:00AM";
             }

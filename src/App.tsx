@@ -39,11 +39,14 @@ const App = () => {
   };
 
   const [visiblePage, setVisiblePage] = useState<string>("1");
-  const [dailyList, setDailyList] = useState<Record<string, Supplement[]>>({"12/23": []});
+  const [dailyList, setDailyList] = useState<Record<string, Supplement[]>>({});
   const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 
   const [journalVisible, setJournalVisible] = useState<boolean>(false);
   const [suppModalVisible, setSuppModalVisible] = useState<boolean>(false);
+
+  console.log(daySelected);
+  console.log(dailyList);
 
   return (
     <View style={{ flex: 1, backgroundColor: "#0B172A"}}>
@@ -69,6 +72,7 @@ const App = () => {
             { visiblePage === "2" && <SupplementInfoPage
               setDailyList={setDailyList}
               dailyList={dailyList}
+              daySelected={daySelected}
             ></SupplementInfoPage> }
             { visiblePage === "3" && <CalendarPage
               setDaySelected={setDaySelected}

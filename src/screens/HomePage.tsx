@@ -32,6 +32,7 @@ export default function HomePage({ setJournalVisible, journalVisible, setDailyLi
         <DailySupplementWindow
           setDailyList={setDailyList}
           dailyList={dailyList}
+          daySelected={daySelected}
         ></DailySupplementWindow>
       </View>
     );
