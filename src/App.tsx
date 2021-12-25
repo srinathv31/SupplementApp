@@ -1,15 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
+  Modal,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -26,34 +19,17 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import MonthView from './components/Calendar/MonthView';
+import JournalButton from './components/JournalEntry/JournalButton';
+import JournalEntryModal from './components/JournalEntry/JournalEntryModal';
+import BottomMenuTab from './components/Menus/BottomMenuTab';
+import SupplementModal from './components/SupplementViews/SupplementModal';
+import Supplement from './interfaces/Supplement';
+import CalendarPage from './screens/CalendarPage';
+import HomePage from './screens/HomePage';
+import SupplementInfoPage from './screens/SupplementInfoPage';
+import getCurrentDate from './utilities/getCurrentDate';
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,54 +38,58 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [visiblePage, setVisiblePage] = useState<string>("1");
+  const [supplementMap, setSupplementMap] = useState<Record<string, Supplement[]>>({});
+  const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
+
+  const [journalVisible, setJournalVisible] = useState<boolean>(false);
+  const [suppModalVisible, setSuppModalVisible] = useState<boolean>(false);
+
+  console.log(daySelected);
+  console.log(supplementMap);
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="This is an edit">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
+    <View style={{ flex: 1, backgroundColor: "#0B172A"}}>
+      <SafeAreaView style={{flex: 1}}>
+        <StatusBar barStyle={'light-content'} />
+        
+        <View style={{ flex: 1, opacity: (suppModalVisible === true || journalVisible === true) ? 0.5 : 1 }}>
+          <View style={{ flex: 1 }}>
+            <SupplementModal
+              setSuppModalVisible={setSuppModalVisible}
+              suppModalVisible={suppModalVisible}
+              setSupplementMap={setSupplementMap}
+              supplementMap={supplementMap}
+              daySelected={daySelected}
+            ></SupplementModal>
+            { visiblePage === "1" && <HomePage
+                setJournalVisible={setJournalVisible}
+                journalVisible={journalVisible}
+                setSupplementMap={setSupplementMap}
+                supplementMap={supplementMap}
+                setVisiblePage={setVisiblePage}
+                daySelected={daySelected}
+              ></HomePage> }
+            { visiblePage === "2" && <SupplementInfoPage
+              setSupplementMap={setSupplementMap}
+              supplementMap={supplementMap}
+              daySelected={daySelected}
+            ></SupplementInfoPage> }
+            { visiblePage === "3" && <CalendarPage
+              setDaySelected={setDaySelected}
+            ></CalendarPage> }
+          </View>
+          <View style={{ flex: 2, justifyContent: "flex-end", maxHeight: "10%" }}>
+            <BottomMenuTab
+              setVisiblePage={setVisiblePage}
+              setSuppModalVisible={setSuppModalVisible}
+            ></BottomMenuTab>
+          </View>
         </View>
-      </ScrollView>
-    </SafeAreaView>
+
+      </SafeAreaView>
+    </View>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
