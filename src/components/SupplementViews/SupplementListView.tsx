@@ -8,9 +8,10 @@ import Supplement from "../../interfaces/Supplement";
 
 // Design Imports
 
-export default function SupplementListView({ setDailyList, dailyList, fontSizeNumber }: {
+export default function SupplementListView({ setDailyList, dailyList, fontSizeNumber, query }: {
     setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>,
-    fontSizeNumber: number
+    fontSizeNumber: number,
+    query: string
 }): JSX.Element {
 
     function addSupplement(item: Supplement) {
@@ -30,7 +31,15 @@ export default function SupplementListView({ setDailyList, dailyList, fontSizeNu
         <View style={{alignSelf: "center"}}>
             { fontSizeNumber === 24 && <Text style={{color: "white", fontSize: fontSizeNumber}}>Supplement Info</Text>} 
             <FlatList
-                data={SupplementList}
+                data={
+                    SupplementList.filter(post => {
+                        if (query === "") {
+                            return post;
+                        } else if (post.name.toLowerCase().includes(query.toLowerCase())) {
+                            return post;
+                        }
+                    })
+                }
                 renderItem={({ item, index, separators }) => (
                     <TouchableHighlight
                       key={item.name}

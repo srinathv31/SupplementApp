@@ -2,7 +2,7 @@
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Supplement from "../../interfaces/Supplement";
-import SupplementListView from "./SupplemenListView";
+import SupplementListView from "./SupplementListView";
 
 // Component Imports
 
@@ -28,6 +28,7 @@ export default function SupplementModal({ setSuppModalVisible, suppModalVisible,
                   setDailyList={setDailyList}
                   dailyList={dailyList}
                   fontSizeNumber={18}
+                  query={""}
                 ></SupplementListView>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}

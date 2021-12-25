@@ -1,8 +1,9 @@
 // Source Imports
-import React from "react";
+import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import SupplementList from "../assets/SupplementList.json";
-import SupplementListView from "../components/SupplementViews/SupplemenListView";
+import SearchBar from "../components/SupplementViews/SearchBar";
+import SupplementListView from "../components/SupplementViews/SupplementListView";
 import Supplement from "../interfaces/Supplement";
 
 // Component Imports
@@ -12,26 +13,21 @@ import Supplement from "../interfaces/Supplement";
 export default function SupplementInfoPage({ setDailyList, dailyList }: {
     setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>
 }): JSX.Element {
-
-    function addSupplement(item: Supplement) {
-        const dailyListCopy = {...dailyList};
-        
-        dailyListCopy["12/23"].push(item);
-        Object.values(dailyListCopy["12/23"]).forEach( supplement => {
-            if (supplement === item) {
-                supplement.time = "7:00AM";
-            }
-        });
-
-        setDailyList(dailyListCopy);
-    }
+    const [query, setQuery] = useState<string>("");
 
     return(
-        <SupplementListView
-            setDailyList={setDailyList}
-            dailyList={dailyList}
-            fontSizeNumber={24}
-        ></SupplementListView>
+        <View>
+            <SearchBar
+                setQuery={setQuery}
+                query={query}
+            ></SearchBar>
+            <SupplementListView
+                setDailyList={setDailyList}
+                dailyList={dailyList}
+                fontSizeNumber={24}
+                query={query}
+            ></SupplementListView>
+        </View>
     );
 }
 
