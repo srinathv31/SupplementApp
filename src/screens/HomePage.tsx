@@ -7,13 +7,15 @@ import ExploreWindow from "../components/HomePage/ExploreWindow";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
 import JournalButton from "../components/JournalEntry/JournalButton";
 import JournalEntryModal from "../components/JournalEntry/JournalEntryModal";
+import Supplement from "../interfaces/Supplement";
 
 // Component Imports
 
 // Design Imports
 
-export default function HomePage({ setJournalVisible, journalVisible }: {
-    setJournalVisible: (j: boolean) => void, journalVisible: boolean
+export default function HomePage({ setJournalVisible, journalVisible, setDailyList, dailyList }: {
+    setJournalVisible: (j: boolean) => void, journalVisible: boolean,
+    setDailyList: (d: Record<string, Supplement[]>) => void, dailyList: Record<string, Supplement[]>
 }): JSX.Element {
     return(
       <View>
@@ -23,7 +25,10 @@ export default function HomePage({ setJournalVisible, journalVisible }: {
         ></HeaderWindow>
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>
-        <DailySupplementWindow></DailySupplementWindow>
+        <DailySupplementWindow
+          setDailyList={setDailyList}
+          dailyList={dailyList}
+        ></DailySupplementWindow>
       </View>
     );
 }

@@ -8,7 +8,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
-export default function BottomMenuTab(): JSX.Element {
+export default function BottomMenuTab({ setVisiblePage, setSuppModalVisible }: {
+    setVisiblePage: (v: string) => void,
+    setSuppModalVisible: (s: boolean) => void
+}): JSX.Element {
     const [showButtons, setShowButons] = useState<boolean>(false);
 
 
@@ -39,17 +42,20 @@ export default function BottomMenuTab(): JSX.Element {
         <View>
             <Animated.View style={{opacity: fadeAnim}}>
                 <View style={BottomMenuTabStyles.secondaryButtonRow}>
-                    <Icon name="pill" size={30} color="white"/>
+                    <Icon onPress={() => setSuppModalVisible(true)}
+                        name="pill" size={30} color="white"/>
                     <Icon name="emoticon-happy-outline" size={30} color="white"/>
                     <Icon name="silverware-fork-knife" size={30} color="white"/>
                     <Icon name="weight-lifter" size={30} color="white" onPress={() => console.log('hello')}/>
                 </View>
             </Animated.View>
             <View style={BottomMenuTabStyles.mainButtonRow}>
-                <Icon name="pill" size={30} color="white" style={{opacity: showButtons ? 0.5 : 1 }}/>
+                <Icon onPress={() => setVisiblePage("1")}
+                    name="home" size={30} color="white" style={{opacity: showButtons ? 0.5 : 1 }}/>
                 <Icon onPress={buttonHandle}
-                name="plus-box-outline" size={30} color="white"/>
-                <Icon name="magnify" size={30} color="white" style={{opacity: showButtons ? 0.5 : 1 }}/>
+                    name="plus-box-outline" size={30} color="white"/>
+                <Icon onPress={() => setVisiblePage("2")}
+                    name="magnify" size={30} color="white" style={{opacity: showButtons ? 0.5 : 1 }}/>
             </View>
         </View>
     );
