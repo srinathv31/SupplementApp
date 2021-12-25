@@ -10,16 +10,17 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setJournalVisible, journalVisible, setVisiblePage }: {
+export default function HeaderWindow({ setJournalVisible, journalVisible, setVisiblePage, daySelected }: {
     setJournalVisible: (j: boolean) => void, journalVisible: boolean,
-    setVisiblePage: (v: string) => void
+    setVisiblePage: (v: string) => void,
+    daySelected: string
 }): JSX.Element {
     return(
         <View style={{flexDirection: "row", justifyContent: "space-around"}}>
             <CalendarButton
                 setVisiblePage={setVisiblePage}
             ></CalendarButton>
-            <Text style={styles.sectionTitle}>Home Page</Text>
+            <Text style={styles.sectionTitle}>{daySelected}</Text>
             <JournalEntryModal
                 setJournalVisible={setJournalVisible}
                 journalVisible={journalVisible}

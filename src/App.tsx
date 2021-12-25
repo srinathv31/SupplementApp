@@ -28,6 +28,7 @@ import Supplement from './interfaces/Supplement';
 import CalendarPage from './screens/CalendarPage';
 import HomePage from './screens/HomePage';
 import SupplementInfoPage from './screens/SupplementInfoPage';
+import getCurrentDate from './utilities/getCurrentDate';
 
 
 const App = () => {
@@ -39,6 +40,7 @@ const App = () => {
 
   const [visiblePage, setVisiblePage] = useState<string>("1");
   const [dailyList, setDailyList] = useState<Record<string, Supplement[]>>({"12/23": []});
+  const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 
   const [journalVisible, setJournalVisible] = useState<boolean>(false);
   const [suppModalVisible, setSuppModalVisible] = useState<boolean>(false);
@@ -62,12 +64,14 @@ const App = () => {
                 setDailyList={setDailyList}
                 dailyList={dailyList}
                 setVisiblePage={setVisiblePage}
+                daySelected={daySelected}
               ></HomePage> }
             { visiblePage === "2" && <SupplementInfoPage
               setDailyList={setDailyList}
               dailyList={dailyList}
             ></SupplementInfoPage> }
             { visiblePage === "3" && <CalendarPage
+              setDaySelected={setDaySelected}
             ></CalendarPage> }
           </View>
           <View style={{ flex: 2, justifyContent: "flex-end", maxHeight: "10%" }}>

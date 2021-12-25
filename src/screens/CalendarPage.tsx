@@ -7,8 +7,12 @@ import MonthView from "../components/Calendar/MonthView";
 
 // Design Imports
 
-export default function CalendarPage(): JSX.Element {
+export default function CalendarPage({ setDaySelected }: {
+    setDaySelected: (d: string) => void
+}): JSX.Element {
     return(
-        <MonthView></MonthView>
+        <MonthView
+            setDaySelected={setDaySelected}
+        ></MonthView>
     );
 }
