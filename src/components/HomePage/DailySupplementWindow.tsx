@@ -3,21 +3,37 @@ import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import Supplement from "../../interfaces/Supplement";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { DateData } from "react-native-calendars/src/types";
 
 // Component Imports
 
 // Design Imports
 
-export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected }: {
+export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
-    daySelected: string
+    daySelected: string,
+    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    objDaySelected: DateData
 }): JSX.Element {
 
     function removeSupplement(item: Supplement) {
         let supplementMapCopy = {...supplementMap};
 
         supplementMapCopy[daySelected] = supplementMapCopy[daySelected].filter(listItem => listItem !== item);
+        removeDate(objDaySelected, supplementMapCopy);
+        if (Object.values(supplementMapCopy[daySelected]).length === 0) {
+            delete supplementMapCopy[daySelected];
+        }
         setSupplementMap(supplementMapCopy);
+    }
+
+    function removeDate(day: DateData, supplementMap: Record<string, Supplement[]>){
+        const selectedDatesCopy = {...selectedDates};
+        const stringDate = day.dateString;
+        if (Object.values(supplementMap[daySelected]).length === 0){
+            selectedDatesCopy[stringDate] = {marked: false};
+        }
+        setSelectedDates(selectedDatesCopy);
     }
 
     return(

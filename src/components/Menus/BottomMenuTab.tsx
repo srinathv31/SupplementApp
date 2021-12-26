@@ -8,9 +8,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
-export default function BottomMenuTab({ setVisiblePage, setSuppModalVisible }: {
+export default function BottomMenuTab({ setVisiblePage, setModalVisible }: {
     setVisiblePage: (v: string) => void,
-    setSuppModalVisible: (s: boolean) => void
+    setModalVisible: (s: string) => void
 }): JSX.Element {
     const [showButtons, setShowButons] = useState<boolean>(false);
 
@@ -42,7 +42,7 @@ export default function BottomMenuTab({ setVisiblePage, setSuppModalVisible }: {
         <View style={{zIndex: 100}}>
             <Animated.View style={{opacity: fadeAnim}}>
                 <View style={BottomMenuTabStyles.secondaryButtonRow}>
-                    <Icon onPress={() => setSuppModalVisible(true)}
+                    <Icon onPress={() => setModalVisible("2")}
                         name="pill" size={30} color="white"/>
                     <Icon name="emoticon-happy-outline" size={30} color="white"/>
                     <Icon name="silverware-fork-knife" size={30} color="white"/>

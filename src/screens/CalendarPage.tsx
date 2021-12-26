@@ -1,18 +1,46 @@
 // Source Imports
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import MonthView from "../components/Calendar/MonthView";
+import DailySupplementModal from "../components/SupplementViews/DailySupplementModal";
+import Supplement from "../interfaces/Supplement";
 
 // Component Imports
 
 // Design Imports
 
-export default function CalendarPage({ setDaySelected }: {
-    setDaySelected: (d: string) => void
+export default function CalendarPage({ setModalVisible, modalVisible, setDaySelected, setSupplementMap, supplementMap, daySelected, setVisiblePage, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
+    setModalVisible: (m: string) => void, modalVisible: string,
+    setDaySelected: (d: string) => void,
+    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    daySelected: string,
+    setVisiblePage: (v: string) => void,
+    setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
+    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}}
 }): JSX.Element {
     return(
-        <MonthView
-            setDaySelected={setDaySelected}
-        ></MonthView>
+        <>
+            <DailySupplementModal
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+                setSupplementMap={setSupplementMap}
+                supplementMap={supplementMap}
+                daySelected={daySelected}
+                setSelectedDates={setSelectedDates}
+                selectedDates={selectedDates}
+                objDaySelected={objDaySelected}
+            ></DailySupplementModal>
+            <MonthView
+                setDaySelected={setDaySelected}
+                setModalVisible={setModalVisible}
+                setVisiblePage={setVisiblePage}
+                setObjDaySelected={setObjDaySelected}
+                objDaySelected={objDaySelected}
+                setSelectedDates={setSelectedDates}
+                selectedDates={selectedDates}
+                supplementMap={supplementMap}
+            ></MonthView>
+        </>
     );
 }

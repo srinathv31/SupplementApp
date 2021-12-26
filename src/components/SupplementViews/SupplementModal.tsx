@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import Supplement from "../../interfaces/Supplement";
 import SupplementListView from "./SupplementListView";
 
@@ -8,18 +9,20 @@ import SupplementListView from "./SupplementListView";
 
 // Design Imports
 
-export default function SupplementModal({ setSuppModalVisible, suppModalVisible, setSupplementMap, supplementMap, daySelected }: {
-    setSuppModalVisible: (s: boolean) => void, suppModalVisible: boolean,
+export default function SupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
+    setModalVisible: (s: string) => void, modalVisible: string,
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
-    daySelected: string
+    daySelected: string,
+    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    objDaySelected: DateData
 }): JSX.Element {
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={suppModalVisible}
+            visible={modalVisible === "2" ? true : false}
             onRequestClose={() => {
-            setSuppModalVisible(!suppModalVisible);
+            setModalVisible("0");
             }}
         >
             <View style={styles.centeredView}>
@@ -31,10 +34,13 @@ export default function SupplementModal({ setSuppModalVisible, suppModalVisible,
                   fontSizeNumber={18}
                   query={""}
                   daySelected={daySelected}
+                  setSelectedDates={setSelectedDates}
+                  selectedDates={selectedDates}
+                  objDaySelected={objDaySelected}
                 ></SupplementListView>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => setSuppModalVisible(!suppModalVisible)}
+                  onPress={() => setModalVisible("0")}
                 >
                   <Text style={styles.textStyle}>Close</Text>
                 </Pressable>

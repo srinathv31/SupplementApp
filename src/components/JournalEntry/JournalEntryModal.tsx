@@ -7,16 +7,16 @@ import JournalTextEntry from "./JournalTextEntry";
 
 // Design Imports
 
-export default function JournalEntryModal({ setJournalVisible, journalVisible }: {
-    setJournalVisible: (j: boolean) => void, journalVisible: boolean
+export default function JournalEntryModal({ setModalVisible, modalVisible }: {
+    setModalVisible: (j: string) => void, modalVisible: string
 }): JSX.Element {
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={journalVisible}
+            visible={modalVisible === "1" ? true : false}
             onRequestClose={() => {
-            setJournalVisible(!journalVisible);
+            setModalVisible("0");
             }}
         >
             <View style={styles.centeredView}>
@@ -25,7 +25,7 @@ export default function JournalEntryModal({ setJournalVisible, journalVisible }:
                 <JournalTextEntry/>
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => setJournalVisible(!journalVisible)}
+                  onPress={() => setModalVisible("0")}
                 >
                   <Text style={styles.textStyle}>Close Journal</Text>
                 </Pressable>

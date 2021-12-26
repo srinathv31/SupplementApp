@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../../assets/SupplementList.json";
 import Supplement from "../../interfaces/Supplement";
 
@@ -8,11 +9,13 @@ import Supplement from "../../interfaces/Supplement";
 
 // Design Imports
 
-export default function SupplementListView({ setSupplementMap, supplementMap, fontSizeNumber, query, daySelected }: {
+export default function SupplementListView({ setSupplementMap, supplementMap, fontSizeNumber, query, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     fontSizeNumber: number,
     query: string,
-    daySelected: string
+    daySelected: string,
+    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    objDaySelected: DateData
 }): JSX.Element {
 
     function addSupplement(item: Supplement) {
@@ -23,6 +26,7 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
         }
         
         supplementMapCopy[daySelected].push(item);
+        addDate(objDaySelected, supplementMapCopy);
         Object.values(supplementMapCopy[daySelected]).forEach( supplement => {
             if (supplement === item) {
                 supplement.time = "7:00AM";
@@ -30,6 +34,16 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
         });
 
         setSupplementMap(supplementMapCopy);
+
+    }
+
+    function addDate(day: DateData, supplementMap: Record<string, Supplement[]>){
+        const selectedDatesCopy = {...selectedDates};
+        const stringDate = day.dateString;
+        if (Object.values(supplementMap[daySelected]).length > 0){
+            selectedDatesCopy[stringDate] = {marked: true};
+        }
+        setSelectedDates(selectedDatesCopy);
     }
 
     return(

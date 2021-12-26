@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import Divider from "../components/Design/Divider";
 import DailySupplementWindow from "../components/HomePage/DailySupplementWindow";
 import ExploreWindow from "../components/HomePage/ExploreWindow";
@@ -13,19 +14,24 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function HomePage({ setJournalVisible, journalVisible, setSupplementMap, supplementMap, setVisiblePage, daySelected }: {
-    setJournalVisible: (j: boolean) => void, journalVisible: boolean,
+export default function HomePage({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setVisiblePage, setDaySelected, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
+    setModalVisible: (j: string) => void, modalVisible: string,
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     setVisiblePage: (v: string) => void,
-    daySelected: string
+    setDaySelected: (d: string) => void, daySelected: string,
+    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
+    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
 }): JSX.Element {
     return(
       <View>
         <HeaderWindow
-          setJournalVisible={setJournalVisible}
-          journalVisible={journalVisible}
+          setModalVisible={setModalVisible}
+          modalVisible={modalVisible}
           setVisiblePage={setVisiblePage}
           daySelected={daySelected}
+          setDaySelected={setDaySelected}
+          setObjDaySelected={setObjDaySelected}
+          objDaySelected={objDaySelected}
         ></HeaderWindow>
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>
@@ -33,6 +39,9 @@ export default function HomePage({ setJournalVisible, journalVisible, setSupplem
           setSupplementMap={setSupplementMap}
           supplementMap={supplementMap}
           daySelected={daySelected}
+          setSelectedDates={setSelectedDates}
+          selectedDates={selectedDates}
+          objDaySelected={objDaySelected}
         ></DailySupplementWindow>
       </View>
     );

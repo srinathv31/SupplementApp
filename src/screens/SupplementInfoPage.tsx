@@ -1,6 +1,7 @@
 // Source Imports
 import React, { useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../assets/SupplementList.json";
 import SearchBar from "../components/SupplementViews/SearchBar";
 import SupplementListView from "../components/SupplementViews/SupplementListView";
@@ -10,9 +11,11 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function SupplementInfoPage({ setSupplementMap, supplementMap, daySelected }: {
+export default function SupplementInfoPage({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
-    daySelected: string
+    daySelected: string,
+    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    objDaySelected: DateData
 }): JSX.Element {
     const [query, setQuery] = useState<string>("");
 
@@ -28,6 +31,9 @@ export default function SupplementInfoPage({ setSupplementMap, supplementMap, da
                 fontSizeNumber={24}
                 query={query}
                 daySelected={daySelected}
+                setSelectedDates={setSelectedDates}
+                selectedDates={selectedDates}
+                objDaySelected={objDaySelected}
             ></SupplementListView>
         </View>
     );

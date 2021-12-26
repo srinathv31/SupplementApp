@@ -7,14 +7,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 // Design Imports
 
-export default function JournalButton( { setJournalVisible }: {
-    setJournalVisible: (j: boolean) => void
+export default function JournalButton( { setModalVisible }: {
+    setModalVisible: (j: string) => void
 }): JSX.Element {
     return(
         <Icon
         style={{padding: 10,
             margin: 12}}
-            onPress={() => setJournalVisible(true)}
+            onPress={() => setModalVisible("1")}
             name="create-outline" size={30} color="white"
         />
     );

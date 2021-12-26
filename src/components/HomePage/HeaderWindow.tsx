@@ -1,7 +1,10 @@
 // Source Imports
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import CalendarButton from "../Calendar/CalendarButton";
+import NextDayButton from "../Calendar/NextDayButton";
+import PrevDayButton from "../Calendar/PrevDayButton";
 import JournalButton from "../JournalEntry/JournalButton";
 import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 
@@ -10,23 +13,34 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setJournalVisible, journalVisible, setVisiblePage, daySelected }: {
-    setJournalVisible: (j: boolean) => void, journalVisible: boolean,
+export default function HeaderWindow({ setModalVisible, modalVisible, setVisiblePage, daySelected, setDaySelected, setObjDaySelected, objDaySelected }: {
+    setModalVisible: (j: string) => void, modalVisible: string,
     setVisiblePage: (v: string) => void,
-    daySelected: string
+    setDaySelected: (d: string) => void, daySelected: string,
+    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData
 }): JSX.Element {
     return(
         <View style={{flexDirection: "row", justifyContent: "space-around"}}>
             <CalendarButton
                 setVisiblePage={setVisiblePage}
             ></CalendarButton>
+            <PrevDayButton
+                setDaySelected={setDaySelected}
+                setObjDaySelected={setObjDaySelected}
+                objDaySelected={objDaySelected}
+            ></PrevDayButton>
             <Text style={styles.sectionTitle}>{daySelected}</Text>
+            <NextDayButton
+                setDaySelected={setDaySelected}
+                setObjDaySelected={setObjDaySelected}
+                objDaySelected={objDaySelected}
+            ></NextDayButton>
             <JournalEntryModal
-                setJournalVisible={setJournalVisible}
-                journalVisible={journalVisible}
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
             ></JournalEntryModal>
             <JournalButton
-                setJournalVisible={setJournalVisible}
+                setModalVisible={setModalVisible}
             ></JournalButton>
         </View>
     );
