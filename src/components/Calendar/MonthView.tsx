@@ -5,38 +5,33 @@ import { Agenda, Calendar, CalendarList, WeekCalendar } from "react-native-calen
 import Day from "react-native-calendars/src/calendar/day";
 import { DateData } from "react-native-calendars/src/types";
 import Supplement from "../../interfaces/Supplement";
+import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Component Imports
 
 // Design Imports
 
-export default function MonthView({ setDaySelected, setModalVisible, setVisiblePage, setObjDaySelected, objDaySelected,setSelectedDates, selectedDates, supplementMap }: {
+export default function MonthView({ setDaySelected, setModalVisible, setVisiblePage, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, supplementMap }: {
     setDaySelected: (d: string) => void,
     setModalVisible: (m: string) => void,
     setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
-    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     supplementMap: Record<string, Supplement[]>
 }): JSX.Element {
 
     function handleDayClick(day: DateData) {
+
         setObjDaySelected(day);
         setDaySelected(dayToString(day));
-        // addDate(day);
+
+        const selectedDatesCopy = handleCalendar(selectedDates, day.dateString);
+        setSelectedDates(selectedDatesCopy);
     }
 
     function dayToString(day: DateData) {
         return ""+day.month + "/" + ""+day.day + "/" + ""+day.year;
     }
-
-    // function addDate(day: DateData){
-    //     const selectedDatesCopy = {...selectedDates};
-    //     const stringDate = day.dateString;
-    //     if (supplementMap[dayToString(day)] !== undefined && Object.values(supplementMap[dayToString(day)]).length > 0){
-    //         selectedDatesCopy[stringDate] = {marked: true};
-    //     }
-    //     setSelectedDates(selectedDatesCopy);
-    // }
 
     return(
         <View style={{flex: 1}}>

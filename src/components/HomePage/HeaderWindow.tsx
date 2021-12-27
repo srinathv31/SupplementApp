@@ -13,11 +13,12 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setModalVisible, modalVisible, setVisiblePage, daySelected, setDaySelected, setObjDaySelected, objDaySelected }: {
+export default function HeaderWindow({ setModalVisible, modalVisible, setVisiblePage, daySelected, setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
     setModalVisible: (j: string) => void, modalVisible: string,
     setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
-    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData
+    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
 }): JSX.Element {
     return(
         <View style={{flexDirection: "row", justifyContent: "space-around"}}>
@@ -28,12 +29,16 @@ export default function HeaderWindow({ setModalVisible, modalVisible, setVisible
                 setDaySelected={setDaySelected}
                 setObjDaySelected={setObjDaySelected}
                 objDaySelected={objDaySelected}
+                setSelectedDates={setSelectedDates}
+                selectedDates={selectedDates}
             ></PrevDayButton>
             <Text style={styles.sectionTitle}>{daySelected}</Text>
             <NextDayButton
                 setDaySelected={setDaySelected}
                 setObjDaySelected={setObjDaySelected}
                 objDaySelected={objDaySelected}
+                setSelectedDates={setSelectedDates}
+                selectedDates={selectedDates}
             ></NextDayButton>
             <JournalEntryModal
                 setModalVisible={setModalVisible}

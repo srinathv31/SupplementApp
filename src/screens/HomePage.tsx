@@ -20,7 +20,7 @@ export default function HomePage({ setModalVisible, modalVisible, setSupplementM
     setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
-    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
 }): JSX.Element {
     return(
       <View>
@@ -32,6 +32,8 @@ export default function HomePage({ setModalVisible, modalVisible, setSupplementM
           setDaySelected={setDaySelected}
           setObjDaySelected={setObjDaySelected}
           objDaySelected={objDaySelected}
+          setSelectedDates={setSelectedDates}
+          selectedDates={selectedDates}
         ></HeaderWindow>
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>

@@ -13,7 +13,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
     setModalVisible: (m: string) => void, modalVisible: string,
     setSupplementMap: (s: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     daySelected: string,
-    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
 
@@ -32,7 +32,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
         const selectedDatesCopy = {...selectedDates};
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected]).length === 0){
-            selectedDatesCopy[stringDate] = {marked: false};
+            selectedDatesCopy[stringDate].marked = false;
         }
         setSelectedDates(selectedDatesCopy);
     }

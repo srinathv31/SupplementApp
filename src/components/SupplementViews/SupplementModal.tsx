@@ -13,7 +13,7 @@ export default function SupplementModal({ setModalVisible, modalVisible, setSupp
     setModalVisible: (s: string) => void, modalVisible: string,
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     daySelected: string,
-    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
     return(

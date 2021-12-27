@@ -12,7 +12,7 @@ import { DateData } from "react-native-calendars/src/types";
 export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
     daySelected: string,
-    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
 
@@ -31,7 +31,7 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
         const selectedDatesCopy = {...selectedDates};
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected]).length === 0){
-            selectedDatesCopy[stringDate] = {marked: false};
+            selectedDatesCopy[stringDate].marked = false;
         }
         setSelectedDates(selectedDatesCopy);
     }
