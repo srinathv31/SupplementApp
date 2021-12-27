@@ -3,14 +3,16 @@ import React from "react";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { generatePrevDate } from "../../utilities/generateNextDate";
+import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Component Imports
 
 // Design Imports
 
-export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected }: {
+export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
     setDaySelected: (d: string) => void, 
-    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData
+    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
 }): JSX.Element {
 
     function grabPrevDay(day: DateData) {
@@ -25,7 +27,16 @@ export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDa
         copyDate = generatePrevDate(copyDate, date, month, year);
 
         // Setting new date string
-        copyDate.dateString = ""+copyDate.year + "-" + ""+copyDate.month + "-" + ""+copyDate.day;
+        let stringDay = ""+copyDate.day;
+        let stringMonth = ""+copyDate.month;
+
+        copyDate.day < 10 ? stringDay = ""+"0"+copyDate.day : stringDay = stringDay;
+        copyDate.month < 10 ? stringMonth = ""+"0"+copyDate.month : stringMonth = stringMonth;
+
+        copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
+        
+        const selectedDatesCopy = handleCalendar(selectedDates, copyDate.dateString);
+        setSelectedDates(selectedDatesCopy);
 
         setObjDaySelected(copyDate);
 

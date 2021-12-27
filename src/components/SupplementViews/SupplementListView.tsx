@@ -14,7 +14,7 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
     fontSizeNumber: number,
     query: string,
     daySelected: string,
-    setSelectedDates: (s: {[date: string]: {marked: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean}},
+    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
 
@@ -41,7 +41,7 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
         const selectedDatesCopy = {...selectedDates};
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected]).length > 0){
-            selectedDatesCopy[stringDate] = {marked: true};
+            selectedDatesCopy[stringDate].marked = true;
         }
         setSelectedDates(selectedDatesCopy);
     }
