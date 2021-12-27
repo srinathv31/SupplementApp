@@ -17,7 +17,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setVisibleP
     setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
     setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
-    supplementMap: Record<string, Supplement[]>
+    supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>
 }): JSX.Element {
 
     function handleDayClick(day: DateData) {

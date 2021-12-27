@@ -10,7 +10,7 @@ import Supplement from "../../interfaces/Supplement";
 // Design Imports
 
 export default function SupplementListView({ setSupplementMap, supplementMap, fontSizeNumber, query, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
-    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     fontSizeNumber: number,
     query: string,
     daySelected: string,
@@ -22,12 +22,12 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
         const supplementMapCopy = {...supplementMap};
         
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = [];
+            supplementMapCopy[daySelected] = {SupplementSchedule: [], JournalEntry: ""};
         }
         
-        supplementMapCopy[daySelected].push(item);
+        supplementMapCopy[daySelected].SupplementSchedule.push(item);
         addDate(objDaySelected, supplementMapCopy);
-        Object.values(supplementMapCopy[daySelected]).forEach( supplement => {
+        Object.values(supplementMapCopy[daySelected].SupplementSchedule).forEach( supplement => {
             if (supplement === item) {
                 supplement.time = "7:00AM";
             }
@@ -37,10 +37,10 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
 
     }
 
-    function addDate(day: DateData, supplementMap: Record<string, Supplement[]>){
+    function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>){
         const selectedDatesCopy = {...selectedDates};
         const stringDate = day.dateString;
-        if (Object.values(supplementMap[daySelected]).length > 0){
+        if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
             selectedDatesCopy[stringDate].marked = true;
         }
         setSelectedDates(selectedDatesCopy);

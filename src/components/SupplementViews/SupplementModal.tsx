@@ -11,7 +11,7 @@ import SupplementListView from "./SupplementListView";
 
 export default function SupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     setModalVisible: (s: string) => void, modalVisible: string,
-    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     daySelected: string,
     setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData

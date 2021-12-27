@@ -41,7 +41,7 @@ const App = () => {
   };
 
   const [visiblePage, setVisiblePage] = useState<string>("1");
-  const [supplementMap, setSupplementMap] = useState<Record<string, Supplement[]>>({});
+  const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>>({});
   const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
   const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
 
@@ -51,8 +51,9 @@ const App = () => {
   // 1 - journal, 2 - supplement modal, 3 - daily supp modal
   const [modalVisible, setModalVisible] = useState<string>("0");
 
-  console.log(objDaySelected?.dateString);
-  console.log(selectedDates);
+  // console.log(objDaySelected?.dateString);
+  // console.log(selectedDates);
+  console.log(supplementMap);
 
 
   return (
