@@ -1,7 +1,8 @@
 // Source Imports
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
+import Supplement from "../../interfaces/Supplement";
 import CalendarButton from "../Calendar/CalendarButton";
 import NextDayButton from "../Calendar/NextDayButton";
 import PrevDayButton from "../Calendar/PrevDayButton";
@@ -13,13 +14,18 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setModalVisible, modalVisible, setVisiblePage, daySelected, setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
+export default function HeaderWindow({ setModalVisible, modalVisible, setVisiblePage, daySelected, setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setSupplementMap, supplementMap }: {
     setModalVisible: (j: string) => void, modalVisible: string,
     setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
     setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
 }): JSX.Element {
+  
+    const [journalText, setJournalText] = useState<string>("");
+
+
     return(
         <View style={{flexDirection: "row", justifyContent: "space-around"}}>
             <CalendarButton
@@ -43,9 +49,18 @@ export default function HeaderWindow({ setModalVisible, modalVisible, setVisible
             <JournalEntryModal
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}
+                setSupplementMap={setSupplementMap}
+                supplementMap={supplementMap}
+                daySelected={daySelected}
+                setJournalText={setJournalText}
+                journalText={journalText}
             ></JournalEntryModal>
             <JournalButton
                 setModalVisible={setModalVisible}
+                setSupplementMap={setSupplementMap}
+                supplementMap={supplementMap}
+                daySelected={daySelected}
+                setJournalText={setJournalText}
             ></JournalButton>
         </View>
     );

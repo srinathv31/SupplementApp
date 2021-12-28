@@ -41,6 +41,9 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
         const selectedDatesCopy = {...selectedDates};
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
+            if (selectedDatesCopy[stringDate] === undefined) {
+                selectedDatesCopy[stringDate] = {marked: false, selected: false}
+            }
             selectedDatesCopy[stringDate].marked = true;
         }
         setSelectedDates(selectedDatesCopy);

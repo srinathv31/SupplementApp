@@ -34,6 +34,8 @@ export default function HomePage({ setModalVisible, modalVisible, setSupplementM
           objDaySelected={objDaySelected}
           setSelectedDates={setSelectedDates}
           selectedDates={selectedDates}
+          setSupplementMap={setSupplementMap}
+          supplementMap={supplementMap}
         ></HeaderWindow>
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>
