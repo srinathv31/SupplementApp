@@ -52,8 +52,8 @@ const App = () => {
   const [modalVisible, setModalVisible] = useState<string>("0");
 
   // console.log(objDaySelected?.dateString);
-  // console.log(selectedDates);
-  console.log(supplementMap);
+  // console.log(supplementMap);
+  console.log("Hi");
 
 
   return (
