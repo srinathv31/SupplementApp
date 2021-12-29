@@ -30,8 +30,8 @@ const App = () => {
 
 
 	return (
-		<View style={{ flex: 1, backgroundColor: "#0B172A"}}>
-			<SafeAreaView style={{flex: 1}}>
+		<View style={{ flex: 1, backgroundColor: "#0B172A" }}>
+			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar barStyle={"light-content"} />
         
 				<View style={{ flex: 1, opacity: (modalVisible !== "0") ? 0.5 : 1 }}>
