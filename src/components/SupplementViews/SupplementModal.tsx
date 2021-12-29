@@ -16,85 +16,85 @@ export default function SupplementModal({ setModalVisible, modalVisible, setSupp
     setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
-    return(
-        <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible === "2" ? true : false}
-            onRequestClose={() => {
-            setModalVisible("0");
-            }}
-        >
-            <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-                <Text style={styles.modalText}>Supplement List</Text>
-                <SupplementListView
-                  setSupplementMap={setSupplementMap}
-                  supplementMap={supplementMap}
-                  fontSizeNumber={18}
-                  query={""}
-                  daySelected={daySelected}
-                  setSelectedDates={setSelectedDates}
-                  selectedDates={selectedDates}
-                  objDaySelected={objDaySelected}
-                ></SupplementListView>
-                <Pressable
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible("0")}
-                >
-                  <Text style={styles.textStyle}>Close</Text>
-                </Pressable>
-            </View>
-            </View>
-        </Modal>
-    );
+	return(
+		<Modal
+			animationType="slide"
+			transparent={true}
+			visible={modalVisible === "2" ? true : false}
+			onRequestClose={() => {
+				setModalVisible("0");
+			}}
+		>
+			<View style={styles.centeredView}>
+				<View style={styles.modalView}>
+					<Text style={styles.modalText}>Supplement List</Text>
+					<SupplementListView
+						setSupplementMap={setSupplementMap}
+						supplementMap={supplementMap}
+						fontSizeNumber={18}
+						query={""}
+						daySelected={daySelected}
+						setSelectedDates={setSelectedDates}
+						selectedDates={selectedDates}
+						objDaySelected={objDaySelected}
+					></SupplementListView>
+					<Pressable
+						style={[styles.button, styles.buttonClose]}
+						onPress={() => setModalVisible("0")}
+					>
+						<Text style={styles.textStyle}>Close</Text>
+					</Pressable>
+				</View>
+			</View>
+		</Modal>
+	);
 }
 
 const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginTop: "25%",
-      maxHeight: "55%"
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 20,
-      paddingBottom: 15,
-      paddingTop: 15,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2,
-      width: 125
-    },
-    buttonOpen: {
-      backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center",
-      width: 125,
-      textDecorationLine: "underline"
-    }
+	centeredView: {
+		flex: 1,
+		justifyContent: "space-between",
+		alignItems: "center",
+		marginTop: "25%",
+		maxHeight: "55%"
+	},
+	modalView: {
+		margin: 20,
+		backgroundColor: "white",
+		borderRadius: 20,
+		paddingBottom: 15,
+		paddingTop: 15,
+		alignItems: "center",
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 2
+		},
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 5
+	},
+	button: {
+		borderRadius: 20,
+		padding: 10,
+		elevation: 2,
+		width: 125
+	},
+	buttonOpen: {
+		backgroundColor: "#F194FF",
+	},
+	buttonClose: {
+		backgroundColor: "#2196F3",
+	},
+	textStyle: {
+		color: "white",
+		fontWeight: "bold",
+		textAlign: "center"
+	},
+	modalText: {
+		marginBottom: 15,
+		textAlign: "center",
+		width: 125,
+		textDecorationLine: "underline"
+	}
 });
