@@ -34,7 +34,7 @@ export default function JournalButton( { setModalVisible, setJournalText, daySel
 			style={{ padding: 10,
 				margin: 12 }}
 			onPress={() => HandleJournalOpen()}
-			name="create-outline" size={30} color="white"
+			name="create-outline" size={30} color={supplementMap[daySelected] !== undefined && supplementMap[daySelected].JournalEntry !== "" ? "lime" : "white"}
 		/>
 	);
 }
