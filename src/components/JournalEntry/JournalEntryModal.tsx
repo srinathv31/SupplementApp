@@ -1,15 +1,45 @@
 // Source Imports
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import Supplement from "../../interfaces/Supplement";
 import JournalTextEntry from "./JournalTextEntry";
 
 // Component Imports
 
 // Design Imports
 
-export default function JournalEntryModal({ setModalVisible, modalVisible }: {
-    setModalVisible: (j: string) => void, modalVisible: string
+export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText }: {
+    setModalVisible: (j: string) => void, modalVisible: string,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
+    daySelected: string,
+    setJournalText: (j: string) => void, journalText: string
 }): JSX.Element {
+
+
+  function handleJournal() {
+    const supplementMapCopy = { ...supplementMap };
+
+    if (supplementMapCopy[daySelected] === undefined) {
+      supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" }
+    }
+
+    supplementMapCopy[daySelected].JournalEntry = journalText;
+
+    // if the journal entry is empty + there are no supplements added to the day delete that day object
+    if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length === 0) {
+      delete supplementMapCopy[daySelected];
+    }
+    // else if only the journal entry is empty then set the journalEntry to an empty string
+    else if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length > 0) {
+      supplementMapCopy[daySelected].JournalEntry = "";
+    }
+    
+    setSupplementMap(supplementMapCopy);
+
+    setModalVisible("0");
+  }
+
+
     return(
         <Modal
             animationType="slide"
@@ -22,10 +52,16 @@ export default function JournalEntryModal({ setModalVisible, modalVisible }: {
             <View style={styles.centeredView}>
             <View style={styles.modalView}>
                 <Text style={styles.modalText}>Today's Journal</Text>
-                <JournalTextEntry/>
+                <JournalTextEntry
+                  setSupplementMap={setSupplementMap}
+                  supplementMap={supplementMap}
+                  daySelected={daySelected}
+                  setJournalText={setJournalText}
+                  journalText={journalText}
+                />
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible("0")}
+                  onPress={() => handleJournal()}
                 >
                   <Text style={styles.textStyle}>Close Journal</Text>
                 </Pressable>

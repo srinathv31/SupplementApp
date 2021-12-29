@@ -10,7 +10,7 @@ import { DateData } from "react-native-calendars/src/types";
 // Design Imports
 
 export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
-    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     daySelected: string,
     setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
     objDaySelected: DateData
@@ -19,18 +19,18 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
     function removeSupplement(item: Supplement) {
         let supplementMapCopy = {...supplementMap};
 
-        supplementMapCopy[daySelected] = supplementMapCopy[daySelected].filter(listItem => listItem !== item);
+        supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
         removeDate(objDaySelected, supplementMapCopy);
-        if (Object.values(supplementMapCopy[daySelected]).length === 0) {
+        if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
             delete supplementMapCopy[daySelected];
         }
         setSupplementMap(supplementMapCopy);
     }
 
-    function removeDate(day: DateData, supplementMap: Record<string, Supplement[]>){
+    function removeDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>){
         const selectedDatesCopy = {...selectedDates};
         const stringDate = day.dateString;
-        if (Object.values(supplementMap[daySelected]).length === 0){
+        if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
             selectedDatesCopy[stringDate].marked = false;
         }
         setSelectedDates(selectedDatesCopy);
@@ -47,7 +47,7 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
         // </>
         <View style={{alignSelf: "center"}}>
             <FlatList
-                data={supplementMap[daySelected]}
+                data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
                 renderItem={({ item }) => (
                     <TouchableHighlight
                       key={item.name}

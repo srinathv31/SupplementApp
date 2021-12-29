@@ -16,7 +16,7 @@ import Supplement from "../interfaces/Supplement";
 
 export default function HomePage({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setVisiblePage, setDaySelected, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
     setModalVisible: (j: string) => void, modalVisible: string,
-    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
@@ -34,6 +34,8 @@ export default function HomePage({ setModalVisible, modalVisible, setSupplementM
           objDaySelected={objDaySelected}
           setSelectedDates={setSelectedDates}
           selectedDates={selectedDates}
+          setSupplementMap={setSupplementMap}
+          supplementMap={supplementMap}
         ></HeaderWindow>
         <ExploreWindow></ExploreWindow>
         <Divider></Divider>

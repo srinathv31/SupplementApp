@@ -13,7 +13,7 @@ import Supplement from "../interfaces/Supplement";
 export default function CalendarPage({ setModalVisible, modalVisible, setDaySelected, setSupplementMap, supplementMap, daySelected, setVisiblePage, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
     setModalVisible: (m: string) => void, modalVisible: string,
     setDaySelected: (d: string) => void,
-    setSupplementMap: (d: Record<string, Supplement[]>) => void, supplementMap: Record<string, Supplement[]>,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     daySelected: string,
     setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,

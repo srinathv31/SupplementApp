@@ -1,13 +1,17 @@
 // Source Imports
 import React, { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
+import Supplement from "../../interfaces/Supplement";
 
 // Component Imports
 
 // Design Imports
 
-export default function JournalTextEntry(): JSX.Element {
-    const [journalText, setJournalText] = useState<string>("")
+export default function JournalTextEntry({ setSupplementMap, supplementMap, daySelected, setJournalText, journalText }: {
+    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
+    daySelected: string,
+    setJournalText: (j: string) => void, journalText: string
+}): JSX.Element {
 
     return(
         <TextInput
