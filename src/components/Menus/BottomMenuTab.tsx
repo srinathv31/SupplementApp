@@ -1,6 +1,6 @@
 // Source Imports
-import React, { useRef, useState } from "react";
-import { Animated, View } from "react-native";
+import React, { useRef } from "react";
+import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 // Component Imports
@@ -8,11 +8,11 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
-export default function BottomMenuTab({ setVisiblePage, setModalVisible }: {
-    setVisiblePage: (v: string) => void,
-    setModalVisible: (s: string) => void
+export default function BottomMenuTab({ setVisiblePage, visiblePage, setModalVisible, showButtons, setShowButtons }: {
+    setVisiblePage: (v: string) => void, visiblePage: string
+    setModalVisible: (s: string) => void,
+	setShowButtons: (b: boolean) => void, showButtons: boolean
 }): JSX.Element {
-	const [showButtons, setShowButons] = useState<boolean>(false);
 
 
 	const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -35,27 +35,31 @@ export default function BottomMenuTab({ setVisiblePage, setModalVisible }: {
 	};
 
 	function buttonHandle(){
-		showButtons ? (fadeOut(), setShowButons(false)) : (fadeIn(), setShowButons(true));
+		showButtons ? (fadeOut(), setShowButtons(false)) : (fadeIn(), setShowButtons(true));
 	}
 
 	return(
 		<View style={{ zIndex: 100 }}>
 			<Animated.View style={{ opacity: fadeAnim }}>
-				<View style={BottomMenuTabStyles.secondaryButtonRow}>
+				{ showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
 					<Icon onPress={() => setModalVisible("2")}
 						name="pill" size={30} color="white"/>
 					<Icon name="emoticon-happy-outline" size={30} color="white"/>
 					<Icon name="silverware-fork-knife" size={30} color="white"/>
 					<Icon name="weight-lifter" size={30} color="white" onPress={() => console.log("hello")}/>
-				</View>
+				</View> }
 			</Animated.View>
 			<View style={BottomMenuTabStyles.mainButtonRow}>
-				<Icon onPress={() => setVisiblePage("1")}
-					name="home" size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1 }}/>
+				<Pressable onPress={() => setVisiblePage("1")} disabled={ showButtons ? true : false }>
+					<Icon
+						name={ visiblePage === "1" ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
+				</Pressable>
 				<Icon onPress={buttonHandle}
-					name="plus-box-outline" size={30} color="white"/>
-				<Icon onPress={() => setVisiblePage("2")}
-					name="magnify" size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1 }}/>
+					name="plus-box-outline" size={30} color="white" style={{ padding: 5 }}/>
+				<Pressable onPress={() => setVisiblePage("2")} disabled={ showButtons ? true : false }>
+					<Icon
+						name={ visiblePage === "2" ? "text-box-search" : "text-box-search-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
+				</Pressable>
 			</View>
 		</View>
 	);

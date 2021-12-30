@@ -17,6 +17,7 @@ const App = () => {
 	const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>>({});
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 	const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
+	const [showButtons, setShowButtons] = useState<boolean>(false);
 
 	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
 
@@ -58,6 +59,7 @@ const App = () => {
 							objDaySelected={objDaySelected as DateData}
 							setSelectedDates={setSelectedDates}
 							selectedDates={selectedDates}
+							setShowButtons={setShowButtons}
 						></HomePage> }
 						{ visiblePage === "2" && <SupplementInfoPage
 							setSupplementMap={setSupplementMap}
@@ -84,7 +86,10 @@ const App = () => {
 					<View style={{ flex: 2, justifyContent: "flex-end", maxHeight: "10%" }}>
 						<BottomMenuTab
 							setVisiblePage={setVisiblePage}
+							visiblePage={visiblePage}
 							setModalVisible={setModalVisible}
+							setShowButtons={setShowButtons}
+							showButtons={showButtons}
 						></BottomMenuTab>
 					</View>
 				</View>

@@ -12,13 +12,14 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function HomePage({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setVisiblePage, setDaySelected, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
+export default function HomePage({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setVisiblePage, setDaySelected, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setShowButtons }: {
     setModalVisible: (j: string) => void, modalVisible: string,
     setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
 	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
+	setShowButtons: (b: boolean) => void
 }): JSX.Element {
 	return(
 		<View>
@@ -34,6 +35,7 @@ export default function HomePage({ setModalVisible, modalVisible, setSupplementM
 				selectedDates={selectedDates}
 				setSupplementMap={setSupplementMap}
 				supplementMap={supplementMap}
+				setShowButtons={setShowButtons}
 			></HeaderWindow>
 			<ExploreWindow></ExploreWindow>
 			<Divider></Divider>
