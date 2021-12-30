@@ -39,6 +39,13 @@ export default function MonthView({ setDaySelected, setModalVisible, setVisibleP
 				markingType={"multi-dot"}
 				markedDates={selectedDates}
 				current={objDaySelected.dateString}
+				theme={{
+					calendarBackground: "#0B172A",
+					textColor: "white",
+					arrowColor: "white",
+					dayTextColor: "white",
+					monthTextColor: "white"
+				}}
 			></CalendarList>
 		</View>
 	);
