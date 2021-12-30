@@ -13,7 +13,7 @@ import Supplement from "../interfaces/Supplement";
 export default function SupplementInfoPage({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     daySelected: string,
-    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
 	const [query, setQuery] = useState<string>("");

@@ -12,7 +12,7 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 export default function NextDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
     setDaySelected: (d: string) => void, 
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
-    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
 }): JSX.Element {
 
 	function grabNextDay(day: DateData) {

@@ -19,7 +19,7 @@ export default function HeaderWindow({ setModalVisible, modalVisible, setVisible
     setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
-    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
     setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
 }): JSX.Element {
   
@@ -54,6 +54,9 @@ export default function HeaderWindow({ setModalVisible, modalVisible, setVisible
 				daySelected={daySelected}
 				setJournalText={setJournalText}
 				journalText={journalText}
+				setSelectedDates={setSelectedDates}
+				selectedDates={selectedDates}
+				objDaySelected={objDaySelected}
 			></JournalEntryModal>
 			<JournalButton
 				setModalVisible={setModalVisible}

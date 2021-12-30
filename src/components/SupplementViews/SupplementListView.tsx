@@ -4,6 +4,8 @@ import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-nati
 import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../../assets/SupplementList.json";
 import Supplement from "../../interfaces/Supplement";
+import { supplementDot } from "../../utilities/calendarDots";
+import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 
 // Component Imports
 
@@ -14,7 +16,7 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
     fontSizeNumber: number,
     query: string,
     daySelected: string,
-    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
     objDaySelected: DateData
 }): JSX.Element {
 
@@ -42,9 +44,12 @@ export default function SupplementListView({ setSupplementMap, supplementMap, fo
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
 			if (selectedDatesCopy[stringDate] === undefined) {
-				selectedDatesCopy[stringDate] = { marked: false, selected: false };
+				selectedDatesCopy[stringDate] = { dots:[{ key: "", color: "" }], selected: false };
 			}
-			selectedDatesCopy[stringDate].marked = true;
+			if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 1){
+				selectedDatesCopy[stringDate].dots.push(supplementDot);
+			}
+			selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
 		}
 		setSelectedDates(selectedDatesCopy);
 	}

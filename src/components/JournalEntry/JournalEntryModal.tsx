@@ -1,23 +1,30 @@
 // Source Imports
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { DateData } from "react-native-calendars/src/types";
 import Supplement from "../../interfaces/Supplement";
+import { journalDot } from "../../utilities/calendarDots";
+import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
 
 // Component Imports
 
 // Design Imports
 
-export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText }: {
+export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: {
     setModalVisible: (j: string) => void, modalVisible: string,
     setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     daySelected: string,
-    setJournalText: (j: string) => void, journalText: string
+    setJournalText: (j: string) => void, journalText: string,
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
+    objDaySelected: DateData,
 }): JSX.Element {
 
 
 	function handleJournal() {
 		const supplementMapCopy = { ...supplementMap };
+		const selectedDatesCopy = { ...selectedDates };
+		const stringDate = objDaySelected.dateString;
 
 		if (supplementMapCopy[daySelected] === undefined) {
 			supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
@@ -28,12 +35,25 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		// if the journal entry is empty + there are no supplements added to the day delete that day object
 		if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length === 0) {
 			delete supplementMapCopy[daySelected];
+			selectedDatesCopy[stringDate].dots = removeJournalDot(selectedDatesCopy, stringDate);
 		}
 		// else if only the journal entry is empty then set the journalEntry to an empty string
 		else if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length > 0) {
 			supplementMapCopy[daySelected].JournalEntry = "";
+			selectedDatesCopy[stringDate].dots = removeJournalDot(selectedDatesCopy, stringDate);
+		}
+		// else if there is a journal entry and there is no previously set journalDot, then set the journalDot in the calendar
+		else if (supplementMapCopy[daySelected].JournalEntry.trim()){
+			if (selectedDatesCopy[stringDate] === undefined){
+				selectedDatesCopy[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
+			}
+			if (!selectedDatesCopy[stringDate].dots.includes(journalDot)) {
+				selectedDatesCopy[stringDate].dots.push(journalDot);
+			}
+			selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
 		}
     
+		setSelectedDates(selectedDatesCopy);
 		setSupplementMap(supplementMapCopy);
 
 		setModalVisible("0");
