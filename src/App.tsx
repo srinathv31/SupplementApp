@@ -18,7 +18,7 @@ const App = () => {
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 	const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
 
-	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({});
+	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
 
 
 	// 1 - journal, 2 - supplement modal, 3 - daily supp modal
