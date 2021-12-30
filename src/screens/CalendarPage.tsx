@@ -16,7 +16,7 @@ export default function CalendarPage({ setModalVisible, modalVisible, setDaySele
     daySelected: string,
     setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
-    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}}
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
 }): JSX.Element {
 	return(
 		<>

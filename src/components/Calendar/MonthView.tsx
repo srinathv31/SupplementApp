@@ -14,7 +14,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setVisibleP
     setModalVisible: (m: string) => void,
     setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
-    setSelectedDates: (s: {[date: string]: {marked: boolean, selected: boolean}}) => void, selectedDates: {[date: string]: {marked: boolean, selected: boolean}},
+	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
 }): JSX.Element {
 
 	function handleDayClick(day: DateData) {
@@ -36,7 +36,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setVisibleP
 				style={styles.calendar}
 				onDayPress={(day) => (handleDayClick(day), setVisiblePage("1"))}
 				onDayLongPress={(day) => (handleDayClick(day), setModalVisible("3"))}
-				markingType={"dot"}
+				markingType={"multi-dot"}
 				markedDates={selectedDates}
 				current={objDaySelected.dateString}
 			></CalendarList>

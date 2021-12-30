@@ -18,7 +18,7 @@ const App = () => {
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 	const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
 
-	const [selectedDates, setSelectedDates] = useState<{[date: string]: {marked: boolean, selected: boolean}}>({});
+	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({});
 
 
 	// 1 - journal, 2 - supplement modal, 3 - daily supp modal
@@ -26,7 +26,7 @@ const App = () => {
 
 	// console.log(objDaySelected?.dateString);
 	console.log(supplementMap);
-	// console.log("Hi");
+	console.log(selectedDates);
 
 
 	return (
