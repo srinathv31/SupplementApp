@@ -14,9 +14,9 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setModalVisible, modalVisible, setVisiblePage, daySelected, setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setSupplementMap, supplementMap, setShowButtons }: {
+export default function HeaderWindow({ setModalVisible, modalVisible, setIndex, daySelected, setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setSupplementMap, supplementMap, setShowButtons }: {
     setModalVisible: (j: string) => void, modalVisible: string,
-    setVisiblePage: (v: string) => void,
+	setIndex: (i: number) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
 	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
@@ -30,8 +30,8 @@ export default function HeaderWindow({ setModalVisible, modalVisible, setVisible
 	return(
 		<View style={{ flexDirection: "row", justifyContent: "space-around" }}>
 			<CalendarButton
-				setVisiblePage={setVisiblePage}
 				setShowButtons={setShowButtons}
+				setIndex={setIndex}
 			></CalendarButton>
 			<PrevDayButton
 				setDaySelected={setDaySelected}

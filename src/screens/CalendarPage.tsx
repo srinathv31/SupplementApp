@@ -9,14 +9,14 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function CalendarPage({ setModalVisible, modalVisible, setDaySelected, setSupplementMap, supplementMap, daySelected, setVisiblePage, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
+export default function CalendarPage({ setModalVisible, modalVisible, setDaySelected, setSupplementMap, supplementMap, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex }: {
     setModalVisible: (m: string) => void, modalVisible: string,
     setDaySelected: (d: string) => void,
     setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
     daySelected: string,
-    setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
 	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
+	setIndex: (i: number) => void
 }): JSX.Element {
 	return(
 		<>
@@ -33,11 +33,11 @@ export default function CalendarPage({ setModalVisible, modalVisible, setDaySele
 			<MonthView
 				setDaySelected={setDaySelected}
 				setModalVisible={setModalVisible}
-				setVisiblePage={setVisiblePage}
 				setObjDaySelected={setObjDaySelected}
 				objDaySelected={objDaySelected}
 				setSelectedDates={setSelectedDates}
 				selectedDates={selectedDates}
+				setIndex={setIndex}
 			></MonthView>
 		</>
 	);

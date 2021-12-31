@@ -9,12 +9,12 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Design Imports
 
-export default function MonthView({ setDaySelected, setModalVisible, setVisiblePage, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
+export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex }: {
     setDaySelected: (d: string) => void,
     setModalVisible: (m: string) => void,
-    setVisiblePage: (v: string) => void,
     setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
 	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
+	setIndex: (i: number) => void
 }): JSX.Element {
 
 	function handleDayClick(day: DateData) {
@@ -34,7 +34,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setVisibleP
 		<View style={{ flex: 1 }}>
 			<CalendarList
 				style={styles.calendar}
-				onDayPress={(day) => (handleDayClick(day), setVisiblePage("1"))}
+				onDayPress={(day) => (handleDayClick(day), setIndex(1))}
 				onDayLongPress={(day) => (handleDayClick(day), setModalVisible("3"))}
 				markingType={"multi-dot"}
 				markedDates={selectedDates}

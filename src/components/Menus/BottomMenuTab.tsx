@@ -8,10 +8,10 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
-export default function BottomMenuTab({ setVisiblePage, visiblePage, setModalVisible, showButtons, setShowButtons }: {
-    setVisiblePage: (v: string) => void, visiblePage: string
+export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex }: {
     setModalVisible: (s: string) => void,
-	setShowButtons: (b: boolean) => void, showButtons: boolean
+	setShowButtons: (b: boolean) => void, showButtons: boolean,
+	setIndex: (i: number) => void, index: number
 }): JSX.Element {
 
 
@@ -46,19 +46,24 @@ export default function BottomMenuTab({ setVisiblePage, visiblePage, setModalVis
 						name="pill" size={30} color="white"/>
 					<Icon name="emoticon-happy-outline" size={30} color="white"/>
 					<Icon name="silverware-fork-knife" size={30} color="white"/>
-					<Icon name="weight-lifter" size={30} color="white" onPress={() => console.log("hello")}/>
 				</View> }
 			</Animated.View>
 			<View style={BottomMenuTabStyles.mainButtonRow}>
-				<Pressable onPress={() => setVisiblePage("1")} disabled={ showButtons ? true : false }>
+				<Pressable onPress={() => setIndex(0)} disabled={ showButtons ? true : false }>
+					<Icon name={ index === 0 ? "calendar-text" : "calendar-text-outline"} size={30} color="white"style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
+				</Pressable>
+				<Pressable onPress={() => setIndex(1)} disabled={ showButtons ? true : false }>
 					<Icon
-						name={ visiblePage === "1" ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
+						name={ index === 1 ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
 				</Pressable>
 				<Icon onPress={buttonHandle}
 					name="plus-box-outline" size={30} color="white" style={{ padding: 5 }}/>
-				<Pressable onPress={() => setVisiblePage("2")} disabled={ showButtons ? true : false }>
+				<Pressable onPress={() => setIndex(2)} disabled={ showButtons ? true : false }>
 					<Icon
-						name={ visiblePage === "2" ? "text-box-search" : "text-box-search-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
+						name={ index === 2 ? "text-box-search" : "text-box-search-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
+				</Pressable>
+				<Pressable onPress={() => setIndex(3)} disabled={ showButtons ? true : false }>
+					<Icon name={ index === 3 ? "heart-multiple" : "heart-multiple-outline"} size={30} color="white"style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
 				</Pressable>
 			</View>
 		</View>

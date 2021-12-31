@@ -6,14 +6,14 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 // Design Imports
 
-export default function CalendarButton({ setVisiblePage, setShowButtons }: {
-    setVisiblePage: (v: string) => void,
+export default function CalendarButton({ setIndex, setShowButtons }: {
+	setIndex: (i: number) => void,
 	setShowButtons: (b: boolean) => void
 }): JSX.Element {
 
 	function buttonHandle(){
 		setShowButtons(false);
-		setVisiblePage("3");
+		setIndex(0);
 	}
 
 	return(

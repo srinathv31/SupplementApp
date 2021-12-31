@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { SafeAreaView, StatusBar, View } from "react-native";
+import { Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 
 import BottomMenuTab from "./components/Menus/BottomMenuTab";
@@ -10,10 +10,10 @@ import CalendarPage from "./screens/CalendarPage";
 import HomePage from "./screens/HomePage";
 import SupplementInfoPage from "./screens/SupplementInfoPage";
 import getCurrentDate, { generateCurrentDateObject } from "./utilities/getCurrentDate";
+import { TabView, SceneMap } from "react-native-tab-view";
 
 
 const App = () => {
-	const [visiblePage, setVisiblePage] = useState<string>("1");
 	const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>>({});
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 	const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
@@ -29,6 +29,69 @@ const App = () => {
 	console.log(supplementMap);
 	console.log(selectedDates);
 
+	const HomeRoute = () => (
+		<HomePage
+			setModalVisible={setModalVisible}
+			modalVisible={modalVisible}
+			setSupplementMap={setSupplementMap}
+			supplementMap={supplementMap}
+			daySelected={daySelected}
+			setDaySelected={setDaySelected}
+			setObjDaySelected={setObjDaySelected}
+			objDaySelected={objDaySelected as DateData}
+			setSelectedDates={setSelectedDates}
+			selectedDates={selectedDates}
+			setShowButtons={setShowButtons}
+			setIndex={setIndex}
+		></HomePage>
+	);
+	
+	const CalendarRoute = () => (
+		<CalendarPage
+			setDaySelected={setDaySelected}
+			daySelected={daySelected}
+			setModalVisible={setModalVisible}
+			modalVisible={modalVisible}
+			setSupplementMap={setSupplementMap}
+			supplementMap={supplementMap}
+			setObjDaySelected={setObjDaySelected}
+			objDaySelected={objDaySelected as DateData}
+			setSelectedDates={setSelectedDates}
+			selectedDates={selectedDates}
+			setIndex={setIndex}
+		></CalendarPage>
+	);
+	
+	const SupplementRoute = (): JSX.Element => {
+		return <SupplementInfoPage
+			setSupplementMap={setSupplementMap}
+			supplementMap={supplementMap}
+			daySelected={daySelected}
+			setSelectedDates={setSelectedDates}
+			selectedDates={selectedDates}
+			objDaySelected={objDaySelected as DateData}
+		></SupplementInfoPage>;
+	};
+
+	const WorkoutRoute = (): JSX.Element => {
+		return <View style={{ flex: 1, backgroundColor: "#ff4081" }} />;
+	};
+
+	const renderScene = SceneMap({
+		second: CalendarRoute,
+		first: HomeRoute,
+		supp: SupplementRoute,
+		work: WorkoutRoute
+	});
+
+	const [index, setIndex] = React.useState(1);
+	const [routes] = useState<Route[]>([
+		{ key: "second", title: "Calendar" },
+		{ key: "first", title: "Home" },
+		{ key: "supp", title: "Calendar" },
+		{ key: "work", title: "Workout" },
+	]);
+	const layout = useWindowDimensions();
 
 	return (
 		<View style={{ flex: 1, backgroundColor: "#0B172A" }}>
@@ -47,51 +110,22 @@ const App = () => {
 							selectedDates={selectedDates}
 							objDaySelected={objDaySelected as DateData}
 						></SupplementModal>
-						{ visiblePage === "1" && <HomePage
-							setModalVisible={setModalVisible}
-							modalVisible={modalVisible}
-							setSupplementMap={setSupplementMap}
-							supplementMap={supplementMap}
-							setVisiblePage={setVisiblePage}
-							daySelected={daySelected}
-							setDaySelected={setDaySelected}
-							setObjDaySelected={setObjDaySelected}
-							objDaySelected={objDaySelected as DateData}
-							setSelectedDates={setSelectedDates}
-							selectedDates={selectedDates}
-							setShowButtons={setShowButtons}
-						></HomePage> }
-						{ visiblePage === "2" && <SupplementInfoPage
-							setSupplementMap={setSupplementMap}
-							supplementMap={supplementMap}
-							daySelected={daySelected}
-							setSelectedDates={setSelectedDates}
-							selectedDates={selectedDates}
-							objDaySelected={objDaySelected as DateData}
-						></SupplementInfoPage> }
-						{ visiblePage === "3" && <CalendarPage
-							setDaySelected={setDaySelected}
-							daySelected={daySelected}
-							setModalVisible={setModalVisible}
-							modalVisible={modalVisible}
-							setSupplementMap={setSupplementMap}
-							supplementMap={supplementMap}
-							setVisiblePage={setVisiblePage}
-							setObjDaySelected={setObjDaySelected}
-							objDaySelected={objDaySelected as DateData}
-							setSelectedDates={setSelectedDates}
-							selectedDates={selectedDates}
-						></CalendarPage> }
+						<TabView
+							navigationState={{ index, routes, key: index }}
+							renderScene={renderScene}
+							onIndexChange={setIndex}
+							initialLayout={{ width: layout.width }}
+							tabBarPosition="bottom"
+							renderTabBar={() => <BottomMenuTab
+								setModalVisible={setModalVisible}
+								setShowButtons={setShowButtons}
+								showButtons={showButtons}
+								index={index}
+								setIndex={setIndex}
+							/>}
+						/>
 					</View>
-					<View style={{ flex: 2, justifyContent: "flex-end", maxHeight: "10%" }}>
-						<BottomMenuTab
-							setVisiblePage={setVisiblePage}
-							visiblePage={visiblePage}
-							setModalVisible={setModalVisible}
-							setShowButtons={setShowButtons}
-							showButtons={showButtons}
-						></BottomMenuTab>
-					</View>
+					
 				</View>
 
 			</SafeAreaView>

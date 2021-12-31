@@ -12,21 +12,21 @@ import Supplement from "../interfaces/Supplement";
 
 // Design Imports
 
-export default function HomePage({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setVisiblePage, setDaySelected, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setShowButtons }: {
+export default function HomePage({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setShowButtons, setIndex }: {
     setModalVisible: (j: string) => void, modalVisible: string,
     setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
-    setVisiblePage: (v: string) => void,
     setDaySelected: (d: string) => void, daySelected: string,
     setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
 	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-	setShowButtons: (b: boolean) => void
+	setShowButtons: (b: boolean) => void,
+	setIndex: (i: number) => void,
 }): JSX.Element {
 	return(
 		<View>
 			<HeaderWindow
 				setModalVisible={setModalVisible}
 				modalVisible={modalVisible}
-				setVisiblePage={setVisiblePage}
+				setIndex={setIndex}
 				daySelected={daySelected}
 				setDaySelected={setDaySelected}
 				setObjDaySelected={setObjDaySelected}
