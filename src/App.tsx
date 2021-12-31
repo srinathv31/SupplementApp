@@ -23,11 +23,12 @@ const App = () => {
 
 
 	// 1 - journal, 2 - supplement modal, 3 - daily supp modal
-	const [modalVisible, setModalVisible] = useState<string>("0");
+	const [modalVisible, setModalVisible] = useState<string>("hide-modal");
 
 	// console.log(objDaySelected?.dateString);
 	console.log(supplementMap);
-	console.log(selectedDates);
+	console.log(daySelected);
+	// console.log(selectedDates);
 
 	const HomeRoute = () => (
 		<HomePage
@@ -98,7 +99,7 @@ const App = () => {
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar barStyle={"light-content"} />
         
-				<View style={{ flex: 1, opacity: (modalVisible !== "0") ? 0.5 : 1 }}>
+				<View style={{ flex: 1, opacity: (modalVisible !== "hide-modal") ? 0.5 : 1 }}>
 					<View style={{ flex: 1 }}>
 						<SupplementModal
 							setModalVisible={setModalVisible}

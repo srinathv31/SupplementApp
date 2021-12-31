@@ -20,9 +20,9 @@ export default function SupplementModal({ setModalVisible, modalVisible, setSupp
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "2" ? true : false}
+			visible={modalVisible === "supplement-modal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("0");
+				setModalVisible("hide-modal");
 			}}
 		>
 			<View style={styles.centeredView}>
@@ -40,7 +40,7 @@ export default function SupplementModal({ setModalVisible, modalVisible, setSupp
 					></SupplementListView>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
-						onPress={() => setModalVisible("0")}
+						onPress={() => setModalVisible("hide-modal")}
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>

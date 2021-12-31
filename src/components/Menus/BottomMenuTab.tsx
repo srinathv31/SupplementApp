@@ -42,7 +42,7 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
 		<View style={{ zIndex: 100 }}>
 			<Animated.View style={{ opacity: fadeAnim }}>
 				{ showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
-					<Icon onPress={() => setModalVisible("2")}
+					<Icon onPress={() => setModalVisible("supplement-modal")}
 						name="pill" size={30} color="white"/>
 					<Icon name="emoticon-happy-outline" size={30} color="white"/>
 					<Icon name="silverware-fork-knife" size={30} color="white"/>

@@ -26,7 +26,7 @@ export default function JournalButton( { setModalVisible, setJournalText, daySel
 			setJournalText(supplementMapCopy[daySelected].JournalEntry);
 		}
 		setSupplementMap(supplementMapCopy);
-		setModalVisible("1");
+		setModalVisible("journal");
 	}
 
 	return(

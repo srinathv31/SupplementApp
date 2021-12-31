@@ -41,9 +41,9 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "3" ? true : false}
+			visible={modalVisible === "daily-modal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("0");
+				setModalVisible("hide-modal");
 			}}
 		>
 			<View style={styles.centeredView}>
@@ -66,7 +66,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 					></FlatList>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
-						onPress={() => setModalVisible("0")}
+						onPress={() => setModalVisible("hide-modal")}
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>
