@@ -30,25 +30,8 @@ const App = () => {
 	console.log(daySelected);
 	// console.log(selectedDates);
 
-	const HomeRoute = () => (
-		<HomePage
-			setModalVisible={setModalVisible}
-			modalVisible={modalVisible}
-			setSupplementMap={setSupplementMap}
-			supplementMap={supplementMap}
-			daySelected={daySelected}
-			setDaySelected={setDaySelected}
-			setObjDaySelected={setObjDaySelected}
-			objDaySelected={objDaySelected as DateData}
-			setSelectedDates={setSelectedDates}
-			selectedDates={selectedDates}
-			setShowButtons={setShowButtons}
-			setIndex={setIndex}
-		></HomePage>
-	);
-	
-	const CalendarRoute = () => (
-		<CalendarPage
+	const CalendarRoute = (): JSX.Element => {
+		return <CalendarPage
 			setDaySelected={setDaySelected}
 			daySelected={daySelected}
 			setModalVisible={setModalVisible}
@@ -60,30 +43,49 @@ const App = () => {
 			setSelectedDates={setSelectedDates}
 			selectedDates={selectedDates}
 			setIndex={setIndex}
-		></CalendarPage>
-	);
-	
-	const SupplementRoute = (): JSX.Element => {
-		return <SupplementInfoPage
-			setSupplementMap={setSupplementMap}
-			supplementMap={supplementMap}
-			daySelected={daySelected}
-			setSelectedDates={setSelectedDates}
-			selectedDates={selectedDates}
-			objDaySelected={objDaySelected as DateData}
-		></SupplementInfoPage>;
+		></CalendarPage>;
 	};
 
-	const WorkoutRoute = (): JSX.Element => {
+	const WorkoutPage = (): JSX.Element => {
 		return <View style={{ flex: 1, backgroundColor: "#ff4081" }} />;
 	};
 
-	const renderScene = SceneMap({
-		second: CalendarRoute,
-		first: HomeRoute,
-		supp: SupplementRoute,
-		work: WorkoutRoute
-	});
+	const renderScene = ({ route }: {
+		route: Route
+	}) => {
+		switch (route.key) {
+		case "first":
+			return <HomePage
+				setModalVisible={setModalVisible}
+				modalVisible={modalVisible}
+				setSupplementMap={setSupplementMap}
+				supplementMap={supplementMap}
+				daySelected={daySelected}
+				setDaySelected={setDaySelected}
+				setObjDaySelected={setObjDaySelected}
+				objDaySelected={objDaySelected as DateData}
+				setSelectedDates={setSelectedDates}
+				selectedDates={selectedDates}
+				setShowButtons={setShowButtons}
+				setIndex={setIndex}
+			/>;
+		case "second":
+			return <CalendarRoute />;
+		case "supp":
+			return <SupplementInfoPage 
+				setSupplementMap={setSupplementMap}
+				supplementMap={supplementMap}
+				daySelected={daySelected}
+				setSelectedDates={setSelectedDates}
+				selectedDates={selectedDates}
+				objDaySelected={objDaySelected as DateData}
+			/>;
+		case "work":
+			return <WorkoutPage />;
+		default:
+			return null;
+		}
+	};
 
 	const [index, setIndex] = React.useState(1);
 	const [routes] = useState<Route[]>([
