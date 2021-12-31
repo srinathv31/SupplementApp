@@ -10,7 +10,7 @@ import CalendarPage from "./screens/CalendarPage";
 import HomePage from "./screens/HomePage";
 import SupplementInfoPage from "./screens/SupplementInfoPage";
 import getCurrentDate, { generateCurrentDateObject } from "./utilities/getCurrentDate";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { TabView } from "react-native-tab-view";
 
 
 const App = () => {
@@ -88,7 +88,7 @@ const App = () => {
 	};
 
 	const [index, setIndex] = React.useState(1);
-	const [routes] = useState<Route[]>([
+	const [routes] = useState([
 		{ key: "second", title: "Calendar" },
 		{ key: "first", title: "Home" },
 		{ key: "supp", title: "Calendar" },
@@ -114,7 +114,7 @@ const App = () => {
 							objDaySelected={objDaySelected as DateData}
 						></SupplementModal>
 						<TabView
-							navigationState={{ index, routes, key: index }}
+							navigationState={{ index, routes }}
 							renderScene={renderScene}
 							onIndexChange={setIndex}
 							initialLayout={{ width: layout.width }}
