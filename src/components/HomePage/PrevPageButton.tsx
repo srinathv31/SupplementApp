@@ -7,11 +7,12 @@ import { AppProps } from "../../interfaces/Props";
 
 // Design Imports
 
-export default function CalendarButton( { setShowButtons, setIndex }: AppProps ): JSX.Element {
+export default function PrevPageButton( { setShowButtons, setIndex, index, setPrevIndex, prevIndex }: AppProps ): JSX.Element {
 
 	function buttonHandle(){
 		setShowButtons(false);
-		setIndex(0);
+		setPrevIndex(index);
+		setIndex(prevIndex);
 	}
 
 	return(
@@ -19,7 +20,7 @@ export default function CalendarButton( { setShowButtons, setIndex }: AppProps )
 			style={{ padding: 10,
 				margin: 12 }}
 			onPress={() => buttonHandle()}
-			name="calendar" size={30} color="white"
+			name="arrow-undo-outline" size={30} color="white"
 		/>
 	);
 }
