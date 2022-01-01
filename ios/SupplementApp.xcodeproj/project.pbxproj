@@ -145,7 +145,6 @@
 				6C97AB639B58BBB4B15BBE30 /* Pods-SupplementApp-SupplementAppTests.debug.xcconfig */,
 				1D0AE47A65C8663E3B452821 /* Pods-SupplementApp-SupplementAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -432,6 +431,7 @@
 			baseConfigurationReference = 6C97AB639B58BBB4B15BBE30 /* Pods-SupplementApp-SupplementAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = 2AURZ4H46L;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -460,6 +460,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 2AURZ4H46L;
 				INFOPLIST_FILE = SupplementAppTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -485,6 +486,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2AURZ4H46L;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = SupplementApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -511,6 +513,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2AURZ4H46L;
 				INFOPLIST_FILE = SupplementApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

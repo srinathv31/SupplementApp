@@ -14,6 +14,7 @@ import { TabView } from "react-native-tab-view";
 import { AppProps } from "./interfaces/Props";
 
 import { LogBox } from "react-native";
+import HeaderWindow from "./components/HomePage/HeaderWindow";
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
@@ -31,8 +32,11 @@ const App = () => {
 	const [journalText, setJournalText] = useState<string>("");
 	// Sets visibility of modals: "hide-modal", "journal", "daiy-modal", "supplement-modal"
 	const [modalVisible, setModalVisible] = useState<string>("hide-modal");
-
+	// Index for page sliding
 	const [index, setIndex] = React.useState(1);
+	// Prev Page feature
+	const [prevIndex, setPrevIndex] = useState<number>(index);
+
 	const [routes] = useState([
 		{ key: "cal", title: "Calendar" },
 		{ key: "home", title: "Home" },
@@ -56,6 +60,8 @@ const App = () => {
 		showButtons,
 		setIndex,
 		index,
+		setPrevIndex,
+		prevIndex,
 		setJournalText,
 		journalText
 	};
@@ -93,7 +99,9 @@ const App = () => {
 				<View style={{ flex: 1, opacity: (modalVisible !== "hide-modal") ? 0.5 : 1 }}>
 					<View style={{ flex: 1 }}>
 						<SupplementModal {...AllProps}></SupplementModal>
+						<HeaderWindow {...AllProps}></HeaderWindow>
 						<TabView
+							onSwipeStart={() => setPrevIndex(index)}
 							navigationState={{ index, routes }}
 							renderScene={renderScene}
 							onIndexChange={setIndex}

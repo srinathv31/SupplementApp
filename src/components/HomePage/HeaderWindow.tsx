@@ -2,7 +2,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
-import CalendarButton from "../Calendar/CalendarButton";
+import PrevPageButton from "./PrevPageButton";
 import NextDayButton from "../Calendar/NextDayButton";
 import PrevDayButton from "../Calendar/PrevDayButton";
 import JournalButton from "../JournalEntry/JournalButton";
@@ -17,7 +17,7 @@ export default function HeaderWindow(AllProps: AppProps): JSX.Element {
   
 	return(
 		<View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-			<CalendarButton {...AllProps}></CalendarButton>
+			<PrevPageButton {...AllProps}></PrevPageButton>
 			<PrevDayButton  {...AllProps}></PrevDayButton>
 			<Text style={styles.sectionTitle}>{AllProps.daySelected}</Text>
 			<NextDayButton {...AllProps}></NextDayButton>

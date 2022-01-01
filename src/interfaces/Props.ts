@@ -16,6 +16,8 @@ export interface AppProps {
     showButtons: boolean,
     setIndex: (i: number) => void,
     index: number,
+    setPrevIndex: (i: number) => void,
+    prevIndex: number
     setJournalText: (j: string) => void,
     journalText: string,
 }
