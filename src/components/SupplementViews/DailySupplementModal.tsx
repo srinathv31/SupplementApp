@@ -3,19 +3,14 @@ import React from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AppProps } from "../../interfaces/Props";
 import Supplement from "../../interfaces/Supplement";
 
 // Component Imports
 
 // Design Imports
 
-export default function DailySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
-    setModalVisible: (m: string) => void, modalVisible: string,
-    setSupplementMap: (s: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
-    daySelected: string,
-	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-    objDaySelected: DateData
-}): JSX.Element {
+export default function DailySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: AppProps): JSX.Element {
 
 	function removeSupplement(item: Supplement) {
 		const supplementMapCopy = { ...supplementMap };
@@ -28,7 +23,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 		setSupplementMap(supplementMapCopy);
 	}
 
-	function removeDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>){
+	function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
@@ -41,9 +36,9 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "3" ? true : false}
+			visible={modalVisible === "daily-modal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("0");
+				setModalVisible("hide-modal");
 			}}
 		>
 			<View style={styles.centeredView}>
@@ -52,10 +47,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 					<FlatList
 						data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
 						renderItem={({ item }) => (
-							<TouchableHighlight
-								key={item.name}
-                      
-							>
+							<TouchableHighlight key={item.name}>
 								<View style={styles.ListItem}>
 									<Text style={styles.ListName}>{item.time}: {item.name}</Text>
 									<Icon onPress={() => removeSupplement(item)}
@@ -66,7 +58,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 					></FlatList>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
-						onPress={() => setModalVisible("0")}
+						onPress={() => setModalVisible("hide-modal")}
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>

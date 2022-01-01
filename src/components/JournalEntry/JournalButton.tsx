@@ -1,18 +1,13 @@
 // Source Imports
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import Supplement from "../../interfaces/Supplement";
+import { AppProps } from "../../interfaces/Props";
 
 // Component Imports
 
 // Design Imports
 
-export default function JournalButton( { setModalVisible, setJournalText, daySelected, setSupplementMap, supplementMap }: {
-    setModalVisible: (j: string) => void,
-    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
-    daySelected: string,
-    setJournalText: (j: string) => void
-}): JSX.Element {
+export default function JournalButton( { setModalVisible, setJournalText, daySelected, setSupplementMap, supplementMap }: AppProps): JSX.Element {
 
 	function HandleJournalOpen() {
 		const supplementMapCopy = { ...supplementMap };
@@ -25,8 +20,9 @@ export default function JournalButton( { setModalVisible, setJournalText, daySel
 		} else {
 			setJournalText(supplementMapCopy[daySelected].JournalEntry);
 		}
+		
 		setSupplementMap(supplementMapCopy);
-		setModalVisible("1");
+		setModalVisible("journal");
 	}
 
 	return(

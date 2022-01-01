@@ -2,6 +2,7 @@
 import React from "react";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AppProps } from "../../interfaces/Props";
 import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
@@ -9,11 +10,7 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Design Imports
 
-export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: {
-    setDaySelected: (d: string) => void, 
-    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
-	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-}): JSX.Element {
+export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: AppProps): JSX.Element {
 
 	function grabPrevDay(day: DateData) {
 		let copyDate = day;

@@ -1,8 +1,7 @@
 // Source Imports
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { DateData } from "react-native-calendars/src/types";
-import Supplement from "../../interfaces/Supplement";
+import { AppProps } from "../../interfaces/Props";
 import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
@@ -11,14 +10,8 @@ import JournalTextEntry from "./JournalTextEntry";
 
 // Design Imports
 
-export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: {
-    setModalVisible: (j: string) => void, modalVisible: string,
-    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
-    daySelected: string,
-    setJournalText: (j: string) => void, journalText: string,
-	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-    objDaySelected: DateData,
-}): JSX.Element {
+export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
+	AppProps): JSX.Element {
 
 
 	function handleJournal() {
@@ -56,7 +49,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		setSelectedDates(selectedDatesCopy);
 		setSupplementMap(supplementMapCopy);
 
-		setModalVisible("0");
+		setModalVisible("hide-modal");
 	}
 
 
@@ -64,9 +57,9 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "1" ? true : false}
+			visible={modalVisible === "journal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("0");
+				setModalVisible("hide-modal");
 			}}
 		>
 			<View style={styles.centeredView}>
