@@ -11,39 +11,57 @@ import HomePage from "./screens/HomePage";
 import SupplementInfoPage from "./screens/SupplementInfoPage";
 import getCurrentDate, { generateCurrentDateObject } from "./utilities/getCurrentDate";
 import { TabView } from "react-native-tab-view";
+import { AppProps } from "./interfaces/Props";
 
+import { LogBox } from "react-native";
+LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
+	// Data structure that handles supplements and journal enttry for a given day
 	const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>>({});
+	// Returns string date in format - MM/DD/YYYY
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
+	// Returns DateData object of date
 	const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
+	// Boolean that toggles sub menu
 	const [showButtons, setShowButtons] = useState<boolean>(false);
-
+	// List of dates that tells the Calendar component which dates require dots and the selected background
 	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
-
-
-	// 1 - journal, 2 - supplement modal, 3 - daily supp modal
+	// Returns journal entry text
+	const [journalText, setJournalText] = useState<string>("");
+	// Sets visibility of modals: "hide-modal", "journal", "daiy-modal", "supplement-modal"
 	const [modalVisible, setModalVisible] = useState<string>("hide-modal");
 
-	// console.log(objDaySelected?.dateString);
-	console.log(supplementMap);
-	console.log(daySelected);
-	// console.log(selectedDates);
+	const [index, setIndex] = React.useState(1);
+	const [routes] = useState([
+		{ key: "cal", title: "Calendar" },
+		{ key: "home", title: "Home" },
+		{ key: "supp", title: "Supplements" },
+		{ key: "work", title: "Workouts" },
+	]);
+	const layout = useWindowDimensions();
+
+	const AllProps: AppProps = {
+		setDaySelected,
+		daySelected,
+		setModalVisible,
+		modalVisible,
+		setSupplementMap,
+		supplementMap,
+		setObjDaySelected,
+		objDaySelected,
+		setSelectedDates,
+		selectedDates,
+		setShowButtons,
+		showButtons,
+		setIndex,
+		index,
+		setJournalText,
+		journalText
+	};
 
 	const CalendarRoute = (): JSX.Element => {
-		return <CalendarPage
-			setDaySelected={setDaySelected}
-			daySelected={daySelected}
-			setModalVisible={setModalVisible}
-			modalVisible={modalVisible}
-			setSupplementMap={setSupplementMap}
-			supplementMap={supplementMap}
-			setObjDaySelected={setObjDaySelected}
-			objDaySelected={objDaySelected as DateData}
-			setSelectedDates={setSelectedDates}
-			selectedDates={selectedDates}
-			setIndex={setIndex}
-		></CalendarPage>;
+		return <CalendarPage {...AllProps} ></CalendarPage>;
 	};
 
 	const WorkoutPage = (): JSX.Element => {
@@ -54,47 +72,18 @@ const App = () => {
 		route: Route
 	}) => {
 		switch (route.key) {
-		case "first":
-			return <HomePage
-				setModalVisible={setModalVisible}
-				modalVisible={modalVisible}
-				setSupplementMap={setSupplementMap}
-				supplementMap={supplementMap}
-				daySelected={daySelected}
-				setDaySelected={setDaySelected}
-				setObjDaySelected={setObjDaySelected}
-				objDaySelected={objDaySelected as DateData}
-				setSelectedDates={setSelectedDates}
-				selectedDates={selectedDates}
-				setShowButtons={setShowButtons}
-				setIndex={setIndex}
-			/>;
-		case "second":
+		case "home":
+			return <HomePage {...AllProps}/>;
+		case "cal":
 			return <CalendarRoute />;
 		case "supp":
-			return <SupplementInfoPage 
-				setSupplementMap={setSupplementMap}
-				supplementMap={supplementMap}
-				daySelected={daySelected}
-				setSelectedDates={setSelectedDates}
-				selectedDates={selectedDates}
-				objDaySelected={objDaySelected as DateData}
-			/>;
+			return <SupplementInfoPage {...AllProps}/>;
 		case "work":
 			return <WorkoutPage />;
 		default:
 			return null;
 		}
 	};
-
-	const [index, setIndex] = React.useState(1);
-	const [routes] = useState([
-		{ key: "second", title: "Calendar" },
-		{ key: "first", title: "Home" },
-		{ key: "supp", title: "Calendar" },
-		{ key: "work", title: "Workout" },
-	]);
-	const layout = useWindowDimensions();
 
 	return (
 		<View style={{ flex: 1, backgroundColor: "#0B172A" }}>
@@ -103,29 +92,14 @@ const App = () => {
         
 				<View style={{ flex: 1, opacity: (modalVisible !== "hide-modal") ? 0.5 : 1 }}>
 					<View style={{ flex: 1 }}>
-						<SupplementModal
-							setModalVisible={setModalVisible}
-							modalVisible={modalVisible}
-							setSupplementMap={setSupplementMap}
-							supplementMap={supplementMap}
-							daySelected={daySelected}
-							setSelectedDates={setSelectedDates}
-							selectedDates={selectedDates}
-							objDaySelected={objDaySelected as DateData}
-						></SupplementModal>
+						<SupplementModal {...AllProps}></SupplementModal>
 						<TabView
 							navigationState={{ index, routes }}
 							renderScene={renderScene}
 							onIndexChange={setIndex}
 							initialLayout={{ width: layout.width }}
 							tabBarPosition="bottom"
-							renderTabBar={() => <BottomMenuTab
-								setModalVisible={setModalVisible}
-								setShowButtons={setShowButtons}
-								showButtons={showButtons}
-								index={index}
-								setIndex={setIndex}
-							/>}
+							renderTabBar={() => <BottomMenuTab {...AllProps}/>}
 						/>
 					</View>
 					

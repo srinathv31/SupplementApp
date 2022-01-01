@@ -1,8 +1,7 @@
 // Source Imports
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { DateData } from "react-native-calendars/src/types";
-import Supplement from "../../interfaces/Supplement";
+import { AppProps } from "../../interfaces/Props";
 import CalendarButton from "../Calendar/CalendarButton";
 import NextDayButton from "../Calendar/NextDayButton";
 import PrevDayButton from "../Calendar/PrevDayButton";
@@ -14,59 +13,16 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 // Design Imports
 
 
-export default function HeaderWindow({ setModalVisible, modalVisible, setIndex, daySelected, setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setSupplementMap, supplementMap, setShowButtons }: {
-    setModalVisible: (j: string) => void, modalVisible: string,
-	setIndex: (i: number) => void,
-    setDaySelected: (d: string) => void, daySelected: string,
-    setObjDaySelected: (o: DateData) => void, objDaySelected: DateData,
-	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
-	setShowButtons: (b: boolean) => void
-}): JSX.Element {
+export default function HeaderWindow(AllProps: AppProps): JSX.Element {
   
-	const [journalText, setJournalText] = useState<string>("");
-
-
 	return(
 		<View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-			<CalendarButton
-				setShowButtons={setShowButtons}
-				setIndex={setIndex}
-			></CalendarButton>
-			<PrevDayButton
-				setDaySelected={setDaySelected}
-				setObjDaySelected={setObjDaySelected}
-				objDaySelected={objDaySelected}
-				setSelectedDates={setSelectedDates}
-				selectedDates={selectedDates}
-			></PrevDayButton>
-			<Text style={styles.sectionTitle}>{daySelected}</Text>
-			<NextDayButton
-				setDaySelected={setDaySelected}
-				setObjDaySelected={setObjDaySelected}
-				objDaySelected={objDaySelected}
-				setSelectedDates={setSelectedDates}
-				selectedDates={selectedDates}
-			></NextDayButton>
-			<JournalEntryModal
-				setModalVisible={setModalVisible}
-				modalVisible={modalVisible}
-				setSupplementMap={setSupplementMap}
-				supplementMap={supplementMap}
-				daySelected={daySelected}
-				setJournalText={setJournalText}
-				journalText={journalText}
-				setSelectedDates={setSelectedDates}
-				selectedDates={selectedDates}
-				objDaySelected={objDaySelected}
-			></JournalEntryModal>
-			<JournalButton
-				setModalVisible={setModalVisible}
-				setSupplementMap={setSupplementMap}
-				supplementMap={supplementMap}
-				daySelected={daySelected}
-				setJournalText={setJournalText}
-			></JournalButton>
+			<CalendarButton {...AllProps}></CalendarButton>
+			<PrevDayButton  {...AllProps}></PrevDayButton>
+			<Text style={styles.sectionTitle}>{AllProps.daySelected}</Text>
+			<NextDayButton {...AllProps}></NextDayButton>
+			<JournalEntryModal {...AllProps}></JournalEntryModal>
+			<JournalButton {...AllProps}></JournalButton>
 		</View>
 	);
 }

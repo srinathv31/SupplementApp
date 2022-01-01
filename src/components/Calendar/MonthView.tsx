@@ -3,19 +3,14 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
+import { AppProps } from "../../interfaces/Props";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Component Imports
 
 // Design Imports
 
-export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex }: {
-    setDaySelected: (d: string) => void,
-    setModalVisible: (m: string) => void,
-    setObjDaySelected: (d: DateData) => void, objDaySelected: DateData,
-	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-	setIndex: (i: number) => void
-}): JSX.Element {
+export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex }: AppProps): JSX.Element {
 
 	function handleDayClick(day: DateData) {
 

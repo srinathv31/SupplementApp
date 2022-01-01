@@ -1,15 +1,13 @@
 // Source Imports
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
+import { AppProps } from "../../interfaces/Props";
 
 // Component Imports
 
 // Design Imports
 
-export default function CalendarButton({ setIndex, setShowButtons }: {
-	setIndex: (i: number) => void,
-	setShowButtons: (b: boolean) => void
-}): JSX.Element {
+export default function CalendarButton( { setShowButtons, setIndex }: AppProps ): JSX.Element {
 
 	function buttonHandle(){
 		setShowButtons(false);

@@ -2,17 +2,14 @@
 import React, { useRef } from "react";
 import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AppProps } from "../../interfaces/Props";
 
 // Component Imports
 
 // Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
-export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex }: {
-    setModalVisible: (s: string) => void,
-	setShowButtons: (b: boolean) => void, showButtons: boolean,
-	setIndex: (i: number) => void, index: number
-}): JSX.Element {
+export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex }: AppProps): JSX.Element {
 
 
 	const fadeAnim = useRef(new Animated.Value(0)).current;

@@ -3,6 +3,7 @@ import React from "react";
 import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../../assets/SupplementList.json";
+import { AppProps } from "../../interfaces/Props";
 import Supplement from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
@@ -11,13 +12,11 @@ import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 
 // Design Imports
 
-export default function SupplementListView({ setSupplementMap, supplementMap, fontSizeNumber, query, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
-    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
+export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
     fontSizeNumber: number,
     query: string,
-    daySelected: string,
-	setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void, selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
-    objDaySelected: DateData
+	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
+	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"]
 }): JSX.Element {
 
 	function addSupplement(item: Supplement) {
