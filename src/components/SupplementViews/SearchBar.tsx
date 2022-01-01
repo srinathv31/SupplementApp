@@ -16,7 +16,6 @@ export default function SearchBar({ setQuery, query }: {
 				onChangeText={setQuery}
 				value={query}
 				multiline
-				autoFocus
 				placeholder="Search Supplement"
 			/>
 		</View>

@@ -10,7 +10,7 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Design Imports
 
-export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex }: AppProps): JSX.Element {
+export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex }: AppProps): JSX.Element {
 
 	function handleDayClick(day: DateData) {
 
@@ -29,7 +29,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 		<View style={{ flex: 1 }}>
 			<CalendarList
 				style={styles.calendar}
-				onDayPress={(day) => (handleDayClick(day), setIndex(1))}
+				onDayPress={(day) => (handleDayClick(day), setPrevIndex(0), setIndex(1))}
 				onDayLongPress={(day) => (handleDayClick(day), setModalVisible("daily-modal"))}
 				markingType={"multi-dot"}
 				markedDates={selectedDates}
@@ -48,7 +48,6 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 
 const styles = StyleSheet.create({
 	calendar: {
-		height: "85%",
-		marginTop: 50
+		height: "95%",
 	}
 });
