@@ -23,7 +23,7 @@ export default function DailySupplementModal({ setModalVisible, modalVisible, se
 		setSupplementMap(supplementMapCopy);
 	}
 
-	function removeDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>){
+	function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
