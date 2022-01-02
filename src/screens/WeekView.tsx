@@ -78,67 +78,67 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<GestureRecognizer
+					{/* <GestureRecognizer
 						onSwipeRight={() => switchWeek("prev")}
 						onSwipeLeft={() => switchWeek("next")}
+					> */}
+					{/* <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>Swipe</Text> */}
+					<Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
+					<View style={{ flexDirection: "row" }}>
+						<Icon onPress={() => switchWeek("prev")}
+							name="chevron-left" style={styles.IconWeek}/>
+						<FlatList
+							style={{ padding: 10, maxHeight: 70 }}
+							contentOffset={{ x: 15, y: 0 }}
+							scrollEnabled={false}
+							horizontal
+							data={week}
+							renderItem={({ item }) => (
+								<View style={{ padding: 10 }}>
+									<Text style={{ color: daySelected === item.dateString ? "orange" : "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
+									<Text style={{ color: daySelected === item.dateString ? "orange" : "white", fontSize: 13 }}>{item.day}</Text>
+								</View>
+							)}
+						></FlatList>
+						<Icon onPress={() => switchWeek("next")}
+							name="chevron-right" style={styles.IconWeek}/>
+					</View>
+					<View style={{ flex: 1 }}>
+						<FlatList
+							data={week}
+							renderItem={({ item }) => { 
+								const parentData = item; 
+								return (
+									<TouchableHighlight key={item.date}>
+										<View style={styles.ListItem}>
+											<Pressable onPress={() => handleDayClick(item)}>
+												<Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
+											</Pressable>
+											<Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
+											<FlatList
+												data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
+												renderItem={({ item }) => (
+													<TouchableHighlight key={item.name}>
+														<View style={styles.SuppItem}>
+															<Text style={styles.ListName}>{item.time}: {item.name}</Text>
+															<Icon onPress={() => removeSupplement(item, parentData)}
+																name="delete-forever" style={styles.IconPadding}/>
+														</View>
+													</TouchableHighlight>
+												)}
+											></FlatList>
+										</View>
+									</TouchableHighlight>
+								);}}
+						></FlatList>
+					</View>
+					<Pressable
+						style={[styles.button, styles.buttonClose]}
+						onPress={() => setModalVisible("hide-modal")}
 					>
-						{/* <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>Swipe</Text> */}
-						<Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
-						<View style={{ flexDirection: "row" }}>
-							<Icon onPress={() => switchWeek("prev")}
-								name="chevron-left" style={styles.IconWeek}/>
-							<FlatList
-								style={{ padding: 10, maxHeight: 70 }}
-								contentOffset={{ x: 15, y: 0 }}
-								scrollEnabled={false}
-								horizontal
-								data={week}
-								renderItem={({ item }) => (
-									<View style={{ padding: 10 }}>
-										<Text style={{ color: daySelected === item.dateString ? "orange" : "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
-										<Text style={{ color: daySelected === item.dateString ? "orange" : "white", fontSize: 13 }}>{item.day}</Text>
-									</View>
-								)}
-							></FlatList>
-							<Icon onPress={() => switchWeek("next")}
-								name="chevron-right" style={styles.IconWeek}/>
-						</View>
-						<View>
-							<FlatList
-								data={week}
-								renderItem={({ item }) => { 
-									const parentData = item; 
-									return (
-										<TouchableHighlight key={item.date}>
-											<View style={styles.ListItem}>
-												<Pressable onPress={() => handleDayClick(item)}>
-													<Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
-												</Pressable>
-												<Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
-												<FlatList
-													data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
-													renderItem={({ item }) => (
-														<TouchableHighlight key={item.name}>
-															<View style={styles.SuppItem}>
-																<Text style={styles.ListName}>{item.time}: {item.name}</Text>
-																<Icon onPress={() => removeSupplement(item, parentData)}
-																	name="delete-forever" style={styles.IconPadding}/>
-															</View>
-														</TouchableHighlight>
-													)}
-												></FlatList>
-											</View>
-										</TouchableHighlight>
-									);}}
-							></FlatList>
-						</View>
-						<Pressable
-							style={[styles.button, styles.buttonClose]}
-							onPress={() => setModalVisible("hide-modal")}
-						>
-							<Text style={styles.textStyle}>Close</Text>
-						</Pressable>
-					</GestureRecognizer>
+						<Text style={styles.textStyle}>Close</Text>
+					</Pressable>
+					{/* </GestureRecognizer> */}
 				</View>
 			</View>
 		</Modal>
@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 10,
-		
 	},
 	modalView: {
 		width: "95%",
