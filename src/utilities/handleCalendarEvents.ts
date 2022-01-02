@@ -18,7 +18,9 @@ export default function handleCalendar(selectedDates: {[date: string]: {dots: [{
 	selectedDatesCopy[dateString] !== undefined ? selectedDatesCopy[dateString].selected = true : selectedDatesCopy[dateString] = { dots: [{ key: "", color: "" }], selected: true };
 
 	// Delete Any Dates from the calendar dot object that have no dots
-	selectedDatesCopy[dateString].dots = removeEmptyDotObjects(selectedDatesCopy, dateString);
+	Object.keys(selectedDatesCopy).forEach(date => {
+		selectedDatesCopy[date].dots = removeEmptyDotObjects(selectedDatesCopy, date);
+	});
 
 	return selectedDatesCopy;
 }
