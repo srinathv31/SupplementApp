@@ -6,10 +6,9 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
 import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
-import GestureRecognizer from "react-native-swipe-gestures";
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
-
+import GestureRecognizer from "react-native-swipe-gestures";
 // Component Imports
 
 // Design Imports
@@ -78,10 +77,6 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					{/* <GestureRecognizer
-						onSwipeRight={() => switchWeek("prev")}
-						onSwipeLeft={() => switchWeek("next")}
-					> */}
 					{/* <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>Swipe</Text> */}
 					<Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
 					<View style={{ flexDirection: "row" }}>
@@ -109,26 +104,31 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 							renderItem={({ item }) => { 
 								const parentData = item; 
 								return (
-									<TouchableHighlight key={item.date}>
-										<View style={styles.ListItem}>
-											<Pressable onPress={() => handleDayClick(item)}>
-												<Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
-											</Pressable>
-											<Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
-											<FlatList
-												data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
-												renderItem={({ item }) => (
-													<TouchableHighlight key={item.name}>
-														<View style={styles.SuppItem}>
-															<Text style={styles.ListName}>{item.time}: {item.name}</Text>
-															<Icon onPress={() => removeSupplement(item, parentData)}
-																name="delete-forever" style={styles.IconPadding}/>
-														</View>
-													</TouchableHighlight>
-												)}
-											></FlatList>
-										</View>
-									</TouchableHighlight>
+									<GestureRecognizer
+										onSwipeLeft={() => switchWeek("next")}
+										onSwipeRight={() => switchWeek("prev")}
+									>
+										<TouchableHighlight key={item.date}>
+											<View style={styles.ListItem}>
+												<Pressable onPress={() => handleDayClick(item)}>
+													<Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
+												</Pressable>
+												<Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
+												<FlatList
+													data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
+													renderItem={({ item }) => (
+														<TouchableHighlight key={item.name}>
+															<View style={styles.SuppItem}>
+																<Text style={styles.ListName}>{item.time}: {item.name}</Text>
+																<Icon onPress={() => removeSupplement(item, parentData)}
+																	name="delete-forever" style={styles.IconPadding}/>
+															</View>
+														</TouchableHighlight>
+													)}
+												></FlatList>
+											</View>
+										</TouchableHighlight>
+									</GestureRecognizer>
 								);}}
 						></FlatList>
 					</View>
@@ -138,7 +138,6 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>
-					{/* </GestureRecognizer> */}
 				</View>
 			</View>
 		</Modal>
