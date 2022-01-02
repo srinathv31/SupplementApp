@@ -1,5 +1,6 @@
 import { DateData } from "react-native-calendars/src/types";
 import Supplement from "./Supplement";
+import { WeekDay } from "./WeekDay";
 
 export interface AppProps {
     setDaySelected: (d: string) => void,
@@ -20,5 +21,9 @@ export interface AppProps {
     prevIndex: number
     setJournalText: (j: string) => void,
     journalText: string,
+    setWeek: (w: WeekDay[]) => void,
+    week: WeekDay[],
+    setMonthText: (m: string) => void,
+    monthText: string
 }
 

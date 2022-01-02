@@ -39,7 +39,6 @@ export default function generateNextDate(copyDate: DateData, date: number, month
 		break;
 	case 2:
 		// Check if leap year
-		console.log(isLeapYear);
 		if (isLeapYear) {
 			if (date === 29) {
 				copyDate.day = 1;
