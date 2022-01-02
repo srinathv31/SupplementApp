@@ -16,32 +16,18 @@ export function getDateString(day: DateData): string {
 	return ""+day.month + "/" + ""+day.day + "/" + ""+day.year;
 }
 
+export function convertWeekDayToDateData(weekDay: WeekDay): DateData{
+	const month = weekDay.month;
+	const day = weekDay.date;
+	const year = weekDay.year;
+	const strDate = ""+month + " " + ""+day + "," + " " + ""+year; 
+	const generatedDate = new Date(strDate);
+	return generateDateObject(generatedDate);
+}
+
 export function generateCurrentDateObject(): DateData {
 	const currentDate = new Date();
-
-	const month = currentDate.getMonth()+1;
-	const date = currentDate.getDate();
-	const year = currentDate.getFullYear();
-
-	// Setting new date string
-	let stringDay = ""+date;
-	let stringMonth = ""+month;
-
-	date < 10 ? stringDay = ""+"0"+date : stringDay = ""+date;
-	month < 10 ? stringMonth = ""+"0"+month : stringMonth = ""+month;
-
-	const newDateString = ""+year + "-" + stringMonth + "-" + stringDay;
-
-
-	const DateObject: DateData = {
-		year: year,
-		month: month,
-		day: date,
-		timestamp: currentDate.getTime(),
-		dateString: newDateString
-	};
-
-	return DateObject;
+	return generateDateObject(currentDate);
 }
 
 export function generateDateObject(day: Date): DateData {
