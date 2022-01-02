@@ -5,7 +5,7 @@ import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
-import { generateDateObject, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
+import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
 import GestureRecognizer from "react-native-swipe-gestures";
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
@@ -14,23 +14,26 @@ import { WeekDay } from "../interfaces/WeekDay";
 
 // Design Imports
 
-export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, objDaySelected, setWeek, week, setMonthText, monthText }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText }: AppProps): JSX.Element {
 
-	function removeSupplement(item: Supplement) {
+	function removeSupplement(item: Supplement, parentData: WeekDay) {
 		const supplementMapCopy = { ...supplementMap };
+		const parentDataMapKey = parentData.dateString;
+		const parentDayDateData = convertWeekDayToDateData(parentData);
 
-		supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
-		removeDate(objDaySelected, supplementMapCopy);
-		if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
-			delete supplementMapCopy[daySelected];
+		supplementMapCopy[parentDataMapKey].SupplementSchedule = supplementMapCopy[parentDataMapKey].SupplementSchedule.filter(listItem => listItem !== item);
+		removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
+		if (Object.values(supplementMapCopy[parentDataMapKey].SupplementSchedule).length === 0 && supplementMapCopy[parentDataMapKey].JournalEntry === "") {
+			delete supplementMapCopy[parentDataMapKey];
 		}
 		setSupplementMap(supplementMapCopy);
+		handleDayClick(parentData);
 	}
 
-	function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
+	function removeDate(day: DateData, supplementMap: AppProps["supplementMap"], parentDataMapKey: string){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
-		if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
+		if (Object.values(supplementMap[parentDataMapKey].SupplementSchedule).length === 0){
 			selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
 		}
 		setSelectedDates(selectedDatesCopy);
@@ -49,12 +52,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 	}
 
 	function handleDayClick(weekDay: WeekDay) {
-		const month = weekDay.month;
-		const day = weekDay.date;
-		const year = weekDay.year;
-		const strDate = ""+month + " " + ""+day + "," + " " + ""+year; 
-		const generatedDate = new Date(strDate);
-		const weekDayDateData = generateDateObject(generatedDate);
+		const weekDayDateData = convertWeekDayToDateData(weekDay);
 
 		setObjDaySelected(weekDayDateData);
 		setDaySelected(getDateString(weekDayDateData));
@@ -123,8 +121,8 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 														<TouchableHighlight key={item.name}>
 															<View style={styles.SuppItem}>
 																<Text style={styles.ListName}>{item.time}: {item.name}</Text>
-																{ daySelected === parentData.dateString && <Icon onPress={() => removeSupplement(item)}
-																	name="delete-forever" style={styles.IconPadding}/> }
+																<Icon onPress={() => removeSupplement(item, parentData)}
+																	name="delete-forever" style={styles.IconPadding}/>
 															</View>
 														</TouchableHighlight>
 													)}
