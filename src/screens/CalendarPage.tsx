@@ -1,8 +1,8 @@
 // Source Imports
 import React from "react";
 import MonthView from "../components/Calendar/MonthView";
-import DailySupplementModal from "../components/SupplementViews/DailySupplementModal";
 import { AppProps } from "../interfaces/Props";
+import WeeklySupplementModal from "./WeekView";
 
 // Component Imports
 
@@ -11,7 +11,7 @@ import { AppProps } from "../interfaces/Props";
 export default function CalendarPage( AllProps: AppProps): JSX.Element {
 	return(
 		<>
-			<DailySupplementModal {...AllProps} ></DailySupplementModal>
+			<WeeklySupplementModal {...AllProps}></WeeklySupplementModal>
 			<MonthView {...AllProps}></MonthView>
 		</>
 	);

@@ -4,13 +4,14 @@ import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
+import { generateWeek, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Component Imports
 
 // Design Imports
 
-export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex }: AppProps): JSX.Element {
+export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
 
 	function handleDayClick(day: DateData) {
 
@@ -19,6 +20,9 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 
 		const selectedDatesCopy = handleCalendar(selectedDates, day.dateString);
 		setSelectedDates(selectedDatesCopy);
+
+		setWeek(generateWeek(day));
+		setMonthText(grabMonth(generateWeek(day)));
 	}
 
 	function dayToString(day: DateData) {
@@ -30,7 +34,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 			<CalendarList
 				style={styles.calendar}
 				onDayPress={(day) => (handleDayClick(day), setPrevIndex(0), setIndex(1))}
-				onDayLongPress={(day) => (handleDayClick(day), setModalVisible("daily-modal"))}
+				onDayLongPress={(day) => (handleDayClick(day), setModalVisible("weekly-modal"))}
 				markingType={"multi-dot"}
 				markedDates={selectedDates}
 				current={objDaySelected.dateString}

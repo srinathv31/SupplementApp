@@ -9,12 +9,13 @@ import Supplement from "./interfaces/Supplement";
 import CalendarPage from "./screens/CalendarPage";
 import HomePage from "./screens/HomePage";
 import SupplementInfoPage from "./screens/SupplementInfoPage";
-import getCurrentDate, { generateCurrentDateObject } from "./utilities/getCurrentDate";
+import getCurrentDate, { generateCurrentDateObject, generateWeek, grabMonth } from "./utilities/getCurrentDate";
 import { TabView } from "react-native-tab-view";
 import { AppProps } from "./interfaces/Props";
-
 import { LogBox } from "react-native";
 import HeaderWindow from "./components/HomePage/HeaderWindow";
+import { WeekDay } from "./interfaces/WeekDay";
+
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
@@ -30,12 +31,16 @@ const App = () => {
 	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
 	// Returns journal entry text
 	const [journalText, setJournalText] = useState<string>("");
-	// Sets visibility of modals: "hide-modal", "journal", "daiy-modal", "supplement-modal"
+	// Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal"
 	const [modalVisible, setModalVisible] = useState<string>("hide-modal");
 	// Index for page sliding
 	const [index, setIndex] = React.useState(1);
 	// Prev Page feature
 	const [prevIndex, setPrevIndex] = useState<number>(index);
+	// Renders the selected day's week for the weekly modal
+	const [week, setWeek] = useState<WeekDay[]>(generateWeek(generateCurrentDateObject()));
+	// Sets the text for the weekly modal
+	const [monthText, setMonthText] = useState<string>(grabMonth(week));
 
 	const [routes] = useState([
 		{ key: "cal", title: "Calendar" },
@@ -63,7 +68,11 @@ const App = () => {
 		setPrevIndex,
 		prevIndex,
 		setJournalText,
-		journalText
+		journalText,
+		setWeek,
+		week,
+		setMonthText,
+		monthText
 	};
 
 	const CalendarRoute = (): JSX.Element => {
