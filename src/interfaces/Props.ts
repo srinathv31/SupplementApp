@@ -24,6 +24,8 @@ export interface AppProps {
     setWeek: (w: WeekDay[]) => void,
     week: WeekDay[],
     setMonthText: (m: string) => void,
-    monthText: string
+    monthText: string,
+    setSwipeAnimation: (s: string) => void,
+    swipeAnimation: string
 }
 

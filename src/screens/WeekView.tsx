@@ -1,20 +1,20 @@
 // Source Imports
 import React from "react";
-import { FlatList, Pressable, StyleSheet, Text, TouchableHighlight, View, Modal } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
 import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
-import GestureRecognizer from "react-native-swipe-gestures";
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
-
+import GestureRecognizer from "react-native-swipe-gestures";
+import Modal from "react-native-modal";
 // Component Imports
 
 // Design Imports
 
-export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation }: AppProps): JSX.Element {
 
 	function removeSupplement(item: Supplement, parentData: WeekDay) {
 		const supplementMapCopy = { ...supplementMap };
@@ -44,15 +44,19 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 			const nextWeek = generateNextWeek(week);
 			setWeek(nextWeek);
 			setMonthText(grabMonth(nextWeek));
+			setSwipeAnimation("slideInRight");
 		} else if (direction === "prev") {
 			const prevWeek = generatePrevWeek(week);
 			setWeek(prevWeek);
 			setMonthText(grabMonth(prevWeek));
+			setSwipeAnimation("slideInLeft");
 		}
 	}
 
 	function handleDayClick(weekDay: WeekDay) {
 		const weekDayDateData = convertWeekDayToDateData(weekDay);
+
+		setSwipeAnimation("fadeIn");
 
 		setObjDaySelected(weekDayDateData);
 		setDaySelected(getDateString(weekDayDateData));
@@ -66,49 +70,46 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 
 	return(
 		<Modal
-			animationType={"slide"}
-			transparent={true}
-			visible={modalVisible === "weekly-modal" ? true : false}
-			// animationInTiming={1500}
-			// animationOut={"slideOutRight"}
-			// animationOutTiming={1500}
-			onRequestClose={() => {
-				setModalVisible("hide-modal");
-			}}
+			animationIn={swipeAnimation}
+			animationOut="zoomOut"
+			isVisible={modalVisible === "weekly-modal"}
+			useNativeDriver={true}
+			onBackdropPress={() => setModalVisible("hide-modal")}
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<GestureRecognizer
-						onSwipeRight={() => switchWeek("prev")}
-						onSwipeLeft={() => switchWeek("next")}
-					>
-						{/* <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>Swipe</Text> */}
-						<Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
-						<View style={{ flexDirection: "row" }}>
-							<Icon onPress={() => switchWeek("prev")}
-								name="chevron-left" style={styles.IconWeek}/>
-							<FlatList
-								style={{ padding: 10, maxHeight: 70 }}
-								contentOffset={{ x: 15, y: 0 }}
-								scrollEnabled={false}
-								horizontal
-								data={week}
-								renderItem={({ item }) => (
-									<View style={{ padding: 10 }}>
-										<Text style={{ color: daySelected === item.dateString ? "orange" : "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
-										<Text style={{ color: daySelected === item.dateString ? "orange" : "white", fontSize: 13 }}>{item.day}</Text>
-									</View>
-								)}
-							></FlatList>
-							<Icon onPress={() => switchWeek("next")}
-								name="chevron-right" style={styles.IconWeek}/>
-						</View>
-						<View>
-							<FlatList
-								data={week}
-								renderItem={({ item }) => { 
-									const parentData = item; 
-									return (
+					{/* <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>Swipe</Text> */}
+					<Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
+					<View style={{ flexDirection: "row" }}>
+						<Icon onPress={() => switchWeek("prev")}
+							name="chevron-left" style={styles.IconWeek}/>
+						<FlatList
+							style={{ padding: 10, maxHeight: 70 }}
+							contentOffset={{ x: 15, y: 0 }}
+							scrollEnabled={false}
+							horizontal
+							data={week}
+							renderItem={({ item }) => (
+								<View style={{ padding: 10 }}>
+									<Text style={{ color: daySelected === item.dateString ? "orange" : "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
+									<Text style={{ color: daySelected === item.dateString ? "orange" : "white", fontSize: 13 }}>{item.day}</Text>
+								</View>
+							)}
+						></FlatList>
+						<Icon onPress={() => switchWeek("next")}
+							name="chevron-right" style={styles.IconWeek}/>
+					</View>
+					<View style={{ flex: 1 }}>
+						<FlatList
+							data={week}
+							showsVerticalScrollIndicator={false}
+							renderItem={({ item }) => { 
+								const parentData = item; 
+								return (
+									<GestureRecognizer
+										onSwipeLeft={() => switchWeek("next")}
+										onSwipeRight={() => switchWeek("prev")}
+									>
 										<TouchableHighlight key={item.date}>
 											<View style={styles.ListItem}>
 												<Pressable onPress={() => handleDayClick(item)}>
@@ -129,16 +130,16 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 												></FlatList>
 											</View>
 										</TouchableHighlight>
-									);}}
-							></FlatList>
-						</View>
-						<Pressable
-							style={[styles.button, styles.buttonClose]}
-							onPress={() => setModalVisible("hide-modal")}
-						>
-							<Text style={styles.textStyle}>Close</Text>
-						</Pressable>
-					</GestureRecognizer>
+									</GestureRecognizer>
+								);}}
+						></FlatList>
+					</View>
+					<Pressable
+						style={[styles.button, styles.buttonClose]}
+						onPress={() => (setModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
+					>
+						<Text style={styles.textStyle}>Close</Text>
+					</Pressable>
 				</View>
 			</View>
 		</Modal>
@@ -151,7 +152,6 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		marginTop: 10,
-		
 	},
 	modalView: {
 		width: "95%",
