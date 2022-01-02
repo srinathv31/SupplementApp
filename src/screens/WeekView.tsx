@@ -1,6 +1,6 @@
 // Source Imports
 import React from "react";
-import { FlatList, Pressable, StyleSheet, Text, TouchableHighlight, View, Modal } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
@@ -9,11 +9,12 @@ import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateW
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
 import GestureRecognizer from "react-native-swipe-gestures";
+import Modal from "react-native-modal";
 // Component Imports
 
 // Design Imports
 
-export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation }: AppProps): JSX.Element {
 
 	function removeSupplement(item: Supplement, parentData: WeekDay) {
 		const supplementMapCopy = { ...supplementMap };
@@ -43,15 +44,19 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 			const nextWeek = generateNextWeek(week);
 			setWeek(nextWeek);
 			setMonthText(grabMonth(nextWeek));
+			setSwipeAnimation("slideInRight");
 		} else if (direction === "prev") {
 			const prevWeek = generatePrevWeek(week);
 			setWeek(prevWeek);
 			setMonthText(grabMonth(prevWeek));
+			setSwipeAnimation("slideInLeft");
 		}
 	}
 
 	function handleDayClick(weekDay: WeekDay) {
 		const weekDayDateData = convertWeekDayToDateData(weekDay);
+
+		setSwipeAnimation("fadeIn");
 
 		setObjDaySelected(weekDayDateData);
 		setDaySelected(getDateString(weekDayDateData));
@@ -65,15 +70,11 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 
 	return(
 		<Modal
-			animationType={"slide"}
-			transparent={true}
-			visible={modalVisible === "weekly-modal" ? true : false}
-			// animationInTiming={1500}
-			// animationOut={"slideOutRight"}
-			// animationOutTiming={1500}
-			onRequestClose={() => {
-				setModalVisible("hide-modal");
-			}}
+			animationIn={swipeAnimation}
+			animationOut="zoomOut"
+			isVisible={modalVisible === "weekly-modal"}
+			useNativeDriver={true}
+			onBackdropPress={() => setModalVisible("hide-modal")}
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
@@ -101,6 +102,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 					<View style={{ flex: 1 }}>
 						<FlatList
 							data={week}
+							showsVerticalScrollIndicator={false}
 							renderItem={({ item }) => { 
 								const parentData = item; 
 								return (
@@ -134,7 +136,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 					</View>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
-						onPress={() => setModalVisible("hide-modal")}
+						onPress={() => (setModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>

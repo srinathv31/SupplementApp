@@ -41,6 +41,9 @@ const App = () => {
 	const [week, setWeek] = useState<WeekDay[]>(generateWeek(generateCurrentDateObject()));
 	// Sets the text for the weekly modal
 	const [monthText, setMonthText] = useState<string>(grabMonth(week));
+	// Sets Animation for Weekly modal
+	const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
+
 
 	const [routes] = useState([
 		{ key: "cal", title: "Calendar" },
@@ -72,7 +75,9 @@ const App = () => {
 		setWeek,
 		week,
 		setMonthText,
-		monthText
+		monthText,
+		setSwipeAnimation,
+		swipeAnimation
 	};
 
 	const CalendarRoute = (): JSX.Element => {
