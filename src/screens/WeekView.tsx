@@ -5,14 +5,16 @@ import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
-import { generateNextWeek, generatePrevWeek, grabMonth } from "../utilities/getCurrentDate";
+import { generateDateObject, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
 import GestureRecognizer from "react-native-swipe-gestures";
+import handleCalendar from "../utilities/handleCalendarEvents";
+import { WeekDay } from "../interfaces/WeekDay";
 
 // Component Imports
 
 // Design Imports
 
-export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setWeek, week, setMonthText, monthText }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, objDaySelected, setWeek, week, setMonthText, monthText }: AppProps): JSX.Element {
 
 	function removeSupplement(item: Supplement) {
 		const supplementMapCopy = { ...supplementMap };
@@ -44,12 +46,29 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 			setWeek(prevWeek);
 			setMonthText(grabMonth(prevWeek));
 		}
-		
+	}
+
+	function handleDayClick(weekDay: WeekDay) {
+		const month = weekDay.month;
+		const day = weekDay.date;
+		const year = weekDay.year;
+		const strDate = ""+month + " " + ""+day + "," + " " + ""+year; 
+		const generatedDate = new Date(strDate);
+		const weekDayDateData = generateDateObject(generatedDate);
+
+		setObjDaySelected(weekDayDateData);
+		setDaySelected(getDateString(weekDayDateData));
+
+		const selectedDatesCopy = handleCalendar(selectedDates, weekDayDateData.dateString);
+		setSelectedDates(selectedDatesCopy);
+
+		setWeek(generateWeek(weekDayDateData));
+		setMonthText(grabMonth(generateWeek(weekDayDateData)));
 	}
 
 	return(
 		<Modal
-			animationType="slide"
+			animationType={"slide"}
 			transparent={true}
 			visible={modalVisible === "weekly-modal" ? true : false}
 			// animationInTiming={1500}
@@ -78,8 +97,8 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 								data={week}
 								renderItem={({ item }) => (
 									<View style={{ padding: 10 }}>
-										<Text style={{ color: "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
-										<Text style={{ color: "white", fontSize: 13 }}>{item.day}</Text>
+										<Text style={{ color: daySelected === item.dateString ? "orange" : "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
+										<Text style={{ color: daySelected === item.dateString ? "orange" : "white", fontSize: 13 }}>{item.day}</Text>
 									</View>
 								)}
 							></FlatList>
@@ -89,28 +108,30 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 						<View>
 							<FlatList
 								data={week}
-								renderItem={({ item }) => (
-									<TouchableHighlight key={item.date}>
-										<View style={styles.ListItem}>
-											<Pressable onPress={() => console.log(item.dateString)}>
-												<Text style={{ fontSize: 24, color: "white" }}>{item.date}</Text>
-											</Pressable>
-											<Text style={styles.ListName}>{item.day}</Text>
-											<FlatList
-												data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
-												renderItem={({ item }) => (
-													<TouchableHighlight key={item.name}>
-														<View style={styles.SuppItem}>
-															<Text style={styles.ListName}>{item.time}: {item.name}</Text>
-															<Icon onPress={() => removeSupplement(item)}
-																name="delete-forever" style={styles.IconPadding}/>
-														</View>
-													</TouchableHighlight>
-												)}
-											></FlatList>
-										</View>
-									</TouchableHighlight>
-								)}
+								renderItem={({ item }) => { 
+									const parentData = item; 
+									return (
+										<TouchableHighlight key={item.date}>
+											<View style={styles.ListItem}>
+												<Pressable onPress={() => handleDayClick(item)}>
+													<Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
+												</Pressable>
+												<Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
+												<FlatList
+													data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
+													renderItem={({ item }) => (
+														<TouchableHighlight key={item.name}>
+															<View style={styles.SuppItem}>
+																<Text style={styles.ListName}>{item.time}: {item.name}</Text>
+																{ daySelected === parentData.dateString && <Icon onPress={() => removeSupplement(item)}
+																	name="delete-forever" style={styles.IconPadding}/> }
+															</View>
+														</TouchableHighlight>
+													)}
+												></FlatList>
+											</View>
+										</TouchableHighlight>
+									);}}
 							></FlatList>
 						</View>
 						<Pressable

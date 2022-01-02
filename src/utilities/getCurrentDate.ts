@@ -12,37 +12,60 @@ export default function getCurrentDate(): string {
 	return ""+month+"/"+day+"/"+year;
 }
 
-function getDateString(month: number, day: number, year: number): string {
-	return ""+month+"/"+day+"/"+year;
+export function getDateString(day: DateData): string {
+	return ""+day.month + "/" + ""+day.day + "/" + ""+day.year;
 }
 
 export function generateCurrentDateObject(): DateData {
 	const currentDate = new Date();
 
 	const month = currentDate.getMonth()+1;
+	const date = currentDate.getDate();
+	const year = currentDate.getFullYear();
+
+	// Setting new date string
+	let stringDay = ""+date;
+	let stringMonth = ""+month;
+
+	date < 10 ? stringDay = ""+"0"+date : stringDay = ""+date;
+	month < 10 ? stringMonth = ""+"0"+month : stringMonth = ""+month;
+
+	const newDateString = ""+year + "-" + stringMonth + "-" + stringDay;
+
 
 	const DateObject: DateData = {
-		year: currentDate.getFullYear(),
+		year: year,
 		month: month,
-		day: currentDate.getDate(),
+		day: date,
 		timestamp: currentDate.getTime(),
-		dateString: ""+currentDate.getFullYear() + "-" + ""+month + "-" + ""+currentDate.getDate()
+		dateString: newDateString
 	};
 
 	return DateObject;
 }
 
-function generateDateObject(day: Date): DateData {
+export function generateDateObject(day: Date): DateData {
 	const currentDate = day;
 
 	const month = currentDate.getMonth()+1;
+	const date = currentDate.getDate();
+	const year = currentDate.getFullYear();
+
+	// Setting new date string
+	let stringDay = ""+date;
+	let stringMonth = ""+month;
+
+	date < 10 ? stringDay = ""+"0"+date : stringDay = ""+date;
+	month < 10 ? stringMonth = ""+"0"+month : stringMonth = ""+month;
+
+	const newDateString = ""+year + "-" + stringMonth + "-" + stringDay;
 
 	const DateObject: DateData = {
-		year: currentDate.getFullYear(),
+		year: year,
 		month: month,
-		day: currentDate.getDate(),
+		day: date,
 		timestamp: currentDate.getTime(),
-		dateString: ""+currentDate.getFullYear() + "-" + ""+month + "-" + ""+currentDate.getDate()
+		dateString: newDateString
 	};
 
 	return DateObject;
@@ -76,9 +99,9 @@ function generateWeekList(generatedDate: Date) {
 	const currentDate = generateDateObject(generatedDate);
 
 	if (generatedDate.getDay() === 0) {
-		weekList.push({ day: grabWeekDay(0), date: currentDate.day, month: currentDate.month, year: currentDate.year, dateString: getDateString(currentDate.month, currentDate.day, currentDate.year) });
+		weekList.push({ day: grabWeekDay(0), date: currentDate.day, month: currentDate.month, year: currentDate.year, dateString: getDateString(currentDate) });
 		for (let i=1; i<7; i++) {
-			weekList[i] = { day: grabWeekDay(i), date: grabDay(currentDate, currentDate.day, currentDate.month, currentDate.year), month: currentDate.month, year: currentDate.year, dateString: getDateString(currentDate.month, currentDate.day, currentDate.year) };
+			weekList[i] = { day: grabWeekDay(i), date: grabDay(currentDate, currentDate.day, currentDate.month, currentDate.year), month: currentDate.month, year: currentDate.year, dateString: getDateString(currentDate) };
 		}
 	} else {
 		const lowerBound = generatedDate.getDay();
