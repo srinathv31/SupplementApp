@@ -1,6 +1,6 @@
 // Source Imports
 import React from "react";
-import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Supplement from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DateData } from "react-native-calendars/src/types";
@@ -10,9 +10,9 @@ import { AppProps } from "../../interfaces/Props";
 
 // Design Imports
 
-export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement }: AppProps): JSX.Element {
 
-	function removeSupplement(item: Supplement) {
+	function removeSupplement(item: {Supplement: Supplement, time: string}) {
 		const supplementMapCopy = { ...supplementMap };
 
 		supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
@@ -32,20 +32,33 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
 		setSelectedDates(selectedDatesCopy);
 	}
 
+	function changeTime(item: {Supplement: Supplement, time: string}) {
+		setSelectedSupplement(item);
+		setModalVisible("time-modal");
+	}
+
 	return(
 		<View style={{ alignSelf: "center" }}>
-			<FlatList
-				data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
-				renderItem={({ item }) => (
-					<TouchableHighlight key={item.name}>
-						<View style={styles.ListItem}>
-							<Text style={styles.ListName}>{item.time}: {item.name}</Text>
-							<Icon onPress={() => removeSupplement(item)}
-								name="delete-forever" style={styles.IconPadding}/>
-						</View>
-					</TouchableHighlight>
-				)}
-			></FlatList>
+			<View style={{ flex: 1 }}>
+				<FlatList
+					data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
+					renderItem={({ item }) => (
+						<TouchableOpacity key={item.Supplement.name} onPress={() => console.log(item.Supplement.name)}>
+							<View style={styles.ListItem}>
+								{item.time === "" && <Icon onPress={() => changeTime(item)} name="clock" style={styles.IconPadding}/>}
+								<Text onPress={() => changeTime(item)} style={styles.ListName}>
+									{item.time !== "" && item.time+":"}
+								</Text> 
+								<Text style={styles.ListName}>
+									{item.Supplement.name}
+								</Text>
+								<Icon onPress={() => removeSupplement(item)}
+									name="delete-forever" style={styles.IconPadding}/>
+							</View>
+						</TouchableOpacity>
+					)}
+				></FlatList>
+			</View>
 		</View>
 	);
 }
@@ -56,20 +69,22 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		padding: 10,
 		margin: 10,
-		color: "black",
-		borderWidth: 1,
-		borderRadius: 10,
-		backgroundColor: "orange",
+		borderRadius: 5,
+		backgroundColor: "#112442",
 		overflow:"hidden",
-		flexDirection: "row"
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+		
 	},
 	ListName: {
 		fontSize: 18,
 		fontWeight: "600",
+		color: "#EEE"
 	},
 	IconPadding: {
 		padding: 1,
 		margin: 1,
-		fontSize: 18
+		fontSize: 18,
+		color: "#EEE"
 	}
 });

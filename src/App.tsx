@@ -15,12 +15,13 @@ import { AppProps } from "./interfaces/Props";
 import { LogBox } from "react-native";
 import HeaderWindow from "./components/HomePage/HeaderWindow";
 import { WeekDay } from "./interfaces/WeekDay";
+import SupplementList from "./assets/SupplementList.json";
 
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
 	// Data structure that handles supplements and journal enttry for a given day
-	const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>>({});
+	const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>>({});
 	// Returns string date in format - MM/DD/YYYY
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 	// Returns DateData object of date
@@ -44,6 +45,7 @@ const App = () => {
 	// Sets Animation for Weekly modal
 	const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
 
+	const [selectedSupplement, setSelectedSupplement] = useState<{Supplement: Supplement, time: string}>({ Supplement: SupplementList[0], time: "" });
 
 	const [routes] = useState([
 		{ key: "cal", title: "Calendar" },
@@ -77,7 +79,9 @@ const App = () => {
 		setMonthText,
 		monthText,
 		setSwipeAnimation,
-		swipeAnimation
+		swipeAnimation,
+		setSelectedSupplement,
+		selectedSupplement
 	};
 
 	const CalendarRoute = (): JSX.Element => {
@@ -110,7 +114,7 @@ const App = () => {
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar barStyle={"light-content"} />
         
-				<View style={{ flex: 1, opacity: (modalVisible !== "hide-modal") ? 0.5 : 1 }}>
+				<View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal") ? 0.5 : 1 }}>
 					<View style={{ flex: 1 }}>
 						<SupplementModal {...AllProps}></SupplementModal>
 						<HeaderWindow {...AllProps}></HeaderWindow>

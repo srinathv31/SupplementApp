@@ -7,8 +7,8 @@ export interface AppProps {
     daySelected: string,
     setModalVisible: (j: string) => void,
     modalVisible: string,
-    setSupplementMap: (d: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>) => void,
-    supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>,
+    setSupplementMap: (d: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>) => void,
+    supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>,
     setObjDaySelected: (o: DateData) => void,
     objDaySelected: DateData,
     setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void,
@@ -26,6 +26,8 @@ export interface AppProps {
     setMonthText: (m: string) => void,
     monthText: string,
     setSwipeAnimation: (s: string) => void,
-    swipeAnimation: string
+    swipeAnimation: string,
+    setSelectedSupplement: (s: {Supplement: Supplement, time: string}) => void,
+    selectedSupplement: {Supplement: Supplement, time: string}
 }
 
