@@ -18,6 +18,6 @@ export default function convertTime(currentDate: Date) {
 	}
 
 	// 12:32_PM
-	// 01234567
+	// 12345678
 	return hour + ":" + minutes + " " + ""+timeTag;
 }

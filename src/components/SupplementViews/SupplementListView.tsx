@@ -7,6 +7,7 @@ import { AppProps } from "../../interfaces/Props";
 import Supplement from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
+import sortDailyList from "../../utilities/sortDailyList";
 
 // Component Imports
 
@@ -29,8 +30,9 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 		supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "" });
 		addDate(objDaySelected, supplementMapCopy);
 
-		setSupplementMap(supplementMapCopy);
+		supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
 
+		setSupplementMap(supplementMapCopy);
 	}
 
 	function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>){
@@ -80,15 +82,15 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 const styles = StyleSheet.create({
 	ListItem: {
 		fontSize: 24,
-		fontWeight: "600",
 		textAlign: "center",
-		padding: 5,
+		padding: 10,
 		margin: 10,
-		color: "white",
-		borderWidth: 1,
-		borderRadius: 10,
-		backgroundColor: "orange",
-		overflow:"hidden"
+		borderRadius: 5,
+		backgroundColor: "#112442",
+		overflow:"hidden",
+		flexDirection: "row",
+		justifyContent: "space-evenly",
+		color: "white"
 	},
 	ListItemSmall: {
 		fontSize: 16,
