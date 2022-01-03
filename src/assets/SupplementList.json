@@ -1,40 +1,32 @@
 [{
     "name": "Creatine",
-    "description": "Muscle Stuff",
-    "time": ""
+    "description": "Muscle Stuff"
 },
 {
     "name": "Fish Oil",
-    "description": "Cognitive Function",
-    "time": ""
+    "description": "Cognitive Function"
 },
 {
     "name": "Melatonin",
-    "description": "Sleep Time",
-    "time": ""
+    "description": "Sleep Time"
 },
 {
     "name": "Vitamin B12",
-    "description": "Energy Function",
-    "time": ""
+    "description": "Energy Function"
 },
 {
     "name": "Vitamin D",
-    "description": "Energy Function",
-    "time": ""
+    "description": "Energy Function"
 },
 {
     "name": "Zinc",
-    "description": "Revitilization",
-    "time": ""
+    "description": "Revitilization"
 },
 {
     "name": "Vitamin C",
-    "description": "More Energy",
-    "time": ""
+    "description": "More Energy"
 },
 {
     "name": "Calcium",
-    "description": "Stronger Bones",
-    "time": ""
+    "description": "Stronger Bones"
 }]

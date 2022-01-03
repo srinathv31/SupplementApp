@@ -26,19 +26,14 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 			supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
 		}
         
-		supplementMapCopy[daySelected].SupplementSchedule.push(item);
+		supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "" });
 		addDate(objDaySelected, supplementMapCopy);
-		Object.values(supplementMapCopy[daySelected].SupplementSchedule).forEach( supplement => {
-			if (supplement === item) {
-				supplement.time = "7:00AM";
-			}
-		});
 
 		setSupplementMap(supplementMapCopy);
 
 	}
 
-	function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: Supplement[], JournalEntry: string}>){
+	function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){

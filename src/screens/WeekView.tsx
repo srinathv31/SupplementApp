@@ -14,9 +14,9 @@ import Modal from "react-native-modal";
 
 // Design Imports
 
-export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, setIndex }: AppProps): JSX.Element {
 
-	function removeSupplement(item: Supplement, parentData: WeekDay) {
+	function removeSupplement(item: {Supplement: Supplement, time: string}, parentData: WeekDay) {
 		const supplementMapCopy = { ...supplementMap };
 		const parentDataMapKey = parentData.dateString;
 		const parentDayDateData = convertWeekDayToDateData(parentData);
@@ -66,6 +66,13 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 
 		setWeek(generateWeek(weekDayDateData));
 		setMonthText(grabMonth(generateWeek(weekDayDateData)));
+	}
+
+	function changeTime(item: {Supplement: Supplement, time: string}, parentData: WeekDay) {
+		handleDayClick(parentData);
+		setSelectedSupplement(item);
+		setIndex(1);
+		setModalVisible("time-modal");
 	}
 
 	return(
@@ -119,9 +126,11 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 												<FlatList
 													data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
 													renderItem={({ item }) => (
-														<TouchableHighlight key={item.name}>
+														<TouchableHighlight key={item.Supplement.name}>
 															<View style={styles.SuppItem}>
-																<Text style={styles.ListName}>{item.time}: {item.name}</Text>
+																{item.time === "" && <Icon onPress={() => changeTime(item, parentData)} name="clock" style={styles.IconPadding}/>}
+																<Text onPress={() => changeTime(item, parentData)} style={styles.ListName}>{item.time !== "" && item.time +":"} </Text>
+																<Text style={styles.ListName}> {item.Supplement.name}</Text>
 																<Icon onPress={() => removeSupplement(item, parentData)}
 																	name="delete-forever" style={styles.IconPadding}/>
 															</View>
