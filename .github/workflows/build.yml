@@ -19,7 +19,7 @@ jobs:
           npm test
       - name: Check eslint
         run: |
-          npm lint
+          npm run lint
   build-android:
       needs: install-and-test
       runs-on: ubuntu-latest
