@@ -92,7 +92,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 							name="chevron-left" style={styles.IconWeek}/>
 						<FlatList
 							style={{ padding: 10, maxHeight: 70 }}
-							contentOffset={{ x: 15, y: 0 }}
+							contentOffset={{ x: 5, y: 0 }}
 							scrollEnabled={false}
 							horizontal
 							data={week}
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	modalView: {
-		width: "95%",
+		width: "110%",
 		height: "85%",
 		margin: 20,
 		backgroundColor: "#0B172A",
