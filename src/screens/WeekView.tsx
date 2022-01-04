@@ -5,7 +5,7 @@ import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
-import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
+import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeekList, getDateString, grabMonth } from "../utilities/getCurrentDate";
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -64,8 +64,8 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 		const selectedDatesCopy = handleCalendar(selectedDates, weekDayDateData.dateString);
 		setSelectedDates(selectedDatesCopy);
 
-		setWeek(generateWeek(weekDayDateData));
-		setMonthText(grabMonth(generateWeek(weekDayDateData)));
+		setWeek(generateWeekList(weekDayDateData));
+		setMonthText(grabMonth(generateWeekList(weekDayDateData)));
 	}
 
 	function changeTime(item: {Supplement: Supplement, time: string}, parentData: WeekDay) {
@@ -92,7 +92,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 							name="chevron-left" style={styles.IconWeek}/>
 						<FlatList
 							style={{ padding: 10, maxHeight: 70 }}
-							contentOffset={{ x: 15, y: 0 }}
+							contentOffset={{ x: 5, y: 0 }}
 							scrollEnabled={false}
 							horizontal
 							data={week}
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
 		marginTop: 10,
 	},
 	modalView: {
-		width: "95%",
+		width: "110%",
 		height: "85%",
 		margin: 20,
 		backgroundColor: "#0B172A",

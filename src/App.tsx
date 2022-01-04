@@ -9,7 +9,7 @@ import Supplement, { SupplementObject } from "./interfaces/Supplement";
 import CalendarPage from "./screens/CalendarPage";
 import HomePage from "./screens/HomePage";
 import SupplementInfoPage from "./screens/SupplementInfoPage";
-import getCurrentDate, { generateCurrentDateObject, generateWeek, grabMonth } from "./utilities/getCurrentDate";
+import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "./utilities/getCurrentDate";
 import { TabView } from "react-native-tab-view";
 import { AppProps } from "./interfaces/Props";
 import { LogBox } from "react-native";
@@ -40,7 +40,7 @@ const App = () => {
 	// Prev Page feature
 	const [prevIndex, setPrevIndex] = useState<number>(index);
 	// Renders the selected day's week for the weekly modal
-	const [week, setWeek] = useState<WeekDay[]>(generateWeek(generateCurrentDateObject()));
+	const [week, setWeek] = useState<WeekDay[]>(generateWeekList(objDaySelected));
 	// Sets the text for the weekly modal
 	const [monthText, setMonthText] = useState<string>(grabMonth(week));
 	// Sets Animation for Weekly modal
