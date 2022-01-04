@@ -28,6 +28,8 @@ export interface AppProps {
     setSwipeAnimation: (s: string) => void,
     swipeAnimation: string,
     setSelectedSupplement: (s: {Supplement: Supplement, time: string}) => void,
-    selectedSupplement: {Supplement: Supplement, time: string}
+    selectedSupplement: {Supplement: Supplement, time: string},
+    setMultipleAddMode: (m: boolean) => void,
+    multipleAddMode: boolean
 }
 

@@ -3,25 +3,29 @@ import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import convertTime from "../../utilities/convertTime";
 import sortDailyList from "../../utilities/sortDailyList";
+import convertDateTimeToStringTime from "../../utilities/convertTime";
 // Component Imports
 
 // Design Imports
 
-export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, daySelected }: 
+export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, daySelected, multipleAddMode }: 
 	AppProps): JSX.Element {
 	const [time, setTime] = useState<Date>(new Date());
 
 	function handleJournal() {
-		setModalVisible("hide-modal");
+		multipleAddMode ? setModalVisible("calendar-modal") : setModalVisible("hide-modal");
 	}
 	
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const onChange = (event: any, selectedDate: any) => {
 		const supplementMapCopy = { ...supplementMap };
 		const currentDate = selectedDate || time;
-		const convertedTime = convertTime(currentDate);
+		const convertedTime = convertDateTimeToStringTime(currentDate);
+		if (multipleAddMode) {
+			selectedSupplement.time = convertedTime;
+			return;
+		}
 		Object.values(supplementMapCopy[daySelected].SupplementSchedule).forEach(supplement => {
 			if (supplement === selectedSupplement) {
 				supplement.time = convertedTime;
