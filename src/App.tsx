@@ -47,6 +47,8 @@ const App = () => {
 
 	const [selectedSupplement, setSelectedSupplement] = useState<{Supplement: Supplement, time: string}>({ Supplement: SupplementList[0], time: "" });
 
+	const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
+
 	const [routes] = useState([
 		{ key: "cal", title: "Calendar" },
 		{ key: "home", title: "Home" },
@@ -81,7 +83,9 @@ const App = () => {
 		setSwipeAnimation,
 		swipeAnimation,
 		setSelectedSupplement,
-		selectedSupplement
+		selectedSupplement,
+		setMultipleAddMode,
+		multipleAddMode
 	};
 
 	const CalendarRoute = (): JSX.Element => {

@@ -9,7 +9,7 @@ import { AppProps } from "../../interfaces/Props";
 // Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
-export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex }: AppProps): JSX.Element {
+export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode }: AppProps): JSX.Element {
 
 
 	const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -43,7 +43,7 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
 						name="pill" size={30} color="white"/>
 					<Icon name="emoticon-happy-outline" size={30} color="white"/>
 					<Icon name="silverware-fork-knife" size={30} color="white"/>
-					<Icon onPress={() => setModalVisible("calendar-modal")} 
+					<Icon onPress={() => (setModalVisible("supplement-modal"), setMultipleAddMode(true))} 
 						name="clock" size={30} color="white"/>
 				</View> }
 			</Animated.View>

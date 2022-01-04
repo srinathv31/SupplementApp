@@ -13,11 +13,12 @@ import sortDailyList from "../../utilities/sortDailyList";
 
 // Design Imports
 
-export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected }: {
+export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible }: {
     fontSizeNumber: number,
     query: string,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
-	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"]
+	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"],
+	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
 
 	function addSupplement(item: Supplement) {
@@ -66,7 +67,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 				renderItem={({ item, separators }) => (
 					<TouchableHighlight
 						key={item.name}
-						onPress={() => addSupplement(item)}
+						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "" }), setModalVisible("calendar-modal")) : () => addSupplement(item)}
 						onShowUnderlay={separators.highlight}
 						onHideUnderlay={separators.unhighlight}>
 						<View>

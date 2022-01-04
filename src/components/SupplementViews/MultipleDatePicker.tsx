@@ -9,13 +9,12 @@ import { getDateString } from "../../utilities/getCurrentDate";
 import sortDailyList from "../../utilities/sortDailyList";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
-import SupplementList from "../../assets/SupplementList.json";
 
 // Component Imports
 
 // Design Imports
 
-export default function MultipleDatePicker({ setModalVisible, modalVisible, setSelectedDates, selectedDates, setSupplementMap, supplementMap, selectedSupplement }: AppProps): JSX.Element {
+export default function MultipleDatePicker({ setModalVisible, modalVisible, setSelectedDates, selectedDates, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
 	const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
 	function addSupplement(item: Supplement, dayString: string) {
@@ -57,7 +56,7 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 				if (supplementMapCopy[strDate] === undefined) {
 					supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "" };
 				}
-				supplementMapCopy[strDate].SupplementSchedule = addSupplement(SupplementList[0], strDate);
+				supplementMapCopy[strDate].SupplementSchedule = addSupplement(selectedSupplement.Supplement, strDate);
 				if (selectedDatesCopy[item.day.dateString] === undefined) {
 					selectedDatesCopy[item.day.dateString] = { dots:[{ key: "", color: "" }], selected: false };
 				}
@@ -70,6 +69,7 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 		setSupplementMap(supplementMapCopy);
 		setModalVisible("hide-modal");
 		setSchedule({});
+		setMultipleAddMode(false);
 	}
 
 	function addDayToSchedule(day: DateData) {
@@ -98,7 +98,7 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<Text style={styles.modalText}>Choose Dates for {selectedSupplement.Supplement}</Text>
+					<Text style={styles.modalText}>Choose Dates for {selectedSupplement.Supplement.name}</Text>
 					<Calendar
 						markedDates={schedule}
 						theme={{
