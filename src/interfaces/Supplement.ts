@@ -3,4 +3,16 @@ interface Supplement {
     description: string,
 }
 
+export interface SupplementObject {
+    Supplement: Supplement,
+    time: string,
+    taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time"
+}
+
+export interface SupplementMapObject {
+    SupplementSchedule: {Supplement: Supplement, time: string}[], 
+    JournalEntry: string
+}
+
+
 export default Supplement;
