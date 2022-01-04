@@ -17,40 +17,40 @@ jobs:
       - name: Run tests
         run: |
           npm test
-#   build-android:
-#       needs: install-and-test
-#       runs-on: ubuntu-latest
-#       steps: 
-#         - uses: actions/checkout@v2
-#         - name: Install npm dependencies
-#           run: |
-#             npm install
-#         - name: Build Android Release
-#           run: |
-#             cd android && ./gradlew assembleRelease -PMYAPP_UPLOAD_STORE_PASSWORD='${{ secrets.ANDROID_BUILD_SECRET }}' -PMYAPP_UPLOAD_KEY_PASSWORD='${{ secrets.ANDROID_BUILD_SECRET }}'
-#         - name: Upload Artifact
-#           uses: actions/upload-artifact@v1
-#           with:
-#             name: app-release.apk
-#             path: android/app/build/outputs/apk/release/
-  build-ios:
-    needs: install-and-test
-    runs-on: macos-latest
-    steps: 
-      - uses: actions/checkout@v2
-      - name: Install npm dependencies
-        run: |
-          npm install
-      - name: Install pod dependencies
-        run: |
-          cd ios && pod install
-      - name: Build app
-        run: |       
-          xcodebuild -workspace SupplementApp.xcworkspace -scheme SupplementApp archive -archivePath SupplementApp.xcarchive -allowProvisioningUpdates
-          xcodebuild -exportArchive -archivePath ./SupplementApp.xcarchive -exportPath . -exportOptionsPlist SupplementApp/Info.plist
-          mv SupplementApp.ipa ../SupplementApp.ipa
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: SupplementApp.ipa
-          path: ios/build/
+  build-android:
+      needs: install-and-test
+      runs-on: ubuntu-latest
+      steps: 
+        - uses: actions/checkout@v2
+        - name: Install npm dependencies
+          run: |
+            npm install
+        - name: Build Android Release
+          run: |
+            cd android && ./gradlew assembleRelease -PMYAPP_UPLOAD_STORE_PASSWORD='${{ secrets.ANDROID_BUILD_SECRET }}' -PMYAPP_UPLOAD_KEY_PASSWORD='${{ secrets.ANDROID_BUILD_SECRET }}'
+        - name: Upload Artifact
+          uses: actions/upload-artifact@v1
+          with:
+            name: app-release.apk
+            path: android/app/build/outputs/apk/release/
+#   build-ios:
+#     needs: install-and-test
+#     runs-on: macos-latest
+#     steps: 
+#       - uses: actions/checkout@v2
+#       - name: Install npm dependencies
+#         run: |
+#           npm install
+#       - name: Install pod dependencies
+#         run: |
+#           cd ios && pod install
+#       - name: Build app
+#         run: |       
+#           xcodebuild -workspace SupplementApp.xcworkspace -scheme SupplementApp archive -archivePath SupplementApp.xcarchive -allowProvisioningUpdates
+#           xcodebuild -exportArchive -archivePath ./SupplementApp.xcarchive -exportPath . -exportOptionsPlist SupplementApp/Info.plist
+#           mv SupplementApp.ipa ../SupplementApp.ipa
+#       - name: Upload Artifact
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: SupplementApp.ipa
+#           path: ios/build/
