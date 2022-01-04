@@ -5,7 +5,7 @@ import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
-import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeek, getDateString, grabMonth } from "../utilities/getCurrentDate";
+import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeekList, getDateString, grabMonth } from "../utilities/getCurrentDate";
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
 import GestureRecognizer from "react-native-swipe-gestures";
@@ -64,8 +64,8 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 		const selectedDatesCopy = handleCalendar(selectedDates, weekDayDateData.dateString);
 		setSelectedDates(selectedDatesCopy);
 
-		setWeek(generateWeek(weekDayDateData));
-		setMonthText(grabMonth(generateWeek(weekDayDateData)));
+		setWeek(generateWeekList(weekDayDateData));
+		setMonthText(grabMonth(generateWeekList(weekDayDateData)));
 	}
 
 	function changeTime(item: {Supplement: Supplement, time: string}, parentData: WeekDay) {

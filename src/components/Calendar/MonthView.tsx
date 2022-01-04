@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
-import { generateWeek, getDateString, grabMonth } from "../../utilities/getCurrentDate";
+import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 // Component Imports
@@ -21,8 +21,8 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 		const selectedDatesCopy = handleCalendar(selectedDates, day.dateString);
 		setSelectedDates(selectedDatesCopy);
 
-		setWeek(generateWeek(day));
-		setMonthText(grabMonth(generateWeek(day)));
+		setWeek(generateWeekList(day));
+		setMonthText(grabMonth(generateWeekList(day)));
 	}
 
 	return(

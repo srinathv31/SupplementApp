@@ -57,18 +57,7 @@ export function generateDateObject(day: Date): DateData {
 	return DateObject;
 }
 
-// function generateDateOrig(currentDate: DateData) {
-// 	const month = currentDate.month;
-// 	const day = currentDate.day;
-// 	const year = currentDate.year;
-// 	const strDate = ""+month + " " + ""+day + "," + " " + ""+year; 
-
-// 	const generatedDate = new Date(strDate);
-	
-// 	return generatedDate;
-// }
-
-export function generateWeek(currentDate: DateData): WeekDay[] {
+export function generateDateOrig(currentDate: DateData): Date {
 	const month = currentDate.month;
 	const day = currentDate.day;
 	const year = currentDate.year;
@@ -76,13 +65,12 @@ export function generateWeek(currentDate: DateData): WeekDay[] {
 
 	const generatedDate = new Date(strDate);
 	
-	const weekList = generateWeekList(generatedDate);
-	return weekList;
+	return generatedDate;
 }
 
-function generateWeekList(generatedDate: Date) {
+export function generateWeekList(currentDate: DateData): WeekDay[] {
 	const weekList: WeekDay[] = [];
-	const currentDate = generateDateObject(generatedDate);
+	const generatedDate = generateDateOrig(currentDate);
 
 	if (generatedDate.getDay() === 0) {
 		weekList.push({ day: grabWeekDay(0), date: currentDate.day, month: currentDate.month, year: currentDate.year, dateString: getDateString(currentDate) });
@@ -90,16 +78,22 @@ function generateWeekList(generatedDate: Date) {
 			weekList[i] = { day: grabWeekDay(i), date: grabDay(currentDate, currentDate.day, currentDate.month, currentDate.year), month: currentDate.month, year: currentDate.year, dateString: getDateString(currentDate) };
 		}
 	} else {
-		const lowerBound = generatedDate.getDay();
-
-		let prevSunday = currentDate;
-		for (let i=0; i<lowerBound; i++){
-			prevSunday = generatePrevDate(currentDate, currentDate.day, currentDate.month, currentDate.year);
+		const prevSunday = findPrevSunday(generatedDate.getDay(), currentDate);
+		
+		weekList.push({ day: grabWeekDay(0), date: prevSunday.day, month: prevSunday.month, year: prevSunday.year, dateString: getDateString(prevSunday) });
+		for (let i=1; i<7; i++) {
+			weekList[i] = { day: grabWeekDay(i), date: grabDay(prevSunday, prevSunday.day, prevSunday.month, prevSunday.year), month: prevSunday.month, year: prevSunday.year, dateString: getDateString(prevSunday) };
 		}
-		return generateWeek(prevSunday);
 	}
-
 	return weekList;
+}
+
+function findPrevSunday(lowerBound: number, currentDate: DateData): DateData {
+	let prevSunday = currentDate;
+	for (let i=0; i<lowerBound; i++){
+		prevSunday = generatePrevDate(currentDate, currentDate.day, currentDate.month, currentDate.year);
+	}
+	return prevSunday;
 }
 
 export function generatePrevWeek(weekList: WeekDay[]): WeekDay[]  {
@@ -114,7 +108,7 @@ export function generatePrevWeek(weekList: WeekDay[]): WeekDay[]  {
 	for (let i=0; i<7; i++){
 		prevSunday = generatePrevDate(currSunday, currSunday.day, weekList[0].month, weekList[0].year);
 	}
-	return generateWeek(prevSunday);
+	return generateWeekList(prevSunday);
 }
 
 export function generateNextWeek(weekList: WeekDay[]): WeekDay[]  {
@@ -128,7 +122,7 @@ export function generateNextWeek(weekList: WeekDay[]): WeekDay[]  {
 	let nextSunday = currSaturday;
 	nextSunday = generateNextDate(currSaturday, currSaturday.day, weekList[0].month, weekList[0].year);
 	
-	return generateWeek(nextSunday);
+	return generateWeekList(nextSunday);
 }
 
 function grabWeekDay(i: number): string {
