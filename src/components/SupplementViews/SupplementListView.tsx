@@ -67,7 +67,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 				renderItem={({ item, separators }) => (
 					<TouchableHighlight
 						key={item.name}
-						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "" }), setModalVisible("calendar-modal")) : () => addSupplement(item)}
+						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "" }), setModalVisible("time-modal")) : () => addSupplement(item)}
 						onShowUnderlay={separators.highlight}
 						onHideUnderlay={separators.unhighlight}>
 						<View>

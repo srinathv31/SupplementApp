@@ -24,7 +24,7 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 			supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "" };
 		}
         
-		supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: "" });
+		supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time });
 
 		supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
 
