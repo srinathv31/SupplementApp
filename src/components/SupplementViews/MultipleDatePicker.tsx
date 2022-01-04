@@ -51,7 +51,6 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 		const selectedDatesCopy = { ...selectedDates };
 		if (schedule !== undefined){
 			Object.values(schedule).forEach(item => {
-				console.log(item.day.dateString);
 				const strDate = getDateString(item.day);
 				if (supplementMapCopy[strDate] === undefined) {
 					supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "" };
@@ -61,8 +60,6 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 					selectedDatesCopy[item.day.dateString] = { dots:[{ key: "", color: "" }], selected: false };
 				}
 				selectedDatesCopy[item.day.dateString] = addDate(item.day, supplementMapCopy, strDate);
-				console.log(supplementMapCopy);
-				console.log(selectedDatesCopy);
 			});
 		}
 		setSelectedDates(selectedDatesCopy);
