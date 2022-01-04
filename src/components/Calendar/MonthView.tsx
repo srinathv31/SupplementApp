@@ -30,7 +30,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 			<CalendarList
 				style={styles.calendar}
 				onDayPress={(day) => (handleDayClick(day), setPrevIndex(0), setIndex(1))}
-				onDayLongPress={(day) => (handleDayClick(day), setModalVisible("weekly-modal"))}
+				onDayLongPress={(day) => (handleDayClick(day), setModalVisible({ modal: "weekly-modal" }))}
 				markingType={"multi-dot"}
 				markedDates={selectedDates}
 				current={objDaySelected.dateString}

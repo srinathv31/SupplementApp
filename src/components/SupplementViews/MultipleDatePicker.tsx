@@ -4,7 +4,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import { Calendar } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
-import Supplement from "../../interfaces/Supplement";
+import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { getDateString } from "../../utilities/getCurrentDate";
 import sortDailyList from "../../utilities/sortDailyList";
 import { supplementDot } from "../../utilities/calendarDots";
@@ -24,14 +24,14 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 			supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "" };
 		}
         
-		supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time });
+		supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken" });
 
 		supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
 
 		return supplementMapCopy[dayString].SupplementSchedule;
 	}
 
-	function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>, dayString: string){
+	function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>, dayString: string){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[dayString].SupplementSchedule).length > 0){
@@ -64,7 +64,7 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 		}
 		setSelectedDates(selectedDatesCopy);
 		setSupplementMap(supplementMapCopy);
-		setModalVisible("hide-modal");
+		setModalVisible({ modal: "hide-modal" });
 		setSchedule({});
 		setMultipleAddMode(false);
 	}
@@ -88,9 +88,9 @@ export default function MultipleDatePicker({ setModalVisible, modalVisible, setS
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "calendar-modal" ? true : false}
+			visible={modalVisible.modal === "calendar-modal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("hide-modal");
+				setModalVisible({ modal: "hide-modal" });
 			}}
 		>
 			<View style={styles.centeredView}>

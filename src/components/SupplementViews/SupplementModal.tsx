@@ -13,9 +13,9 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={AllProps.modalVisible === "supplement-modal" ? true : false}
+			visible={AllProps.modalVisible.modal === "supplement-modal" ? true : false}
 			onRequestClose={() => {
-				AllProps.setModalVisible("hide-modal");
+				AllProps.setModalVisible({ modal: "hide-modal" });
 			}}
 		>
 			<View style={styles.centeredView}>
@@ -28,7 +28,7 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 					></SupplementListView>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
-						onPress={() => AllProps.setModalVisible("hide-modal")}
+						onPress={() => AllProps.setModalVisible({ modal: "hide-modal" })}
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>

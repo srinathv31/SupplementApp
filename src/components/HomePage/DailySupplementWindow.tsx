@@ -1,7 +1,7 @@
 // Source Imports
 import React from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import Supplement from "../../interfaces/Supplement";
+import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
@@ -12,7 +12,7 @@ import { AppProps } from "../../interfaces/Props";
 
 export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement }: AppProps): JSX.Element {
 
-	function removeSupplement(item: {Supplement: Supplement, time: string}) {
+	function removeSupplement(item: SupplementObject) {
 		const supplementMapCopy = { ...supplementMap };
 
 		supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
@@ -32,9 +32,9 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
 		setSelectedDates(selectedDatesCopy);
 	}
 
-	function changeTime(item: {Supplement: Supplement, time: string}) {
+	function changeTime(item: SupplementObject) {
 		setSelectedSupplement(item);
-		setModalVisible("time-modal");
+		setModalVisible({ modal: "time-modal" });
 	}
 
 	return(

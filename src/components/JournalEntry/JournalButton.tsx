@@ -22,7 +22,7 @@ export default function JournalButton( { setModalVisible, setJournalText, daySel
 		}
 		
 		setSupplementMap(supplementMapCopy);
-		setModalVisible("journal");
+		setModalVisible({ modal: "journal" });
 	}
 
 	return(

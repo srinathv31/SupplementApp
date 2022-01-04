@@ -10,7 +10,7 @@ export interface SupplementObject {
 }
 
 export interface SupplementMapObject {
-    SupplementSchedule: {Supplement: Supplement, time: string}[], 
+    SupplementSchedule: SupplementObject[], 
     JournalEntry: string
 }
 

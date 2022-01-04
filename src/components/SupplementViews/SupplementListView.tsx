@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-nati
 import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../../assets/SupplementList.json";
 import { AppProps } from "../../interfaces/Props";
-import Supplement from "../../interfaces/Supplement";
+import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
@@ -28,7 +28,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 			supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
 		}
         
-		supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "" });
+		supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
 		addDate(objDaySelected, supplementMapCopy);
 
 		supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
@@ -36,7 +36,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 		setSupplementMap(supplementMapCopy);
 	}
 
-	function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>){
+	function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
@@ -67,7 +67,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 				renderItem={({ item, separators }) => (
 					<TouchableHighlight
 						key={item.name}
-						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "" }), setModalVisible("time-modal")) : () => addSupplement(item)}
+						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" })) : () => addSupplement(item)}
 						onShowUnderlay={separators.highlight}
 						onHideUnderlay={separators.unhighlight}>
 						<View>

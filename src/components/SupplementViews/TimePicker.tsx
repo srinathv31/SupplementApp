@@ -14,7 +14,7 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
 	const [time, setTime] = useState<Date>(new Date());
 
 	function handleJournal() {
-		multipleAddMode ? setModalVisible("calendar-modal") : setModalVisible("hide-modal");
+		multipleAddMode ? setModalVisible({ modal: "calendar-modal" }) : setModalVisible({ modal: "hide-modal" });
 	}
 	
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,9 +40,9 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "time-modal" ? true : false}
+			visible={modalVisible.modal === "time-modal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("hide-modal");
+				setModalVisible({ modal: "hide-modal" });
 			}}
 		>
 			<View style={styles.centeredView}>

@@ -49,7 +49,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		setSelectedDates(selectedDatesCopy);
 		setSupplementMap(supplementMapCopy);
 
-		setModalVisible("hide-modal");
+		setModalVisible({ modal: "hide-modal" });
 	}
 
 
@@ -57,9 +57,9 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "journal" ? true : false}
+			visible={modalVisible.modal === "journal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("hide-modal");
+				setModalVisible({ modal: "hide-modal" });
 			}}
 		>
 			<View style={styles.centeredView}>

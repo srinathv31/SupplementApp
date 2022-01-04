@@ -4,7 +4,7 @@ import { FlatList, Pressable, StyleSheet, Text, TouchableHighlight, View } from 
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../interfaces/Props";
-import Supplement from "../interfaces/Supplement";
+import { SupplementObject } from "../interfaces/Supplement";
 import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeekList, getDateString, grabMonth } from "../utilities/getCurrentDate";
 import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
@@ -16,7 +16,7 @@ import Modal from "react-native-modal";
 
 export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, setIndex }: AppProps): JSX.Element {
 
-	function removeSupplement(item: {Supplement: Supplement, time: string}, parentData: WeekDay) {
+	function removeSupplement(item: SupplementObject, parentData: WeekDay) {
 		const supplementMapCopy = { ...supplementMap };
 		const parentDataMapKey = parentData.dateString;
 		const parentDayDateData = convertWeekDayToDateData(parentData);
@@ -68,20 +68,20 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 		setMonthText(grabMonth(generateWeekList(weekDayDateData)));
 	}
 
-	function changeTime(item: {Supplement: Supplement, time: string}, parentData: WeekDay) {
+	function changeTime(item: SupplementObject, parentData: WeekDay) {
 		handleDayClick(parentData);
 		setSelectedSupplement(item);
 		setIndex(1);
-		setModalVisible("time-modal");
+		setModalVisible({ modal: "time-modal" });
 	}
 
 	return(
 		<Modal
 			animationIn={swipeAnimation}
 			animationOut="zoomOut"
-			isVisible={modalVisible === "weekly-modal"}
+			isVisible={modalVisible.modal === "weekly-modal"}
 			useNativeDriver={true}
-			onBackdropPress={() => setModalVisible("hide-modal")}
+			onBackdropPress={() => setModalVisible({ modal: "hide-modal" })}
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
@@ -145,7 +145,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 					</View>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
-						onPress={() => (setModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
+						onPress={() => (setModalVisible({ modal: "hide-modal" }), setSwipeAnimation("fadeIn"))}
 					>
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>

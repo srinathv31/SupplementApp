@@ -1,6 +1,7 @@
+import CalendarDotObject from "../interfaces/Calendar";
 import removeEmptyDotObjects from "./removeEmptyDotObjects";
 
-export default function handleCalendar(selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}, dateString: string): {[date: string]: {dots: [{key: string, color: string}], selected: boolean}} {
+export default function handleCalendar(selectedDates: CalendarDotObject, dateString: string): CalendarDotObject {
 	const selectedDatesCopy = { ...selectedDates };
 
 	// Delete Each Date from the Object that has no Values
