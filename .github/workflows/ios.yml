@@ -32,4 +32,4 @@ jobs:
       working-directory: ios
       name: Install pod dependencies
     - name: Build iOS (debug)
-      run: npx react-native run-ios
+      run: "xcodebuild \ -workspace ios/SupplementApp.xcworkspace \ -scheme SupplementApp \ clean archive \ -sdk iphoneos \ -configuration Debug \ -UseModernBuildSystem=NO \ -archivePath $PWD/SupplementApp \ CODE_SIGNING_ALLOWED=NO"
