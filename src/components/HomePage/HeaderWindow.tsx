@@ -8,6 +8,7 @@ import PrevDayButton from "../Calendar/PrevDayButton";
 import JournalButton from "../JournalEntry/JournalButton";
 import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 import TimePicker from "../SupplementViews/TimePicker";
+import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
 
 // Component Imports
 
@@ -25,6 +26,7 @@ export default function HeaderWindow(AllProps: AppProps): JSX.Element {
 			<JournalEntryModal {...AllProps}></JournalEntryModal>
 			<JournalButton {...AllProps}></JournalButton>
 			<TimePicker {...AllProps}></TimePicker>
+			<MultipleDatePicker {...AllProps}></MultipleDatePicker>
 		</View>
 	);
 }

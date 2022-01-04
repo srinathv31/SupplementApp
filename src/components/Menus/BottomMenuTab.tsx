@@ -43,6 +43,8 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
 						name="pill" size={30} color="white"/>
 					<Icon name="emoticon-happy-outline" size={30} color="white"/>
 					<Icon name="silverware-fork-knife" size={30} color="white"/>
+					<Icon onPress={() => setModalVisible("calendar-modal")} 
+						name="clock" size={30} color="white"/>
 				</View> }
 			</Animated.View>
 			<View style={BottomMenuTabStyles.mainButtonRow}>

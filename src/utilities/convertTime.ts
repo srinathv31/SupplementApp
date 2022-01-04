@@ -1,5 +1,6 @@
+import Supplement from "../interfaces/Supplement";
 
-export default function convertTime(currentDate: Date) {
+export default function convertDateTimeToStringTime(currentDate: Date) {
 	let timeTag = "AM";
 	let hour = ""+currentDate.getHours();
 	let minutes = ""+currentDate.getMinutes();
@@ -20,4 +21,17 @@ export default function convertTime(currentDate: Date) {
 	// 12:32_PM
 	// 12345678
 	return hour + ":" + minutes + " " + ""+timeTag;
+}
+
+export function convertStringTimeToDateTime(supplement: {Supplement: Supplement, time: string}) {
+	
+	// Set time strings to same length
+	if (supplement.time.length === 7) {
+		supplement.time = "0"+supplement.time;
+	}
+
+	const time = supplement.time.substring(0,5);
+	
+	return new Date("2019-05-17T"+ time +":00");
+
 }
