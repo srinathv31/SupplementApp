@@ -29,7 +29,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 		<View style={{ flex: 1 }}>
 			<CalendarList
 				style={styles.calendar}
-				onDayPress={(day) => (handleDayClick(day), setModalVisible("weekly-modal"))}
+				onDayPress={(day) => (handleDayClick(day), setModalVisible({ modal: "weekly-modal" }))}
 				onDayLongPress={(day) => (handleDayClick(day), setPrevIndex(0), setIndex(1))}
 				markingType={"multi-dot"}
 				markedDates={selectedDates}
