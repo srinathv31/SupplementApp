@@ -92,8 +92,9 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 							name="chevron-left" style={styles.IconWeek}/>
 						<FlatList
 							style={{ padding: 10, maxHeight: 70 }}
-							contentOffset={{ x: 5, y: 0 }}
-							scrollEnabled={false}
+							contentOffset={{ x: 15, y: 0 }}
+							scrollEnabled
+							showsHorizontalScrollIndicator={false}
 							horizontal
 							data={week}
 							renderItem={({ item }) => (

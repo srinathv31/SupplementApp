@@ -39,7 +39,7 @@ const App = () => {
 	// Prev Page feature
 	const [prevIndex, setPrevIndex] = useState<number>(index);
 	// Renders the selected day's week for the weekly modal
-	const [week, setWeek] = useState<WeekDay[]>(generateWeekList(objDaySelected));
+	const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
 	// Sets the text for the weekly modal
 	const [monthText, setMonthText] = useState<string>(grabMonth(week));
 	// Sets Animation for Weekly modal
