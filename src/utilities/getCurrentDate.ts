@@ -107,7 +107,6 @@ export function generateWeekList(currentDate: DateData): WeekDay[] {
 			weekList[i] = { day: grabWeekDay(i), date: grabDay(prevSunday, prevSunday.day, prevSunday.month, prevSunday.year), month: prevSunday.month, year: prevSunday.year, dateString: getDateString(prevSunday) };
 		}
 	}
-
 	return weekList;
 }
 
