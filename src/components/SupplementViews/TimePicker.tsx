@@ -5,9 +5,7 @@ import { AppProps } from "../../interfaces/Props";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
-// Component Imports
 
-// Design Imports
 
 export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, daySelected, multipleAddMode }: 
 	AppProps): JSX.Element {

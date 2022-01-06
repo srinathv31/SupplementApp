@@ -9,9 +9,6 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
 
-// Component Imports
-
-// Design Imports
 
 export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible }: {
     fontSizeNumber: number,

@@ -4,9 +4,7 @@ import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
 
-// Component Imports
 
-// Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
 export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode }: AppProps): JSX.Element {

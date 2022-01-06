@@ -1,9 +1,6 @@
 // Source Imports
 import { StyleSheet } from "react-native";
 
-// Component Imports
-
-// Design Imports
 
 const BottomMenuTabStyles = StyleSheet.create({
 	mainButtonRow: {

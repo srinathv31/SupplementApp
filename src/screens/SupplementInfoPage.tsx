@@ -5,9 +5,6 @@ import SearchBar from "../components/SupplementViews/SearchBar";
 import SupplementListView from "../components/SupplementViews/SupplementListView";
 import { AppProps } from "../interfaces/Props";
 
-// Component Imports
-
-// Design Imports
 
 export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
 	const [query, setQuery] = useState<string>("");

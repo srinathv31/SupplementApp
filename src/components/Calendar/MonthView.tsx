@@ -7,9 +7,6 @@ import { AppProps } from "../../interfaces/Props";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
-// Component Imports
-
-// Design Imports
 
 export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
 

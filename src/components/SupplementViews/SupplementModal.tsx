@@ -4,11 +4,8 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import SearchBar from "./SearchBar";
 import SupplementListView from "./SupplementListView";
-// import Modal from "react-native-modal";
 
-// Component Imports
 
-// Design Imports
 
 export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 	const [query, setQuery] = useState<string>("");

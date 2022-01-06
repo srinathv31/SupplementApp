@@ -10,9 +10,6 @@ import sortDailyList from "../../utilities/sortDailyList";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 
-// Component Imports
-
-// Design Imports
 
 export default function MultipleDatePicker({ setModalVisible, modalVisible, setSelectedDates, selectedDates, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
 	const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();

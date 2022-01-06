@@ -6,9 +6,6 @@ import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
 
-// Component Imports
-
-// Design Imports
 
 export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
 	AppProps): JSX.Element {

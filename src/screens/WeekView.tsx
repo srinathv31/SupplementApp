@@ -11,9 +11,7 @@ import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
 import GestureRecognizer from "react-native-swipe-gestures";
 import Modal from "react-native-modal";
-// Component Imports
 
-// Design Imports
 
 export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
 	const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);

@@ -7,9 +7,6 @@ import IconI from "react-native-vector-icons/Ionicons";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
 
-// Component Imports
-
-// Design Imports
 
 export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
 	const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);

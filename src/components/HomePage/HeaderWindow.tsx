@@ -10,10 +10,6 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 import TimePicker from "../SupplementViews/TimePicker";
 import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
 
-// Component Imports
-
-// Design Imports
-
 
 export default function HeaderWindow(AllProps: AppProps): JSX.Element {
   

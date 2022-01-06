@@ -3,9 +3,6 @@ import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { AppProps } from "../../interfaces/Props";
 
-// Component Imports
-
-// Design Imports
 
 export default function JournalButton( { setModalVisible, setJournalText, daySelected, setSupplementMap, supplementMap }: AppProps): JSX.Element {
 
