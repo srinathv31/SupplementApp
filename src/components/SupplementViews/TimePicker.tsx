@@ -47,7 +47,7 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<Text style={styles.modalText}>Changing: {selectedSupplement.Supplement.name} {selectedSupplement.time}</Text>
+					{ multipleAddMode ? <Text style={styles.modalText}>Choose Scheduled Time For: {selectedSupplement.Supplement.name} {selectedSupplement.time}</Text> : <Text style={styles.modalText}>Setting Time: {selectedSupplement.Supplement.name} {selectedSupplement.time}</Text> }
 					<DateTimePicker
 						testID="dateTimePicker"
 						value={time}
@@ -61,7 +61,7 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
 						style={[styles.button, styles.buttonClose]}
 						onPress={() => handleJournal()}
 					>
-						<Text style={styles.textStyle}>Close Journal</Text>
+						{ multipleAddMode ? <Text style={styles.textStyle}>Set Time</Text> : <Text style={styles.textStyle}>{ selectedSupplement.time !== "" ? "Set Time" : "Close" }</Text> }
 					</Pressable>
 				</View>
 			</View>
