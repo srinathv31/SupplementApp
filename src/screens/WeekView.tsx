@@ -102,6 +102,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 	}
 
 	function handleStatusToggle(item: SupplementObject) {
+		setSwipeAnimation("fadeIn");
 		setSelectedSupplement(item);
 		setShowStatusButtons(!showStatusButtons);
 	}
@@ -160,7 +161,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 									>
 										<TouchableHighlight key={item.date}>
 											<View style={styles.ListItem}>
-												<Pressable onPress={() => handleDayClick(item)}>
+												<Pressable onPress={() => (handleDayClick(item), setModalVisible({ modal: "hide-modal" }), setIndex(1))}>
 													<Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
 												</Pressable>
 												<Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
