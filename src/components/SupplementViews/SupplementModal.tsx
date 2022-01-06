@@ -1,7 +1,8 @@
 // Source Imports
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
+import SearchBar from "./SearchBar";
 import SupplementListView from "./SupplementListView";
 // import Modal from "react-native-modal";
 
@@ -10,6 +11,8 @@ import SupplementListView from "./SupplementListView";
 // Design Imports
 
 export default function SupplementModal( AllProps: AppProps ): JSX.Element {
+	const [query, setQuery] = useState<string>("");
+
 	return(
 		<Modal
 			animationType="slide"
@@ -22,10 +25,14 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
 					<Text style={styles.modalText}>Choose Supplement to Add</Text>
+					<SearchBar
+						setQuery={setQuery}
+						query={query}
+					></SearchBar>
 					<SupplementListView
 						{...AllProps}
 						fontSizeNumber={18}
-						query={""}
+						query={query}
 					></SupplementListView>
 					<Pressable
 						style={[styles.button, styles.buttonClose]}
@@ -66,7 +73,7 @@ const styles = StyleSheet.create({
 		elevation: 2,
 		width: 125,
 		alignSelf: "center",
-		marginTop: "-30%"
+		marginTop: "-55%"
 	},
 	buttonOpen: {
 		backgroundColor: "#F194FF",

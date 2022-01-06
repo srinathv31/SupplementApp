@@ -8,7 +8,6 @@ import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
-// import SearchBar from "./SearchBar";
 
 // Component Imports
 
@@ -55,10 +54,6 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 	return(
 		<View style={{ alignSelf: "center" }}>
 			{ fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
-			{/* { fontSizeNumber !== 24 && <SearchBar 
-				setQuery={setSmallQuery}
-				query={smallQuery}
-			></SearchBar>} */}
 			<FlatList
 				data={
 					SupplementList.filter(post => {
