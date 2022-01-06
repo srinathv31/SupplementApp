@@ -1,6 +1,6 @@
 // Source Imports
 import React from "react";
-import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../../assets/SupplementList.json";
 import { AppProps } from "../../interfaces/Props";
@@ -8,6 +8,7 @@ import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
+// import SearchBar from "./SearchBar";
 
 // Component Imports
 
@@ -15,7 +16,7 @@ import sortDailyList from "../../utilities/sortDailyList";
 
 export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible }: {
     fontSizeNumber: number,
-    query: string,
+	query: string,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
 	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"]
@@ -54,6 +55,10 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 	return(
 		<View style={{ alignSelf: "center" }}>
 			{ fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
+			{/* { fontSizeNumber !== 24 && <SearchBar 
+				setQuery={setSmallQuery}
+				query={smallQuery}
+			></SearchBar>} */}
 			<FlatList
 				data={
 					SupplementList.filter(post => {
@@ -64,16 +69,15 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 						}
 					})
 				}
-				renderItem={({ item, separators }) => (
-					<TouchableHighlight
+				renderItem={({ item }) => (
+					<TouchableOpacity
 						key={item.name}
 						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" })) : () => addSupplement(item)}
-						onShowUnderlay={separators.highlight}
-						onHideUnderlay={separators.unhighlight}>
+					>
 						<View>
 							<Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>
 						</View>
-					</TouchableHighlight>
+					</TouchableOpacity>
 				)}
 			></FlatList>
 		</View>
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
 		color: "white"
 	},
 	ListItemSmall: {
-		fontSize: 16,
+		fontSize: 20,
 		fontWeight: "500",
 		textAlign: "center",
 		padding: 5,
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		borderWidth: 1,
 		borderRadius: 10,
-		backgroundColor: "orange",
+		backgroundColor: "#112442",
 		overflow:"hidden"
 	}
 });

@@ -3,6 +3,7 @@ import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import SupplementListView from "./SupplementListView";
+// import Modal from "react-native-modal";
 
 // Component Imports
 
@@ -20,7 +21,7 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<Text style={styles.modalText}>Supplement List</Text>
+					<Text style={styles.modalText}>Choose Supplement to Add</Text>
 					<SupplementListView
 						{...AllProps}
 						fontSizeNumber={18}
@@ -41,32 +42,31 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 const styles = StyleSheet.create({
 	centeredView: {
 		flex: 1,
-		justifyContent: "space-between",
-		alignItems: "center",
-		marginTop: "25%",
-		maxHeight: "55%"
+		justifyContent: "center",
+		alignItems:"center",
 	},
 	modalView: {
-		margin: 20,
-		backgroundColor: "white",
-		borderRadius: 20,
-		paddingBottom: 15,
-		paddingTop: 15,
-		alignItems: "center",
+		width: "75%", padding: 10,
+		height: "80%",
+		borderRadius: 10,
+		borderWidth: 1,
+		backgroundColor: "#0B172A",
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
 			height: 2
 		},
-		shadowOpacity: 0.25,
+		shadowOpacity: 0.75,
 		shadowRadius: 4,
-		elevation: 5
+		overflow: "hidden"
 	},
 	button: {
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
-		width: 125
+		width: 125,
+		alignSelf: "center",
+		marginTop: "-30%"
 	},
 	buttonOpen: {
 		backgroundColor: "#F194FF",
@@ -80,9 +80,9 @@ const styles = StyleSheet.create({
 		textAlign: "center"
 	},
 	modalText: {
-		marginBottom: 15,
-		textAlign: "center",
-		width: 125,
-		textDecorationLine: "underline"
+		fontSize: 18,
+		fontWeight: "600",
+		color: "white",
+		textAlign: "center"
 	}
 });

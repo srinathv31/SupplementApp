@@ -78,10 +78,11 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
 	return(
 		<Modal
 			animationIn={swipeAnimation}
-			animationOut="zoomOut"
-			isVisible={modalVisible.modal === "weekly-modal"}
+			animationOut="slideOutDown"
+			isVisible={modalVisible.modal === "weekly-modal" ? true : false}
 			useNativeDriver={true}
-			onBackdropPress={() => setModalVisible({ modal: "hide-modal" })}
+			backdropTransitionOutTiming={0}
+			hideModalContentWhileAnimating
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
