@@ -86,7 +86,7 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
 				<FlatList
 					data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
 					renderItem={({ item }) => (
-						<View style={{ flexDirection: "row" }}>
+						<View style={{ flexDirection: "row", justifyContent: "center" }}>
 							{ (selectedSupplement === item && showStatusButtons) && <View style={{ flexDirection: "column" }}>
 								<IconI onPress={() => toggleTakenStatus("not-taken", item)} name={"radio-button-off-outline"} style={[styles.IconPadding, { color: "#EEE" }]}></IconI>
 								<IconI onPress={() => toggleTakenStatus("taken-off-time", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "#fcc623" }]}></IconI>
@@ -127,7 +127,6 @@ const styles = StyleSheet.create({
 		overflow:"hidden",
 		flexDirection: "row",
 		justifyContent: "space-evenly",
-		
 	},
 	ListName: {
 		fontSize: 18,
