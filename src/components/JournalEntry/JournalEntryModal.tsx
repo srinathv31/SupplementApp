@@ -6,9 +6,6 @@ import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
 
-// Component Imports
-
-// Design Imports
 
 export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
 	AppProps): JSX.Element {
@@ -49,7 +46,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		setSelectedDates(selectedDatesCopy);
 		setSupplementMap(supplementMapCopy);
 
-		setModalVisible("hide-modal");
+		setModalVisible({ modal: "hide-modal" });
 	}
 
 
@@ -57,9 +54,9 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "journal" ? true : false}
+			visible={modalVisible.modal === "journal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("hide-modal");
+				setModalVisible({ modal: "hide-modal" });
 			}}
 		>
 			<View style={styles.centeredView}>

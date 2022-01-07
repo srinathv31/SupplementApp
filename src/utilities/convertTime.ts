@@ -1,4 +1,4 @@
-import Supplement from "../interfaces/Supplement";
+import { SupplementObject } from "../interfaces/Supplement";
 
 export default function convertDateTimeToStringTime(currentDate: Date) {
 	let timeTag = "AM";
@@ -23,7 +23,7 @@ export default function convertDateTimeToStringTime(currentDate: Date) {
 	return hour + ":" + minutes + " " + ""+timeTag;
 }
 
-export function convertStringTimeToDateTime(supplement: {Supplement: Supplement, time: string}) {
+export function convertStringTimeToDateTime(supplement: SupplementObject) {
 	
 	// Set time strings to same length
 	if (supplement.time.length === 7) {

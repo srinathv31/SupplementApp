@@ -6,9 +6,6 @@ import DailySupplementWindow from "../components/HomePage/DailySupplementWindow"
 import ExploreWindow from "../components/HomePage/ExploreWindow";
 import { AppProps } from "../interfaces/Props";
 
-// Component Imports
-
-// Design Imports
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
 	return(

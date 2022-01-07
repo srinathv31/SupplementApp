@@ -5,7 +5,7 @@ import { DateData } from "react-native-calendars/src/types";
 
 import BottomMenuTab from "./components/Menus/BottomMenuTab";
 import SupplementModal from "./components/SupplementViews/SupplementModal";
-import Supplement from "./interfaces/Supplement";
+import { SupplementMapObject, SupplementObject } from "./interfaces/Supplement";
 import CalendarPage from "./screens/CalendarPage";
 import HomePage from "./screens/HomePage";
 import SupplementInfoPage from "./screens/SupplementInfoPage";
@@ -16,12 +16,14 @@ import { LogBox } from "react-native";
 import HeaderWindow from "./components/HomePage/HeaderWindow";
 import { WeekDay } from "./interfaces/WeekDay";
 import SupplementList from "./assets/SupplementList.json";
+import CalendarDotObject from "./interfaces/Calendar";
+import ModalObject from "./interfaces/Modal";
 
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
 	// Data structure that handles supplements and journal enttry for a given day
-	const [supplementMap, setSupplementMap] = useState<Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>>({});
+	const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
 	// Returns string date in format - MM/DD/YYYY
 	const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 	// Returns DateData object of date
@@ -29,11 +31,11 @@ const App = () => {
 	// Boolean that toggles sub menu
 	const [showButtons, setShowButtons] = useState<boolean>(false);
 	// List of dates that tells the Calendar component which dates require dots and the selected background
-	const [selectedDates, setSelectedDates] = useState<{[date: string]: {dots: [{key: string, color: string}], selected: boolean}}>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
+	const [selectedDates, setSelectedDates] = useState<CalendarDotObject>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
 	// Returns journal entry text
 	const [journalText, setJournalText] = useState<string>("");
-	// Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal"
-	const [modalVisible, setModalVisible] = useState<string>("hide-modal");
+	// Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
+	const [modalVisible, setModalVisible] = useState<ModalObject>({ modal: "hide-modal" });
 	// Index for page sliding
 	const [index, setIndex] = React.useState(1);
 	// Prev Page feature
@@ -44,9 +46,9 @@ const App = () => {
 	const [monthText, setMonthText] = useState<string>(grabMonth(week));
 	// Sets Animation for Weekly modal
 	const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
-
-	const [selectedSupplement, setSelectedSupplement] = useState<{Supplement: Supplement, time: string}>({ Supplement: SupplementList[0], time: "" });
-
+	// Tracks selected supplement for mass adding and time changing features
+	const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>({ Supplement: SupplementList[0], time: "", taken: "not-taken" });
+	// Sets app in multipleAdd State mode
 	const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
 
 	const [routes] = useState([
@@ -118,7 +120,7 @@ const App = () => {
 			<SafeAreaView style={{ flex: 1 }}>
 				<StatusBar barStyle={"light-content"} />
         
-				<View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal") ? 0.5 : 1 }}>
+				<View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal") ? 0.5 : 1 }}>
 					<View style={{ flex: 1 }}>
 						<SupplementModal {...AllProps}></SupplementModal>
 						<HeaderWindow {...AllProps}></HeaderWindow>

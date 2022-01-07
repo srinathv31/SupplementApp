@@ -2,9 +2,6 @@
 import React from "react";
 import { View } from "react-native";
 
-// Component Imports
-
-// Design Imports
 
 export default function Divider(): JSX.Element {
 	return(

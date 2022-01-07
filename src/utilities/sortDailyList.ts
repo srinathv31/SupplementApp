@@ -1,11 +1,11 @@
-import Supplement from "../interfaces/Supplement";
+import { SupplementObject } from "../interfaces/Supplement";
 
-export default function sortDailyList(supplementList: {Supplement: Supplement, time: string}[]): {Supplement: Supplement, time: string}[] {
+export default function sortDailyList(supplementList: SupplementObject[]): SupplementObject[] {
 	const supplementListCopy = supplementList;
-	let AMBucket: {Supplement: Supplement, time: string}[] = [];
-	let PMBucket: {Supplement: Supplement, time: string}[] = [];
-	let NoonMidnightBucket: {Supplement: Supplement, time: string}[] = [];
-	const sortedBucket: {Supplement: Supplement, time: string}[] = [];
+	let AMBucket: SupplementObject[] = [];
+	let PMBucket: SupplementObject[] = [];
+	let NoonMidnightBucket: SupplementObject[] = [];
+	const sortedBucket: SupplementObject[] = [];
 
 	// Make all time strings the same length
 	Object.values(supplementListCopy).forEach(supplement => {

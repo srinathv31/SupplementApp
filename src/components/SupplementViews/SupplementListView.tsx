@@ -1,21 +1,18 @@
 // Source Imports
 import React from "react";
-import { FlatList, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import SupplementList from "../../assets/SupplementList.json";
 import { AppProps } from "../../interfaces/Props";
-import Supplement from "../../interfaces/Supplement";
+import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
 
-// Component Imports
-
-// Design Imports
 
 export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible }: {
     fontSizeNumber: number,
-    query: string,
+	query: string,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
 	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"]
@@ -28,7 +25,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 			supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
 		}
         
-		supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "" });
+		supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
 		addDate(objDaySelected, supplementMapCopy);
 
 		supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
@@ -36,7 +33,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 		setSupplementMap(supplementMapCopy);
 	}
 
-	function addDate(day: DateData, supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>){
+	function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>){
 		const selectedDatesCopy = { ...selectedDates };
 		const stringDate = day.dateString;
 		if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
@@ -64,16 +61,15 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 						}
 					})
 				}
-				renderItem={({ item, separators }) => (
-					<TouchableHighlight
+				renderItem={({ item }) => (
+					<TouchableOpacity
 						key={item.name}
-						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "" }), setModalVisible("time-modal")) : () => addSupplement(item)}
-						onShowUnderlay={separators.highlight}
-						onHideUnderlay={separators.unhighlight}>
+						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" })) : () => addSupplement(item)}
+					>
 						<View>
 							<Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>
 						</View>
-					</TouchableHighlight>
+					</TouchableOpacity>
 				)}
 			></FlatList>
 		</View>
@@ -94,7 +90,7 @@ const styles = StyleSheet.create({
 		color: "white"
 	},
 	ListItemSmall: {
-		fontSize: 16,
+		fontSize: 20,
 		fontWeight: "500",
 		textAlign: "center",
 		padding: 5,
@@ -102,7 +98,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		borderWidth: 1,
 		borderRadius: 10,
-		backgroundColor: "orange",
+		backgroundColor: "#112442",
 		overflow:"hidden"
 	}
 });

@@ -4,9 +4,6 @@ import { Text } from "react-native";
 import SupplementList from "../../assets/SupplementList.json";
 import LinearGradient from "react-native-linear-gradient";
 
-// Component Imports
-
-// Design Imports
 
 export default function ExploreWindow(): JSX.Element {
 	const [randomSupplement, setRandomSupplement] = useState<number>(0);

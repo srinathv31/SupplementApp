@@ -1,18 +1,20 @@
 import { DateData } from "react-native-calendars/src/types";
-import Supplement from "./Supplement";
+import CalendarDotObject from "./Calendar";
+import ModalObject from "./Modal";
+import { SupplementMapObject, SupplementObject } from "./Supplement";
 import { WeekDay } from "./WeekDay";
 
 export interface AppProps {
     setDaySelected: (d: string) => void,
     daySelected: string,
-    setModalVisible: (j: string) => void,
-    modalVisible: string,
-    setSupplementMap: (d: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>) => void,
-    supplementMap: Record<string, {SupplementSchedule: {Supplement: Supplement, time: string}[], JournalEntry: string}>,
+    setModalVisible: (j: ModalObject) => void,
+    modalVisible: ModalObject,
+    setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
+    supplementMap: Record<string, SupplementMapObject>,
     setObjDaySelected: (o: DateData) => void,
     objDaySelected: DateData,
-    setSelectedDates: (d: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}}) => void,
-    selectedDates: {[date: string]: {dots: [{key: string, color: string}], selected: boolean}},
+    setSelectedDates: (d: CalendarDotObject) => void,
+    selectedDates: CalendarDotObject,
     setShowButtons: (b: boolean) => void,
     showButtons: boolean,
     setIndex: (i: number) => void,
@@ -27,8 +29,8 @@ export interface AppProps {
     monthText: string,
     setSwipeAnimation: (s: string) => void,
     swipeAnimation: string,
-    setSelectedSupplement: (s: {Supplement: Supplement, time: string}) => void,
-    selectedSupplement: {Supplement: Supplement, time: string},
+    setSelectedSupplement: (s: SupplementObject) => void,
+    selectedSupplement: SupplementObject,
     setMultipleAddMode: (m: boolean) => void,
     multipleAddMode: boolean
 }

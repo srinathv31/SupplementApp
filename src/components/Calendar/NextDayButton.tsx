@@ -6,9 +6,6 @@ import { AppProps } from "../../interfaces/Props";
 import generateNextDate from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
-// Component Imports
-
-// Design Imports
 
 export default function NextDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: AppProps ): JSX.Element {
 

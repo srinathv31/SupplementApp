@@ -5,16 +5,14 @@ import { AppProps } from "../../interfaces/Props";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
-// Component Imports
 
-// Design Imports
 
 export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, daySelected, multipleAddMode }: 
 	AppProps): JSX.Element {
 	const [time, setTime] = useState<Date>(new Date());
 
 	function handleJournal() {
-		multipleAddMode ? setModalVisible("calendar-modal") : setModalVisible("hide-modal");
+		multipleAddMode ? setModalVisible({ modal: "calendar-modal" }) : setModalVisible({ modal: "hide-modal" });
 	}
 	
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,14 +38,14 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
 		<Modal
 			animationType="slide"
 			transparent={true}
-			visible={modalVisible === "time-modal" ? true : false}
+			visible={modalVisible.modal === "time-modal" ? true : false}
 			onRequestClose={() => {
-				setModalVisible("hide-modal");
+				setModalVisible({ modal: "hide-modal" });
 			}}
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<Text style={styles.modalText}>Changing: {selectedSupplement.Supplement.name} {selectedSupplement.time}</Text>
+					{ multipleAddMode ? <Text style={styles.modalText}>Choose Scheduled Time For: {selectedSupplement.Supplement.name} {selectedSupplement.time}</Text> : <Text style={styles.modalText}>Setting Time: {selectedSupplement.Supplement.name} {selectedSupplement.time}</Text> }
 					<DateTimePicker
 						testID="dateTimePicker"
 						value={time}
@@ -61,7 +59,7 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
 						style={[styles.button, styles.buttonClose]}
 						onPress={() => handleJournal()}
 					>
-						<Text style={styles.textStyle}>Close Journal</Text>
+						{ multipleAddMode ? <Text style={styles.textStyle}>Set Time</Text> : <Text style={styles.textStyle}>{ selectedSupplement.time !== "" ? "Set Time" : "Close" }</Text> }
 					</Pressable>
 				</View>
 			</View>

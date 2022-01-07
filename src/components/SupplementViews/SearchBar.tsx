@@ -2,9 +2,6 @@
 import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-// Component Imports
-
-// Design Imports
 
 export default function SearchBar({ setQuery, query }: {
     setQuery: (q: string) => void, query: string

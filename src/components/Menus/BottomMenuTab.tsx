@@ -4,9 +4,7 @@ import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
 
-// Component Imports
 
-// Design Imports
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
 export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode }: AppProps): JSX.Element {
@@ -39,11 +37,11 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
 		<View style={{ zIndex: 100 }}>
 			<Animated.View style={{ opacity: fadeAnim }}>
 				{ showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
-					<Icon onPress={() => setModalVisible("supplement-modal")}
+					<Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
 						name="pill" size={30} color="white"/>
 					<Icon name="emoticon-happy-outline" size={30} color="white"/>
 					<Icon name="silverware-fork-knife" size={30} color="white"/>
-					<Icon onPress={() => (setModalVisible("supplement-modal"), setMultipleAddMode(true))} 
+					<Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
 						name="clock" size={30} color="white"/>
 				</View> }
 			</Animated.View>
