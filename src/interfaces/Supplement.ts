@@ -1,6 +1,10 @@
 interface Supplement {
     name: string,
+    smallDescription: string,
     description: string,
+    benefits: string,
+    safe: string,
+    sideEffects: string
 }
 
 export interface SupplementObject {
