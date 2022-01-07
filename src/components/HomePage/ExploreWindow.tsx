@@ -4,14 +4,11 @@ import { Text, TouchableOpacity, View } from "react-native";
 import SupplementList from "../../assets/SupplementList.json";
 import LinearGradient from "react-native-linear-gradient";
 import Divider from "../Design/Divider";
-import Supplement, { SupplementObject } from "../../interfaces/Supplement";
+import Supplement from "../../interfaces/Supplement";
 import { AppProps } from "../../interfaces/Props";
 
 
-export default function ExploreWindow({ setExploreSupplement, setModalVisible }: {
-	setExploreSupplement: (e: SupplementObject) => void,
-	setModalVisible: AppProps["setModalVisible"],
-}): JSX.Element {
+export default function ExploreWindow({ setSelectedSupplement, setModalVisible }: AppProps): JSX.Element {
 	const [randomSupplement, setRandomSupplement] = useState<number>(0);
 	// const [randomGradient, setRandomGradient] = useState<number>(0);
 
@@ -36,7 +33,7 @@ export default function ExploreWindow({ setExploreSupplement, setModalVisible }:
 	// }
 
 	function handleTouch(supp: Supplement) {
-		setExploreSupplement({ Supplement: supp, time: "", taken: "not-taken" });
+		setSelectedSupplement({ Supplement: supp, time: "", taken: "not-taken" });
 		setModalVisible({ modal: "info-modal" });
 	}
 

@@ -22,7 +22,7 @@ export default function SupplementPage({ supplementObj }: {
 			<Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Is it Safe?</Text>
 			<Divider length="full"></Divider>
 			<Text style={{ color: "white", fontSize: 18, padding: 10 }}>{supplement.safe}</Text>
-			<Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>What are the Side Effects?</Text>
+			<Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Any Side Effects?</Text>
 			<Divider length="full"></Divider>
 			<Text style={{ color: "white", fontSize: 18, padding: 10 }}>{supplement.sideEffects}</Text>
 		</ScrollView>
