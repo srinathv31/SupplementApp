@@ -2,20 +2,21 @@
 import React from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
-import SupplementList from "../../assets/SupplementList.json";
 import { AppProps } from "../../interfaces/Props";
 import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
+import SupplementList from "../../assets/SupplementList.json";
 
 
-export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible }: {
+export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
     fontSizeNumber: number,
 	query: string,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
 	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"],
-	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"]
+	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
+	index: AppProps["index"]
 }): JSX.Element {
 
 	function addSupplement(item: Supplement) {
@@ -48,6 +49,11 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 		setSelectedDates(selectedDatesCopy);
 	}
 
+	function expandSupplement(item: Supplement) {
+		setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
+		setModalVisible({ modal: "info-modal" });
+	}
+
 	return(
 		<View style={{ alignSelf: "center" }}>
 			{ fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
@@ -64,7 +70,10 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 				renderItem={({ item }) => (
 					<TouchableOpacity
 						key={item.name}
-						onPress={ multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" })) : () => addSupplement(item)}
+						onPress={ 
+							multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
+								: index === 2 ? () => expandSupplement(item) : () => addSupplement(item)
+						}
 					>
 						<View>
 							<Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>

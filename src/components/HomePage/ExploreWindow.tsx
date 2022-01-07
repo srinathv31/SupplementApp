@@ -1,11 +1,17 @@
 // Source Imports
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import SupplementList from "../../assets/SupplementList.json";
 import LinearGradient from "react-native-linear-gradient";
+import Divider from "../Design/Divider";
+import Supplement, { SupplementObject } from "../../interfaces/Supplement";
+import { AppProps } from "../../interfaces/Props";
 
 
-export default function ExploreWindow(): JSX.Element {
+export default function ExploreWindow({ setExploreSupplement, setModalVisible }: {
+	setExploreSupplement: (e: SupplementObject) => void,
+	setModalVisible: AppProps["setModalVisible"],
+}): JSX.Element {
 	const [randomSupplement, setRandomSupplement] = useState<number>(0);
 	// const [randomGradient, setRandomGradient] = useState<number>(0);
 
@@ -29,12 +35,22 @@ export default function ExploreWindow(): JSX.Element {
 	// 	setRandomGradient(randomIndex);
 	// }
 
+	function handleTouch(supp: Supplement) {
+		setExploreSupplement({ Supplement: supp, time: "", taken: "not-taken" });
+		setModalVisible({ modal: "info-modal" });
+	}
+
 	return(
-		<LinearGradient colors={["#ee0979", "#ff6a00"]} style={{ flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "orange", height: "20%", borderRadius: 10, padding: 10, margin: 10 }}>
-			<Text style={{ fontSize: 26, fontWeight: "600" }}>Explore</Text>
-			<Text style={{ fontSize: 20 }}>{SupplementList[randomSupplement].name}</Text>
-			<Text style={{ fontSize: 18 }}>{SupplementList[randomSupplement].description}</Text>
-		</LinearGradient>
+		<View style={{ flexDirection: "column", height: "20%",  margin: 10 }}>
+			<TouchableOpacity onPress={() => handleTouch(SupplementList[randomSupplement])}>
+				<LinearGradient colors={["#ee0979", "#ff6a00"]} style={{ justifyContent: "space-evenly", borderRadius: 10, padding: 10, alignItems: "center", height: "100%" }} >
+					<Text style={{ fontSize: 26, fontWeight: "600" }}>Explore</Text>
+					<Text style={{ fontSize: 20, fontWeight: "500" }}>{SupplementList[randomSupplement].name}</Text>
+					<Divider length="small" color="black"></Divider>
+					<Text style={{ fontSize: 18, textAlign: "center" }}>{SupplementList[randomSupplement].smallDescription}</Text>
+				</LinearGradient>
+			</TouchableOpacity>
+		</View>
 
 	);
 }

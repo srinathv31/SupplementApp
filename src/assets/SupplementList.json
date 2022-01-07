@@ -1,32 +1,64 @@
 [{
     "name": "Creatine",
-    "description": "Muscle Stuff"
+    "smallDescription": "Helps Muscles Retain Water for more Power.",
+    "description": "Creatine is a molecule that's produced in the body from amino acids. It's primarily made in the liver and to a lesser extent in the kidneys and pancreas. It stores high-energy phosphate groups in the form of phosphocreatine which are donated to ADP, regenerating it to ATP, the primary energy carrier in the body. This role in energy production is particularly relevant under conditions of high energy demand such as intense physical or mental activity.\n\nCreatine can be found in some foods and is most prevalent in meat and fish. Athletes commonly take it as a powder or in capsules.",
+    "benefits": "The primary benefit of creatine is an improvement in strength and power output during resistance exercise. For this purpose, creatine is well-researched, and the effects are quite notable for a supplement. When used in conjunction with resistance exercise, creatine may modestly increase lean mass. It has also been tested for anaerobic running capacity in many studies, the results of which are fairly mixed but generally suggest a small improvement in performance.",
+    "safe": "Most of the supposed dangers of creatine are unfounded. Due to the bad reputation of performance-enhancing drugs, it has been wrongfully equated with the worst examples. It also increases levels of creatinine in the body, which are a marker of poor kidney function. However, the increase in creatinine isn't due to kidney damage, but simply more creatinine being produced. There is a lack of long-term studies in people with reduced kidney function, however, so caution could still be taken in that instance. Besides the minor gastrointestinal issues from excessive creatine, it is unlikely to be unsafe or bad for you.",
+    "sideEffects": "When taken without sufficient water, stomach cramping can occur. Diarrhea and nausea can occur when too much creatine is taken at once, in which case doses should be spread out throughout the day and taken with meals."
 },
 {
     "name": "Fish Oil",
-    "description": "Cognitive Function"
+    "smallDescription": "Cognitive Function",
+    "description": "Cognitive Function",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 },
 {
     "name": "Melatonin",
-    "description": "Sleep Time"
+    "smallDescription": "Sleep Time",
+    "description": "Sleep Time",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 },
 {
     "name": "Vitamin B12",
-    "description": "Energy Function"
+    "smallDescription": "Energy Function",
+    "description": "Energy Function",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 },
 {
     "name": "Vitamin D",
-    "description": "Energy Function"
+    "smallDescription": "Helps Muscles Retain Water for more Power.",
+    "description": "Energy Function",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 },
 {
     "name": "Zinc",
-    "description": "Revitilization"
+    "smallDescription": "Revitilization",
+    "description": "Revitilization",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 },
 {
     "name": "Vitamin C",
-    "description": "More Energy"
+    "smallDescription": "More Energy",
+    "description": "More Energy",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 },
 {
     "name": "Calcium",
-    "description": "Stronger Bones"
+    "smallDescription": "Stronger Bones",
+    "description": "Stronger Bones",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": ""
 }]
