@@ -55,32 +55,35 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 	}
 
 	return(
-		<View style={{ alignSelf: "center" }}>
+		<View style={{ alignSelf: "center", flex: 1 }}>
 			{ fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
-			<FlatList
-				data={
-					SupplementList.filter(post => {
-						if (query === "") {
-							return post;
-						} else if (post.name.toLowerCase().includes(query.toLowerCase())) {
-							return post;
-						}
-					})
-				}
-				renderItem={({ item }) => (
-					<TouchableOpacity
-						key={item.name}
-						onPress={ 
-							multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
-								: index === 2 ? () => expandSupplement(item) : () => addSupplement(item)
-						}
-					>
-						<View>
-							<Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>
-						</View>
-					</TouchableOpacity>
-				)}
-			></FlatList>
+			<View style={{ flex: 1 }}>
+				<FlatList
+					contentContainerStyle={{ flexGrow: 1 }}
+					data={
+						SupplementList.filter(post => {
+							if (query === "") {
+								return post;
+							} else if (post.name.toLowerCase().includes(query.toLowerCase())) {
+								return post;
+							}
+						})
+					}
+					renderItem={({ item }) => (
+						<TouchableOpacity
+							key={item.name}
+							onPress={ 
+								multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
+									: index === 2 ? () => expandSupplement(item) : () => addSupplement(item)
+							}
+						>
+							<View>
+								<Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>
+							</View>
+						</TouchableOpacity>
+					)}
+				></FlatList>
+			</View>
 		</View>
 	);
 }
