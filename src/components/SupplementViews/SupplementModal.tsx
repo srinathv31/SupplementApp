@@ -1,6 +1,7 @@
 // Source Imports
 import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { AppProps } from "../../interfaces/Props";
 import SearchBar from "./SearchBar";
 import SupplementListView from "./SupplementListView";
@@ -38,6 +39,8 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
 						<Text style={styles.textStyle}>Close</Text>
 					</Pressable>
 				</View>
+				<Toast />
+
 			</View>
 		</Modal>
 	);

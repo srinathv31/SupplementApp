@@ -8,6 +8,7 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
 import SupplementList from "../../assets/SupplementList.json";
+import { showAddToast } from "../../utilities/toasts";
 
 
 export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
@@ -31,6 +32,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
 
 		supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
 
+		showAddToast(item, daySelected);
 		setSupplementMap(supplementMapCopy);
 	}
 
