@@ -13,27 +13,27 @@ import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
 
 export default function HeaderWindow(AllProps: AppProps): JSX.Element {
   
-	return(
-		<View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-			<PrevPageButton {...AllProps}></PrevPageButton>
-			<PrevDayButton  {...AllProps}></PrevDayButton>
-			<Text style={styles.sectionTitle}>{AllProps.daySelected}</Text>
-			<NextDayButton {...AllProps}></NextDayButton>
-			<JournalEntryModal {...AllProps}></JournalEntryModal>
-			<JournalButton {...AllProps}></JournalButton>
-			<TimePicker {...AllProps}></TimePicker>
-			<MultipleDatePicker {...AllProps}></MultipleDatePicker>
-		</View>
-	);
+    return(
+        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+            <PrevPageButton {...AllProps}></PrevPageButton>
+            <PrevDayButton  {...AllProps}></PrevDayButton>
+            <Text style={styles.sectionTitle}>{AllProps.daySelected}</Text>
+            <NextDayButton {...AllProps}></NextDayButton>
+            <JournalEntryModal {...AllProps}></JournalEntryModal>
+            <JournalButton {...AllProps}></JournalButton>
+            <TimePicker {...AllProps}></TimePicker>
+            <MultipleDatePicker {...AllProps}></MultipleDatePicker>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-	sectionTitle: {
-		fontSize: 24,
-		fontWeight: "600",
-		textAlign: "center",
-		padding: 10,
-		margin: 12,
-		color: "white"
-	}
+    sectionTitle: {
+        fontSize: 24,
+        fontWeight: "600",
+        textAlign: "center",
+        padding: 10,
+        margin: 12,
+        color: "white"
+    }
 });

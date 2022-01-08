@@ -10,18 +10,18 @@ import { AppProps } from "../interfaces/Props";
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
 
-	return(
-		<View>
-			<DetailedSupplementModal
-				{...AllProps}
-			></DetailedSupplementModal>
-			<ExploreWindow
-				{...AllProps}
-			></ExploreWindow>
-			<Divider length="full"></Divider>
-			<DailySupplementWindow
-				{...AllProps}
-			></DailySupplementWindow>
-		</View>
-	);
+    return(
+        <View>
+            <DetailedSupplementModal
+                {...AllProps}
+            ></DetailedSupplementModal>
+            <ExploreWindow
+                {...AllProps}
+            ></ExploreWindow>
+            <Divider length="full"></Divider>
+            <DailySupplementWindow
+                {...AllProps}
+            ></DailySupplementWindow>
+        </View>
+    );
 }

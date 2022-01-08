@@ -6,10 +6,10 @@ import WeeklySupplementModal from "./WeekView";
 
 
 export default function CalendarPage( AllProps: AppProps): JSX.Element {
-	return(
-		<>
-			<WeeklySupplementModal {...AllProps}></WeeklySupplementModal>
-			<MonthView {...AllProps}></MonthView>
-		</>
-	);
+    return(
+        <>
+            <WeeklySupplementModal {...AllProps}></WeeklySupplementModal>
+            <MonthView {...AllProps}></MonthView>
+        </>
+    );
 }

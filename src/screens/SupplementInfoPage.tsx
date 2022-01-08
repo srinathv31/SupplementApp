@@ -7,22 +7,22 @@ import { AppProps } from "../interfaces/Props";
 
 
 export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
-	const [query, setQuery] = useState<string>("");
+    const [query, setQuery] = useState<string>("");
 
-	return(
-		<>
-			<DetailedSupplementModal
-				{...AllProps}
-			></DetailedSupplementModal>
-			<SearchBar
-				setQuery={setQuery}
-				query={query}
-			></SearchBar>
-			<SupplementListView
-				{...AllProps}
-				fontSizeNumber={24}
-				query={query}
-			></SupplementListView>
-		</>
-	);
+    return(
+        <>
+            <DetailedSupplementModal
+                {...AllProps}
+            ></DetailedSupplementModal>
+            <SearchBar
+                setQuery={setQuery}
+                query={query}
+            ></SearchBar>
+            <SupplementListView
+                {...AllProps}
+                fontSizeNumber={24}
+                query={query}
+            ></SupplementListView>
+        </>
+    );
 }

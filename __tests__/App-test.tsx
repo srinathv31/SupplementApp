@@ -15,8 +15,8 @@ import { generateCurrentDateObject, generateWeekList } from "../src/utilities/ge
 // });
 
 it("Creates a week", () => {
-	const week = generateWeekList(generateCurrentDateObject());
+    const week = generateWeekList(generateCurrentDateObject());
 	
-	expect(week.length === 7);
+    expect(week.length === 7);
 });
 

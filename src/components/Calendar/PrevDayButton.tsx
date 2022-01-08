@@ -9,42 +9,42 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 
 export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: AppProps): JSX.Element {
 
-	function grabPrevDay(day: DateData) {
-		let copyDate = day;
+    function grabPrevDay(day: DateData) {
+        let copyDate = day;
 
-		// Current Date Info to compare
-		const date = day.day;
-		const month = day.month;
-		const year = day.year;
+        // Current Date Info to compare
+        const date = day.day;
+        const month = day.month;
+        const year = day.year;
 
-		// Based on month set max days - reset day to 31/30/(28/29)
-		copyDate = generatePrevDate(copyDate, date, month, year);
+        // Based on month set max days - reset day to 31/30/(28/29)
+        copyDate = generatePrevDate(copyDate, date, month, year);
 
-		// Setting new date string
-		let stringDay = ""+copyDate.day;
-		let stringMonth = ""+copyDate.month;
+        // Setting new date string
+        let stringDay = ""+copyDate.day;
+        let stringMonth = ""+copyDate.month;
 
-		copyDate.day < 10 ? stringDay = ""+"0"+copyDate.day : stringDay = ""+copyDate.day;
-		copyDate.month < 10 ? stringMonth = ""+"0"+copyDate.month : stringMonth = ""+copyDate.month;
+        copyDate.day < 10 ? stringDay = ""+"0"+copyDate.day : stringDay = ""+copyDate.day;
+        copyDate.month < 10 ? stringMonth = ""+"0"+copyDate.month : stringMonth = ""+copyDate.month;
 
-		copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
+        copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
         
-		const selectedDatesCopy = handleCalendar(selectedDates, copyDate.dateString);
-		setSelectedDates(selectedDatesCopy);
+        const selectedDatesCopy = handleCalendar(selectedDates, copyDate.dateString);
+        setSelectedDates(selectedDatesCopy);
 
-		setObjDaySelected(copyDate);
+        setObjDaySelected(copyDate);
 
-		return ""+copyDate.month + "/" + ""+copyDate.day + "/" + ""+copyDate.year;
-	}
+        return ""+copyDate.month + "/" + ""+copyDate.day + "/" + ""+copyDate.year;
+    }
     
-	return(
-		<Icon
-			onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
-			style={{ padding: 10,
-				margin: 15,
-				marginRight: 0,
-				marginLeft: 0 }}
-			name="chevron-left-circle" size={25} color="white"
-		/>
-	);
+    return(
+        <Icon
+            onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
+            style={{ padding: 10,
+                margin: 15,
+                marginRight: 0,
+                marginLeft: 0 }}
+            name="chevron-left-circle" size={25} color="white"
+        />
+    );
 }
