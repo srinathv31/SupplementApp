@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 
@@ -18,10 +18,15 @@ import { WeekDay } from "./interfaces/WeekDay";
 import SupplementList from "./assets/SupplementList.json";
 import CalendarDotObject from "./interfaces/Calendar";
 import ModalObject from "./interfaces/Modal";
+import User from "./interfaces/User";
+import { checkForSave } from "./utilities/storageChecker";
 
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
+   
+    // Data structure for User Data
+    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, data: { supplementMap: {}, selectedDates: {} } });
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
@@ -51,6 +56,11 @@ const App = () => {
     // Sets app in multipleAdd State mode
     const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
 
+    // UseEffect loads in saved data from phone on App Load once
+    useEffect(() => {
+        checkForSave(AllProps);
+    }, []);
+
     const [routes] = useState([
         { key: "cal", title: "Calendar" },
         { key: "home", title: "Home" },
@@ -60,6 +70,8 @@ const App = () => {
     const layout = useWindowDimensions();
 
     const AllProps: AppProps = {
+        setUserData,
+        userData,
         setDaySelected,
         daySelected,
         setModalVisible,

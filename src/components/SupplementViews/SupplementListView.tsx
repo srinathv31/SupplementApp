@@ -9,11 +9,14 @@ import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
 import SupplementList from "../../assets/SupplementList.json";
 import { showAddToast } from "../../utilities/toasts";
+import saveUserData from "../../utilities/saveUserData";
+import User from "../../interfaces/User";
 
 
-export default function SupplementListView({ fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
+export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
     fontSizeNumber: number,
 	query: string,
+    setUserData: (u: User) => void, userData: User,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
 	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
@@ -28,15 +31,17 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
         }
         
         supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
-        addDate(objDaySelected, supplementMapCopy);
+        const selectedDatesModified = addDate(objDaySelected, supplementMapCopy);
 
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
+
+        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
 
         showAddToast(item, daySelected);
         setSupplementMap(supplementMapCopy);
     }
 
-    function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>){
+    function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>) {
         const selectedDatesCopy = { ...selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
@@ -49,6 +54,7 @@ export default function SupplementListView({ fontSizeNumber, query, setSupplemen
             selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
         }
         setSelectedDates(selectedDatesCopy);
+        return selectedDatesCopy;
     }
 
     function expandSupplement(item: Supplement) {
