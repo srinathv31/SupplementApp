@@ -24,12 +24,3 @@ const saveUserToPhone = async (userData: User) => {
     }
 };
 
-const removeValue = async (userData: User) => {
-    try {
-        await AsyncStorage.removeItem(userData.name);
-    } catch(e) {
-        // remove error
-    }
-    console.log("Done.");
-};
-
