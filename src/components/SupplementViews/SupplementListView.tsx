@@ -9,7 +9,7 @@ import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import sortDailyList from "../../utilities/sortDailyList";
 import SupplementList from "../../assets/SupplementList.json";
 import { showAddToast } from "../../utilities/toasts";
-import saveUserData from "../../utilities/saveUserData";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import User from "../../interfaces/User";
 
 

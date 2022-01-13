@@ -19,7 +19,7 @@ import SupplementList from "./assets/SupplementList.json";
 import CalendarDotObject from "./interfaces/Calendar";
 import ModalObject from "./interfaces/Modal";
 import User from "./interfaces/User";
-import { checkForSave } from "./utilities/storageChecker";
+import { checkForSave } from "./utilities/saveLoadFunctions/storageChecker";
 
 LogBox.ignoreLogs(["Sending"]);
 

@@ -9,7 +9,7 @@ import { getDateString } from "../../utilities/getCurrentDate";
 import sortDailyList from "../../utilities/sortDailyList";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
-import saveUserData from "../../utilities/saveUserData";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 
 export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSelectedDates, selectedDates, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
@@ -61,7 +61,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
             });
         }
         saveUserData(userData, setUserData, supplementMapCopy, selectedDatesCopy);
-        
+
         setSelectedDates(selectedDatesCopy);
         setSupplementMap(supplementMapCopy);
         setModalVisible({ modal: "hide-modal" });

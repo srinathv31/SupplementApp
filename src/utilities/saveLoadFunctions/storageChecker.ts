@@ -1,6 +1,6 @@
-import User from "../interfaces/User";
+import User from "../../interfaces/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AppProps } from "../interfaces/Props";
+import { AppProps } from "../../interfaces/Props";
 // import CalendarDotObject from "../interfaces/Calendar";
 
 export const checkForSave = async ({ userData, setSupplementMap, setSelectedDates }: AppProps) => {
