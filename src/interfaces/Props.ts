@@ -35,6 +35,8 @@ export interface AppProps {
     setSelectedSupplement: (s: SupplementObject) => void,
     selectedSupplement: SupplementObject,
     setMultipleAddMode: (m: boolean) => void,
-    multipleAddMode: boolean
+    multipleAddMode: boolean,
+    setMood: (m: string) => void,
+    mood: string
 }
 

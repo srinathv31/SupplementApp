@@ -3,11 +3,12 @@ import React, { useRef, useState } from "react";
 import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
-import DropDownPicker from "react-native-dropdown-picker";
+import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
+import ChangeMoodModal from "../Mood/ChangeMoodModal";
 
-export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode }: AppProps): JSX.Element {
+export default function BottomMenuTab({ setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, supplementMap, daySelected }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState("");
     const [items, setItems] = useState([
@@ -54,8 +55,26 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
         showButtons ? (fadeOut(), setShowButtons(false)) : (fadeIn(), setShowButtons(true));
     }
 
+    function addMood(item: ItemType) {
+        setMood(""+item.label);
+        setModalVisible({ modal: "mood-modal" });
+    }
+
+    function handleMoodOpen() {
+        (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") ? 
+            setModalVisible({ modal: "mood-change-modal" }) :
+            setOpen(!open);
+    }
+
     return(
         <View style={{ zIndex: 100 }}>
+            <ChangeMoodModal
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
+                setOpen={setOpen}
+                supplementMap={supplementMap}
+                daySelected={daySelected}
+            ></ChangeMoodModal>
             { open && <DropDownPicker
                 open={open}
                 value={value}
@@ -72,15 +91,15 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
                 placeholder="Select A Mood for the Day"
                 searchPlaceholder="Start Typing a Mood"
                 onSelectItem={(item) => {
-                    console.log(item);
+                    addMood(item);
                 }}
             ></DropDownPicker> }
             <Animated.View style={{ opacity: fadeAnim }}>
                 { showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
                     <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
                         name="pill" size={30} color="white"/>
-                    <Icon onPress={() => setOpen(!open)} 
-                        name="emoticon-happy-outline" size={30} color="white"/>
+                    <Icon onPress={() => handleMoodOpen()} 
+                        name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
                     <Icon name="silverware-fork-knife" size={30} color="white"/>
                     <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                         name="clock" size={30} color="white"/>

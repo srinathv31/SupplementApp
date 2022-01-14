@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
+import { Route, SafeAreaView, StatusBar, Text, useWindowDimensions, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 
 import BottomMenuTab from "./components/Menus/BottomMenuTab";
@@ -56,6 +56,8 @@ const App = () => {
     // Sets app in multipleAdd State mode
     const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
 
+    const [mood, setMood] = useState<string>("");
+
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
         checkForSave(AllProps);
@@ -99,7 +101,9 @@ const App = () => {
         setSelectedSupplement,
         selectedSupplement,
         setMultipleAddMode,
-        multipleAddMode
+        multipleAddMode,
+        setMood,
+        mood
     };
 
     const CalendarRoute = (): JSX.Element => {
@@ -107,7 +111,9 @@ const App = () => {
     };
 
     const WorkoutPage = (): JSX.Element => {
-        return <View style={{ flex: 1, backgroundColor: "#ff4081" }} />;
+        return <View style={{ flex: 1, backgroundColor: "#ff4081" }} >
+            <Text>{supplementMap[daySelected] === undefined ? "No Mood Selected Today" : supplementMap[daySelected].DailyMood.mood}</Text>
+        </View>;
     };
 
     const renderScene = ({ route }: {
