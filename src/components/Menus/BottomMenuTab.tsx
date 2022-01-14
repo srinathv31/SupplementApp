@@ -3,34 +3,18 @@ import React, { useRef, useState } from "react";
 import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
-import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
 
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
+import MoodPicker from "../Mood/MoodPicker";
 
-export default function BottomMenuTab({ setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, supplementMap, daySelected }: AppProps): JSX.Element {
+export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, selectedDates }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
-    const [items, setItems] = useState([
-        { label: "Energetic", value: "Energetic" },
-        { label: "Focused", value: "Focused" },
-        { label: "Motivated", value: "Motivated" },
-        { label: "Peaceful", value: "Peaceful" },
-        { label: "Optimistic", value: "Optimistic" },
-        { label: "Calm", value: "Calm" },
-        { label: "Lively", value: "Lively" },
-        { label: "Relaxed", value: "Relaxed" },
-        { label: "Fatigued", value: "Fatigued" },
-        { label: "Unfocused", value: "Unfocused" },
-        { label: "Scatter Brained", value: "Scatter Brained" },
-        { label: "Anxious", value: "Anxious" },
-        { label: "Cynical", value: "Cynical" },
-        { label: "Discontented", value: "Discontented" },
-        { label: "Irritability", value: "Irritability" },
-        { label: "Difficulty Sleeping", value: "Difficulty Sleeping" },
-        { label: "Unmotivated", value: "Unmotivated" },
-        { label: "Depressed", value: "Depressed" },
-    ]);
+    
+    const MoodProps = {
+        open,
+        setOpen
+    };
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -55,11 +39,6 @@ export default function BottomMenuTab({ setModalVisible, modalVisible, showButto
         showButtons ? (fadeOut(), setShowButtons(false)) : (fadeIn(), setShowButtons(true));
     }
 
-    function addMood(item: ItemType) {
-        setMood(""+item.label);
-        setModalVisible({ modal: "mood-modal" });
-    }
-
     function handleMoodOpen() {
         (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") ? 
             setModalVisible({ modal: "mood-change-modal" }) :
@@ -72,28 +51,18 @@ export default function BottomMenuTab({ setModalVisible, modalVisible, showButto
                 setModalVisible={setModalVisible}
                 modalVisible={modalVisible}
                 setOpen={setOpen}
+                setSupplementMap={setSupplementMap}
                 supplementMap={supplementMap}
                 daySelected={daySelected}
+                userData={userData}
+                setUserData={setUserData}
+                selectedDates={selectedDates}
             ></ChangeMoodModal>
-            { open && <DropDownPicker
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setItems={setItems}
-                setValue={() => setValue}
-                theme="DARK"
-                dropDownDirection="TOP"
-                textStyle={{ fontSize: 15, color: "white", textAlign: "center" }}
-                labelStyle={{ fontSize: 15, textAlign: "center" }}
-                containerStyle={{ width: "80%", alignSelf: "center", opacity: 0.95 }}
-                searchable
-                placeholder="Select A Mood for the Day"
-                searchPlaceholder="Start Typing a Mood"
-                onSelectItem={(item) => {
-                    addMood(item);
-                }}
-            ></DropDownPicker> }
+            { open && <MoodPicker
+                {...MoodProps}
+                setModalVisible={setModalVisible}
+                setMood={setMood}
+            ></MoodPicker> }
             <Animated.View style={{ opacity: fadeAnim }}>
                 { showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
                     <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}

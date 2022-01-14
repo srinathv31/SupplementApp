@@ -2,15 +2,30 @@
 import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
-export default function ChangeMoodModal({ supplementMap, daySelected, setModalVisible, modalVisible, setOpen }: {
-    supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], setModalVisible: AppProps["setModalVisible"],
-    modalVisible: AppProps["modalVisible"], setOpen: (o: boolean) => void
+export default function ChangeMoodModal({ userData, setUserData, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible, setOpen, selectedDates }: {
+    supplementMap: AppProps["supplementMap"], setSupplementMap: AppProps["setSupplementMap"],
+    daySelected: AppProps["daySelected"], setModalVisible: AppProps["setModalVisible"],
+    modalVisible: AppProps["modalVisible"], setOpen: (o: boolean) => void,
+    userData: AppProps["userData"], setUserData: AppProps["setUserData"],
+    selectedDates: AppProps["selectedDates"]
 }): JSX.Element {
     
     function changeMood() {
         setModalVisible({ modal: "hide-modal" });
         setOpen(true);
+    }
+
+    function clearMood() {
+        const supplementMapCopy = { ...supplementMap };
+
+        supplementMap[daySelected].DailyMood = { mood: "", range: 0 };
+        setSupplementMap(supplementMapCopy);
+        saveUserData(userData, setUserData, supplementMapCopy, selectedDates);
+
+        setModalVisible({ modal: "hide-modal" });
+        setOpen(false);
     }
 
     return(
@@ -24,13 +39,19 @@ export default function ChangeMoodModal({ supplementMap, daySelected, setModalVi
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Selected Mood for Day: {supplementMap[daySelected].DailyMood.mood}: {supplementMap[daySelected].DailyMood.range}</Text>
+                    {supplementMap[daySelected] && <Text style={styles.modalText}>Selected Mood for Day: {supplementMap[daySelected].DailyMood.mood}: {supplementMap[daySelected].DailyMood.range}</Text> }
                     
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => changeMood()}
                     >
                         <Text style={styles.textStyle}>Overwrite Mood?</Text>
+                    </Pressable>
+                    <Pressable
+                        style={[styles.button, styles.buttonClose]}
+                        onPress={() => clearMood()}
+                    >
+                        <Text style={styles.textStyle}>{"Clear Today's Mood"}</Text>
                     </Pressable>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
@@ -49,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems:"center",
-        marginTop: "60%" 
+        marginTop: "0%" 
     },
     modalView: {
         width: "75%", padding: 10,

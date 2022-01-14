@@ -61,7 +61,8 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>{"Today's Journal"}</Text>
+                    <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
+                    { (supplementMap[daySelected] && supplementMap[daySelected].DailyMood.mood !== "") && <Text style={styles.modalText}>{"Feeling " + supplementMap[daySelected].DailyMood.mood + " Today"}</Text> }
                     <JournalTextEntry
                         setJournalText={setJournalText}
                         journalText={journalText}
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 5
     },
     modalView: {
         margin: 20,
@@ -120,9 +121,9 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     modalText: {
-        marginBottom: 15,
+        marginBottom: 5,
         textAlign: "center",
-        width: 125,
+        width: 175,
         textDecorationLine: "underline"
     }
 });
