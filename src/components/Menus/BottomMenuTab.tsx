@@ -1,14 +1,35 @@
 // Source Imports
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
-
+import DropDownPicker from "react-native-dropdown-picker";
 
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 
 export default function BottomMenuTab({ setModalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode }: AppProps): JSX.Element {
-
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState("");
+    const [items, setItems] = useState([
+        { label: "Energetic", value: "Energetic" },
+        { label: "Focused", value: "Focused" },
+        { label: "Motivated", value: "Motivated" },
+        { label: "Peaceful", value: "Peaceful" },
+        { label: "Optimistic", value: "Optimistic" },
+        { label: "Calm", value: "Calm" },
+        { label: "Lively", value: "Lively" },
+        { label: "Relaxed", value: "Relaxed" },
+        { label: "Fatigued", value: "Fatigued" },
+        { label: "Unfocused", value: "Unfocused" },
+        { label: "Scatter Brained", value: "Scatter Brained" },
+        { label: "Anxious", value: "Anxious" },
+        { label: "Cynical", value: "Cynical" },
+        { label: "Discontented", value: "Discontented" },
+        { label: "Irritability", value: "Irritability" },
+        { label: "Difficulty Sleeping", value: "Difficulty Sleeping" },
+        { label: "Unmotivated", value: "Unmotivated" },
+        { label: "Depressed", value: "Depressed" },
+    ]);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -35,11 +56,31 @@ export default function BottomMenuTab({ setModalVisible, showButtons, setShowBut
 
     return(
         <View style={{ zIndex: 100 }}>
+            { open && <DropDownPicker
+                open={open}
+                value={value}
+                items={items}
+                setOpen={setOpen}
+                setItems={setItems}
+                setValue={() => setValue}
+                theme="DARK"
+                dropDownDirection="TOP"
+                textStyle={{ fontSize: 15, color: "white", textAlign: "center" }}
+                labelStyle={{ fontSize: 15, textAlign: "center" }}
+                containerStyle={{ width: "80%", alignSelf: "center", opacity: 0.95 }}
+                searchable
+                placeholder="Select A Mood for the Day"
+                searchPlaceholder="Start Typing a Mood"
+                onSelectItem={(item) => {
+                    console.log(item);
+                }}
+            ></DropDownPicker> }
             <Animated.View style={{ opacity: fadeAnim }}>
                 { showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
                     <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
                         name="pill" size={30} color="white"/>
-                    <Icon name="emoticon-happy-outline" size={30} color="white"/>
+                    <Icon onPress={() => setOpen(!open)} 
+                        name="emoticon-happy-outline" size={30} color="white"/>
                     <Icon name="silverware-fork-knife" size={30} color="white"/>
                     <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                         name="clock" size={30} color="white"/>

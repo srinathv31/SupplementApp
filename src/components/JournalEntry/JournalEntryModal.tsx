@@ -17,7 +17,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined) {
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
         }
 
         supplementMapCopy[daySelected].JournalEntry = journalText;

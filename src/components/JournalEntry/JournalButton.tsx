@@ -10,7 +10,7 @@ export default function JournalButton( { setModalVisible, setJournalText, daySel
         const supplementMapCopy = { ...supplementMap };
 
         if (supplementMapCopy[daySelected] === undefined) {
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
         }
         if (supplementMapCopy[daySelected].JournalEntry === "") {
             setJournalText("");

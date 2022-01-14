@@ -27,7 +27,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
         }
         
         supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });

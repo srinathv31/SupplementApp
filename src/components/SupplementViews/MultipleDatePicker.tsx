@@ -19,7 +19,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[dayString] === undefined){
-            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "" };
+            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
         }
         
         supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken" });
@@ -51,7 +51,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
             Object.values(schedule).forEach(item => {
                 const strDate = getDateString(item.day);
                 if (supplementMapCopy[strDate] === undefined) {
-                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "" };
+                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
                 }
                 supplementMapCopy[strDate].SupplementSchedule = addSupplement(selectedSupplement.Supplement, strDate);
                 if (selectedDatesCopy[item.day.dateString] === undefined) {
