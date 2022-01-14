@@ -1,45 +1,38 @@
 // Source Imports
 import React, { useRef, useState } from "react";
-import { Animated, FlatList, PanResponder, Pressable, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import { DateData } from "react-native-calendars/src/types";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import IconI from "react-native-vector-icons/Ionicons";
+import { Animated, PanResponder, Pressable, Text, View } from "react-native";
 import { AppProps } from "../interfaces/Props";
-import { SupplementObject } from "../interfaces/Supplement";
-import { convertWeekDayToDateData, generateNextWeek, generatePrevWeek, generateWeekList, getDateString, grabMonth } from "../utilities/getCurrentDate";
-import handleCalendar from "../utilities/handleCalendarEvents";
-import { WeekDay } from "../interfaces/WeekDay";
+import { generateNextWeek, generatePrevWeek, grabMonth } from "../utilities/getCurrentDate";
 import Modal from "react-native-modal";
-import saveUserData from "../utilities/saveLoadFunctions/saveUserData";
-
+import { styles } from "../styles/WeekStyles";
+import { WeekProps } from "../interfaces/WeekProps";
+import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
+import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 
 export default function WeeklySupplementModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
-
-    function removeSupplement(item: SupplementObject, parentData: WeekDay) {
-        const supplementMapCopy = { ...supplementMap };
-        const parentDataMapKey = parentData.dateString;
-        const parentDayDateData = convertWeekDayToDateData(parentData);
-
-        supplementMapCopy[parentDataMapKey].SupplementSchedule = supplementMapCopy[parentDataMapKey].SupplementSchedule.filter(listItem => listItem !== item);
-        const selectedDatesModified = removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
-        if (Object.values(supplementMapCopy[parentDataMapKey].SupplementSchedule).length === 0 && supplementMapCopy[parentDataMapKey].JournalEntry === "") {
-            delete supplementMapCopy[parentDataMapKey];
-        }
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
-        setSupplementMap(supplementMapCopy);
-        handleDayClick(parentData);
-    }
-
-    function removeDate(day: DateData, supplementMap: AppProps["supplementMap"], parentDataMapKey: string){
-        const selectedDatesCopy = { ...selectedDates };
-        const stringDate = day.dateString;
-        if (Object.values(supplementMap[parentDataMapKey].SupplementSchedule).length === 0){
-            selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
-        }
-        setSelectedDates(selectedDatesCopy);
-        return selectedDatesCopy;
-    }
+    
+    const WeekPropValues: WeekProps = {
+        setWeek,
+        week,
+        setMonthText,
+        setSwipeAnimation,
+        daySelected,
+        setModalVisible,
+        supplementMap,
+        selectedSupplement,
+        setObjDaySelected,
+        setDaySelected,
+        setIndex,
+        setSelectedSupplement,
+        setSelectedDates,
+        selectedDates,
+        setShowStatusButtons,
+        showStatusButtons,
+        setUserData,
+        userData,
+        setSupplementMap
+    };
 
     function switchWeek(direction: string) {
         if (direction === "next") {
@@ -55,68 +48,9 @@ export default function WeeklySupplementModal({ setUserData, userData, setModalV
         }
     }
 
-    function handleDayClick(weekDay: WeekDay) {
-        const weekDayDateData = convertWeekDayToDateData(weekDay);
-
-        setSwipeAnimation("fadeIn");
-
-        setObjDaySelected(weekDayDateData);
-        setDaySelected(getDateString(weekDayDateData));
-
-        const selectedDatesCopy = handleCalendar(selectedDates, weekDayDateData.dateString);
-        setSelectedDates(selectedDatesCopy);
-
-        setWeek(generateWeekList(weekDayDateData));
-        setMonthText(grabMonth(generateWeekList(weekDayDateData)));
-    }
-
-    function changeTime(item: SupplementObject, parentData: WeekDay) {
-        handleDayClick(parentData);
-        setSelectedSupplement(item);
-        setIndex(1);
-        setModalVisible({ modal: "time-modal" });
-    }
-
-    function getRadioButtonStatus(taken: SupplementObject["taken"]) {
-        switch(taken) {
-        case "not-taken":
-            return "radio-button-off-outline";
-        case "taken-off-time":
-        case "missed":
-            return "radio-button-on-outline";
-        case "taken-on-time":
-            return "checkmark-circle";
-        }
-    }
-    function getRadioButtonColor(taken: SupplementObject["taken"]) {
-        switch(taken) {
-        case "not-taken":
-            return "#EEE";
-        case "taken-off-time":
-            return "#fcc623";
-        case "missed":
-            return "red";
-        case "taken-on-time":
-            return "#28c916";
-        }
-    }
-
-    function handleStatusToggle(item: SupplementObject) {
-        setSwipeAnimation("fadeIn");
-        setSelectedSupplement(item);
-        setShowStatusButtons(!showStatusButtons);
-    }
-
-    function toggleTakenStatus(taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time", item: SupplementObject) {
-        const supplementMapCopy = { ... supplementMap };
-
-        item.taken = taken;
-        setSupplementMap(supplementMapCopy);
-        setShowStatusButtons(false);
-    }
+    // Animation Functions
     const pan = useRef(new Animated.ValueXY()).current;
     pan.addListener(() => { 
-        console.log(pan.x);
         if (+JSON.stringify(pan.x) > 220) {
             switchWeek("prev");
         }
@@ -159,68 +93,12 @@ export default function WeeklySupplementModal({ setUserData, userData, setModalV
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
-                        <View style={{ flexDirection: "row" }}>
-                            <Icon onPress={() => switchWeek("prev")}
-                                name="chevron-left" style={styles.IconWeek}/>
-                            <FlatList
-                                style={{ padding: 10, maxHeight: 70 }}
-                                contentOffset={{ x: 25, y: 0 }}
-                                scrollEnabled
-                                showsHorizontalScrollIndicator={false}
-                                horizontal
-                                data={week}
-                                renderItem={({ item }) => (
-                                    <View style={{ padding: 10 }}>
-                                        <Text style={{ color: daySelected === item.dateString ? "orange" : "white", textAlign: "center", fontSize: 13 }}>{item.date}</Text>
-                                        <Text style={{ color: daySelected === item.dateString ? "orange" : "white", fontSize: 13 }}>{item.day}</Text>
-                                    </View>
-                                )}
-                            ></FlatList>
-                            <Icon onPress={() => switchWeek("next")}
-                                name="chevron-right" style={styles.IconWeek}/>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: "row" }}>
-                            <Icon name="drag-vertical" style={styles.IconDrag}/>
-                            <FlatList
-                                data={week}
-                                showsVerticalScrollIndicator={false}
-                                renderItem={({ item }) => { 
-                                    const parentData = item; 
-                                    return (
-                                        <TouchableHighlight key={item.date}>
-                                            <View style={styles.ListItem}>
-                                                <Pressable onPress={() => (handleDayClick(item), setModalVisible({ modal: "hide-modal" }), setIndex(1))}>
-                                                    <Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
-                                                </Pressable>
-                                                <Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>
-                                                <FlatList
-                                                    data={supplementMap[item.dateString] === undefined ? [] : supplementMap[item.dateString].SupplementSchedule}
-                                                    renderItem={({ item }) => (
-                                                        <TouchableHighlight key={item.Supplement.name}>
-                                                            <View style={styles.SuppItem}>
-                                                                { (selectedSupplement === item && showStatusButtons) && <View style={{ flexDirection: "row", marginHorizontal: 3 }}>
-                                                                    <IconI onPress={() => toggleTakenStatus("not-taken", item)} name={"radio-button-off-outline"} style={[styles.IconPadding, { color: "#EEE" }]}></IconI>
-                                                                    <IconI onPress={() => toggleTakenStatus("taken-off-time", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "#fcc623" }]}></IconI>
-                                                                    <IconI onPress={() => toggleTakenStatus("missed", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "red" }]}></IconI>
-                                                                    <IconI onPress={() => toggleTakenStatus("taken-on-time", item)} name={"checkmark-circle"} style={[styles.IconPadding, { color: "#28c916" }]}></IconI>
-                                                                </View> }
-                                                                <IconI onPress={() => handleStatusToggle(item)}
-                                                                    name={getRadioButtonStatus(item.taken)} style={[styles.IconPadding, { color: getRadioButtonColor(item.taken) }]}></IconI>
-                                                                {item.time === "" && <Icon onPress={() => changeTime(item, parentData)} name="clock" style={styles.IconPadding}/>}
-                                                                <Text onPress={() => changeTime(item, parentData)} style={styles.ListName}>{item.time !== "" && item.time +":"} </Text>
-                                                                <Text style={styles.ListName}> {item.Supplement.name}</Text>
-                                                                <Icon onPress={() => removeSupplement(item, parentData)}
-                                                                    name="delete-forever" style={styles.IconPadding}/>
-                                                            </View>
-                                                        </TouchableHighlight>
-                                                    )}
-                                                ></FlatList>
-                                            </View>
-                                        </TouchableHighlight>
-                                    );}}
-                            ></FlatList>
-                            <Icon name="drag-vertical" style={styles.IconDrag}/>
-                        </View>
+                        <AgendaHeader
+                            {...WeekPropValues}
+                        ></AgendaHeader>
+                        <AgendaBody
+                            {...WeekPropValues}
+                        ></AgendaBody>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => (setModalVisible({ modal: "hide-modal" }), setSwipeAnimation("fadeIn"))}
@@ -233,101 +111,3 @@ export default function WeeklySupplementModal({ setUserData, userData, setModalV
         </Modal>
     );
 }
-
-const styles = StyleSheet.create({
-    centeredView: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 10,
-    },
-    modalView: {
-        width: "110%",
-        height: "85%",
-        margin: 20,
-        backgroundColor: "#0B172A",
-        borderRadius: 20,
-        padding: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 1,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        margin: 10,
-        elevation: 2,
-        width: 125,
-        alignSelf: "center"
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center",
-        textDecorationLine: "underline",
-        color: "white",
-        fontSize: 20
-    },
-    ListItem: {
-        textAlign: "center",
-        padding: 10,
-        margin: 10,
-        width: "95%",
-        color: "white",
-        borderBottomColor: "white",
-        borderBottomWidth: 1,
-        overflow:"hidden",
-        flexDirection: "row",
-		
-    },
-    SuppItem: {
-        textAlign: "center",
-        padding: 5,
-        margin: 5,
-        width: "95%",
-        color: "white",
-        borderRadius: 10,
-        overflow:"hidden",
-        flexDirection: "row",
-    },
-    ListName: {
-        fontSize: 18,
-        fontWeight: "600",
-        color: "white"
-    },
-    IconPadding: {
-        padding: 1,
-        margin: 1,
-        fontSize: 18,
-        color: "white"
-    },
-    IconWeek: {
-        padding: 1,
-        margin: 1,
-        fontSize: 18,
-        color: "white",
-        alignSelf: "center"
-    },
-    IconDrag: {
-        padding: 0,
-        margin: 0,
-        fontSize: 20,
-        color: "white",
-        alignSelf: "center"
-    }
-});
