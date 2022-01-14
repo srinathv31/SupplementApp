@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Route, SafeAreaView, StatusBar, Text, useWindowDimensions, View } from "react-native";
+import { Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 
 import BottomMenuTab from "./components/Menus/BottomMenuTab";
@@ -22,6 +22,7 @@ import User from "./interfaces/User";
 import { checkForSave } from "./utilities/saveLoadFunctions/storageChecker";
 import WelcomePage from "./screens/WelcomePage";
 import UserInfoPage from "./screens/UserInfoPage";
+import MoodAnalysis from "./components/Mood/MoodAnalysis";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -112,11 +113,11 @@ const App = () => {
         return <CalendarPage {...AllProps} ></CalendarPage>;
     };
 
-    const WorkoutPage = (): JSX.Element => {
-        return <View style={{ flex: 1, backgroundColor: "#ff4081" }} >
-            <Text>{supplementMap[daySelected] === undefined ? "No Mood Selected Today" : supplementMap[daySelected].DailyMood.mood}</Text>
-        </View>;
-    };
+    // const WorkoutPage = (): JSX.Element => {
+    //     return <View style={{ flex: 1, backgroundColor: "#ff4081" }} >
+    //         <Text>{supplementMap[daySelected] === undefined ? "No Mood Selected Today" : supplementMap[daySelected].DailyMood.mood}</Text>
+    //     </View>;
+    // };
 
     const renderScene = ({ route }: {
 		route: Route
@@ -129,7 +130,7 @@ const App = () => {
         case "supp":
             return <SupplementInfoPage {...AllProps}/>;
         case "work":
-            return <WorkoutPage />;
+            return <MoodAnalysis {...AllProps} />;
         default:
             return null;
         }

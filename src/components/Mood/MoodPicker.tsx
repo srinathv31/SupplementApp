@@ -1,13 +1,14 @@
 // Source Imports
 import React, { useState } from "react";
-import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
+import DropDownPicker, { ItemType, DropDownDirectionType } from "react-native-dropdown-picker";
 import { MoodProps } from "../../interfaces/MoodProps";
 import { AppProps } from "../../interfaces/Props";
 
 
-export default function MoodPicker({ open, setOpen, setMood, setModalVisible }: {
+export default function MoodPicker({ open, setOpen, setMood, setModalVisible, dropDirection, mode }: {
     open: MoodProps["open"], setOpen: MoodProps["setOpen"],
-    setMood: AppProps["setMood"], setModalVisible: AppProps["setModalVisible"]
+    setMood: AppProps["setMood"], setModalVisible: AppProps["setModalVisible"],
+    dropDirection: DropDownDirectionType, mode: "analysis" | "setting"
 }): JSX.Element {
     const [value, setValue] = useState("");
     const [items, setItems] = useState([
@@ -35,6 +36,11 @@ export default function MoodPicker({ open, setOpen, setMood, setModalVisible }: 
         setMood(""+item.label);
         setModalVisible({ modal: "mood-modal" });
     }
+
+    function showMood(item: ItemType) {
+        setMood(""+item.label);
+        console.log(item.value);
+    }
     
     return(
         <DropDownPicker
@@ -45,7 +51,7 @@ export default function MoodPicker({ open, setOpen, setMood, setModalVisible }: 
             setItems={setItems}
             setValue={() => setValue}
             theme="DARK"
-            dropDownDirection="TOP"
+            dropDownDirection={dropDirection}
             textStyle={{ fontSize: 15, color: "white", textAlign: "center" }}
             labelStyle={{ fontSize: 15, textAlign: "center" }}
             containerStyle={{ width: "80%", alignSelf: "center", opacity: 0.95 }}
@@ -53,7 +59,7 @@ export default function MoodPicker({ open, setOpen, setMood, setModalVisible }: 
             placeholder="Select A Mood for the Day"
             searchPlaceholder="Start Typing a Mood"
             onSelectItem={(item) => {
-                addMood(item);
+                mode === "setting" ? addMood(item) : showMood(item);
             }}
         ></DropDownPicker>
     );

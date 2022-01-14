@@ -62,6 +62,8 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                 {...MoodProps}
                 setModalVisible={setModalVisible}
                 setMood={setMood}
+                dropDirection="TOP"
+                mode="setting"
             ></MoodPicker> }
             <Animated.View style={{ opacity: fadeAnim }}>
                 { showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
@@ -82,8 +84,9 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                     <Icon
                         name={ index === 1 ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                 </Pressable>
-                <Icon onPress={buttonHandle}
-                    name="plus-box-outline" size={30} color="white" style={{ padding: 5 }}/>
+                <Pressable onPress={buttonHandle} disabled={ index === 3 ? true : false }>
+                    <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
+                </Pressable>
                 <Pressable onPress={() => (setPrevIndex(index), setIndex(2))} disabled={ showButtons ? true : false }>
                     <Icon
                         name={ index === 2 ? "text-box-search" : "text-box-search-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>

@@ -53,7 +53,7 @@ export default function WelcomePage({ userData, setPrevIndex }: AppProps): JSX.E
     };
 
     const startFadeOut = () => {
-        // Breathe In
+        // Breathe Out
         Animated.timing(fadeAnimSub, {
             toValue: 0.3,
             duration: 1000,
