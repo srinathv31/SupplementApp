@@ -20,6 +20,7 @@ import CalendarDotObject from "./interfaces/Calendar";
 import ModalObject from "./interfaces/Modal";
 import User from "./interfaces/User";
 import { checkForSave } from "./utilities/saveLoadFunctions/storageChecker";
+import WelcomePage from "./screens/WelcomePage";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -44,7 +45,7 @@ const App = () => {
     // Index for page sliding
     const [index, setIndex] = React.useState(1);
     // Prev Page feature
-    const [prevIndex, setPrevIndex] = useState<number>(index);
+    const [prevIndex, setPrevIndex] = useState<number>(5);
     // Renders the selected day's week for the weekly modal
     const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
     // Sets the text for the weekly modal
@@ -140,17 +141,15 @@ const App = () => {
         
                 <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal") ? 0.5 : 1 }}>
                     <View style={{ flex: 1 }}>
-                        <SupplementModal {...AllProps}></SupplementModal>
-                        <HeaderWindow {...AllProps}></HeaderWindow>
-                        <TabView
+                        { prevIndex === 5 && <WelcomePage {...AllProps} /> }
+                        { prevIndex !== 5 && <><SupplementModal {...AllProps}></SupplementModal><HeaderWindow {...AllProps}></HeaderWindow><TabView
                             onSwipeStart={() => setPrevIndex(index)}
                             navigationState={{ index, routes }}
                             renderScene={renderScene}
                             onIndexChange={setIndex}
                             initialLayout={{ width: layout.width }}
                             tabBarPosition="bottom"
-                            renderTabBar={() => <BottomMenuTab {...AllProps}/>}
-                        />
+                            renderTabBar={() => <BottomMenuTab {...AllProps} />} /></> }
                     </View>
 					
                 </View>
