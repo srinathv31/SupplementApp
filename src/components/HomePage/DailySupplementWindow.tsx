@@ -6,19 +6,21 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 
-export default function DailySupplementWindow({ setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     function removeSupplement(item: SupplementObject) {
         const supplementMapCopy = { ...supplementMap };
 
         supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
-        removeDate(objDaySelected, supplementMapCopy);
+        const selectedDatesModified = removeDate(objDaySelected, supplementMapCopy);
         if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
             delete supplementMapCopy[daySelected];
         }
+        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
         setSupplementMap(supplementMapCopy);
     }
 
@@ -29,6 +31,7 @@ export default function DailySupplementWindow({ setSupplementMap, supplementMap,
             selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
         }
         setSelectedDates(selectedDatesCopy);
+        return selectedDatesCopy;
     }
 
     function changeTime(item: SupplementObject) {

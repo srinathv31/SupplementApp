@@ -11,9 +11,10 @@ import handleCalendar from "../utilities/handleCalendarEvents";
 import { WeekDay } from "../interfaces/WeekDay";
 import GestureRecognizer from "react-native-swipe-gestures";
 import Modal from "react-native-modal";
+import saveUserData from "../utilities/saveLoadFunctions/saveUserData";
 
 
-export default function WeeklySupplementModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
@@ -22,10 +23,11 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
         const parentDayDateData = convertWeekDayToDateData(parentData);
 
         supplementMapCopy[parentDataMapKey].SupplementSchedule = supplementMapCopy[parentDataMapKey].SupplementSchedule.filter(listItem => listItem !== item);
-        removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
+        const selectedDatesModified = removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
         if (Object.values(supplementMapCopy[parentDataMapKey].SupplementSchedule).length === 0 && supplementMapCopy[parentDataMapKey].JournalEntry === "") {
             delete supplementMapCopy[parentDataMapKey];
         }
+        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
         setSupplementMap(supplementMapCopy);
         handleDayClick(parentData);
     }
@@ -37,6 +39,7 @@ export default function WeeklySupplementModal({ setModalVisible, modalVisible, s
             selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
         }
         setSelectedDates(selectedDatesCopy);
+        return selectedDatesCopy;
     }
 
     function switchWeek(direction: string) {

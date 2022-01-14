@@ -6,9 +6,10 @@ import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 
-export default function MonthView({ setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
+export default function MonthView({ setUserData, userData, supplementMap, setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
 
     function handleDayClick(day: DateData) {
 
@@ -17,6 +18,7 @@ export default function MonthView({ setDaySelected, setModalVisible, setObjDaySe
 
         const selectedDatesCopy = handleCalendar(selectedDates, day.dateString);
         setSelectedDates(selectedDatesCopy);
+        saveUserData(userData, setUserData, supplementMap, selectedDatesCopy);
 
         setWeek(generateWeekList(day));
         setMonthText(grabMonth(generateWeekList(day)));
