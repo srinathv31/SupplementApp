@@ -21,6 +21,7 @@ import ModalObject from "./interfaces/Modal";
 import User from "./interfaces/User";
 import { checkForSave } from "./utilities/saveLoadFunctions/storageChecker";
 import WelcomePage from "./screens/WelcomePage";
+import UserInfoPage from "./screens/UserInfoPage";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -142,14 +143,19 @@ const App = () => {
                 <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal") ? 0.5 : 1 }}>
                     <View style={{ flex: 1 }}>
                         { prevIndex === 5 && <WelcomePage {...AllProps} /> }
-                        { prevIndex !== 5 && <><SupplementModal {...AllProps}></SupplementModal><HeaderWindow {...AllProps}></HeaderWindow><TabView
-                            onSwipeStart={() => setPrevIndex(index)}
-                            navigationState={{ index, routes }}
-                            renderScene={renderScene}
-                            onIndexChange={setIndex}
-                            initialLayout={{ width: layout.width }}
-                            tabBarPosition="bottom"
-                            renderTabBar={() => <BottomMenuTab {...AllProps} />} /></> }
+                        { prevIndex !== 5 && <>
+                            <UserInfoPage {...AllProps}></UserInfoPage>
+                            <SupplementModal {...AllProps}></SupplementModal>
+                            <HeaderWindow {...AllProps}></HeaderWindow>
+                            <TabView
+                                onSwipeStart={() => setPrevIndex(index)}
+                                navigationState={{ index, routes }}
+                                renderScene={renderScene}
+                                onIndexChange={setIndex}
+                                initialLayout={{ width: layout.width }}
+                                tabBarPosition="bottom"
+                                renderTabBar={() => <BottomMenuTab {...AllProps} />}
+                            /></> }
                     </View>
 					
                 </View>
