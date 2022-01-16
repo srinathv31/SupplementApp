@@ -1,6 +1,6 @@
 // Source Imports
 import React from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 
 
@@ -9,14 +9,18 @@ export default function JournalTextEntry({ setJournalText, journalText }: {
 }): JSX.Element {
 
     return(
-        <TextInput
-            style={styles.input}
-            onChangeText={setJournalText}
-            value={journalText}
-            multiline
-            autoFocus
-            placeholder="How did you feel today?"
-        />
+        <View>
+            <TextInput
+                style={styles.input}
+                onChangeText={setJournalText}
+                value={journalText}
+                multiline
+                autoFocus
+                placeholder="How did you feel today?"
+                placeholderTextColor={"gray"}
+                keyboardAppearance="dark"
+            />
+        </View>
     );
 }
 
@@ -26,5 +30,6 @@ const styles = StyleSheet.create({
         width: 350,
         margin: 12,
         padding: 10,
+        color: "white"
     },
 });

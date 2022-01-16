@@ -4,12 +4,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { AppProps } from "../../interfaces/Props";
 
 
-export default function PrevPageButton( { setShowButtons, setIndex, index, setPrevIndex, prevIndex }: AppProps ): JSX.Element {
+export default function PrevPageButton( { setShowButtons, setModalVisible }: AppProps ): JSX.Element {
 
     function buttonHandle(){
         setShowButtons(false);
-        setPrevIndex(index);
-        setIndex(prevIndex);
+        setModalVisible({ modal: "user-modal" });
     }
 
     return(
@@ -17,7 +16,7 @@ export default function PrevPageButton( { setShowButtons, setIndex, index, setPr
             style={{ padding: 10,
                 margin: 12 }}
             onPress={() => buttonHandle()}
-            name="arrow-undo-outline" size={30} color="white"
+            name="person-circle-outline" size={30} color="white"
         />
     );
 }

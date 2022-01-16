@@ -5,7 +5,9 @@ import { AppProps } from "../../interfaces/Props";
 import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
-
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Toast from "react-native-toast-message";
+import Tooltip from "rn-tooltip";
 
 export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
 	AppProps): JSX.Element {
@@ -17,7 +19,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined) {
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "" };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
         }
 
         supplementMapCopy[daySelected].JournalEntry = journalText;
@@ -49,7 +51,6 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         setModalVisible({ modal: "hide-modal" });
     }
 
-
     return(
         <Modal
             animationType="slide"
@@ -61,7 +62,23 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>{"Today's Journal"}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
+                        <Tooltip
+                            popover={ <Text>{(supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") 
+                                ? `Selected Mood for today ${supplementMap[daySelected].DailyMood.mood}: ${supplementMap[daySelected].DailyMood.range}`
+                                : "No Mood Selected for Today"}</Text> }
+                            actionType="press"
+                            withOverlay={false}
+                            width={120}
+                            height={100}
+                            containerStyle={{ height: 80, marginTop: -30 }}
+                            pointerStyle={{ marginTop: -30 }}
+                        >
+                            <Icon
+                                style={{ alignSelf: "flex-start" }} name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
+                        </Tooltip>
+                    </View>
                     <JournalTextEntry
                         setJournalText={setJournalText}
                         journalText={journalText}
@@ -73,6 +90,8 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
                         <Text style={styles.textStyle}>Close Journal</Text>
                     </Pressable>
                 </View>
+                <Toast />
+
             </View>
         </Modal>
     );
@@ -83,12 +102,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22
+        marginTop: 5
     },
     modalView: {
         margin: 20,
         marginBottom: "80%",
-        backgroundColor: "white",
+        backgroundColor: "#121212",
         borderRadius: 20,
         paddingBottom: 15,
         paddingTop: 15,
@@ -100,7 +119,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
     },
     button: {
         borderRadius: 20,
@@ -120,9 +139,10 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     modalText: {
-        marginBottom: 15,
+        marginBottom: 5,
         textAlign: "center",
-        width: 125,
-        textDecorationLine: "underline"
+        width: 175,
+        color: "white",
+        fontSize: 25
     }
 });

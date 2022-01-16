@@ -20,6 +20,9 @@ import CalendarDotObject from "./interfaces/Calendar";
 import ModalObject from "./interfaces/Modal";
 import User from "./interfaces/User";
 import { checkForSave } from "./utilities/saveLoadFunctions/storageChecker";
+import WelcomePage from "./screens/WelcomePage";
+import UserInfoPage from "./screens/UserInfoPage";
+import MoodAnalysis from "./components/Mood/MoodAnalysis";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -44,7 +47,7 @@ const App = () => {
     // Index for page sliding
     const [index, setIndex] = React.useState(1);
     // Prev Page feature
-    const [prevIndex, setPrevIndex] = useState<number>(index);
+    const [prevIndex, setPrevIndex] = useState<number>(5);
     // Renders the selected day's week for the weekly modal
     const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
     // Sets the text for the weekly modal
@@ -55,6 +58,8 @@ const App = () => {
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>({ Supplement: SupplementList[0], time: "", taken: "not-taken" });
     // Sets app in multipleAdd State mode
     const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
+
+    const [mood, setMood] = useState<string>("");
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
@@ -99,16 +104,20 @@ const App = () => {
         setSelectedSupplement,
         selectedSupplement,
         setMultipleAddMode,
-        multipleAddMode
+        multipleAddMode,
+        setMood,
+        mood
     };
 
     const CalendarRoute = (): JSX.Element => {
         return <CalendarPage {...AllProps} ></CalendarPage>;
     };
 
-    const WorkoutPage = (): JSX.Element => {
-        return <View style={{ flex: 1, backgroundColor: "#ff4081" }} />;
-    };
+    // const WorkoutPage = (): JSX.Element => {
+    //     return <View style={{ flex: 1, backgroundColor: "#ff4081" }} >
+    //         <Text>{supplementMap[daySelected] === undefined ? "No Mood Selected Today" : supplementMap[daySelected].DailyMood.mood}</Text>
+    //     </View>;
+    // };
 
     const renderScene = ({ route }: {
 		route: Route
@@ -121,7 +130,7 @@ const App = () => {
         case "supp":
             return <SupplementInfoPage {...AllProps}/>;
         case "work":
-            return <WorkoutPage />;
+            return <MoodAnalysis {...AllProps} />;
         default:
             return null;
         }
@@ -134,17 +143,20 @@ const App = () => {
         
                 <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal") ? 0.5 : 1 }}>
                     <View style={{ flex: 1 }}>
-                        <SupplementModal {...AllProps}></SupplementModal>
-                        <HeaderWindow {...AllProps}></HeaderWindow>
-                        <TabView
-                            onSwipeStart={() => setPrevIndex(index)}
-                            navigationState={{ index, routes }}
-                            renderScene={renderScene}
-                            onIndexChange={setIndex}
-                            initialLayout={{ width: layout.width }}
-                            tabBarPosition="bottom"
-                            renderTabBar={() => <BottomMenuTab {...AllProps}/>}
-                        />
+                        { prevIndex === 5 && <WelcomePage {...AllProps} /> }
+                        { prevIndex !== 5 && <>
+                            <UserInfoPage {...AllProps}></UserInfoPage>
+                            <SupplementModal {...AllProps}></SupplementModal>
+                            <HeaderWindow {...AllProps}></HeaderWindow>
+                            <TabView
+                                onSwipeStart={() => setPrevIndex(index)}
+                                navigationState={{ index, routes }}
+                                renderScene={renderScene}
+                                onIndexChange={setIndex}
+                                initialLayout={{ width: layout.width }}
+                                tabBarPosition="bottom"
+                                renderTabBar={() => <BottomMenuTab {...AllProps} />}
+                            /></> }
                     </View>
 					
                 </View>

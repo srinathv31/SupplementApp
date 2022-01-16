@@ -1,3 +1,4 @@
+import MoodObject from "./Mood";
 interface Supplement {
     name: string,
     smallDescription: string,
@@ -15,7 +16,8 @@ export interface SupplementObject {
 
 export interface SupplementMapObject {
     SupplementSchedule: SupplementObject[], 
-    JournalEntry: string
+    JournalEntry: string,
+    DailyMood: MoodObject
 }
 
 
