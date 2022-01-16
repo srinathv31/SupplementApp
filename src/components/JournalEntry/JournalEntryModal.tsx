@@ -5,6 +5,9 @@ import { AppProps } from "../../interfaces/Props";
 import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { showMoodToast } from "../../utilities/toasts";
+import Toast from "react-native-toast-message";
 
 
 export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
@@ -49,6 +52,12 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         setModalVisible({ modal: "hide-modal" });
     }
 
+    function showMood() {
+        (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") ? 
+            showMoodToast(supplementMap[daySelected].DailyMood) :
+            showMoodToast(supplementMap[daySelected].DailyMood);
+    }
+
 
     return(
         <Modal
@@ -61,8 +70,11 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
-                    { (supplementMap[daySelected] && supplementMap[daySelected].DailyMood.mood !== "") && <Text style={styles.modalText}>{"Feeling " + supplementMap[daySelected].DailyMood.mood + " Today"}</Text> }
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
+                        <Icon onPress={showMood}
+                            style={{ justifyContent: "flex-end" }} name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
+                    </View>
                     <JournalTextEntry
                         setJournalText={setJournalText}
                         journalText={journalText}
@@ -74,6 +86,8 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
                         <Text style={styles.textStyle}>Close Journal</Text>
                     </Pressable>
                 </View>
+                <Toast />
+
             </View>
         </Modal>
     );
@@ -89,7 +103,7 @@ const styles = StyleSheet.create({
     modalView: {
         margin: 20,
         marginBottom: "80%",
-        backgroundColor: "white",
+        backgroundColor: "#121212",
         borderRadius: 20,
         paddingBottom: 15,
         paddingTop: 15,
@@ -101,7 +115,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 5,
     },
     button: {
         borderRadius: 20,
@@ -124,6 +138,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         textAlign: "center",
         width: 175,
-        textDecorationLine: "underline"
+        color: "white",
+        fontSize: 25
     }
 });
