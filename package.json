@@ -27,6 +27,7 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-toast-message": "^2.1.1",
     "react-native-vector-icons": "^9.0.0",
+    "rn-tooltip": "^3.0.1",
     "victory-native": "^36.2.0"
   },
   "devDependencies": {
