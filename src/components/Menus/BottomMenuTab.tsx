@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
@@ -16,14 +16,21 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
         setOpen
     };
 
+    useEffect(() => {
+        showButtons ? fadeIn() : fadeOut();
+
+    }, [showButtons]);
+
+
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
     const fadeIn = () => {
         // Will change fadeAnim value to 1 in 5 seconds
+        
         Animated.timing(fadeAnim, {
             toValue: 1,
             duration: 300,
-            useNativeDriver: false
+            useNativeDriver: true
         }).start();
     };
     const fadeOut = () => {
@@ -31,13 +38,9 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
         Animated.timing(fadeAnim, {
             toValue: 0,
             duration: 200,
-            useNativeDriver: false
+            useNativeDriver: true
         }).start();
     };
-
-    function buttonHandle(){
-        showButtons ? (fadeOut(), setShowButtons(false)) : (fadeIn(), setShowButtons(true));
-    }
 
     function handleMoodOpen() {
         (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") ? 
@@ -65,17 +68,19 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                 dropDirection="TOP"
                 mode="setting"
             ></MoodPicker> }
-            <Animated.View style={{ opacity: fadeAnim }}>
-                { showButtons && <View style={BottomMenuTabStyles.secondaryButtonRow}>
-                    <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
-                        name="pill" size={30} color="white"/>
-                    <Icon onPress={() => handleMoodOpen()} 
-                        name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
-                    <Icon name="silverware-fork-knife" size={30} color="white"/>
-                    <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
-                        name="clock" size={30} color="white"/>
-                </View> }
-            </Animated.View>
+            <View style={{ backgroundColor: "transparent" }}>
+                { showButtons && <Animated.View style={{ opacity: fadeAnim }}>
+                    <View style={BottomMenuTabStyles.secondaryButtonRow}>
+                        <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
+                            name="pill" size={30} color="white"/>
+                        <Icon onPress={() => handleMoodOpen()} 
+                            name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
+                        <Icon name="silverware-fork-knife" size={30} color="white"/>
+                        <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
+                            name="clock" size={30} color="white"/>
+                    </View>
+                </Animated.View>}
+            </View>
             <View style={BottomMenuTabStyles.mainButtonRow}>
                 <Pressable onPress={() => (setPrevIndex(index), setIndex(0))} disabled={ showButtons ? true : false }>
                     <Icon name={ index === 0 ? "calendar-text" : "calendar-text-outline"} size={30} color="white"style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
@@ -84,7 +89,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                     <Icon
                         name={ index === 1 ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                 </Pressable>
-                <Pressable onPress={buttonHandle} disabled={ index === 3 ? true : false }>
+                <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
                     <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
                 </Pressable>
                 <Pressable onPress={() => (setPrevIndex(index), setIndex(2))} disabled={ showButtons ? true : false }>
