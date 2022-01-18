@@ -5,7 +5,8 @@ interface Supplement {
     description: string,
     benefits: string,
     safe: string,
-    sideEffects: string
+    sideEffects: string,
+    url: string
 }
 
 export interface SupplementObject {

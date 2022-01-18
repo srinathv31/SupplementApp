@@ -18,6 +18,7 @@
     "react-native": "0.66.4",
     "react-native-calendars": "^1.1274.0",
     "react-native-dropdown-picker": "^5.3.0",
+    "react-native-gesture-handler": "^2.1.1",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^13.0.0",
     "react-native-modalize": "^2.0.13",
@@ -28,6 +29,7 @@
     "react-native-tab-view": "^3.1.1",
     "react-native-toast-message": "^2.1.1",
     "react-native-vector-icons": "^9.0.0",
+    "react-native-webview": "^11.16.0",
     "rn-tooltip": "^3.0.1",
     "victory-native": "^36.2.0"
   },
