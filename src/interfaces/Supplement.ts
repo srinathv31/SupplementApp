@@ -12,7 +12,8 @@ interface Supplement {
 export interface SupplementObject {
     Supplement: Supplement,
     time: string,
-    taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time"
+    taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time",
+    takenOffTime?: string
 }
 
 export interface SupplementMapObject {

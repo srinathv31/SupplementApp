@@ -7,14 +7,19 @@ import IconI from "react-native-vector-icons/Ionicons";
 import { AppProps } from "../../interfaces/Props";
 import Divider from "../Design/Divider";
 import { SupplementObject } from "../../interfaces/Supplement";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import convertDateTimeToStringTime from "../../utilities/convertTime";
 
-export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap }: {
+export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected }: {
     selectedSupplement: AppProps["selectedSupplement"],
-    setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"]
+    setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
+    daySelected: AppProps["daySelected"]
 }): JSX.Element {
+    const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     const [supplementNotes, setSupplementNotes] = useState<string>("");
     const [expand, setExpand] = useState<boolean>(false);
+    const [time, setTime] = useState<Date>(grabOffTime);
 
     const data = [{ time: "07:00" }, { time: "08:00" }, { time: "09:00" }, { time: "10:00" }, { time: "11:00" }, { time: "12:00" }, { time: "01:00" }, { time: "02:00" }];
 
@@ -62,6 +67,21 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const onChange = (event: any, selectedDate: any) => {
+        const supplementMapCopy = { ...supplementMap };
+        const currentDate = selectedDate || time;
+        const convertedTime = convertDateTimeToStringTime(currentDate);
+        
+        Object.values(supplementMapCopy[daySelected].SupplementSchedule).forEach(supplement => {
+            if (supplement === selectedSupplement) {
+                supplement.takenOffTime = convertedTime;
+            }
+        });
+        setSupplementMap(supplementMapCopy);
+        setTime(currentDate);
+    };
+
     return(
         <KeyboardAvoidingView behavior="position">
             <>
@@ -83,6 +103,19 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                         <IconI onPress={() => setShowStatusButtons(!showStatusButtons)}
                             name={getRadioButtonStatus(selectedSupplement.taken)} style={[styles.IconPadding, { color: getRadioButtonColor(selectedSupplement.taken) }]}></IconI>
                         <Text style={{ color: "white", fontSize: 18, padding: 10 }}>{getRadioText(selectedSupplement.taken)}</Text>
+                        { selectedSupplement.taken === "taken-off-time" && 
+                        <><Text style={{ color: "white", fontSize: 18, paddingLeft: 10, paddingVertical: 10 }}>Taken: </Text>
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={time}
+                                mode={"time"}
+                                is24Hour={true}
+                                display="default"
+                                textColor="white"
+                                themeVariant="dark"
+                                style={{ paddingHorizontal: 50, paddingVertical: 20, marginTop: 2 }}
+                                onChange={onChange} />
+                        </>}
                     </View>
                     { showStatusButtons && <View style={{ flexDirection: "column" }}>
                         <IconI onPress={() => toggleTakenStatus("not-taken", selectedSupplement)} name={"radio-button-off-outline"} style={[styles.IconPadding, { color: "#EEE" }]}>
