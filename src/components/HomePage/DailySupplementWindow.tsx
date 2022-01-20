@@ -112,7 +112,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                                             name={getRadioButtonStatus(item.taken)} style={[styles.IconPadding, { color: getRadioButtonColor(item.taken) }]}></IconI>
                                         {item.time === "" && <Icon onPress={() => changeTime(item)} name="clock" style={styles.IconPadding}/>}
                                         <Text onPress={() => changeTime(item)} style={styles.ListName}>
-                                            {item.time !== "" && item.time+":"}
+                                            {item.time !== "" && item.time+": "}
                                         </Text> 
                                         <Text style={styles.ListName}>
                                             {item.Supplement.name}

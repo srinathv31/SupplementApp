@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -16,8 +16,10 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     daySelected: AppProps["daySelected"]
 }): JSX.Element {
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
+    const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
+
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
-    const [supplementNotes, setSupplementNotes] = useState<string>("");
+    const [supplementNotes, setSupplementNotes] = useState<string>(grabSupplementNote);
     const [expand, setExpand] = useState<boolean>(false);
     const [time, setTime] = useState<Date>(grabOffTime);
 
@@ -81,6 +83,11 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
         setSupplementMap(supplementMapCopy);
         setTime(currentDate);
     };
+
+    useEffect(() => {
+        selectedSupplement.note = supplementNotes;
+        setSupplementMap(supplementMap);
+    }, [supplementNotes]);
 
     return(
         <KeyboardAvoidingView behavior="position">
