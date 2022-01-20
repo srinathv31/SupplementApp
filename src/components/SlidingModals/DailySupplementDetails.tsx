@@ -59,7 +59,7 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     function getRadioText(taken: SupplementObject["taken"]) {
         switch(taken) {
         case "not-taken":
-            return "Not Taken";
+            return "Not Taken Yet";
         case "taken-off-time":
             return "Taken Not On Time";
         case "missed":
@@ -126,7 +126,7 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                     </View>
                     { showStatusButtons && <View style={{ flexDirection: "column" }}>
                         <IconI onPress={() => toggleTakenStatus("not-taken", selectedSupplement)} name={"radio-button-off-outline"} style={[styles.IconPadding, { color: "#EEE" }]}>
-                            <Text style={styles.buttonText}>Not Taken</Text>
+                            <Text style={styles.buttonText}>Not Taken Yet</Text>
                         </IconI>
                         <IconI onPress={() => toggleTakenStatus("taken-off-time", selectedSupplement)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "#fcc623" }]}>
                             <Text style={{ padding: 10 }}>Taken Not On Time</Text>
