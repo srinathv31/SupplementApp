@@ -13,14 +13,19 @@ import { AppProps } from "../interfaces/Props";
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
 
+    const modalizeRef = useRef<Modalize>(null);
+    const [modalizeRefStatus, setModalizeRefStatus] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        modalizeRefStatus === true ? modalizeRef.current?.open() : modalizeRef.current?.close();
+    }, [modalizeRefStatus]);
+
     useEffect(() => {
         setModalizeRefStatus(false);
     }, [AllProps.index]);
 
-    const modalizeRef = useRef<Modalize>(null);
-    const [modalizeRefStatus, setModalizeRefStatus] = useState<boolean>(false);
-    modalizeRefStatus === true ? modalizeRef.current?.open() : modalizeRef.current?.close();
-
+    
     return(
         <View>
             <DetailedSupplementModal
@@ -39,6 +44,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
                 modalizeRef={modalizeRef}
                 url={AllProps.selectedSupplement.Supplement.url}
                 modalHeight={925}
+                setModalizeRefStatus={setModalizeRefStatus}
             ></WebModal>
         </View>
     );
