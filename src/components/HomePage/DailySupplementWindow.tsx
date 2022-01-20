@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -8,15 +8,21 @@ import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
+import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 
-export default function DailySupplementWindow({ setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
-    const onOpen = () => {
+    const onOpen = (item: SupplementObject) => {
+        setSelectedSupplement(item);
         modalizeRef.current?.open();
     };
+
+    useEffect(() => {
+        modalizeRef.current?.close();
+    }, [index]);
 
     function removeSupplement(item: SupplementObject) {
         const supplementMapCopy = { ...supplementMap };
@@ -100,7 +106,7 @@ export default function DailySupplementWindow({ setUserData, userData, setSupple
                                     <IconI onPress={() => toggleTakenStatus("missed", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "red" }]}></IconI>
                                     <IconI onPress={() => toggleTakenStatus("taken-on-time", item)} name={"checkmark-circle"} style={[styles.IconPadding, { color: "#28c916" }]}></IconI>
                                 </View> }
-                                <TouchableOpacity key={item.Supplement.name} onPress={() => onOpen()}>
+                                <TouchableOpacity key={item.Supplement.name} onPress={() => onOpen(item)}>
                                     <View style={styles.ListItem}>
                                         <IconI onPress={() => handleStatusToggle(item)}
                                             name={getRadioButtonStatus(item.taken)} style={[styles.IconPadding, { color: getRadioButtonColor(item.taken) }]}></IconI>
@@ -120,8 +126,12 @@ export default function DailySupplementWindow({ setUserData, userData, setSupple
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={650}>
-                <View style={{ backgroundColor: "crimson", minHeight: "100%" }}><Text>Poggers</Text></View>
+            <Modalize ref={modalizeRef} modalHeight={750}>
+                <DailySupplementDetails
+                    selectedSupplement={selectedSupplement}
+                    setSupplementMap={setSupplementMap}
+                    supplementMap={supplementMap}
+                />
             </Modalize>
         </>
     );
