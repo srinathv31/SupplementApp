@@ -8,7 +8,10 @@ import Supplement from "../../interfaces/Supplement";
 import { AppProps } from "../../interfaces/Props";
 
 
-export default function ExploreWindow({ setSelectedSupplement, setModalVisible }: AppProps): JSX.Element {
+export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplement }: {
+    setModalizeRefStatus: (m: boolean) => void,
+    setSelectedSupplement: AppProps["setSelectedSupplement"]
+}): JSX.Element {
     const [randomSupplement, setRandomSupplement] = useState<number>(0);
     // const [randomGradient, setRandomGradient] = useState<number>(0);
 
@@ -34,7 +37,7 @@ export default function ExploreWindow({ setSelectedSupplement, setModalVisible }
 
     function handleTouch(supp: Supplement) {
         setSelectedSupplement({ Supplement: supp, time: "", taken: "not-taken" });
-        setModalVisible({ modal: "info-modal" });
+        setModalizeRefStatus(true);
     }
 
     return(
