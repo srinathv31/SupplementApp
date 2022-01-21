@@ -4,15 +4,19 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { TimeLineObject } from "../../../interfaces/TimeLine";
 import IconI from "react-native-vector-icons/Ionicons";
 import { EffectsTimelineProps } from "../../../interfaces/EffectsTimelineProps";
-import { timeData } from "../../../utilities/timeline.ts/24hours";
 
 
 export default function EffectsTimeline({ expand, selectedSupplement, setSelectedSupplement, setSupplementMap, supplementMap, daySelected }: EffectsTimelineProps): JSX.Element {
     const [timeLineUpdate, setTimeLineUpdate] = useState<TimeLineObject[]>(selectedSupplement.TimelineData !== undefined ? selectedSupplement.TimelineData : []);
+    const [initialStart, setInitialStart] = useState<number>(0);
 
     useEffect(() => {
-        console.log(JSON.stringify(timeData));
-    }, [timeLineUpdate]);
+        Object.values(timeLineUpdate).forEach( hour => {
+            if (hour.start) {
+                setInitialStart(timeLineUpdate.indexOf(hour));
+            }
+        });
+    }, []);
 
     function getTimelineButton(item: TimeLineObject) {
         let buttonName = "radio-button-off-outline";
@@ -23,7 +27,6 @@ export default function EffectsTimeline({ expand, selectedSupplement, setSelecte
     function createEffectTimeLine(item: TimeLineObject) {
         const timeLineDataCopy: TimeLineObject[] = [];
         const selectedSupplementCopy = { ...selectedSupplement };
-        const supplementMapCopy = { ...supplementMap };
 
         // Make copy of timelineData
         Object.values(timeLineUpdate).forEach( item => {
@@ -47,7 +50,6 @@ export default function EffectsTimeline({ expand, selectedSupplement, setSelecte
         <View style={{ flexDirection: "row", paddingBottom: expand === true ? 80 : 10 }}>
             <FlatList
                 data={timeLineUpdate}
-                // contentOffset={{ x: 650, y: 0 }}
                 renderItem={({ item }) => (
                     <View style={{ flexDirection: "column" }}>
                         <View style={{ borderBottomColor: item.passThrough ? "red" : "transparent", borderBottomWidth: 2 }}>
@@ -60,6 +62,9 @@ export default function EffectsTimeline({ expand, selectedSupplement, setSelecte
                 scrollEnabled
                 horizontal
                 showsHorizontalScrollIndicator={false}
+                initialScrollIndex={initialStart}
+                onScrollToIndexFailed={() => setInitialStart(0)}
+                initialNumToRender={24}
             ></FlatList>
         </View>
     );
