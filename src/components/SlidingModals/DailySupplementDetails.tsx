@@ -1,7 +1,6 @@
 // Source Imports
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { AppProps } from "../../interfaces/Props";
@@ -9,9 +8,11 @@ import Divider from "../Design/Divider";
 import { SupplementObject } from "../../interfaces/Supplement";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
+import { EffectsTimelineProps } from "../../interfaces/EffectsTimelineProps";
+import EffectsTimeline from "./DailyDetailedSupplement/EffectsTimeline";
 
-export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected }: {
-    selectedSupplement: AppProps["selectedSupplement"],
+export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setSelectedSupplement }: {
+    selectedSupplement: AppProps["selectedSupplement"], setSelectedSupplement: AppProps["setSelectedSupplement"],
     setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
     daySelected: AppProps["daySelected"]
 }): JSX.Element {
@@ -23,7 +24,14 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     const [expand, setExpand] = useState<boolean>(false);
     const [time, setTime] = useState<Date>(grabOffTime);
 
-    const data = [{ time: "07:00" }, { time: "08:00" }, { time: "09:00" }, { time: "10:00" }, { time: "11:00" }, { time: "12:00" }, { time: "01:00" }, { time: "02:00" }];
+    const EffectsTimeLineProps: EffectsTimelineProps = {
+        expand,
+        selectedSupplement,
+        setSelectedSupplement,
+        setSupplementMap,
+        supplementMap,
+        daySelected
+    };
 
     function toggleTakenStatus(taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time", item: SupplementObject) {
         const supplementMapCopy = { ... supplementMap };
@@ -143,17 +151,9 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                         <Text onPress={() => setExpand(!expand)} style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
-                    <View style={{ flexDirection: "row", paddingBottom: expand === true ? 80 : 10 }}>
-                        <FlatList
-                            data={data}
-                            renderItem={({ item }) => (
-                                <Text style={{ padding: 10, color: "white" }}>{item.time}</Text>
-                            )}
-                            scrollEnabled
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                        ></FlatList>
-                    </View>
+                    <EffectsTimeline
+                        {...EffectsTimeLineProps}
+                    ></EffectsTimeline>
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="pencil" style={styles.IconPadding}/>
                         <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Notes</Text>
@@ -168,7 +168,6 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                         placeholderTextColor={"silver"}
                         keyboardAppearance="dark"
                     />
-                
                 </View>
             </>
         </KeyboardAvoidingView>
@@ -189,6 +188,13 @@ const styles = StyleSheet.create({
         margin: 1,
         fontSize: 18,
         color: "#EEE"
+    },
+    IconTimelinePadding: {
+        paddingHorizontal: 1,
+        fontSize: 18,
+        color: "#EEE",
+        alignSelf: "center",
+        marginTop: -11
     },
     buttonText: {
         paddingHorizontal: 5

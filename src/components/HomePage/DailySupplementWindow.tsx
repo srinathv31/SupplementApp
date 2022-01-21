@@ -132,6 +132,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     setSupplementMap={setSupplementMap}
                     supplementMap={supplementMap}
                     daySelected={daySelected}
+                    setSelectedSupplement={setSelectedSupplement}
                 />
             </Modalize>
         </>
