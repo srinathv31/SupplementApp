@@ -26,24 +26,91 @@ export default function EffectsTimeline({ expand, selectedSupplement, setSelecte
 
     function createEffectTimeLine(item: TimeLineObject) {
         const timeLineDataCopy: TimeLineObject[] = [];
-        const selectedSupplementCopy = { ...selectedSupplement };
+        const doesStartExist = { index: 0, exist: false };
+        const doesEndExist = { index: 0, exist: false };
 
         // Make copy of timelineData
         Object.values(timeLineUpdate).forEach( item => {
             timeLineDataCopy.push(item);
         });
 
-        // Only set item as start
         Object.values(timeLineDataCopy).forEach( hour => {
-            if (hour !== item) {
-                delete hour.start;
-            } else {
-                hour.start = true;
+            if (hour.start) {
+                doesStartExist.exist = true;
+                doesStartExist.index = timeLineDataCopy.indexOf(hour);
+            }
+            if (hour.end) {
+                doesEndExist.exist = true;
+                doesEndExist.index = timeLineDataCopy.indexOf(hour);
             }
         });
-        selectedSupplementCopy.TimelineData = timeLineDataCopy;
-        setSelectedSupplement(selectedSupplementCopy);
-        setTimeLineUpdate(timeLineDataCopy);
+
+        if (!doesStartExist.exist && !doesEndExist.exist) {
+            // Only set item as start
+            Object.values(timeLineDataCopy).forEach( hour => {
+                if (hour !== item) {
+                    delete hour.start;
+                } else {
+                    hour.start = true;
+                }
+            });
+            setTimeLineUpdate(timeLineDataCopy);
+            return;
+        }
+
+        if (doesStartExist.exist && !doesEndExist.exist && !item.start) {
+            // Only set item as end
+            Object.values(timeLineDataCopy).forEach( hour => {
+                if (hour !== item) {
+                    delete hour.end;
+                } else {
+                    hour.end = true;
+                    doesEndExist.index = timeLineDataCopy.indexOf(hour);
+                }
+            });
+
+            if (doesStartExist.index < doesEndExist.index) {
+                // Set pass throughs
+                Object.values(timeLineDataCopy).forEach( hour => {
+                    if (timeLineDataCopy.indexOf(hour) > doesStartExist.index && timeLineDataCopy.indexOf(hour) < doesEndExist.index) {
+                        hour.passThrough = true;
+                    }
+                });
+            }
+            
+            if (doesStartExist.index > doesEndExist.index) {
+                // Set pass throughs
+                Object.values(timeLineDataCopy).forEach( hour => {
+                    if (timeLineDataCopy.indexOf(hour) > doesStartExist.index) {
+                        hour.passThrough = true;
+                    }
+                    if (timeLineDataCopy.indexOf(hour) < doesEndExist.index) {
+                        hour.passThrough = true;
+                    }
+                });
+            }
+            setTimeLineUpdate(timeLineDataCopy);
+            return;
+        }
+
+        if (doesStartExist.exist && doesEndExist.exist) {
+            // Clear both start and end
+            Object.values(timeLineDataCopy).forEach( hour => {
+                delete hour.start;
+                delete hour.end;
+                delete hour.passThrough;
+            });
+            // Only set item as start
+            Object.values(timeLineDataCopy).forEach( hour => {
+                if (hour !== item) {
+                    delete hour.start;
+                } else {
+                    hour.start = true;
+                }
+            });
+            setTimeLineUpdate(timeLineDataCopy);
+            return;
+        }
     }
 
     return(
