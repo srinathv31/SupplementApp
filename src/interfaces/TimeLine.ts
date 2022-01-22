@@ -6,5 +6,5 @@ export interface TimeLineObject {
     passThrough?: boolean,
     event?: string,
     eventSum?: string,
-    color?: "red" | "orange" | "skyblue" | "#28c916"
+    color?: "red" | "orange" | "#2196F3" | "#28c916"
 }
