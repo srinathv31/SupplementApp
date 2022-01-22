@@ -18,6 +18,26 @@ export default function EffectsTimeline({ expand, selectedSupplement, setSelecte
         });
     }, []);
 
+    useEffect(() => {
+        let startExist = false;
+        let endExist = false;
+        Object.values(timeLineUpdate).forEach( hour => {
+            if (hour.start) {
+                startExist = true;
+            }
+            if (hour.end) {
+                endExist = true;
+            }
+        });
+        if (startExist && !endExist) {
+            Object.values(timeLineUpdate).forEach( hour => {
+                if (hour.start) {
+                    delete hour.start;
+                }
+            });
+        }
+    }, []);
+
     function getTimelineButton(item: TimeLineObject) {
         let buttonName = "radio-button-off-outline";
         item.start || item.end ? buttonName = "radio-button-on-outline" : buttonName = "radio-button-off-outline";
