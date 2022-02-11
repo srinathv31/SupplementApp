@@ -50,7 +50,7 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
             });
             setMoodList(moodListCopy);
         }
-    }, []);
+    }, [supplementMap, modalVisible]);
 
     return(
         <Modal
@@ -77,7 +77,7 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
                             </View>
                         )}
                     ></FlatList>
-                    {supplementMap[daySelected] && Object.keys(supplementMap[daySelected].DailyMood).length < 3 && 
+                    {supplementMap[daySelected] && supplementMap[daySelected].DailyMood["3"].mood === "" && 
                         <Icon onPress={() => changeMood()}
                             name="add-circle-outline" style={{ color: "white", fontSize: 23, alignSelf: "center" }}></Icon>
                     }

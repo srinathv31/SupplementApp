@@ -43,7 +43,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
     };
 
     function handleMoodOpen() {
-        (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["3"].mood !== "") ? 
+        (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "") ? 
             setModalVisible({ modal: "mood-change-modal" }) :
             setOpen(!open);
     }
@@ -77,7 +77,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                             <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
-                                name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["3"].mood !== "" ? "lime" : "white" }/>
+                                name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
                             <Icon onPress={() => setModalVisible({ modal: "mood-timeline" })}
                                 name="silverware-fork-knife" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
