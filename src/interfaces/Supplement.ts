@@ -1,5 +1,4 @@
 import MoodObject from "./Mood";
-import { TimeLineObject } from "./TimeLine";
 interface Supplement {
     name: string,
     smallDescription: string,
@@ -15,14 +14,13 @@ export interface SupplementObject {
     time: string,
     taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time",
     takenOffTime?: string,
-    note?: string,
-    TimelineData?: TimeLineObject[]
+    note?: string
 }
 
 export interface SupplementMapObject {
     SupplementSchedule: SupplementObject[], 
     JournalEntry: string,
-    DailyMood: MoodObject
+    DailyMood: Record<string, MoodObject>,
 }
 
 

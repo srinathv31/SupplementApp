@@ -1,14 +1,13 @@
 // Source Imports
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
-import DropDownPicker, { ItemType } from "react-native-dropdown-picker";
+import DropDownPicker from "react-native-dropdown-picker";
 import IconI from "react-native-vector-icons/Ionicons";
-import { EffectsFlatListProps } from "../../../interfaces/EffectsTimelineProps";
-import { TimeLineObject } from "../../../interfaces/TimeLine";
-import createEffectTimeLine from "../../../utilities/timeline.ts/createEffectTimeLine";
+import { EffectsFlatListProps } from "../../../../interfaces/EffectsTimelineProps";
+import { TimeLineObject } from "../../../../interfaces/TimeLine";
+import createEffectTimeLine from "../../../../utilities/timeline.ts/createEffectTimeLine";
 
-export default function EffectsFlatList({ setTimeLineUpdate, timeLineUpdate, setEditTextMode, editTextMode, setInitialStart,
-    startSelected, initialStart, setColorEditMode, colorEditMode, colorStringStatus }: EffectsFlatListProps): JSX.Element {
+export default function EffectsFlatList({ setTimeLineArray, timeLineArray, setTimelineProps, timelineProps, timeLineArrayKey, setTimeLineArrayKey }: EffectsFlatListProps): JSX.Element {
     
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
     const fadeAnimSub = useRef(new Animated.Value(0)).current;
@@ -71,30 +70,56 @@ export default function EffectsFlatList({ setTimeLineUpdate, timeLineUpdate, set
         return buttonName;
     }
 
-    function addMood(item: TimeLineObject, mood: ItemType) {
-        item.event = ""+mood.value;
-        setTimeLineUpdate(timeLineUpdate);
+    // function addMood(item: TimeLineObject, mood: ItemType) {
+    //     item.event = ""+mood.value;
+    //     setTimeLineArray(timeLineArray);
+    // }
+
+    function moodEditMode(item: TimeLineObject, onlyStateEdit: boolean) {
+        const timelinePropsCopy = { ...timelineProps };
+
+        timelinePropsCopy[timeLineArrayKey].editMoodMode = !timelinePropsCopy[timeLineArrayKey].editMoodMode;
+        if (!onlyStateEdit) {
+            timelinePropsCopy[timeLineArrayKey].initialStart = timeLineArray[timeLineArrayKey].indexOf(item);
+        }
+        setTimelineProps(timelinePropsCopy);
+    }
+    
+    function colorEditMode(item: TimeLineObject) {
+        const timelinePropsCopy = { ...timelineProps };
+
+        timelinePropsCopy[timeLineArrayKey].colorEditMode = !timelinePropsCopy[timeLineArrayKey].colorEditMode;
+        timelinePropsCopy[timeLineArrayKey].initialStart = timeLineArray[timeLineArrayKey].indexOf(item);
+        setTimelineProps(timelinePropsCopy);
+
+        setTimeLineArrayKey(timeLineArrayKey);
+        createEffectTimeLine(item, timeLineArray, setTimeLineArray, timeLineArrayKey, timelinePropsCopy[timeLineArrayKey].timelineColor);
     }
 
     return(
         <View>
             <FlatList
-                data={timeLineUpdate}
+                data={timeLineArray[timeLineArrayKey]}
                 renderItem={({ item }) => (
                     <View style={{ flexDirection: "column" }}>
                         <View style={{ borderBottomColor: item.passThrough || item.start || item.end ? item.color : "transparent", borderBottomWidth: 2 }}>
-                            <Text onPress={() => (setEditTextMode(!editTextMode), setInitialStart(timeLineUpdate.indexOf(item)))} style={{ padding: 10, color: "white", textAlign: "center" }}>{item.time}</Text>
+                            <Text onPress={() => moodEditMode(item, false)} style={{ padding: 10, color: "white", textAlign: "center" }}>{item.time}</Text>
                         </View>
-                        <Animated.View style={[{ opacity: startSelected === true ? fadeAnimSub : 1 }]}>
-                            <IconI onPress={() => (startSelected === true ? createEffectTimeLine(item, timeLineUpdate, setTimeLineUpdate, colorStringStatus) : setColorEditMode(!colorEditMode), setInitialStart(timeLineUpdate.indexOf(item)))}
-                                name={getTimelineButton(item)} style={[styles.IconTimelinePadding, { color: item.color ? item.color : "silver" }]}/>
+                        <Animated.View style={[{ opacity: timelineProps[timeLineArrayKey].startSelected === true ? fadeAnimSub : 1 }]}>
+                            <IconI 
+                                onPress={() => (timelineProps[timeLineArrayKey].startSelected === true ? 
+                                    createEffectTimeLine(item, timeLineArray, setTimeLineArray, timeLineArrayKey, timelineProps[timeLineArrayKey].timelineColor) : 
+                                    colorEditMode(item)) }
+                                name={getTimelineButton(item)}
+                                style={[styles.IconTimelinePadding, { color: item.color ? item.color : "silver" }]}/>
                         </Animated.View>
-                        { editTextMode && timeLineUpdate.indexOf(item) === initialStart ? 
+                        { timelineProps[timeLineArrayKey].editMoodMode && timeLineArray[timeLineArrayKey].indexOf(item) === timelineProps[timeLineArrayKey].initialStart ? 
                             <DropDownPicker
-                                open={editTextMode}
-                                value={item.event ? item.event : value}
+                                open={timelineProps[timeLineArrayKey].editMoodMode}
+                                // value={item.event ? item.event : value}
+                                value={value}
                                 items={items}
-                                setOpen={() => setEditTextMode(!editTextMode)}
+                                setOpen={() => moodEditMode(item, true)}
                                 setItems={setItems}
                                 setValue={() => setValue}
                                 theme="DARK"
@@ -103,18 +128,18 @@ export default function EffectsFlatList({ setTimeLineUpdate, timeLineUpdate, set
                                 labelStyle={{ fontSize: 15, textAlign: "center", opacity: 1 }}
                                 dropDownContainerStyle={{ backgroundColor: "#0B172A" }}
                                 containerStyle={{ width: 200, height: 200, opacity: 0.95, marginTop: 75 }}
-                                onSelectItem={(mood) => {
-                                    addMood(item, mood);
-                                }}
+                                // onSelectItem={(mood) => {
+                                //     addMood(item, mood);
+                                // }}
                             ></DropDownPicker> :
-                            <Text onPress={() => (setEditTextMode(!editTextMode), setInitialStart(timeLineUpdate.indexOf(item)))} style={{ color: "white", paddingHorizontal: 5, textAlign: "center" }}>{item.event}</Text>}
+                            <Text onPress={() => moodEditMode(item, false)} style={{ color: "white", paddingHorizontal: 5, textAlign: "center" }}>{item.mood}</Text>}
                     </View>
                 )}
                 scrollEnabled
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                initialScrollIndex={initialStart}
-                onScrollToIndexFailed={() => setInitialStart(0)}
+                initialScrollIndex={timelineProps[timeLineArrayKey].initialStart}
+                onScrollToIndexFailed={() => timelineProps[timeLineArrayKey].initialStart = 0}
                 initialNumToRender={24}
             ></FlatList>
         </View>

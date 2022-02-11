@@ -6,12 +6,22 @@ import Divider from "../components/Design/Divider";
 import DailySupplementWindow from "../components/HomePage/DailySupplementWindow";
 import ExploreWindow from "../components/HomePage/ExploreWindow";
 import MoodSlider from "../components/Mood/MoodSlider";
+import MoodTimelinePicker from "../components/Mood/MoodTimelinePicker";
 import WebModal from "../components/SlidingModals/WebModal";
 import DetailedSupplementModal from "../components/SupplementViews/DetailedSupplementModal";
+import { MoodTimelinePickerProps } from "../interfaces/MoodTimelineProps";
 import { AppProps } from "../interfaces/Props";
 
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
+
+    const MoodTimelineProps: MoodTimelinePickerProps = {
+        daySelected: AllProps.daySelected,
+        setModalVisible: AllProps.setModalVisible,
+        modalVisible: AllProps.modalVisible,
+        setSupplementMap: AllProps.setSupplementMap,
+        supplementMap: AllProps.supplementMap,
+    };
 
     const modalizeRef = useRef<Modalize>(null);
     const [modalizeRefStatus, setModalizeRefStatus] = useState<boolean>(false);
@@ -32,6 +42,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
                 {...AllProps}
             ></DetailedSupplementModal>
             <MoodSlider {...AllProps}></MoodSlider>
+            <MoodTimelinePicker {...MoodTimelineProps} />
             <ExploreWindow
                 setModalizeRefStatus={setModalizeRefStatus}
                 {...AllProps}

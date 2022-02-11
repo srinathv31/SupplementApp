@@ -8,13 +8,13 @@ import Divider from "../Design/Divider";
 import { SupplementObject } from "../../interfaces/Supplement";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
-import { EffectsTimelineProps } from "../../interfaces/EffectsTimelineProps";
-import EffectsTimeline from "./DailyDetailedSupplement/EffectsTimeline";
+import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
 
-export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setSelectedSupplement }: {
+export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible }: {
     selectedSupplement: AppProps["selectedSupplement"], setSelectedSupplement: AppProps["setSelectedSupplement"],
     setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"]
+    daySelected: AppProps["daySelected"],
+    setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"]
 }): JSX.Element {
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
@@ -24,13 +24,12 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     const [expand, setExpand] = useState<boolean>(false);
     const [time, setTime] = useState<Date>(grabOffTime);
 
-    const EffectsTimeLineProps: EffectsTimelineProps = {
-        expand,
-        selectedSupplement,
-        setSelectedSupplement,
+    const MoodTimelineProps = {
         setSupplementMap,
         supplementMap,
-        daySelected
+        daySelected,
+        setModalVisible,
+        modalVisible
     };
 
     function toggleTakenStatus(taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time", item: SupplementObject) {
@@ -151,9 +150,14 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                         <Text onPress={() => setExpand(!expand)} style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
-                    <EffectsTimeline
-                        {...EffectsTimeLineProps}
-                    ></EffectsTimeline>
+                    {Object.keys(supplementMap[daySelected].DailyMood).map(eachMood => {
+                        return (
+                            <MoodTimlineSupplement
+                                key={""+eachMood}
+                                {...MoodTimelineProps}
+                                timelineData={supplementMap[daySelected].DailyMood[eachMood]}
+                            ></MoodTimlineSupplement>);
+                    })}
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="pencil" style={styles.IconPadding}/>
                         <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Notes</Text>

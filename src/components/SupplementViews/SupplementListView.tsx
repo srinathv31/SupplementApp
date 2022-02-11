@@ -36,35 +36,15 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
+            { 
+                "1": { mood: "", range: 0, TimelineData: [] },
+                "2": { mood: "", range: 0, TimelineData: [] },
+                "3": { mood: "", range: 0, TimelineData: [] }
+            } };
         }
         
-        supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken", TimelineData: [
-            { time: "12:00 A" },
-            { time: "01:00 A" },
-            { time: "02:00 A" },
-            { time: "03:00 A" },
-            { time: "04:00 A" },
-            { time: "05:00 A" },
-            { time: "06:00 A" },
-            { time: "07:00 A" },
-            { time: "08:00 A" },
-            { time: "09:00 A" },
-            { time: "10:00 A" },
-            { time: "11:00 A" },
-            { time: "12:00 P" },
-            { time: "01:00 P" },
-            { time: "02:00 P" },
-            { time: "03:00 P" },
-            { time: "04:00 P" },
-            { time: "05:00 P" },
-            { time: "06:00 P" },
-            { time: "07:00 P" },
-            { time: "08:00 P" },
-            { time: "09:00 P" },
-            { time: "10:00 P" },
-            { time: "11:00 P" },
-        ] });
+        supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
         const selectedDatesModified = addDate(objDaySelected, supplementMapCopy);
 
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
@@ -121,32 +101,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
                             <TouchableOpacity
                                 key={item.name}
                                 onPress={ 
-                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken", TimelineData: [
-                                        { time: "12:00 A" },
-                                        { time: "01:00 A" },
-                                        { time: "02:00 A" },
-                                        { time: "03:00 A" },
-                                        { time: "04:00 A" },
-                                        { time: "05:00 A" },
-                                        { time: "06:00 A" },
-                                        { time: "07:00 A" },
-                                        { time: "08:00 A" },
-                                        { time: "09:00 A" },
-                                        { time: "10:00 A" },
-                                        { time: "11:00 A" },
-                                        { time: "12:00 P" },
-                                        { time: "01:00 P" },
-                                        { time: "02:00 P" },
-                                        { time: "03:00 P" },
-                                        { time: "04:00 P" },
-                                        { time: "05:00 P" },
-                                        { time: "06:00 P" },
-                                        { time: "07:00 P" },
-                                        { time: "08:00 P" },
-                                        { time: "09:00 P" },
-                                        { time: "10:00 P" },
-                                        { time: "11:00 P" },
-                                    ] }), setModalVisible({ modal: "time-modal" }))
+                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
                                         : index === 2 ? () => jumpToWeb(item) : () => addSupplement(item)
                                 }
                             >

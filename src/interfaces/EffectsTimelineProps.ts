@@ -11,14 +11,18 @@ export interface EffectsTimelineProps {
 }
 
 export interface EffectsFlatListProps {
-    setTimeLineUpdate: (t: TimeLineObject[]) => void,
-    timeLineUpdate: TimeLineObject[],
-    setEditTextMode: (e: boolean) => void,
-    editTextMode: boolean,
-    startSelected: boolean,
-    setInitialStart: (i: number) => void,
+    setTimeLineArray: (t: Record<string, TimeLineObject[]>) => void,
+    timeLineArray: Record<string, TimeLineObject[]>,
+    timeLineArrayKey: string,
+    setTimeLineArrayKey: (k: string) => void,
+    setTimelineProps: (t: Record<string, TimelineStateProps>) => void,
+    timelineProps: Record<string, TimelineStateProps>
+}
+
+export interface TimelineStateProps {
     initialStart: number,
-    setColorEditMode: (e: boolean) => void,
+    timelineColor: "red" | "orange" | "#2196F3" | "#28c916",
     colorEditMode: boolean,
-    colorStringStatus: "red" | "orange" | "#2196F3" | "#28c916"
+    startSelected: boolean,
+    editMoodMode: boolean
 }
