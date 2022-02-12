@@ -4,6 +4,7 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import { SupplementMapObject } from "../../interfaces/Supplement";
 
 export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, selectedDates }: AppProps): JSX.Element {
     const [rangeValue, setRangeValue] = useState<number>(0);
@@ -12,15 +13,33 @@ export default function MoodSlider({ setUserData, userData, setModalVisible, mod
         const supplementMapCopy = { ...supplementMap };
 
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
+            { 
+                "1": { mood: "", range: 0, TimelineData: [] },
+                "2": { mood: "", range: 0, TimelineData: [] },
+                "3": { mood: "", range: 0, TimelineData: [] }
+            } };
         }
 
-        supplementMapCopy[daySelected].DailyMood = { mood: mood, range: rangeValue };
+        // Add Mood + Range
+        supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy, selectedDates);
 
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible({ modal: "mood-timeline" });
+    }
+
+    function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
+        let emptyKey = "";
+        
+        Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
+            if (supplementMapCopy[daySelected].DailyMood[key].mood === "" && emptyKey === ""){
+                emptyKey = key;
+            }
+        });
+        supplementMapCopy[daySelected].DailyMood[emptyKey] = { mood: mood, range: rangeValue, TimelineData: [] };
+        return supplementMapCopy[daySelected].DailyMood;
     }
 
     return(
@@ -39,7 +58,7 @@ export default function MoodSlider({ setUserData, userData, setModalVisible, mod
                     <Slider
                         style={{ width: "100%", height: 70 }}
                         minimumValue={0}
-                        maximumValue={100}
+                        maximumValue={5}
                         minimumTrackTintColor="#2196F3"
                         maximumTrackTintColor="#FFFFFF"
                         tapToSeek

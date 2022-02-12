@@ -19,6 +19,7 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
             onRequestClose={() => {
                 AllProps.setModalVisible({ modal: "hide-modal" });
             }}
+            style={{ flex: 1 }}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
@@ -27,11 +28,13 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
                         setQuery={setQuery}
                         query={query}
                     ></SearchBar>
-                    <SupplementListView
-                        {...AllProps}
-                        fontSizeNumber={18}
-                        query={query}
-                    ></SupplementListView>
+                    <View style={{ height: "80%" }}>
+                        <SupplementListView
+                            {...AllProps}
+                            fontSizeNumber={18}
+                            query={query}
+                        ></SupplementListView>
+                    </View>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => AllProps.setModalVisible({ modal: "hide-modal" })}
@@ -73,7 +76,6 @@ const styles = StyleSheet.create({
         elevation: 2,
         width: 125,
         alignSelf: "center",
-        marginTop: "-55%"
     },
     buttonOpen: {
         backgroundColor: "#F194FF",

@@ -14,7 +14,7 @@ export default function saveUserData(userData: User, setUserData: (u: User) => v
     setUserData(userCopy);
 }
 
-const saveUserToPhone = async (userData: User) => {
+export const saveUserToPhone = async (userData: User) => {
     try {
         //save user
         await AsyncStorage.setItem(userData.name, JSON.stringify(userData));

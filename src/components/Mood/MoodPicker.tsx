@@ -39,7 +39,6 @@ export default function MoodPicker({ open, setOpen, setMood, setModalVisible, dr
 
     function showMood(item: ItemType) {
         setMood(""+item.label);
-        console.log(item.value);
     }
     
     return(

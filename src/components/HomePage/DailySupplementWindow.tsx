@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -7,10 +7,22 @@ import IconI from "react-native-vector-icons/Ionicons";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import { Modalize } from "react-native-modalize";
+import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 
-
-export default function DailySupplementWindow({ setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, modalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
+
+    // used to open sliding modal
+    const modalizeRef = useRef<Modalize>(null);
+    const onOpen = (item: SupplementObject) => {
+        setSelectedSupplement(item);
+        modalizeRef.current?.open();
+    };
+
+    useEffect(() => {
+        modalizeRef.current?.close();
+    }, [index]);
 
     function removeSupplement(item: SupplementObject) {
         const supplementMapCopy = { ...supplementMap };
@@ -81,38 +93,51 @@ export default function DailySupplementWindow({ setUserData, userData, setSupple
     }
 
     return(
-        <View style={{ alignSelf: "center" }}>
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
-                    renderItem={({ item }) => (
-                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                            { (selectedSupplement === item && showStatusButtons) && <View style={{ flexDirection: "column" }}>
-                                <IconI onPress={() => toggleTakenStatus("not-taken", item)} name={"radio-button-off-outline"} style={[styles.IconPadding, { color: "#EEE" }]}></IconI>
-                                <IconI onPress={() => toggleTakenStatus("taken-off-time", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "#fcc623" }]}></IconI>
-                                <IconI onPress={() => toggleTakenStatus("missed", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "red" }]}></IconI>
-                                <IconI onPress={() => toggleTakenStatus("taken-on-time", item)} name={"checkmark-circle"} style={[styles.IconPadding, { color: "#28c916" }]}></IconI>
-                            </View> }
-                            <TouchableOpacity key={item.Supplement.name} onPress={() => console.log(item.Supplement.name)}>
-                                <View style={styles.ListItem}>
-                                    <IconI onPress={() => handleStatusToggle(item)}
-                                        name={getRadioButtonStatus(item.taken)} style={[styles.IconPadding, { color: getRadioButtonColor(item.taken) }]}></IconI>
-                                    {item.time === "" && <Icon onPress={() => changeTime(item)} name="clock" style={styles.IconPadding}/>}
-                                    <Text onPress={() => changeTime(item)} style={styles.ListName}>
-                                        {item.time !== "" && item.time+":"}
-                                    </Text> 
-                                    <Text style={styles.ListName}>
-                                        {item.Supplement.name}
-                                    </Text>
-                                    <Icon onPress={() => removeSupplement(item)}
-                                        name="delete-forever" style={styles.IconPadding}/>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-                ></FlatList>
+        <>
+            <View style={{ alignSelf: "center" }}>
+                <View style={{ flex: 1 }}>
+                    <FlatList
+                        data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
+                        renderItem={({ item }) => (
+                            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                { (selectedSupplement === item && showStatusButtons) && <View style={{ flexDirection: "column" }}>
+                                    <IconI onPress={() => toggleTakenStatus("not-taken", item)} name={"radio-button-off-outline"} style={[styles.IconPadding, { color: "#EEE" }]}></IconI>
+                                    <IconI onPress={() => toggleTakenStatus("taken-off-time", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "#fcc623" }]}></IconI>
+                                    <IconI onPress={() => toggleTakenStatus("missed", item)} name={"radio-button-on-outline"} style={[styles.IconPadding, { color: "red" }]}></IconI>
+                                    <IconI onPress={() => toggleTakenStatus("taken-on-time", item)} name={"checkmark-circle"} style={[styles.IconPadding, { color: "#28c916" }]}></IconI>
+                                </View> }
+                                <TouchableOpacity key={item.Supplement.name} onPress={() => onOpen(item)}>
+                                    <View style={styles.ListItem}>
+                                        <IconI onPress={() => handleStatusToggle(item)}
+                                            name={getRadioButtonStatus(item.taken)} style={[styles.IconPadding, { color: getRadioButtonColor(item.taken) }]}></IconI>
+                                        {item.time === "" && <Icon onPress={() => changeTime(item)} name="clock" style={styles.IconPadding}/>}
+                                        <Text onPress={() => changeTime(item)} style={styles.ListName}>
+                                            {item.time !== "" && item.time+": "}
+                                        </Text> 
+                                        <Text style={styles.ListName}>
+                                            {item.Supplement.name}
+                                        </Text>
+                                        <Icon onPress={() => removeSupplement(item)}
+                                            name="delete-forever" style={styles.IconPadding}/>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        )}
+                    ></FlatList>
+                </View>
             </View>
-        </View>
+            <Modalize ref={modalizeRef} modalHeight={750}>
+                <DailySupplementDetails
+                    selectedSupplement={selectedSupplement}
+                    setSupplementMap={setSupplementMap}
+                    supplementMap={supplementMap}
+                    daySelected={daySelected}
+                    setSelectedSupplement={setSelectedSupplement}
+                    setModalVisible={setModalVisible}
+                    modalVisible={modalVisible}
+                />
+            </Modalize>
+        </>
     );
 }
 

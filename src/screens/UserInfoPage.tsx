@@ -1,13 +1,29 @@
 // Source Imports
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
+import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 
 
-export default function UserInfoPage({ userData, modalVisible, setModalVisible }: AppProps): JSX.Element {
+export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData }: AppProps): JSX.Element {
+    
+    function clearEntirePlan() {
+        const userCopy = { ...userData };
+
+        Object.keys(userCopy.data.supplementMap).forEach(date => {
+            delete userCopy.data.supplementMap[date];
+        });
+        Object.keys(userCopy.data.selectedDates).forEach(date => {
+            delete userCopy.data.selectedDates[date];
+        });
+
+        setUserData(userCopy);
+        saveUserToPhone(userCopy);
+    }
+
     return(
         <Modal
             animationIn={"fadeIn"}
@@ -35,7 +51,9 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible }
                         <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>Change Profile Picture</Text>
                         <Divider length="small"></Divider>
                         <View style={{ backgroundColor: "#112442", padding: 10, margin: 20, borderRadius: 5, width: "100%" }}>
-                            <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Reset Entire Plan</Text>
+                            <Pressable onPress={clearEntirePlan}>
+                                <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Reset Entire Plan</Text>
+                            </Pressable>
                         </View>
                     </View>
                 </View>

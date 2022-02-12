@@ -5,9 +5,9 @@ import { AppProps } from "../../interfaces/Props";
 import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Toast from "react-native-toast-message";
-import Tooltip from "rn-tooltip";
+// import Tooltip from "rn-tooltip";
 
 export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
 	AppProps): JSX.Element {
@@ -19,7 +19,12 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
         const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined) {
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
+            { 
+                "1": { mood: "", range: 0, TimelineData: [] },
+                "2": { mood: "", range: 0, TimelineData: [] },
+                "3": { mood: "", range: 0, TimelineData: [] }
+            } };
         }
 
         supplementMapCopy[daySelected].JournalEntry = journalText;
@@ -64,7 +69,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
                 <View style={styles.modalView}>
                     <View style={{ flexDirection: "row" }}>
                         <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
-                        <Tooltip
+                        {/* <Tooltip
                             popover={ <Text>{(supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") 
                                 ? `Selected Mood for today ${supplementMap[daySelected].DailyMood.mood}: ${supplementMap[daySelected].DailyMood.range}`
                                 : "No Mood Selected for Today"}</Text> }
@@ -77,7 +82,7 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
                         >
                             <Icon
                                 style={{ alignSelf: "flex-start" }} name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
-                        </Tooltip>
+                        </Tooltip> */}
                     </View>
                     <JournalTextEntry
                         setJournalText={setJournalText}

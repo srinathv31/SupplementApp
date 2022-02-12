@@ -11,7 +11,6 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
-
 export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSelectedDates, selectedDates, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
@@ -19,7 +18,12 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[dayString] === undefined){
-            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
+            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
+            { 
+                "1": { mood: "", range: 0, TimelineData: [] },
+                "2": { mood: "", range: 0, TimelineData: [] },
+                "3": { mood: "", range: 0, TimelineData: [] }
+            } };
         }
         
         supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken" });
@@ -51,7 +55,12 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
             Object.values(schedule).forEach(item => {
                 const strDate = getDateString(item.day);
                 if (supplementMapCopy[strDate] === undefined) {
-                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
+                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
+                    { 
+                        "1": { mood: "", range: 0, TimelineData: [] },
+                        "2": { mood: "", range: 0, TimelineData: [] },
+                        "3": { mood: "", range: 0, TimelineData: [] }
+                    } };
                 }
                 supplementMapCopy[strDate].SupplementSchedule = addSupplement(selectedSupplement.Supplement, strDate);
                 if (selectedDatesCopy[item.day.dateString] === undefined) {

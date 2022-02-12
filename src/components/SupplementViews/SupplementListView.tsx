@@ -1,5 +1,5 @@
 // Source Imports
-import React from "react";
+import React, { useRef, useState } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
@@ -11,6 +11,8 @@ import SupplementList from "../../assets/SupplementList.json";
 import { showAddToast } from "../../utilities/toasts";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import User from "../../interfaces/User";
+import { Modalize } from "react-native-modalize";
+import WebModal from "../SlidingModals/WebModal";
 
 
 export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
@@ -23,11 +25,23 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
 	index: AppProps["index"]
 }): JSX.Element {
 
+    // used to open sliding modal
+    const modalizeRef = useRef<Modalize>(null);
+    const onOpen = () => {
+        modalizeRef.current?.open();
+    };
+    const [supplementUrl, setSupplementUrl] = useState<string>("");
+
     function addSupplement(item: Supplement) {
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: { mood: "", range: 0 } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
+            { 
+                "1": { mood: "", range: 0, TimelineData: [] },
+                "2": { mood: "", range: 0, TimelineData: [] },
+                "3": { mood: "", range: 0, TimelineData: [] }
+            } };
         }
         
         supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
@@ -57,42 +71,53 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         return selectedDatesCopy;
     }
 
-    function expandSupplement(item: Supplement) {
-        setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
-        setModalVisible({ modal: "info-modal" });
+    // function expandSupplement(item: Supplement) {
+    //     setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
+    //     setModalVisible({ modal: "info-modal" });
+    // }
+
+    function jumpToWeb(item: Supplement) {
+        setSupplementUrl(item.url);
+        onOpen();
     }
 
     return(
-        <View style={{ alignSelf: "center", flex: 1 }}>
-            { fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
-            <View style={{ flex: 1 }}>
-                <FlatList
-                    contentContainerStyle={{ flexGrow: 1 }}
-                    data={
-                        SupplementList.filter(post => {
-                            if (query === "") {
-                                return post;
-                            } else if (post.name.toLowerCase().includes(query.toLowerCase())) {
-                                return post;
-                            }
-                        })
-                    }
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            key={item.name}
-                            onPress={ 
-                                multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
-                                    : index === 2 ? () => expandSupplement(item) : () => addSupplement(item)
-                            }
-                        >
-                            <View>
-                                <Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    )}
-                ></FlatList>
+        <>
+            <View style={{ alignSelf: "center", flex: 1 }}>
+                { fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
+                <View style={{ flex: 1 }}>
+                    <FlatList
+                        contentContainerStyle={{ flexGrow: 1 }}
+                        data={
+                            SupplementList.filter(post => {
+                                if (query === "") {
+                                    return post;
+                                } else if (post.name.toLowerCase().includes(query.toLowerCase())) {
+                                    return post;
+                                }
+                            })
+                        }
+                        renderItem={({ item }) => (
+                            <TouchableOpacity
+                                key={item.name}
+                                onPress={ 
+                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
+                                        : index === 2 ? () => jumpToWeb(item) : () => addSupplement(item)
+                                }
+                            >
+                                <View>
+                                    <Text style={fontSizeNumber === 24 ? styles.ListItem : styles.ListItemSmall}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+                        )}
+                    ></FlatList>
+                </View>
             </View>
-        </View>
+            <WebModal
+                modalizeRef={modalizeRef}
+                url={supplementUrl}
+            ></WebModal>
+        </>
     );
 }
 

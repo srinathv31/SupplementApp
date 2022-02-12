@@ -1,7 +1,9 @@
+import { TimeLineObject } from "./TimeLine";
 
 interface MoodObject {
     mood: string,
-    range: number
+    range: number,
+    TimelineData: TimeLineObject[],
 }
 
 export default MoodObject;
