@@ -10,11 +10,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
 
-export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible }: {
+export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected }: {
     selectedSupplement: AppProps["selectedSupplement"], setSelectedSupplement: AppProps["setSelectedSupplement"],
     setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"],
-    setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"]
+    daySelected: AppProps["daySelected"]
 }): JSX.Element {
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
@@ -27,9 +26,7 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     const MoodTimelineProps = {
         setSupplementMap,
         supplementMap,
-        daySelected,
-        setModalVisible,
-        modalVisible
+        daySelected
     };
 
     function toggleTakenStatus(taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time", item: SupplementObject) {
