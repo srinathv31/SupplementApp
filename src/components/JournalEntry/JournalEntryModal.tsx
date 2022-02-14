@@ -9,13 +9,14 @@ import JournalTextEntry from "./JournalTextEntry";
 import Toast from "react-native-toast-message";
 // import Tooltip from "rn-tooltip";
 
-export default function JournalEntryModal({ setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, setSelectedDates, selectedDates, objDaySelected }: 
+export default function JournalEntryModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, objDaySelected }: 
 	AppProps): JSX.Element {
 
 
     function handleJournal() {
+        const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
-        const selectedDatesCopy = { ...selectedDates };
+        const selectedDatesCopy = { ...userCopy.data.selectedDates };
         const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined) {
@@ -50,7 +51,8 @@ export default function JournalEntryModal({ setModalVisible, modalVisible, setSu
             selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
         }
     
-        setSelectedDates(selectedDatesCopy);
+        userCopy.data.selectedDates = selectedDatesCopy;
+        setUserData(userCopy);
         setSupplementMap(supplementMapCopy);
 
         setModalVisible({ modal: "hide-modal" });

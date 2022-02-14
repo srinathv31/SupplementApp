@@ -1,5 +1,4 @@
 import { DateData } from "react-native-calendars/src/types";
-import CalendarDotObject from "./Calendar";
 import ModalObject from "./Modal";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
@@ -16,8 +15,6 @@ export interface AppProps {
     supplementMap: Record<string, SupplementMapObject>,
     setObjDaySelected: (o: DateData) => void,
     objDaySelected: DateData,
-    setSelectedDates: (d: CalendarDotObject) => void,
-    selectedDates: CalendarDotObject,
     setShowButtons: (b: boolean) => void,
     showButtons: boolean,
     setIndex: (i: number) => void,

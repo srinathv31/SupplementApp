@@ -10,7 +10,7 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 
-export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, modalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, modalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     // used to open sliding modal
@@ -26,23 +26,24 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
 
     function removeSupplement(item: SupplementObject) {
         const supplementMapCopy = { ...supplementMap };
+        const userCopy = { ...userData };
 
         supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
-        const selectedDatesModified = removeDate(objDaySelected, supplementMapCopy);
+        userCopy.data.selectedDates = removeDate(objDaySelected, supplementMapCopy);
         if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
             delete supplementMapCopy[daySelected];
         }
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
+        setUserData(userCopy);
+        saveUserData(userData, setUserData, supplementMapCopy);
         setSupplementMap(supplementMapCopy);
     }
 
     function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
-        const selectedDatesCopy = { ...selectedDates };
+        const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
             selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
         }
-        setSelectedDates(selectedDatesCopy);
         return selectedDatesCopy;
     }
 

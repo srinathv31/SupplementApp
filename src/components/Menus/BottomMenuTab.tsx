@@ -8,7 +8,7 @@ import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 
-export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, selectedDates }: AppProps): JSX.Element {
+export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     
     const MoodProps = {
@@ -62,7 +62,6 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                     daySelected={daySelected}
                     userData={userData}
                     setUserData={setUserData}
-                    selectedDates={selectedDates}
                 ></ChangeMoodModal>
                 { open && <MoodPicker
                     {...MoodProps}

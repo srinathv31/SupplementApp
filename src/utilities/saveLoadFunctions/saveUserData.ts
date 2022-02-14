@@ -1,13 +1,12 @@
-import CalendarDotObject from "../../interfaces/Calendar";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import User from "../../interfaces/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function saveUserData(userData: User, setUserData: (u: User) => void, supplementMap: Record<string, SupplementMapObject>, selectedDates: CalendarDotObject) {
-    const userCopy = { ...userData };
+export default function saveUserData(userData: User, setUserData: (u: User) => void, supplementMap: Record<string, SupplementMapObject>) {
+    const userCopy: User = { ...userData };
 
     userCopy.data.supplementMap = supplementMap;
-    userCopy.data.selectedDates = selectedDates;
+    // userCopy.data.selectedDates = selectedDates;
 
     saveUserToPhone(userCopy);
 

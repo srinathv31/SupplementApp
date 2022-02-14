@@ -7,9 +7,10 @@ import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 
-export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: AppProps): JSX.Element {
+export default function PrevDayButton({ userData, setUserData, setDaySelected, setObjDaySelected, objDaySelected }: AppProps): JSX.Element {
 
     function grabPrevDay(day: DateData) {
+        const userCopy = { ...userData };
         let copyDate = day;
 
         // Current Date Info to compare
@@ -29,8 +30,8 @@ export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDa
 
         copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
         
-        const selectedDatesCopy = handleCalendar(selectedDates, copyDate.dateString);
-        setSelectedDates(selectedDatesCopy);
+        userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, copyDate.dateString);
+        setUserData(userCopy);
 
         setObjDaySelected(copyDate);
 

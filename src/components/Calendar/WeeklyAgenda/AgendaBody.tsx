@@ -13,43 +13,46 @@ import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../../interfaces/Props";
 
-export default function AgendaBody({ setUserData, userData, setShowStatusButtons, setSupplementMap, setWeek, week, selectedDates, setSelectedDates, setMonthText, setSelectedSupplement, setIndex, showStatusButtons, daySelected, supplementMap, selectedSupplement, setModalVisible, setSwipeAnimation, setObjDaySelected, setDaySelected }: WeekProps): JSX.Element {
+export default function AgendaBody({ setUserData, userData, setShowStatusButtons, setSupplementMap, setWeek, week, setMonthText, setSelectedSupplement, setIndex, showStatusButtons, daySelected, supplementMap, selectedSupplement, setModalVisible, setSwipeAnimation, setObjDaySelected, setDaySelected }: WeekProps): JSX.Element {
     
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
         const parentDataMapKey = parentData.dateString;
         const parentDayDateData = convertWeekDayToDateData(parentData);
+        const userCopy = { ...userData };
 
         supplementMapCopy[parentDataMapKey].SupplementSchedule = supplementMapCopy[parentDataMapKey].SupplementSchedule.filter(listItem => listItem !== item);
-        const selectedDatesModified = removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
+        userCopy.data.selectedDates = removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
         if (Object.values(supplementMapCopy[parentDataMapKey].SupplementSchedule).length === 0 && supplementMapCopy[parentDataMapKey].JournalEntry === "") {
             delete supplementMapCopy[parentDataMapKey];
         }
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
+        
+        setUserData(userCopy);
+        saveUserData(userData, setUserData, supplementMapCopy);
         setSupplementMap(supplementMapCopy);
         handleDayClick(parentData);
     }
 
     function removeDate(day: DateData, supplementMap: AppProps["supplementMap"], parentDataMapKey: string){
-        const selectedDatesCopy = { ...selectedDates };
+        const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[parentDataMapKey].SupplementSchedule).length === 0){
             selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
         }
-        setSelectedDates(selectedDatesCopy);
         return selectedDatesCopy;
     }
 
     function handleDayClick(weekDay: WeekDay) {
         const weekDayDateData = convertWeekDayToDateData(weekDay);
+        const userCopy = { ...userData };
 
         setSwipeAnimation("fadeIn");
 
         setObjDaySelected(weekDayDateData);
         setDaySelected(getDateString(weekDayDateData));
 
-        const selectedDatesCopy = handleCalendar(selectedDates, weekDayDateData.dateString);
-        setSelectedDates(selectedDatesCopy);
+        userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, weekDayDateData.dateString);
+        setUserData(userCopy);
 
         setWeek(generateWeekList(weekDayDateData));
         setMonthText(grabMonth(generateWeekList(weekDayDateData)));

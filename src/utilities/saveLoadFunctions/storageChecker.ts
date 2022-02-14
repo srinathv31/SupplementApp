@@ -4,17 +4,22 @@ import { AppProps } from "../../interfaces/Props";
 import CalendarDotObject from "../../interfaces/Calendar";
 import { generateCurrentDateObject } from "../getCurrentDate";
 
-export const checkForSave = async ({ userData, setSupplementMap, setSelectedDates }: AppProps) => {
+export const checkForSave = async ({ userData, setUserData, setSupplementMap }: AppProps) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(userCopy.name);
         
         if (jsonValue != null) {
+            // Parsing saved data
             const parsedJsonValue = JSON.parse(jsonValue) as User;
             const adjustedSelectedDates = adjustSelectedDates(parsedJsonValue.data.selectedDates);
 
+            // Setting saved data to User useState
+            userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
+            userCopy.data.selectedDates = adjustedSelectedDates;
+            setUserData(userCopy);
+
             setSupplementMap(parsedJsonValue.data.supplementMap);
-            setSelectedDates(adjustedSelectedDates);
         }
         return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {

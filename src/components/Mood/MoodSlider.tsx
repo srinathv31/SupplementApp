@@ -6,7 +6,7 @@ import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 
-export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, selectedDates }: AppProps): JSX.Element {
+export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected }: AppProps): JSX.Element {
     const [rangeValue, setRangeValue] = useState<number>(0);
     
     function handleSlider() {
@@ -25,7 +25,7 @@ export default function MoodSlider({ setUserData, userData, setModalVisible, mod
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
         setSupplementMap(supplementMapCopy);
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDates);
+        saveUserData(userData, setUserData, supplementMapCopy);
 
         setModalVisible({ modal: "mood-timeline" });
     }

@@ -7,12 +7,11 @@ import Icon from "react-native-vector-icons/Ionicons";
 import MoodObject from "../../interfaces/Mood";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 
-export default function ChangeMoodModal({ userData, setUserData, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible, setOpen, selectedDates }: {
+export default function ChangeMoodModal({ userData, setUserData, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible, setOpen }: {
     supplementMap: AppProps["supplementMap"], setSupplementMap: AppProps["setSupplementMap"],
     daySelected: AppProps["daySelected"], setModalVisible: AppProps["setModalVisible"],
     modalVisible: AppProps["modalVisible"], setOpen: (o: boolean) => void,
-    userData: AppProps["userData"], setUserData: AppProps["setUserData"],
-    selectedDates: AppProps["selectedDates"]
+    userData: AppProps["userData"], setUserData: AppProps["setUserData"]
 }): JSX.Element {
     const [moodList, setMoodList] = useState<MoodObject[]>([]);
     
@@ -40,7 +39,7 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
         }
 
         setSupplementMap(supplementMapCopy);
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDates);
+        saveUserData(userData, setUserData, supplementMapCopy);
 
         setModalVisible({ modal: "hide-modal" });
         setOpen(false);
