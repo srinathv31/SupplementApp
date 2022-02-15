@@ -125,12 +125,10 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
         const stringDate = objDaySelected.dateString;
         
         if (supplementMapCopy[daySelected].DailyMood["3"] === item){
-            console.log("THIRD");
             supplementMapCopy[daySelected].DailyMood = deleteLastIndex(supplementMapCopy);
         }
 
         if (supplementMapCopy[daySelected].DailyMood["2"] === item){
-            console.log("SECOND");
             supplementMapCopy[daySelected].DailyMood = deleteMiddleIndex(supplementMapCopy);
         }
 
@@ -149,6 +147,10 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
         if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood["1"].mood === "" ){
             delete supplementMapCopy[daySelected];
             setMoodList([]);
+        }
+
+        // Close modal if there are no more moods
+        if (supplementMapCopy[daySelected].DailyMood["1"].mood === ""){
             setModalVisible({ modal: "hide-modal" });
         }
 
