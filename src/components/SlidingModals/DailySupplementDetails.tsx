@@ -94,7 +94,7 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     }, [supplementNotes]);
 
     return(
-        <KeyboardAvoidingView behavior="position">
+        <KeyboardAvoidingView behavior="padding">
             <>
                 <View style={{ backgroundColor: "#112442", minHeight: "100%", padding: 10 }}>
                     <Text style={{ color: "white", fontSize: 28, alignSelf: "center", padding: 10 }}>{selectedSupplement.Supplement.name}</Text>
