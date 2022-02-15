@@ -10,7 +10,7 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 
-export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement, setShowButtons }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement, setShowButtons, showButtons }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     // used to open sliding modal
@@ -24,6 +24,12 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
     useEffect(() => {
         modalizeRef.current?.close();
     }, [index]);
+
+    useEffect(() => {
+        if (showButtons){
+            modalizeRef.current?.close();
+        }
+    }, [showButtons]);
 
     function removeSupplement(item: SupplementObject) {
         const supplementMapCopy = { ...supplementMap };
