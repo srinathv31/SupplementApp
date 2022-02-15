@@ -17,6 +17,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = (item: SupplementObject) => {
         setShowButtons(false);
+        setModalVisible({ modal: "disable-header" });
         setSelectedSupplement(item);
         modalizeRef.current?.open();
     };
@@ -134,7 +135,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={750}>
+            <Modalize ref={modalizeRef} modalHeight={750} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
                 <DailySupplementDetails
                     selectedSupplement={selectedSupplement}
                     setSupplementMap={setSupplementMap}

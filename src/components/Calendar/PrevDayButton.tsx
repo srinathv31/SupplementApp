@@ -1,5 +1,6 @@
 // Source Imports
 import React from "react";
+import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
@@ -7,7 +8,7 @@ import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 
-export default function PrevDayButton({ userData, setUserData, setDaySelected, setObjDaySelected, objDaySelected }: AppProps): JSX.Element {
+export default function PrevDayButton({ userData, setUserData, setDaySelected, setObjDaySelected, objDaySelected, modalVisible }: AppProps): JSX.Element {
 
     function grabPrevDay(day: DateData) {
         const userCopy = { ...userData };
@@ -39,13 +40,18 @@ export default function PrevDayButton({ userData, setUserData, setDaySelected, s
     }
     
     return(
-        <Icon
-            onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
-            style={{ padding: 10,
-                margin: 15,
-                marginRight: 0,
-                marginLeft: 0 }}
-            name="chevron-left-circle" size={25} color="white"
-        />
+        <>
+            <Pressable 
+                onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
+                disabled={modalVisible.modal === "disable-header"}>
+                <Icon
+                    style={{ padding: 10,
+                        margin: 15,
+                        marginRight: 0,
+                        marginLeft: 0 }}
+                    name="chevron-left-circle" size={25} color="white"
+                />
+            </Pressable>
+        </>
     );
 }
