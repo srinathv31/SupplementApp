@@ -183,14 +183,14 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Overwrite Mood/Add Mood?</Text>
+                    <Text style={styles.modalText}>Add or Delete Mood?</Text>
                     <FlatList
                         data={moodList}
                         renderItem={({ item }) => (
                             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                 <Pressable
                                     style={[styles.button, styles.buttonClose]}
-                                    onPress={() => changeMood()}
+                                    disabled
                                 >
                                     <Text style={styles.textStyle}>{`${item.mood}: ${item.range}`}</Text>
                                 </Pressable>
@@ -205,13 +205,13 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
                     }
                     <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
                         <Pressable
-                            style={[styles.button, styles.buttonClose]}
+                            style={[styles.button, styles.buttonClose, { backgroundColor: "red" }]}
                             onPress={() => clearAllMood()}
                         >
-                            <Text style={styles.textStyle}>{"Clear All of Today's Moods"}</Text>
+                            <Text style={[styles.textStyle]}>{"Clear All of Today's Moods"}</Text>
                         </Pressable>
                         <Pressable
-                            style={[styles.button, styles.buttonClose]}
+                            style={[styles.button, styles.buttonClose, { backgroundColor: "green" }]}
                             onPress={() => setModalVisible({ modal: "hide-modal" })}
                         >
                             <Text style={styles.textStyle}>{"Don't Change Any Moods"}</Text>
