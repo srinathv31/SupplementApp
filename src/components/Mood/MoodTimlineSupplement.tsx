@@ -12,6 +12,13 @@ export default function MoodTimlineSupplement({ supplementMap, daySelected, setS
     const [initialStart, setInitialStart] = useState<number>(grabInitialStart);
     const [startSelected, setStartSelected] = useState<boolean>(false);
 
+    const radioButtons = [
+        { id: 1, name: "radio-button-off-outline" },
+        { id: 2, name: "radio-button-off-outline" },
+        { id: 3, name: "radio-button-off-outline" },
+        { id: 4, name: "radio-button-off-outline" },
+        { id: 5, name: "radio-button-off-outline" }
+    ];
 
     const data: TimeLineObject[] = [
         { time: "12:00 A" },
@@ -107,6 +114,16 @@ export default function MoodTimlineSupplement({ supplementMap, daySelected, setS
         timelineStateCopy[initialStart].color = colorString;
         setTimelineState(timelineStateCopy);
     }
+
+    useEffect(() => {
+        let colorBuffer: "red" | "orange" | "#2196F3" | "#28c916" = "red";
+        Object.values(timelineData.TimelineData).forEach(item => {
+            if (item.color){
+                colorBuffer = item.color;
+            }
+        });
+        setColorString(colorBuffer);
+    }, [timelineData]);
     
     return(
         <View>
@@ -120,7 +137,12 @@ export default function MoodTimlineSupplement({ supplementMap, daySelected, setS
                 <IconI onPress={() => chooseColor("#28c916")} name={"radio-button-on-outline"} style={[styles.ColorIconPadding, { color: "#28c916" }]}></IconI>
             </View>}
             {timelineData.mood !== "" && <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 10 }}>
-                {timelineData.mood + ": "+ timelineData.range}
+                {timelineData.mood + ": "}
+                {radioButtons.map(item => {
+                    return(
+                        <IconI key={item.id} name={ timelineData.range < +item.id ? item.name : "radio-button-on-outline"} style={{ color: colorString }}></IconI>
+                    );
+                })}
             </Text>}
         </View>
     );

@@ -1,5 +1,4 @@
 import { DateData } from "react-native-calendars/src/types";
-import CalendarDotObject from "./Calendar";
 import ModalObject from "./Modal";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
@@ -18,8 +17,6 @@ export interface WeekProps {
     setDaySelected: (d: string) => void,
     setIndex: (i: number) => void,
     setSelectedSupplement: (s: SupplementObject) => void,
-    setSelectedDates: (d: CalendarDotObject) => void,
-    selectedDates: CalendarDotObject,
     setShowStatusButtons: (b: boolean) => void,
     showStatusButtons: boolean,
     setUserData: (u: User) => void,

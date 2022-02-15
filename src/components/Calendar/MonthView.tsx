@@ -9,16 +9,17 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 
-export default function MonthView({ setUserData, userData, supplementMap, setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
+export default function MonthView({ setUserData, userData, supplementMap, setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
 
     function handleDayClick(day: DateData) {
+        const userCopy = { ...userData };
 
         setObjDaySelected(day);
         setDaySelected(getDateString(day));
 
-        const selectedDatesCopy = handleCalendar(selectedDates, day.dateString);
-        setSelectedDates(selectedDatesCopy);
-        saveUserData(userData, setUserData, supplementMap, selectedDatesCopy);
+        userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, day.dateString);
+        setUserData(userCopy);
+        saveUserData(userData, setUserData, supplementMap);
 
         setWeek(generateWeekList(day));
         setMonthText(grabMonth(generateWeekList(day)));
@@ -31,7 +32,7 @@ export default function MonthView({ setUserData, userData, supplementMap, setDay
                 onDayPress={(day) => (handleDayClick(day), setModalVisible({ modal: "weekly-modal" }))}
                 onDayLongPress={(day) => (handleDayClick(day), setPrevIndex(0), setIndex(1))}
                 markingType={"multi-dot"}
-                markedDates={selectedDates}
+                markedDates={userData.data.selectedDates}
                 current={objDaySelected.dateString}
                 theme={{
                     calendarBackground: "#0B172A",

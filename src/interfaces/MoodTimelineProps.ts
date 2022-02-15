@@ -28,8 +28,6 @@ export interface MoodTimelinePickerProps {
 
 export interface MoodTimelineSupplementProps {
     daySelected: string,
-    setModalVisible: (j: ModalObject) => void,
-    modalVisible: ModalObject,
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
     timelineData: MoodObject

@@ -5,12 +5,15 @@ import Slider from "@react-native-community/slider";
 import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
+import { journalDot } from "../../utilities/calendarDots";
 
-export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, selectedDates }: AppProps): JSX.Element {
+export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
     const [rangeValue, setRangeValue] = useState<number>(0);
     
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
+        const userCopy = { ...userData };
+        const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined){
             supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
@@ -24,8 +27,16 @@ export default function MoodSlider({ setUserData, userData, setModalVisible, mod
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
+        // Adding Green Dot to calendar if there is a mood
+        if (userCopy.data.selectedDates[stringDate] === undefined) {
+            userCopy.data.selectedDates[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
+        }
+        if(!userCopy.data.selectedDates[stringDate].dots.includes(journalDot)) {
+            userCopy.data.selectedDates[stringDate].dots.push(journalDot);
+        }
+
         setSupplementMap(supplementMapCopy);
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDates);
+        saveUserData(userData, setUserData, supplementMapCopy);
 
         setModalVisible({ modal: "mood-timeline" });
     }

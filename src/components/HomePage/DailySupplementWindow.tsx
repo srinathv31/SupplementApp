@@ -10,12 +10,14 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 
-export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setModalVisible, modalVisible, setSelectedSupplement, selectedSupplement }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement, setShowButtons, showButtons }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = (item: SupplementObject) => {
+        setShowButtons(false);
+        setModalVisible({ modal: "disable-header" });
         setSelectedSupplement(item);
         modalizeRef.current?.open();
     };
@@ -24,25 +26,32 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
         modalizeRef.current?.close();
     }, [index]);
 
+    useEffect(() => {
+        if (showButtons){
+            modalizeRef.current?.close();
+        }
+    }, [showButtons]);
+
     function removeSupplement(item: SupplementObject) {
         const supplementMapCopy = { ...supplementMap };
+        const userCopy = { ...userData };
 
         supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
-        const selectedDatesModified = removeDate(objDaySelected, supplementMapCopy);
+        userCopy.data.selectedDates = removeDate(objDaySelected, supplementMapCopy);
         if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
             delete supplementMapCopy[daySelected];
         }
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
+        setUserData(userCopy);
+        saveUserData(userData, setUserData, supplementMapCopy);
         setSupplementMap(supplementMapCopy);
     }
 
     function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
-        const selectedDatesCopy = { ...selectedDates };
+        const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
             selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "supplementCheck") as [{key: string, color: string}];
         }
-        setSelectedDates(selectedDatesCopy);
         return selectedDatesCopy;
     }
 
@@ -126,15 +135,13 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={750}>
+            <Modalize ref={modalizeRef} modalHeight={750} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
                 <DailySupplementDetails
                     selectedSupplement={selectedSupplement}
                     setSupplementMap={setSupplementMap}
                     supplementMap={supplementMap}
                     daySelected={daySelected}
                     setSelectedSupplement={setSelectedSupplement}
-                    setModalVisible={setModalVisible}
-                    modalVisible={modalVisible}
                 />
             </Modalize>
         </>

@@ -15,12 +15,12 @@ import { Modalize } from "react-native-modalize";
 import WebModal from "../SlidingModals/WebModal";
 
 
-export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, setSelectedDates, selectedDates, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
+export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
     fontSizeNumber: number,
 	query: string,
     setUserData: (u: User) => void, userData: User,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
-	setSelectedDates: AppProps["setSelectedDates"], selectedDates: AppProps["selectedDates"], objDaySelected: AppProps["objDaySelected"],
+	objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
 	index: AppProps["index"]
 }): JSX.Element {
@@ -45,30 +45,31 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         }
         
         supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
-        const selectedDatesModified = addDate(objDaySelected, supplementMapCopy);
+        const userCopy = addDate(userData, objDaySelected, supplementMapCopy);
 
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
 
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesModified);
+        saveUserData(userCopy, setUserData, supplementMapCopy);
+        setUserData(userCopy);
 
         showAddToast(item, daySelected);
         setSupplementMap(supplementMapCopy);
     }
 
-    function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>) {
-        const selectedDatesCopy = { ...selectedDates };
+    function addDate(userData: User, day: DateData, supplementMap: Record<string, SupplementMapObject>) {
+        const userCopy: User = { ...userData };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length > 0){
-            if (selectedDatesCopy[stringDate] === undefined) {
-                selectedDatesCopy[stringDate] = { dots:[{ key: "", color: "" }], selected: false };
+            if (userCopy.data.selectedDates[stringDate] === undefined) {
+                userCopy.data.selectedDates[stringDate] = { dots:[{ key: "", color: "" }], selected: false };
             }
             if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 1){
-                selectedDatesCopy[stringDate].dots.push(supplementDot);
+                userCopy.data.selectedDates[stringDate].dots.push(supplementDot);
             }
-            selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
+            userCopy.data.selectedDates[stringDate].dots = removeEmptyDotObjects(userCopy.data.selectedDates, stringDate);
         }
-        setSelectedDates(selectedDatesCopy);
-        return selectedDatesCopy;
+        setUserData(userCopy);
+        return userCopy;
     }
 
     // function expandSupplement(item: Supplement) {

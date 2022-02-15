@@ -11,7 +11,7 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
-export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSelectedDates, selectedDates, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
+export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
     function addSupplement(item: Supplement, dayString: string) {
@@ -34,7 +34,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
     }
 
     function addDate(day: DateData, supplementMap: Record<string, SupplementMapObject>, dayString: string){
-        const selectedDatesCopy = { ...selectedDates };
+        const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[dayString].SupplementSchedule).length > 0){
             if (selectedDatesCopy[stringDate] === undefined) {
@@ -49,8 +49,9 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
     }
 
     function handleJournal() {
+        const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
-        const selectedDatesCopy = { ...selectedDates };
+        const selectedDatesCopy = { ...userCopy.data.selectedDates };
         if (schedule !== undefined){
             Object.values(schedule).forEach(item => {
                 const strDate = getDateString(item.day);
@@ -69,9 +70,10 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
                 selectedDatesCopy[item.day.dateString] = addDate(item.day, supplementMapCopy, strDate);
             });
         }
-        saveUserData(userData, setUserData, supplementMapCopy, selectedDatesCopy);
-
-        setSelectedDates(selectedDatesCopy);
+        userCopy.data.selectedDates = selectedDatesCopy;
+        setUserData(userCopy);
+        saveUserData(userData, setUserData, supplementMapCopy);
+        
         setSupplementMap(supplementMapCopy);
         setModalVisible({ modal: "hide-modal" });
         setSchedule({});

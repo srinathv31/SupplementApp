@@ -8,7 +8,7 @@ import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 
-export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, selectedDates }: AppProps): JSX.Element {
+export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     
     const MoodProps = {
@@ -18,9 +18,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
 
     useEffect(() => {
         showButtons ? fadeIn() : fadeOut();
-
     }, [showButtons]);
-
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -62,7 +60,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                     daySelected={daySelected}
                     userData={userData}
                     setUserData={setUserData}
-                    selectedDates={selectedDates}
+                    objDaySelected={objDaySelected}
                 ></ChangeMoodModal>
                 { open && <MoodPicker
                     {...MoodProps}
@@ -78,7 +76,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
                                 name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
-                            <Icon onPress={() => setModalVisible({ modal: "mood-timeline" })}
+                            <Icon onPress={() => console.log("FORK")}
                                 name="silverware-fork-knife" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                                 name="clock" size={30} color="white"/>

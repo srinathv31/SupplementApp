@@ -9,7 +9,7 @@ import { WeekProps } from "../interfaces/WeekProps";
 import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
 import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 
-export default function WeeklySupplementModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setSelectedDates, selectedDates, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
+export default function WeeklySupplementModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
     const WeekPropValues: WeekProps = {
@@ -25,8 +25,6 @@ export default function WeeklySupplementModal({ setUserData, userData, setModalV
         setDaySelected,
         setIndex,
         setSelectedSupplement,
-        setSelectedDates,
-        selectedDates,
         setShowStatusButtons,
         showStatusButtons,
         setUserData,

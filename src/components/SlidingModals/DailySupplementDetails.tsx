@@ -10,26 +10,22 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
 
-export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible }: {
+export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected }: {
     selectedSupplement: AppProps["selectedSupplement"], setSelectedSupplement: AppProps["setSelectedSupplement"],
     setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"],
-    setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"]
+    daySelected: AppProps["daySelected"]
 }): JSX.Element {
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     const [supplementNotes, setSupplementNotes] = useState<string>(grabSupplementNote);
-    const [expand, setExpand] = useState<boolean>(false);
     const [time, setTime] = useState<Date>(grabOffTime);
 
     const MoodTimelineProps = {
         setSupplementMap,
         supplementMap,
-        daySelected,
-        setModalVisible,
-        modalVisible
+        daySelected
     };
 
     function toggleTakenStatus(taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time", item: SupplementObject) {
@@ -97,7 +93,7 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
     }, [supplementNotes]);
 
     return(
-        <KeyboardAvoidingView behavior="position">
+        <KeyboardAvoidingView behavior="padding">
             <>
                 <View style={{ backgroundColor: "#112442", minHeight: "100%", padding: 10 }}>
                     <Text style={{ color: "white", fontSize: 28, alignSelf: "center", padding: 10 }}>{selectedSupplement.Supplement.name}</Text>
@@ -147,9 +143,16 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                     </View>}
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="brain" style={styles.IconPadding}/>
-                        <Text onPress={() => setExpand(!expand)} style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
+                        <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
+                    {supplementMap[daySelected].DailyMood["1"].mood === "" && 
+                        <Text style={{ color: "silver", fontSize: 15, opacity: 0.8, fontWeight: "600", padding: 10, margin: 10, textAlign: "center" }}>
+                            {"You can add moods from the menu using the "}
+                            <Icon name="emoticon-happy-outline" size={20} color={ "white" }/>
+                            {" Icon"}
+                        </Text>
+                    }
                     {Object.keys(supplementMap[daySelected].DailyMood).map(eachMood => {
                         return (
                             <MoodTimlineSupplement

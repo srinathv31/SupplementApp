@@ -37,7 +37,7 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
                     </View>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={() => AllProps.setModalVisible({ modal: "hide-modal" })}
+                        onPress={() => (AllProps.setModalVisible({ modal: "hide-modal" }), AllProps.setMultipleAddMode(false))}
                     >
                         <Text style={styles.textStyle}>Close</Text>
                     </Pressable>

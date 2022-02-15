@@ -16,7 +16,6 @@ import { LogBox } from "react-native";
 import HeaderWindow from "./components/HomePage/HeaderWindow";
 import { WeekDay } from "./interfaces/WeekDay";
 import SupplementList from "./assets/SupplementList.json";
-import CalendarDotObject from "./interfaces/Calendar";
 import ModalObject from "./interfaces/Modal";
 import User from "./interfaces/User";
 import { checkForSave } from "./utilities/saveLoadFunctions/storageChecker";
@@ -38,8 +37,6 @@ const App = () => {
     const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
     // Boolean that toggles sub menu
     const [showButtons, setShowButtons] = useState<boolean>(false);
-    // List of dates that tells the Calendar component which dates require dots and the selected background
-    const [selectedDates, setSelectedDates] = useState<CalendarDotObject>({ [objDaySelected.dateString]: { dots: [{ key: "", color: "" }], selected: true } });
     // Returns journal entry text
     const [journalText, setJournalText] = useState<string>("");
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
@@ -85,8 +82,6 @@ const App = () => {
         supplementMap,
         setObjDaySelected,
         objDaySelected,
-        setSelectedDates,
-        selectedDates,
         setShowButtons,
         showButtons,
         setIndex,
@@ -141,7 +136,7 @@ const App = () => {
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={"light-content"} />
         
-                <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal") ? 0.5 : 1 }}>
+                <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal" && modalVisible.modal !== "disable-header") ? 0.5 : 1 }}>
                     <View style={{ flex: 1 }}>
                         { prevIndex === 5 && <WelcomePage {...AllProps} /> }
                         { prevIndex !== 5 && <>

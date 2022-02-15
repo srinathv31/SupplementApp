@@ -1,5 +1,6 @@
 // Source Imports
 import React from "react";
+import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
@@ -7,9 +8,10 @@ import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 
-export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDaySelected, setSelectedDates, selectedDates }: AppProps): JSX.Element {
+export default function PrevDayButton({ userData, setUserData, setDaySelected, setObjDaySelected, objDaySelected, modalVisible }: AppProps): JSX.Element {
 
     function grabPrevDay(day: DateData) {
+        const userCopy = { ...userData };
         let copyDate = day;
 
         // Current Date Info to compare
@@ -29,8 +31,8 @@ export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDa
 
         copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
         
-        const selectedDatesCopy = handleCalendar(selectedDates, copyDate.dateString);
-        setSelectedDates(selectedDatesCopy);
+        userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, copyDate.dateString);
+        setUserData(userCopy);
 
         setObjDaySelected(copyDate);
 
@@ -38,13 +40,18 @@ export default function PrevDayButton({ setDaySelected, setObjDaySelected, objDa
     }
     
     return(
-        <Icon
-            onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
-            style={{ padding: 10,
-                margin: 15,
-                marginRight: 0,
-                marginLeft: 0 }}
-            name="chevron-left-circle" size={25} color="white"
-        />
+        <>
+            <Pressable 
+                onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
+                disabled={modalVisible.modal === "disable-header"}>
+                <Icon
+                    style={{ padding: 10,
+                        margin: 15,
+                        marginRight: 0,
+                        marginLeft: 0 }}
+                    name="chevron-left-circle" size={25} color="white"
+                />
+            </Pressable>
+        </>
     );
 }
