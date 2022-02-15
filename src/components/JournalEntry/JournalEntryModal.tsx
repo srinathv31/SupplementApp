@@ -30,21 +30,23 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
 
         supplementMapCopy[daySelected].JournalEntry = journalText;
 
-        // if the journal entry is empty + there are no supplements added to the day delete that day object
-        if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length === 0) {
+        // Create calendar object
+        if (selectedDatesCopy[stringDate] === undefined){
+            selectedDatesCopy[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
+        }
+
+        // if the journal entry is empty + there are no supplements added to the day delete that day object + there are no moods
+        if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].DailyMood["1"].mood === "") {
             delete supplementMapCopy[daySelected];
             selectedDatesCopy[stringDate].dots = removeJournalDot(selectedDatesCopy, stringDate);
         }
-        // else if only the journal entry is empty then set the journalEntry to an empty string
-        else if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length > 0) {
+        // else if the journal entry is empty + there are no moods: then set the journalEntry to an empty string + remove journal dot
+        else if (!supplementMapCopy[daySelected].JournalEntry.trim() && supplementMapCopy[daySelected].SupplementSchedule.length > 0 && supplementMapCopy[daySelected].DailyMood["1"].mood === "") {
             supplementMapCopy[daySelected].JournalEntry = "";
             selectedDatesCopy[stringDate].dots = removeJournalDot(selectedDatesCopy, stringDate);
         }
         // else if there is a journal entry and there is no previously set journalDot, then set the journalDot in the calendar
         else if (supplementMapCopy[daySelected].JournalEntry.trim()){
-            if (selectedDatesCopy[stringDate] === undefined){
-                selectedDatesCopy[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
-            }
             if (!selectedDatesCopy[stringDate].dots.includes(journalDot)) {
                 selectedDatesCopy[stringDate].dots.push(journalDot);
             }
