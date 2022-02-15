@@ -20,7 +20,6 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     const [supplementNotes, setSupplementNotes] = useState<string>(grabSupplementNote);
-    const [expand, setExpand] = useState<boolean>(false);
     const [time, setTime] = useState<Date>(grabOffTime);
 
     const MoodTimelineProps = {
@@ -144,9 +143,16 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
                     </View>}
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="brain" style={styles.IconPadding}/>
-                        <Text onPress={() => setExpand(!expand)} style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
+                        <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
+                    {supplementMap[daySelected].DailyMood["1"].mood === "" && 
+                        <Text style={{ color: "silver", fontSize: 15, opacity: 0.8, fontWeight: "600", padding: 10, margin: 10, textAlign: "center" }}>
+                            {"You can add moods from the menu using the "}
+                            <Icon name="emoticon-happy-outline" size={20} color={ "white" }/>
+                            {" Icon"}
+                        </Text>
+                    }
                     {Object.keys(supplementMap[daySelected].DailyMood).map(eachMood => {
                         return (
                             <MoodTimlineSupplement
