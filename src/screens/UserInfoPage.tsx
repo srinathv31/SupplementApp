@@ -1,12 +1,14 @@
 // Source Imports
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
 import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
-
+import StatsBoxes from "../components/User/StatsBoxes";
+import SettingsList from "../components/User/SettingsList";
+import { generateGreeting } from "../utilities/generateTimeGreetings";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData }: AppProps): JSX.Element {
     
@@ -23,6 +25,23 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
         setUserData(userCopy);
         saveUserToPhone(userCopy);
     }
+
+    const createTwoButtonAlert = () =>
+        Alert.alert(
+            "Are You Sure You Want to Erase All Data?",
+            "This cannot be undone",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { 
+                    text: "Delete All Data", onPress: () => clearEntirePlan(),
+                    style: "destructive"
+                }
+            ]
+        );
 
     return(
         <Modal
@@ -42,7 +61,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                                 name="close-outline" size={30} color="white"
                             />
                         </View>
-                        <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>Hello {userData.name}</Text>
+                        <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{`${generateGreeting()}${userData.name}`}</Text>
                         <Icon
                             style={{ padding: 5 }}
                             onPress={() => setModalVisible({ modal: "hide-modal" })}
@@ -50,9 +69,19 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         />
                         <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>Change Profile Picture</Text>
                         <Divider length="small"></Divider>
-                        <View style={{ backgroundColor: "#112442", padding: 10, margin: 20, borderRadius: 5, width: "100%" }}>
-                            <Pressable onPress={clearEntirePlan}>
-                                <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Reset Entire Plan</Text>
+                        <StatsBoxes
+                            userData={userData}
+                        ></StatsBoxes>
+                        <SettingsList></SettingsList>
+                        <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
+                            <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
+                                {
+                                    backgroundColor: pressed
+                                        ? "#111f36"
+                                        : "#112442"
+                                }
+                            ]}>
+                                <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
                             </Pressable>
                         </View>
                     </View>
