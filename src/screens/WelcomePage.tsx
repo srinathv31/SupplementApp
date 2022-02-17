@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Animated } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
+import { generateGreeting } from "../utilities/generateTimeGreetings";
 
 export default function WelcomePage({ userData, setPrevIndex }: AppProps): JSX.Element {
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
@@ -65,7 +66,7 @@ export default function WelcomePage({ userData, setPrevIndex }: AppProps): JSX.E
     return(
         <View style={{ padding: 10, flex: 1, alignItems: "center", justifyContent: "center" }}>
             <Animated.View style={[{ opacity: fadeAnim }, fadeAnimTop.getLayout()]}>
-                <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>Welcome {userData.name}</Text>
+                <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{generateGreeting()}{userData.name}</Text>
             </Animated.View>
             <Divider length="small"></Divider>
             <Animated.View style={[{ opacity: fadeAnimSub }]}>
