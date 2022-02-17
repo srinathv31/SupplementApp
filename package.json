@@ -12,7 +12,6 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.15",
     "@react-native-community/datetimepicker": "^5.1.0",
-    "@react-native-community/push-notification-ios": "^1.10.1",
     "@react-native-community/slider": "^4.1.12",
     "ansi-regex": "^5.0.1",
     "node-fetch": "^2.6.7",
