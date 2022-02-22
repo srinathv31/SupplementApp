@@ -1,6 +1,6 @@
 // Source Imports
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
@@ -15,6 +15,8 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
+    const { height: initialHeight } = Dimensions.get("window");
+    const height = initialHeight;
     const onOpen = (item: SupplementObject) => {
         setShowButtons(false);
         setModalVisible({ modal: "disable-header" });
@@ -135,7 +137,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={750} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.85} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
                 <DailySupplementDetails
                     selectedSupplement={selectedSupplement}
                     setSupplementMap={setSupplementMap}

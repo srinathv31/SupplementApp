@@ -85,7 +85,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
     return(
         <>
             <View style={{ alignSelf: "center", flex: 1 }}>
-                { fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber }}>Supplement Info</Text>} 
+                { fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber, textAlign: "center" }}>Supplement Info</Text>} 
                 <View style={{ flex: 1 }}>
                     <FlatList
                         contentContainerStyle={{ flexGrow: 1 }}
@@ -117,6 +117,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
             <WebModal
                 modalizeRef={modalizeRef}
                 url={supplementUrl}
+                index={index}
             ></WebModal>
         </>
     );
