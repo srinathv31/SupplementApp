@@ -4,5 +4,6 @@ export interface WebModalProps {
     modalizeRef: React.RefObject<IHandles>, 
     url: string,
     modalHeight?: number,
-    setModalizeRefStatus?: (m: boolean) => void
+    setModalizeRefStatus?: (m: boolean) => void,
+    index: number
 }

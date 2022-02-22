@@ -8,7 +8,6 @@ import ExploreWindow from "../components/HomePage/ExploreWindow";
 import MoodSlider from "../components/Mood/MoodSlider";
 import MoodTimelinePicker from "../components/Mood/MoodTimelinePicker";
 import WebModal from "../components/SlidingModals/WebModal";
-import DetailedSupplementModal from "../components/SupplementViews/DetailedSupplementModal";
 import { MoodTimelinePickerProps } from "../interfaces/MoodTimelineProps";
 import { AppProps } from "../interfaces/Props";
 
@@ -38,9 +37,6 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
     
     return(
         <View>
-            <DetailedSupplementModal
-                {...AllProps}
-            ></DetailedSupplementModal>
             <MoodSlider {...AllProps}></MoodSlider>
             <MoodTimelinePicker {...MoodTimelineProps} />
             <ExploreWindow
@@ -54,8 +50,8 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             <WebModal
                 modalizeRef={modalizeRef}
                 url={AllProps.selectedSupplement.Supplement.url}
-                modalHeight={925}
                 setModalizeRefStatus={setModalizeRefStatus}
+                index={AllProps.index}
             ></WebModal>
         </View>
     );
