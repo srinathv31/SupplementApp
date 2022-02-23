@@ -1,4 +1,5 @@
 // Source Imports
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, KeyboardAvoidingView, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -46,6 +47,15 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
             setOpen(!open);
     }
 
+    function sendNoti() {
+        PushNotificationIOS.addNotificationRequest({
+            id: "Test PN",
+            title: "TEST",
+            body: "This is a Test",
+        });
+        console.log("SLIME");
+    }
+
     return(
         <KeyboardAvoidingView
             behavior="position"
@@ -76,7 +86,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
                                 name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
-                            <Icon onPress={() => console.log("FORK")}
+                            <Icon onPress={() => sendNoti()}
                                 name="silverware-fork-knife" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                                 name="clock" size={30} color="white"/>

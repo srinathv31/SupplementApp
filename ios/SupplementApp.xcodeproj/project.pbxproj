@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		6172F2D35A4C3AA820D92908 /* libPods-SupplementApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6423831EA8574132BED9D8CC /* libPods-SupplementApp.a */; };
+		7194848827C5C31100514620 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7194848727C5C31100514620 /* AudioToolbox.framework */; };
 		71BA43A62787AAD1007DB178 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		7EF68E3733C33B6898317E18 /* libPods-SupplementApp-SupplementAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-SupplementApp-SupplementAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -40,6 +41,7 @@
 		6423831EA8574132BED9D8CC /* libPods-SupplementApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SupplementApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C97AB639B58BBB4B15BBE30 /* Pods-SupplementApp-SupplementAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SupplementApp-SupplementAppTests.debug.xcconfig"; path = "Target Support Files/Pods-SupplementApp-SupplementAppTests/Pods-SupplementApp-SupplementAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		714D354527BEB35400DAACC8 /* SupplementApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SupplementApp.entitlements; path = SupplementApp/SupplementApp.entitlements; sourceTree = "<group>"; };
+		7194848727C5C31100514620 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupplementApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABFE59519B596E51CEFDCCC0 /* libPods-SupplementApp-SupplementAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SupplementApp-SupplementAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0A881CF5CF3F2B244570E2A /* Pods-SupplementApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SupplementApp.debug.xcconfig"; path = "Target Support Files/Pods-SupplementApp/Pods-SupplementApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6172F2D35A4C3AA820D92908 /* libPods-SupplementApp.a in Frameworks */,
+				7194848827C5C31100514620 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +104,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7194848727C5C31100514620 /* AudioToolbox.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				6423831EA8574132BED9D8CC /* libPods-SupplementApp.a */,
 				ABFE59519B596E51CEFDCCC0 /* libPods-SupplementApp-SupplementAppTests.a */,
