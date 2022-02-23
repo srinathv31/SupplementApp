@@ -8,7 +8,7 @@ import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 
-export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setPrevIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
+export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     
     const MoodProps = {
@@ -84,21 +84,21 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                     </Animated.View>}
                 </View>
                 <View style={BottomMenuTabStyles.mainButtonRow}>
-                    <Pressable onPress={() => (setPrevIndex(index), setIndex(0))} disabled={ showButtons ? true : false }>
+                    <Pressable onPress={() => (setIndex(0))} disabled={ showButtons ? true : false }>
                         <Icon name={ index === 0 ? "calendar-text" : "calendar-text-outline"} size={30} color="white"style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                     </Pressable>
-                    <Pressable onPress={() => (setPrevIndex(index), setIndex(1))} disabled={ showButtons ? true : false }>
+                    <Pressable onPress={() => (setIndex(1))} disabled={ showButtons ? true : false }>
                         <Icon
                             name={ index === 1 ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                     </Pressable>
                     <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
                         <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
                     </Pressable>
-                    <Pressable onPress={() => (setPrevIndex(index), setIndex(2))} disabled={ showButtons ? true : false }>
+                    <Pressable onPress={() => (setIndex(2))} disabled={ showButtons ? true : false }>
                         <Icon
                             name={ index === 2 ? "text-box-search" : "text-box-search-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                     </Pressable>
-                    <Pressable onPress={() => (setPrevIndex(index), setIndex(3))} disabled={ showButtons ? true : false }>
+                    <Pressable onPress={() => (setIndex(3))} disabled={ showButtons ? true : false }>
                         <Icon name={ index === 3 ? "heart-multiple" : "heart-multiple-outline"} size={30} color="white"style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                     </Pressable>
                 </View>
