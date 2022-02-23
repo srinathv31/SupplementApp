@@ -10,7 +10,7 @@ import StatsBoxes from "../components/User/StatsBoxes";
 import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 
-export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData }: AppProps): JSX.Element {
+export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage }: AppProps): JSX.Element {
     
     function clearEntirePlan() {
         const userCopy = { ...userData };
@@ -72,7 +72,9 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <StatsBoxes
                             userData={userData}
                         ></StatsBoxes>
-                        <SettingsList></SettingsList>
+                        <SettingsList
+                            setPage={setPage}
+                        ></SettingsList>
                         <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
                             <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
                                 {
