@@ -7,6 +7,7 @@ interface Supplement {
     safe: string,
     sideEffects: string,
     url: string
+    dosageMetric: string
 }
 
 export interface SupplementObject {
