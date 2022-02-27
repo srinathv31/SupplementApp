@@ -14,7 +14,8 @@ export interface SupplementObject {
     time: string,
     taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time",
     takenOffTime?: string,
-    note?: string
+    note?: string,
+    dosage?: string
 }
 
 export interface SupplementMapObject {
