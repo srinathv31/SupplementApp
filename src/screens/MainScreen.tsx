@@ -20,10 +20,13 @@ import SupplementInfoPage from "./SupplementInfoPage";
 import UserInfoPage from "./UserInfoPage";
 import WelcomePage from "./WelcomePage";
 import SupplementList from "../assets/SupplementList.json";
+import Page from "../interfaces/Page";
 
 LogBox.ignoreLogs(["Sending"]);
 
-const MainScreen = () => {
+export default function MainScreen({ page, setPage }: {
+    page: Page, setPage: (p: Page) => void
+}): JSX.Element {
    
     // Data structure for User Data
     const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, data: { supplementMap: {}, selectedDates: {} } });
@@ -41,8 +44,6 @@ const MainScreen = () => {
     const [modalVisible, setModalVisible] = useState<ModalObject>({ modal: "hide-modal" });
     // Index for page sliding
     const [index, setIndex] = React.useState(1);
-    // Page feature
-    const [prevIndex, setPrevIndex] = useState<number>(5);
     // Renders the selected day's week for the weekly modal
     const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
     // Sets the text for the weekly modal
@@ -84,8 +85,8 @@ const MainScreen = () => {
         showButtons,
         setIndex,
         index,
-        setPrevIndex,
-        prevIndex,
+        setPage,
+        page,
         setJournalText,
         journalText,
         setWeek,
@@ -136,13 +137,12 @@ const MainScreen = () => {
         
                 <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal" && modalVisible.modal !== "disable-header") ? 0.5 : 1 }}>
                     <View style={{ flex: 1 }}>
-                        { prevIndex === 5 && <WelcomePage {...AllProps} /> }
-                        { prevIndex !== 5 && <>
+                        { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
+                        { page.page === "app-screen" && <>
                             <UserInfoPage {...AllProps}></UserInfoPage>
                             <SupplementModal {...AllProps}></SupplementModal>
                             <HeaderWindow {...AllProps}></HeaderWindow>
                             <TabView
-                                onSwipeStart={() => setPrevIndex(index)}
                                 navigationState={{ index, routes }}
                                 renderScene={renderScene}
                                 onIndexChange={setIndex}
@@ -157,6 +157,4 @@ const MainScreen = () => {
             </SafeAreaView>
         </View>
     );
-};
-
-export default MainScreen;
+}

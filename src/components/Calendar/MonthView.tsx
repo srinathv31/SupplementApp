@@ -9,7 +9,7 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 
-export default function MonthView({ setUserData, userData, supplementMap, setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setIndex, setPrevIndex, setWeek, setMonthText }: AppProps): JSX.Element {
+export default function MonthView({ setUserData, userData, supplementMap, setDaySelected, setModalVisible, setObjDaySelected, objDaySelected, setIndex, setWeek, setMonthText }: AppProps): JSX.Element {
 
     function handleDayClick(day: DateData) {
         const userCopy = { ...userData };
@@ -30,7 +30,7 @@ export default function MonthView({ setUserData, userData, supplementMap, setDay
             <CalendarList
                 style={styles.calendar}
                 onDayPress={(day) => (handleDayClick(day), setModalVisible({ modal: "weekly-modal" }))}
-                onDayLongPress={(day) => (handleDayClick(day), setPrevIndex(0), setIndex(1))}
+                onDayLongPress={(day) => (handleDayClick(day), setIndex(1))}
                 markingType={"multi-dot"}
                 markedDates={userData.data.selectedDates}
                 current={objDaySelected.dateString}

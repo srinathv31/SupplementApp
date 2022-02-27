@@ -5,7 +5,7 @@ import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 
-export default function WelcomePage({ userData, setPrevIndex }: AppProps): JSX.Element {
+export default function WelcomePage({ userData, setPage }: AppProps): JSX.Element {
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
 
     useEffect(() => {
@@ -70,7 +70,7 @@ export default function WelcomePage({ userData, setPrevIndex }: AppProps): JSX.E
             </Animated.View>
             <Divider length="small"></Divider>
             <Animated.View style={[{ opacity: fadeAnimSub }]}>
-                <Text onPress={() => setPrevIndex(1)} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>Enter</Text>
+                <Text onPress={() => setPage({ page: "app-screen" })} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>Enter</Text>
             </Animated.View>
         </View>
     );
