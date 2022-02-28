@@ -24,6 +24,7 @@
     "react-native-linear-gradient": "^2.5.6",
     "react-native-modal": "^13.0.0",
     "react-native-modalize": "^2.0.13",
+    "react-native-onboarding-swiper": "^1.2.0",
     "react-native-pager-view": "^5.4.9",
     "react-native-progress": "^5.0.0",
     "react-native-svg": "^12.1.1",
