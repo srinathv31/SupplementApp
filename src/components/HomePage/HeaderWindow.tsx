@@ -9,6 +9,7 @@ import JournalButton from "../JournalEntry/JournalButton";
 import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 import TimePicker from "../SupplementViews/TimePicker";
 import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
+import DosagePickerModal from "../SupplementViews/DosagePickerModal";
 
 
 export default function HeaderWindow(AllProps: AppProps): JSX.Element {
@@ -22,6 +23,7 @@ export default function HeaderWindow(AllProps: AppProps): JSX.Element {
             <JournalEntryModal {...AllProps}></JournalEntryModal>
             <JournalButton {...AllProps}></JournalButton>
             <TimePicker {...AllProps}></TimePicker>
+            <DosagePickerModal {...AllProps}></DosagePickerModal>
             <MultipleDatePicker {...AllProps}></MultipleDatePicker>
         </View>
     );
