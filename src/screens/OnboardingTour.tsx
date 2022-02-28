@@ -16,19 +16,19 @@ export default function OnboardingTour({ setPage }: {
                 {
                     backgroundColor: "#fff",
                     image: <Image source={require("../assets/images/husky.jpg")} style={{ height: 100, width: 100 }} />,
-                    title: "Onboarding",
-                    subtitle: "Done with React Native Onboarding Swiper",
+                    title: "Welcome to Happy",
+                    subtitle: "We're excited for you to start your better health journey ❤️",
                 },
                 {
                     backgroundColor: "#fe6e58",
                     image: <Image source={require("../assets/images/pitbull.jpg")} style={{ height: 100, width: 100 }} />,
-                    title: "The Title",
+                    title: "Start by Scheduling a Supplement 💪",
                     subtitle: "This is the subtitle that sumplements the title.",
                 },
                 {
                     backgroundColor: "skyblue",
                     image: <Image source={require("../assets/images/trippy_astronaut.png")} style={{ height: 100, width: 100 }} />,
-                    title: "Triangle",
+                    title: "Get Information on New Supplements 🔍",
                     subtitle: "Beautiful, isn't it?",
                 },
             ]}
