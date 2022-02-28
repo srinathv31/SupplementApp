@@ -9,7 +9,7 @@ export default function SettingsList({ setPage }: {
 
     const SettingButtons = [
         { name: "Edit Name", color: "white", function: () => console.log("EDIT NAME")  },
-        { name: "Password", color: "white", function: () => console.log("PASSWORD")  },
+        { name: "Help", color: "white", function: () => console.log("PASSWORD")  },
         { name: "Log Out", color: "crimson", function: () => createLogOutAlert() }
     ];
 

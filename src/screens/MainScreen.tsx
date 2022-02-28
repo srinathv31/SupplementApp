@@ -107,12 +107,6 @@ export default function MainScreen({ page, setPage }: {
         return <CalendarPage {...AllProps} ></CalendarPage>;
     };
 
-    // const WorkoutPage = (): JSX.Element => {
-    //     return <View style={{ flex: 1, backgroundColor: "#ff4081" }} >
-    //         <Text>{supplementMap[daySelected] === undefined ? "No Mood Selected Today" : supplementMap[daySelected].DailyMood.mood}</Text>
-    //     </View>;
-    // };
-
     const renderScene = ({ route }: {
 		route: Route
 	}) => {
