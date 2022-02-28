@@ -7,6 +7,7 @@ interface Supplement {
     safe: string,
     sideEffects: string,
     url: string
+    dosageMetric: string
 }
 
 export interface SupplementObject {
@@ -14,7 +15,8 @@ export interface SupplementObject {
     time: string,
     taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time",
     takenOffTime?: string,
-    note?: string
+    note?: string,
+    dosage?: string
 }
 
 export interface SupplementMapObject {

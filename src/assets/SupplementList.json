@@ -5,7 +5,8 @@
     "benefits": "The primary benefit of creatine is an improvement in strength and power output during resistance exercise. For this purpose, creatine is well-researched, and the effects are quite notable for a supplement. When used in conjunction with resistance exercise, creatine may modestly increase lean mass. It has also been tested for anaerobic running capacity in many studies, the results of which are fairly mixed but generally suggest a small improvement in performance.",
     "safe": "Most of the supposed dangers of creatine are unfounded. Due to the bad reputation of performance-enhancing drugs, it has been wrongfully equated with the worst examples. It also increases levels of creatinine in the body, which are a marker of poor kidney function. However, the increase in creatinine isn't due to kidney damage, but simply more creatinine being produced. There is a lack of long-term studies in people with reduced kidney function, however, so caution could still be taken in that instance. Besides the minor gastrointestinal issues from excessive creatine, it is unlikely to be unsafe or bad for you.",
     "sideEffects": "When taken without sufficient water, stomach cramping can occur. Diarrhea and nausea can occur when too much creatine is taken at once, in which case doses should be spread out throughout the day and taken with meals.",
-    "url": "https://examine.com/supplements/creatine/"
+    "url": "https://examine.com/supplements/creatine/",
+    "dosageMetric": "g"
 },
 {
     "name": "Fish Oil",
@@ -14,7 +15,8 @@
     "benefits": "Fish oil causes a potent reduction in triglyceride levels, and a more modest reduction in blood pressure in hypertensives. Despite this, long-term trials haven't found a reduction in the rate of cardiovascular events.\n\nIt appears to notably improve mood in people with major depression, though it's unclear if it has an effect in people with minor depression. EPA, in particular, seems to be the most effective omega-3 fatty acid for this purpose which suggests that the effects of fish oil are due to reducing neuroinflammation. Its anti-inflammatory benefits also seem to extend to reducing the symptoms of systemic lupus erythematosus. However, its benefits shouldn't be assumed to extend to inflammatory diseases in general.",
     "safe": "",
     "sideEffects": "Many fish oil supplements may contain harmful lipid peroxides (oxidized lipids that can damage cells), but it's unclear if this has notable consequences to health.",
-    "url": "https://examine.com/supplements/fish-oil/"
+    "url": "https://examine.com/supplements/fish-oil/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Melatonin",
@@ -23,7 +25,8 @@
     "benefits": "Irregular sleep patterns are associated with a wide variety of health problems and premature aging. Melatonin is the hormone used by your body to help you fall asleep, and thus supplementation is seen as a way to get regular sleep. This is particularly useful for people who engage in shift work or are jet lagged.\n\nOther benefits of melatonin include general neuroprotective effects, as melatonin is a powerful antioxidant. Melatonin also has several anti-cancer properties, and is currently being investigated for its role in fighting breast cancer. It does not appear to have much of an effect on lean mass or body fat, but it potentially stops your body from gaining more fat. Melatonin supplementation also benefits eye health, possibly reduces tinnitus, and improve mood (by helping you get better sleep).",
     "safe": "",
     "sideEffects": "Taking melatonin is not associated with negative feedback (when taking supplementation causes your body to produce less of a hormone). It is also not addictive, and is not toxic.",
-    "url": "https://examine.com/supplements/melatonin/"
+    "url": "https://examine.com/supplements/melatonin/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Vitamin B12",
@@ -32,7 +35,8 @@
     "benefits": "",
     "safe": "Vitamin B12 has not been shown to cause any harm, even at high doses.",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/vitamin-b12/"
+    "url": "https://examine.com/supplements/vitamin-b12/",
+    "dosageMetric": "mcg"
 },
 {
     "name": "Vitamin D",
@@ -41,7 +45,8 @@
     "benefits": "Supplemental vitamin D is associated with a wide range of benefits, including increased cognition, immune health, bone health and well-being. Supplementation can also reduce the risks of cancer, heart disease, diabetes and multiple sclerosis. People deficient in vitamin D may also experience increased testosterone levels after supplementation.",
     "safe": "Most people are not deficient in vitamin D, but they do not have an optimal level of vitamin D either. Due to the many health benefits of vitamin D, supplementation is encouraged if optimal levels are not present in the body.",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/vitamin-d/"
+    "url": "https://examine.com/supplements/vitamin-d/",
+    "dosageMetric": "IU"
 },
 {
     "name": "Zinc",
@@ -50,7 +55,8 @@
     "benefits": "Any benefits of oral zinc supplements or increased dietary intake will depend on the zinc status of the individual. Some research suggests that when zinc levels are low, insulin sensitivity and testosterone can decrease, and supplementation can bring levels closer to normal.\n\nZinc lozenges, in high doses, seem to reduce the duration of common colds, though it's unclear if they reduce the risk of getting colds in the first place or the severity of symptoms. Their effects are largely limited to throat and nasal symptoms, and high doses tend to come with some mild but notable side-effects like nausea and metallic taste in the mouth. Zinc lozenges have not been studied for COVID-19 and extrapolation from colds to COVID-19 is invalid. For more information, see this page.\n\nOther areas of note are depression and acne, which can frequently benefit from increased zinc intake if levels are low.\n\nZinc is lost through sweat, making supplementation very important for athletes that don’t get a lot of zinc through food. Insulin resistance can also decrease zinc levels.",
     "safe": "Large doses of zinc can produce nausea and other forms of gastrointestinal upset, particularly when taken on an empty stomach. Large doses of zinc can also cause a copper deficiency and lead to overdose. Many supplements use far more than the RDA, and a combination of supplements, fortified foods, and high zinc foods may lead to exceeding the tolerable upper intake level for adults, which is 40 mg per day. High dose zinc lozenges can lead to nausea and a metallic taste in the mouth, and should only be taken for a short time, if at all.",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/zinc/"
+    "url": "https://examine.com/supplements/zinc/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Vitamin C",
@@ -59,7 +65,8 @@
     "benefits": "Vitamin C is unable to reduce the frequency of colds in a healthy population. An athlete who frequently undergoes intense physical activity can expect to cut the risk of getting a cold in half. Supplemental vitamin C is able to reduce the duration of a cold by 8-14% in any population, when it is taken as a daily preventative measure, or at the beginning of a cold. Though superloading vitamin C (5-10g daily) is said to be more effective, further research is needed to determine the accuracy of this claim.\n\nVitamin C is capable of being both an antioxidant and pro-oxidant, depending on what the body needs. This mechanism allows it to serve a variety of functions in the body.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/vitamin-c/"
+    "url": "https://examine.com/supplements/vitamin-c/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Calcium",
@@ -68,7 +75,8 @@
     "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/calcium/"
+    "url": "https://examine.com/supplements/calcium/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Citrulline",
@@ -77,7 +85,8 @@
     "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/citrulline/"
+    "url": "https://examine.com/supplements/citrulline/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Curcumin",
@@ -86,7 +95,8 @@
     "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/curcumin/"
+    "url": "https://examine.com/supplements/curcumin/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Beta-Alanine",
@@ -95,7 +105,8 @@
     "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/beta-alanine/"
+    "url": "https://examine.com/supplements/beta-alanine/",
+    "dosageMetric": "g"
 },
 {
     "name": "L-Theanine",
@@ -104,7 +115,8 @@
     "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/theanine/"
+    "url": "https://examine.com/supplements/theanine/",
+    "dosageMetric": "mg"
 },
 {
     "name": "Rhodiola Rosea",
@@ -113,6 +125,7 @@
     "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
     "safe": "",
     "sideEffects": "",
-    "url": "https://examine.com/supplements/rhodiola-rosea/"
+    "url": "https://examine.com/supplements/rhodiola-rosea/",
+    "dosageMetric": "mg"
 }
 ]

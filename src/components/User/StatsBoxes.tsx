@@ -41,7 +41,7 @@ export default function StatsBoxes({ userData }: {
 
         Object.keys(supplementMapCopy).forEach(day => {
             Object.values(supplementMapCopy[day].SupplementSchedule).forEach( supp => {
-                if(supp.note !== ""){
+                if(supp.note){
                     count++;
                 }
             });
