@@ -17,6 +17,7 @@ export const checkForSave = async ({ userData, setUserData, setSupplementMap }: 
             // Setting saved data to User useState
             userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
             userCopy.data.selectedDates = adjustedSelectedDates;
+            userCopy.picture = parsedJsonValue.picture;
             setUserData(userCopy);
 
             setSupplementMap(parsedJsonValue.data.supplementMap);

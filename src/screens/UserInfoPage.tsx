@@ -1,5 +1,5 @@
 // Source Imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Pressable, Alert, Image } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
@@ -9,12 +9,29 @@ import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 import StatsBoxes from "../components/User/StatsBoxes";
 import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
+import ProfilePictureList from "../components/User/ProfilePictureList";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage }: AppProps): JSX.Element {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const profilePicture = require("../assets/images/pitbull.jpg");
-    // const profilePicture = require("../assets/images/husky.jpg");
-    // const profilePicture = require("../assets/images/trippy_astronaut.png");
+    const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
+    const [profilePicture, setProfilePicture] = useState({ url: require("../assets/images/pitbull.jpg") });
+
+    const pictureProps = { setUserData, userData, setChangePictureMode };
+
+    useEffect(() => {
+        const profilePictureCopy = { ...profilePicture };
+        switch (userData.picture){
+        case "../assets/images/pitbull.jpg":
+            profilePictureCopy.url = require("../assets/images/pitbull.jpg");
+            break;
+        case "../assets/images/husky.jpg":
+            profilePictureCopy.url = require("../assets/images/husky.jpg");
+            break;
+        case "../assets/images/trippy_astronaut.png":
+            profilePictureCopy.url = require("../assets/images/trippy_astronaut.png");
+            break;
+        }
+        setProfilePicture(profilePictureCopy);
+    }, [userData]);
 
     function clearEntirePlan() {
         const userCopy = { ...userData };
@@ -66,15 +83,15 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                             />
                         </View>
                         <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{`${generateGreeting()}${userData.name}`}</Text>
-                        <View style={{ borderRadius: 30, overflow: "hidden" }}>
-                            { userData.picture === "" ? <Icon
-                                style={{ padding: 5 }}
-                                onPress={() => setModalVisible({ modal: "hide-modal" })}
-                                name="person-circle-outline" size={80} color="white"
-                            /> :
-                                <Image source={profilePicture} style={{ width: 100, height: 100 }}></Image>}
-                        </View>
-                        <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>Change Profile Picture</Text>
+                        {!changePictureMode ? <View style={{ borderRadius: 30, overflow: "hidden" }}>
+                            <Image source={profilePicture.url} style={{ width: 80, height: 80 }}></Image>
+                        </View> :
+                            <ProfilePictureList {...pictureProps}></ProfilePictureList>}
+                        <Text 
+                            onPress={() => setChangePictureMode(!changePictureMode)}
+                            style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>
+                                Change Profile Picture
+                        </Text>
                         <Divider length="small"></Divider>
                         <StatsBoxes
                             userData={userData}
