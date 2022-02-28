@@ -26,7 +26,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
             } };
         }
         
-        supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken" });
+        supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken", dosage: selectedSupplement.dosage });
 
         supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
 

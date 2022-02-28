@@ -12,7 +12,7 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
     const [time, setTime] = useState<Date>(new Date());
 
     function handleJournal() {
-        multipleAddMode ? setModalVisible({ modal: "calendar-modal" }) : setModalVisible({ modal: "hide-modal" });
+        multipleAddMode ? setModalVisible({ modal: "dosage-modal" }) : setModalVisible({ modal: "hide-modal" });
     }
 	
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
