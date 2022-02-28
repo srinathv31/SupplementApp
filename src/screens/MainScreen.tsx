@@ -29,7 +29,7 @@ export default function MainScreen({ page, setPage }: {
 }): JSX.Element {
    
     // Data structure for User Data
-    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, data: { supplementMap: {}, selectedDates: {} } });
+    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true });
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
@@ -106,12 +106,6 @@ export default function MainScreen({ page, setPage }: {
     const CalendarRoute = (): JSX.Element => {
         return <CalendarPage {...AllProps} ></CalendarPage>;
     };
-
-    // const WorkoutPage = (): JSX.Element => {
-    //     return <View style={{ flex: 1, backgroundColor: "#ff4081" }} >
-    //         <Text>{supplementMap[daySelected] === undefined ? "No Mood Selected Today" : supplementMap[daySelected].DailyMood.mood}</Text>
-    //     </View>;
-    // };
 
     const renderScene = ({ route }: {
 		route: Route
