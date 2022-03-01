@@ -3,32 +3,51 @@ import React from "react";
 import { Alert, Pressable, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 
-export default function SettingsList({ setPage }: {
-    setPage: AppProps["setPage"]
+export default function SettingsList({ setPage, setModalVisible }: {
+    setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
 
     const SettingButtons = [
-        { name: "Edit Name", color: "white", function: () => console.log("EDIT NAME")  },
-        { name: "Help", color: "white", function: () => setPage({ page: "onboarding-screen" })  },
+        { name: "Achievements", color: "white", function: () => setModalVisible({ modal: "achievements-modal" }) },
+        { name: "Help", color: "white", function: () => createHelpAlert() },
         { name: "Log Out", color: "crimson", function: () => createLogOutAlert() }
     ];
 
-    const createLogOutAlert = () =>
+    const createLogOutAlert = () => {
         Alert.alert(
             "Are You Sure You Want to Log Out?",
             "You can log back in anytime 😁",
             [
+                { 
+                    text: "Log Out", onPress: () => setPage({ page: "login-screen" }),
+                    style: "destructive"
+                },
                 {
                     text: "Cancel",
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
-                },
-                { 
-                    text: "Log Out", onPress: () => setPage({ page: "login-screen" }),
-                    style: "destructive"
                 }
             ]
         );
+    };
+
+    const createHelpAlert = () => {
+        Alert.alert(
+            "Do You Wish to Start the Walkthrough Tutorial?",
+            "",
+            [
+                {
+                    text: "Continue",
+                    onPress: () => setPage({ page: "onboarding-screen" }),
+                    style: "default"
+                },
+                { 
+                    text: "Cancel", onPress: () => console.log("Pressed Cancel"),
+                    style: "cancel"
+                }
+            ]
+        );
+    };
 
     return(
         <>

@@ -56,15 +56,15 @@ export default function StatsBoxes({ userData }: {
                 <View style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059" }}>
                     <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>Number of Days Taken Supplement: {grabNumberOfDaysTakenSupplement()}</Text>
                 </View>
-                <View style={{ padding: 10, margin: 10, width: "50%", borderColor: "white", borderRadius: 5, backgroundColor: "#163059" }}>
+                <View style={{ padding: 10, margin: 10, width: "50%", borderColor: "white", borderRadius: 10, backgroundColor: "#163059" }}>
                     <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>{`Writer ✍️! \nWritten ${grabNumberOfDaysWrittenJournal()} Journals`}</Text>
                 </View>
             </View>
             <View style={{ flexDirection: "row" }}>
-                <View style={{ padding: 10, margin: 10, width: "50%", borderColor: "white", borderRadius: 5, backgroundColor: "#163059" }}>
+                <View style={{ padding: 10, margin: 10, width: "50%", borderColor: "white", borderRadius: 10, backgroundColor: "#163059" }}>
                     <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>Workout Machine 🏋️‍♀️</Text>
                 </View>
-                <View style={{ padding: 10, margin: 10, width: "50%", borderColor: "white", borderRadius: 5, backgroundColor: "#163059" }}>
+                <View style={{ padding: 10, margin: 10, width: "50%", borderColor: "white", borderRadius: 10, backgroundColor: "#163059" }}>
                     <Text style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>{`Observant 🧐 Taken Notes on ${grabNumberOfNotesTaken()} Supplements`}</Text>
                 </View>
             </View>

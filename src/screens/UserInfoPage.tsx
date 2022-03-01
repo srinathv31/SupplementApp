@@ -1,9 +1,8 @@
 // Source Imports
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Pressable, Alert, Image } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert, Image, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
-import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 import StatsBoxes from "../components/User/StatsBoxes";
@@ -47,7 +46,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
         saveUserToPhone(userCopy);
     }
 
-    const createTwoButtonAlert = () =>
+    const createTwoButtonAlert = () => {
         Alert.alert(
             "Are You Sure You Want to Erase All Data?",
             "This cannot be undone",
@@ -63,14 +62,44 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                 }
             ]
         );
+    };
+
+    const createSettingsButtonAlert = () => {
+        if (changePictureMode === true) {
+            setChangePictureMode(false);
+            return;
+        }
+        Alert.alert(
+            "What Would You Lke to Change?",
+            "",
+            [
+                {
+                    text: "Change Profile Picture",
+                    onPress: () => setChangePictureMode(true),
+                    style: "default"
+                },
+                { 
+                    text: "Change Name", onPress: () => console.log("NAME"),
+                    style: "default"
+                },
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+            ]
+        );
+    };
 
     return(
         <Modal
-            animationIn={"fadeIn"}
-            animationOut={"slideOutDown"}
-            isVisible={modalVisible.modal === "user-modal" ? true : false}
-            onBackdropPress={() => setModalVisible({ modal: "hide-modal" })}
-            useNativeDriver
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible.modal === "user-modal" ? true : false}
+            onRequestClose={() => {
+                setModalVisible({ modal: "hide-modal" });
+            }}
+            style={{ flex: 1 }}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
@@ -87,17 +116,15 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                             <Image source={profilePicture.url} style={{ width: 80, height: 80 }}></Image>
                         </View> :
                             <ProfilePictureList {...pictureProps}></ProfilePictureList>}
-                        <Text 
-                            onPress={() => setChangePictureMode(!changePictureMode)}
-                            style={{ color: "white", fontSize: 14, textAlign: "center", padding: 5, marginBottom: 5 }}>
-                                Change Profile Picture
-                        </Text>
+                        <Icon onPress={() => createSettingsButtonAlert()}
+                            name="options-outline" style={{ padding: 10 }} size={25} color="white"></Icon>
                         <Divider length="small"></Divider>
                         <StatsBoxes
                             userData={userData}
                         ></StatsBoxes>
                         <SettingsList
                             setPage={setPage}
+                            setModalVisible={setModalVisible}
                         ></SettingsList>
                         <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
                             <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
