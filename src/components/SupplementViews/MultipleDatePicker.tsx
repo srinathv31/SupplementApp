@@ -83,6 +83,9 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         setModalVisible({ modal: "hide-modal" });
         setSchedule({});
         setMultipleAddMode(false);
+        if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 3);
+        }
     }
 
     function addDayToSchedule(day: DateData) {
