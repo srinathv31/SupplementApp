@@ -2,9 +2,11 @@
 import React from "react";
 import { Alert, Pressable, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
-export default function SettingsList({ setPage, setModalVisible }: {
-    setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"]
+export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements }: {
+    setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"],
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"]
 }): JSX.Element {
 
     const SettingButtons = [
@@ -32,6 +34,9 @@ export default function SettingsList({ setPage, setModalVisible }: {
     };
 
     const createHelpAlert = () => {
+        if(completedAchievements[4].color === "white"){
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 4);
+        }
         Alert.alert(
             "Do You Wish to Start the Walkthrough Tutorial?",
             "",

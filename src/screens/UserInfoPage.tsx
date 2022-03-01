@@ -10,7 +10,7 @@ import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 
-export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage }: AppProps): JSX.Element {
+export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
     const [profilePicture, setProfilePicture] = useState({ url: require("../assets/images/pitbull.jpg") });
 
@@ -125,6 +125,8 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <SettingsList
                             setPage={setPage}
                             setModalVisible={setModalVisible}
+                            setCompletedAchievements={setCompletedAchievements}
+                            completedAchievements={completedAchievements}
                         ></SettingsList>
                         <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
                             <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
