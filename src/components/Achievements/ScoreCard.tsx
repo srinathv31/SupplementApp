@@ -4,8 +4,9 @@ import { Image, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import * as Progress from "react-native-progress";
 
-export default function ScoreCard({ userData }: {
-    userData: AppProps["userData"]
+export default function ScoreCard({ userData, completedAchievements }: {
+    userData: AppProps["userData"],
+    completedAchievements: number
 }): JSX.Element {
     const [profilePicture, setProfilePicture] = useState({ url: require("../../assets/images/pitbull.jpg") });
 
@@ -32,10 +33,10 @@ export default function ScoreCard({ userData }: {
                 <Image source={profilePicture.url} style={{ width: 80, height: 80 }}></Image>
             </View>
             <View style={{ flexDirection: "column", justifyContent: "center" }}>
-                <Text style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10, paddingBottom: 0 }}>Completed: 5/23</Text>
+                <Text style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10, paddingBottom: 0 }}>Completed: {completedAchievements}/15</Text>
                 <Progress.Bar 
                     style={{ marginVertical: 20 }}
-                    progress={0.3}
+                    progress={completedAchievements/15}
                     width={180} 
                     color={"#11ed27"}
                     animated

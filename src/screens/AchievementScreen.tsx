@@ -1,5 +1,5 @@
 // Source Imports
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
@@ -11,6 +11,7 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
     userData: AppProps["userData"],
     setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"]
 }): JSX.Element {
+    const [completedAchievements, setCompletedAchievements] = useState<number>(0);
 
     return(
         <Modal
@@ -36,10 +37,13 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
                         
                         <ScoreCard
                             userData={userData}
+                            completedAchievements={completedAchievements}
                         ></ScoreCard>
                         
                         <Divider length="small"></Divider>
-                        <AchievementsList></AchievementsList>
+                        <AchievementsList
+                            setCompletedAchievements={setCompletedAchievements}
+                        ></AchievementsList>
                     </View>
                 </View>
             </View>
