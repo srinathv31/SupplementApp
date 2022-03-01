@@ -24,7 +24,7 @@ export const showMoodToast = (mood: MoodObject) => {
 export const showAchievementToast = (item: Achievement, setModalVisible: AppProps["setModalVisible"]) => {
     Toast.show({
         type: "tomatoToast",
-        text1: "Achievement Complete:",
+        text1: "🎉 Achievement Complete 🎉",
         text2: `${item.name}`,
         visibilityTime: 5000,
         onPress: () => setModalVisible({ modal: "achievements-modal" }),
