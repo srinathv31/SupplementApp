@@ -6,7 +6,6 @@ import { journalDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Toast from "react-native-toast-message";
 // import Tooltip from "rn-tooltip";
 
 export default function JournalEntryModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, objDaySelected }: 
@@ -99,7 +98,6 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
                         <Text style={styles.textStyle}>Close Journal</Text>
                     </Pressable>
                 </View>
-                <Toast />
 
             </View>
         </Modal>
