@@ -22,7 +22,7 @@ import WelcomePage from "./WelcomePage";
 import SupplementList from "../assets/SupplementList.json";
 import Page from "../interfaces/Page";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
-import Toast from "react-native-toast-message";
+import CustomToast from "../components/Toast/customToast";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -155,7 +155,7 @@ export default function MainScreen({ page, setPage }: {
                 </View>
 
             </SafeAreaView>
-            <Toast />
+            <CustomToast />
         </View>
     );
 }
