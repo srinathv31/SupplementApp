@@ -4,7 +4,7 @@ export interface Achievement {
     color: string
 }
 
-export const AchievementsList: Achievement[] = [
+export const ListOfAchievements: Achievement[] = [
     { name: "First Supplement 😄", description: "Scheduled your first supplement.", color: "white" },
     { name: "Journalist 📓", description: "Started your first journal entry.", color: "white" },
     { name: "Researcher 🧐", description: "Read info about 1 supplement.", color: "white" },

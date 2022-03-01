@@ -11,7 +11,7 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
     userData: AppProps["userData"],
     setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"]
 }): JSX.Element {
-    const [completedAchievements, setCompletedAchievements] = useState<number>(0);
+    const [numberOfAchievements, setNumberOfAchievements] = useState<number>(0);
 
     return(
         <Modal
@@ -37,12 +37,12 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
                         
                         <ScoreCard
                             userData={userData}
-                            completedAchievements={completedAchievements}
+                            numberOfAchievements={numberOfAchievements}
                         ></ScoreCard>
                         
                         <Divider length="small"></Divider>
                         <AchievementsList
-                            setCompletedAchievements={setCompletedAchievements}
+                            setNumberOfAchievements={setNumberOfAchievements}
                         ></AchievementsList>
                     </View>
                 </View>

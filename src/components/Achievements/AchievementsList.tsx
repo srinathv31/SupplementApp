@@ -3,8 +3,8 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function AchievementsList({ setCompletedAchievements }: {
-    setCompletedAchievements: (a: number) => void
+export default function AchievementsList({ setNumberOfAchievements }: {
+    setNumberOfAchievements: (a: number) => void
 }): JSX.Element {
 
     const AchievementsList = [
@@ -32,7 +32,7 @@ export default function AchievementsList({ setCompletedAchievements }: {
                 count++;
             }
         });
-        setCompletedAchievements(count);
+        setNumberOfAchievements(count);
     }, []);
 
     return(

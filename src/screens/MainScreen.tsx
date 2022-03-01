@@ -21,6 +21,7 @@ import UserInfoPage from "./UserInfoPage";
 import WelcomePage from "./WelcomePage";
 import SupplementList from "../assets/SupplementList.json";
 import Page from "../interfaces/Page";
+import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -54,8 +55,10 @@ export default function MainScreen({ page, setPage }: {
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>({ Supplement: SupplementList[0], time: "", taken: "not-taken" });
     // Sets app in multipleAdd State mode
     const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
-
+    // Tracks selected mood for analysis and inputting mood trends
     const [mood, setMood] = useState<string>("");
+    // Updates achievements list throughout app
+    const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
@@ -100,7 +103,9 @@ export default function MainScreen({ page, setPage }: {
         setMultipleAddMode,
         multipleAddMode,
         setMood,
-        mood
+        mood,
+        setCompletedAchievements,
+        completedAchievements
     };
 
     const CalendarRoute = (): JSX.Element => {
