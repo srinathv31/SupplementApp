@@ -13,16 +13,18 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import User from "../../interfaces/User";
 import { Modalize } from "react-native-modalize";
 import WebModal from "../SlidingModals/WebModal";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
 
-export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index }: {
+export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index, setCompletedAchievements, completedAchievements }: {
     fontSizeNumber: number,
 	query: string,
     setUserData: (u: User) => void, userData: User,
 	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
 	objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
-	index: AppProps["index"]
+	index: AppProps["index"],
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"]
 }): JSX.Element {
 
     // used to open sliding modal
@@ -48,6 +50,10 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         const userCopy = addDate(userData, objDaySelected, supplementMapCopy);
 
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
+
+        if (completedAchievements[0].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 0);
+        }
 
         saveUserData(userCopy, setUserData, supplementMapCopy);
         setUserData(userCopy);
