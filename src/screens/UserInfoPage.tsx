@@ -14,7 +14,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
     const [profilePicture, setProfilePicture] = useState({ url: require("../assets/images/pitbull.jpg") });
 
-    const pictureProps = { setUserData, userData, setChangePictureMode };
+    const pictureProps = { setUserData, userData, setChangePictureMode, completedAchievements, setCompletedAchievements, setModalVisible };
 
     useEffect(() => {
         const profilePictureCopy = { ...profilePicture };

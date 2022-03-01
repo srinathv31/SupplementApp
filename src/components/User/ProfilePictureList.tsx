@@ -2,11 +2,14 @@
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 
-export default function ProfilePictureList({ setUserData, userData, setChangePictureMode }: {
+export default function ProfilePictureList({ setUserData, userData, setChangePictureMode, setCompletedAchievements, completedAchievements, setModalVisible }: {
     setUserData: AppProps["setUserData"], userData: AppProps["userData"],
-    setChangePictureMode: (p: boolean) => void
+    setChangePictureMode: (p: boolean) => void,
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
+    setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
     const pictureList = [
         require("../../assets/images/pitbull.jpg"),
@@ -16,6 +19,10 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
 
     function changeProfilePicture(index: number) {
         const userCopy = { ...userData };
+
+        if (completedAchievements[5].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 5);
+        }
 
         switch(index){
         case 0:
