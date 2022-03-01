@@ -10,6 +10,7 @@ import JournalEntryModal from "../JournalEntry/JournalEntryModal";
 import TimePicker from "../SupplementViews/TimePicker";
 import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
 import DosagePickerModal from "../SupplementViews/DosagePickerModal";
+import AchievementScreen from "../../screens/AchievementScreen";
 
 
 export default function HeaderWindow(AllProps: AppProps): JSX.Element {
@@ -25,6 +26,7 @@ export default function HeaderWindow(AllProps: AppProps): JSX.Element {
             <TimePicker {...AllProps}></TimePicker>
             <DosagePickerModal {...AllProps}></DosagePickerModal>
             <MultipleDatePicker {...AllProps}></MultipleDatePicker>
+            <AchievementScreen {...AllProps}></AchievementScreen>
         </View>
     );
 }
