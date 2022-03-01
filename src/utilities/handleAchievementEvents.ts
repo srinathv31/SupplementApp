@@ -10,7 +10,7 @@ export function achievementUnlocked(completedAchievements: AppProps["completedAc
         completedAchievementsCopy.push(item);
     });
 
-    completedAchievementsCopy[0].color === "white" ? completedAchievementsCopy[index].color = "skyblue" : completedAchievementsCopy[index].color = "white";
+    completedAchievementsCopy[index].color === "white" ? completedAchievementsCopy[index].color = "skyblue" : completedAchievementsCopy[index].color = "white";
     setTimeout(() => showAchievementToast(completedAchievementsCopy[index], setModalVisible), 1000);
     setCompletedAchievements(completedAchievementsCopy);
 }

@@ -84,6 +84,9 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
     // }
 
     function jumpToWeb(item: Supplement) {
+        if (completedAchievements[2].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+        }
         setSupplementUrl(item.url);
         onOpen();
     }

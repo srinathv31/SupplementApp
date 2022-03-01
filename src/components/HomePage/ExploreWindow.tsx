@@ -6,11 +6,14 @@ import LinearGradient from "react-native-linear-gradient";
 import Divider from "../Design/Divider";
 import Supplement from "../../interfaces/Supplement";
 import { AppProps } from "../../interfaces/Props";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
 
-export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplement }: {
+export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible }: {
     setModalizeRefStatus: (m: boolean) => void,
-    setSelectedSupplement: AppProps["setSelectedSupplement"]
+    setSelectedSupplement: AppProps["setSelectedSupplement"],
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
+    setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
     const [randomSupplement, setRandomSupplement] = useState<number>(0);
 
@@ -31,6 +34,9 @@ export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplem
 
     function handleTouch(supp: Supplement) {
         setSelectedSupplement({ Supplement: supp, time: "", taken: "not-taken" });
+        if (completedAchievements[2].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+        }
         setModalizeRefStatus(true);
     }
 
