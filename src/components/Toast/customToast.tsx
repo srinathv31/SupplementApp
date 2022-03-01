@@ -54,12 +54,12 @@ const toastConfig: ToastConfig = {
     I can consume any custom `props` I want.
     They will be passed when calling the `show` method (see below)
   */
-    tomatoToast: ({ text1, text2, onPress }) => (
+    tomatoToast: ({ text1, text2, onPress, props }) => (
         <Pressable 
             onPress={onPress}
             style={{ backgroundColor: "#112442", padding: 20, margin: 5, borderRadius: 5, height: 100, width: "95%", borderWidth: 5, borderColor: "skyblue", justifyContent: "center", alignItems: "center" }}>
             <Text style={{ color: "white", fontSize: 18, padding: 5 }}>{text1}</Text>
-            <Text style={{ color: "white", fontSize: 18, padding: 5 }}>{text2}</Text>
+            <Text style={{ color: "white", fontSize: props.spider === true ? 15 : 18, padding: 5 }}>{text2}</Text>
         </Pressable>
     )
 };

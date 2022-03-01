@@ -29,6 +29,7 @@ export const showAchievementToast = (item: Achievement, setModalVisible: AppProp
         visibilityTime: 5000,
         onPress: () => setModalVisible({ modal: "achievements-modal" }),
         // And I can pass any custom props I want
-        props: { uuid: "bba1a7d0-6ab2-4a0a-a76e-ebbe05ae6d70" }
+        props: { uuid: "bba1a7d0-6ab2-4a0a-a76e-ebbe05ae6d70", 
+            spider: item.description === "Create a note for an individual supplement." ? true : false }
     });
 };

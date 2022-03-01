@@ -10,7 +10,8 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 
-export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement, setShowButtons, showButtons }: AppProps): JSX.Element {
+export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement, 
+    setShowButtons, showButtons, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     // used to open sliding modal
@@ -144,6 +145,9 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     supplementMap={supplementMap}
                     daySelected={daySelected}
                     setSelectedSupplement={setSelectedSupplement}
+                    setCompletedAchievements={setCompletedAchievements}
+                    completedAchievements={completedAchievements}
+                    setModalVisible={setModalVisible}
                 />
             </Modalize>
         </>
