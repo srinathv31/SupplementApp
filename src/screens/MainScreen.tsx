@@ -23,6 +23,8 @@ import SupplementList from "../assets/SupplementList.json";
 import Page from "../interfaces/Page";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import CustomToast from "../components/Toast/customToast";
+import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
+import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -65,6 +67,17 @@ export default function MainScreen({ page, setPage }: {
     useEffect(() => {
         checkForSave(AllProps);
     }, []);
+
+    // Checks login time for achievements
+    useEffect(() => {
+        const greeting = generateLoginPeriod();
+        if (greeting === "Bird" && completedAchievements[12].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 12);
+        }
+        if (greeting === "Owl" && completedAchievements[11].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 11);
+        }
+    },[]);
 
     const [routes] = useState([
         { key: "cal", title: "Calendar" },
