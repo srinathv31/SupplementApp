@@ -25,6 +25,7 @@ import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import CustomToast from "../components/Toast/customToast";
 import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
+import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -33,7 +34,7 @@ export default function MainScreen({ page, setPage }: {
 }): JSX.Element {
    
     // Data structure for User Data
-    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true });
+    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
@@ -78,6 +79,13 @@ export default function MainScreen({ page, setPage }: {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 11);
         }
     },[]);
+
+    useEffect(() => {
+        const userCopy = { ...userData };
+        userCopy.achievements = completedAchievements;
+        setUserData(userCopy);
+        saveUserToPhone(userCopy);
+    }, [completedAchievements]);
 
     const [routes] = useState([
         { key: "cal", title: "Calendar" },

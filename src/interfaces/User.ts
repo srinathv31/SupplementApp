@@ -1,3 +1,4 @@
+import { Achievement } from "./Achievements";
 import CalendarDotObject from "./Calendar";
 import { SupplementMapObject } from "./Supplement";
 
@@ -10,7 +11,8 @@ interface User {
         selectedDates: CalendarDotObject,
     },
     premiumStatus: boolean,
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
+    achievements: Achievement[]
 }
 
 export default User;

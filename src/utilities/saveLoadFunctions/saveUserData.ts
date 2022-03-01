@@ -4,9 +4,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function saveUserData(userData: User, setUserData: (u: User) => void, supplementMap: Record<string, SupplementMapObject>) {
     const userCopy: User = { ...userData };
-
+    
     userCopy.data.supplementMap = supplementMap;
-    // userCopy.data.selectedDates = selectedDates;
 
     saveUserToPhone(userCopy);
 
