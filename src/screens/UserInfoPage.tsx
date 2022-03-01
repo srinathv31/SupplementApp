@@ -9,6 +9,7 @@ import StatsBoxes from "../components/User/StatsBoxes";
 import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
+import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
@@ -44,6 +45,10 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
 
         setUserData(userCopy);
         saveUserToPhone(userCopy);
+
+        if (completedAchievements[8].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 8);
+        }
     }
 
     const createTwoButtonAlert = () => {
