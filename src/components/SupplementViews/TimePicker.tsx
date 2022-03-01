@@ -5,9 +5,11 @@ import { AppProps } from "../../interfaces/Props";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
 
-export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, daySelected, multipleAddMode }: 
+export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, 
+    daySelected, multipleAddMode, completedAchievements, setCompletedAchievements }: 
 	AppProps): JSX.Element {
     const [time, setTime] = useState<Date>(new Date());
 
@@ -30,6 +32,9 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
             }
         });
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
+        if(completedAchievements[13].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 13);
+        }
         setSupplementMap(supplementMap);
         setTime(currentDate);
     };
