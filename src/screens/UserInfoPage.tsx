@@ -10,6 +10,7 @@ import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
+import { ListOfAchievements } from "../interfaces/Achievements";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
@@ -53,7 +54,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
 
     const createTwoButtonAlert = () => {
         Alert.alert(
-            "Are You Sure You Want to Erase All Data?",
+            "Are You Sure You Want to Erase Your Entire Plan?",
             "This cannot be undone",
             [
                 {
@@ -62,7 +63,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                     style: "cancel"
                 },
                 { 
-                    text: "Delete All Data", onPress: () => clearEntirePlan(),
+                    text: "Erase Entire Plan", onPress: () => clearEntirePlan(),
                     style: "destructive"
                 }
             ]
@@ -95,6 +96,34 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
             ]
         );
     };
+
+    const createDataButtonAlert = () => {
+        Alert.alert(
+            "Are You Sure You Want to Reset All Data?",
+            "This will reset EVERYTHING. It cannot be undone.",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                },
+                { 
+                    text: "DELETE ALL DATA", onPress: () => (clearEntirePlan(), deleteAchievements()),
+                    style: "destructive"
+                }
+            ]
+        );
+    };
+
+    function deleteAchievements() {
+        const userCopy = { ...userData };
+
+        userCopy.achievements = [];
+        setUserData(userCopy);
+
+        setCompletedAchievements(ListOfAchievements);
+        saveUserToPhone(userCopy);
+    }
 
     return(
         <Modal
@@ -142,6 +171,17 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                                 }
                             ]}>
                                 <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
+                            </Pressable>
+                        </View>
+                        <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
+                            <Pressable onPress={() => createDataButtonAlert()} style={({ pressed }) => [
+                                {
+                                    backgroundColor: pressed
+                                        ? "#111f36"
+                                        : "#112442"
+                                }
+                            ]}>
+                                <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Reset All Data</Text>
                             </Pressable>
                         </View>
                     </View>
