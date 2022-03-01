@@ -7,8 +7,9 @@ import { TimeLineObject } from "../../interfaces/TimeLine";
 import { MoodTimelinePickerProps } from "../../interfaces/MoodTimelineProps";
 import MoodObject from "../../interfaces/Mood";
 import { SupplementMapObject } from "../../interfaces/Supplement";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
-export default function MoodTimelinePicker({ setModalVisible, modalVisible, supplementMap, daySelected, setSupplementMap }: MoodTimelinePickerProps): JSX.Element {
+export default function MoodTimelinePicker({ setModalVisible, modalVisible, supplementMap, daySelected, setSupplementMap, completedAchievements, setCompletedAchievements }: MoodTimelinePickerProps): JSX.Element {
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(0);
@@ -105,6 +106,9 @@ export default function MoodTimelinePicker({ setModalVisible, modalVisible, supp
         supplementMapCopy[daySelected].DailyMood = setTimelineInDailyMoodObj(supplementMapCopy);
         setSupplementMap(supplementMapCopy);
         setModalVisible({ modal: "hide-modal" });
+        if (completedAchievements[10].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 10);
+        }
     }
     
     function setTimelineInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
