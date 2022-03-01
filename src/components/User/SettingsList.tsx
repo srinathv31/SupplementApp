@@ -10,7 +10,7 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
 }): JSX.Element {
 
     const SettingButtons = [
-        { name: "Achievements", color: "white", function: () => setModalVisible({ modal: "achievements-modal" }) },
+        { name: "Achievements", color: "white", function: () => openAchievementPage() },
         { name: "Help", color: "white", function: () => createHelpAlert() },
         { name: "Log Out", color: "crimson", function: () => createLogOutAlert() }
     ];
@@ -52,6 +52,13 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
                 }
             ]
         );
+    };
+
+    const openAchievementPage = () => {
+        if (completedAchievements[7].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 7);
+        }
+        setModalVisible({ modal: "achievements-modal" });
     };
 
     return(
