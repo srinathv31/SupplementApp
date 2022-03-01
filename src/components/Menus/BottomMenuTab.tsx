@@ -2,16 +2,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, KeyboardAvoidingView, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { Achievement } from "../../interfaces/Achievements";
 import { AppProps } from "../../interfaces/Props";
-
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
-import { showAchievementToast } from "../../utilities/toasts";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 
 export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
-    setSupplementMap, supplementMap, daySelected, objDaySelected, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
+    setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     
     const MoodProps = {
@@ -49,18 +46,6 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
             setOpen(!open);
     }
 
-    function makeAch() {
-        const completedAchievementsCopy: Achievement[] = [];
-
-        completedAchievements.forEach(item => {
-            completedAchievementsCopy.push(item);
-        });
-
-        completedAchievementsCopy[0].color === "white" ? completedAchievementsCopy[0].color = "skyblue" : completedAchievementsCopy[0].color = "white";
-        showAchievementToast(completedAchievementsCopy[0], setModalVisible);
-        setCompletedAchievements(completedAchievementsCopy);
-    }
-
     return(
         <KeyboardAvoidingView
             behavior="position"
@@ -91,7 +76,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
                                 name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
-                            <Icon onPress={() => makeAch()}
+                            <Icon onPress={() => console.log("FORK")}
                                 name="silverware-fork-knife" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                                 name="clock" size={30} color="white"/>
