@@ -6,6 +6,7 @@ import { LogBox } from "react-native";
 import Page from "./interfaces/Page";
 import LoginScreen from "./screens/LoginScreen";
 import MainScreen from "./screens/MainScreen";
+import OnboardingTour from "./screens/OnboardingTour";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -17,13 +18,16 @@ const App = () => {
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={"light-content"} />
         
-                { page.page === "login-screen" ? <LoginScreen
+                { page.page === "login-screen" && <LoginScreen
                     setPage={setPage}
-                ></LoginScreen> :
-                    <MainScreen
-                        setPage={setPage}
-                        page={page}
-                    />}
+                ></LoginScreen>}
+                {page.page === "onboarding-screen" && <OnboardingTour
+                    setPage={setPage}
+                ></OnboardingTour>}
+                {(page.page !== "login-screen" && page.page !== "onboarding-screen") && <MainScreen
+                    setPage={setPage}
+                    page={page}
+                />}
 
             </SafeAreaView>
         </View>
