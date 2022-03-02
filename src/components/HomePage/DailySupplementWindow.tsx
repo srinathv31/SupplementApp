@@ -106,9 +106,10 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
 
     return(
         <>
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
                         data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
                         renderItem={({ item }) => (
                             <View style={{ flexDirection: "row", justifyContent: "center" }}>
@@ -129,16 +130,16 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                                         <Text style={styles.ListName}>
                                             {item.Supplement.name}
                                         </Text>
-                                        <Icon onPress={() => removeSupplement(item)}
-                                            name="delete-forever" style={styles.IconPadding}/>
                                     </View>
                                 </TouchableOpacity>
+                                <Icon onPress={() => removeSupplement(item)}
+                                    name="delete-forever" style={{ color: "white", alignSelf: "center" }} size={25}/>
                             </View>
                         )}
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.85} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
                 <DailySupplementDetails
                     selectedSupplement={selectedSupplement}
                     setSupplementMap={setSupplementMap}

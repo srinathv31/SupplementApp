@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { AppProps } from "../../interfaces/Props";
+import Icon from "react-native-vector-icons/Ionicons";
+import { shareAchievement } from "../../utilities/shareFunctions";
 
-export default function AchievementsList({ setNumberOfAchievements, completedAchievements }: {
-    setNumberOfAchievements: (a: number) => void,
+export default function AchievementsList({ setNumberOfAchievements, numberOfAchievements, completedAchievements }: {
+    setNumberOfAchievements: (a: number) => void, numberOfAchievements: number,
     completedAchievements: AppProps["completedAchievements"]
 }): JSX.Element {
 
@@ -28,10 +30,16 @@ export default function AchievementsList({ setNumberOfAchievements, completedAch
                             style={{ color: item.color, fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>
                             {item.name}
                         </Text>
-                        { item.color === "skyblue" && <Text
-                            style={{ color: item.color, fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>
-                            {item.description}
-                        </Text>}
+                        { item.color === "skyblue" && 
+                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                            <Text
+                                style={{ color: item.color, fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>
+                                {item.description}
+                            </Text>
+                            <Icon onPress={() => shareAchievement(item, numberOfAchievements)}
+                                name="share-outline" style={{ color: "white" }} size={25}></Icon>
+                        </View>
+                        }
                     </View>
                 );
             })}

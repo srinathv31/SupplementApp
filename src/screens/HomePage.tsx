@@ -29,16 +29,21 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
 
 
     useEffect(() => {
-        modalizeRefStatus === true ? modalizeRef.current?.open() : modalizeRef.current?.close();
+        modalizeRefStatus === true ? onOpen() : modalizeRef.current?.close();
     }, [modalizeRefStatus]);
 
     useEffect(() => {
         setModalizeRefStatus(false);
     }, [AllProps.index]);
 
+    function onOpen() {
+        AllProps.setModalVisible({ modal: "disable-header" });
+        AllProps.setShowButtons(false);
+        modalizeRef.current?.open();
+    }
     
     return(
-        <View>
+        <View style={{ flex: 1 }}>
             <MoodSlider {...AllProps}></MoodSlider>
             <MoodTimelinePicker {...MoodTimelineProps} />
             <ExploreWindow
@@ -54,6 +59,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
                 url={AllProps.selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
                 index={AllProps.index}
+                setModalVisible={AllProps.setModalVisible}
             ></WebModal>
         </View>
     );

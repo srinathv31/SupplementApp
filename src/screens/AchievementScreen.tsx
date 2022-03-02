@@ -45,6 +45,7 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
                         <AchievementsList
                             setNumberOfAchievements={setNumberOfAchievements}
                             completedAchievements={completedAchievements}
+                            numberOfAchievements={numberOfAchievements}
                         ></AchievementsList>
                     </View>
                 </View>
