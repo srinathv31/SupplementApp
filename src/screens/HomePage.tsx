@@ -42,7 +42,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
     }
     
     return(
-        <View>
+        <View style={{ flex: 1 }}>
             <MoodSlider {...AllProps}></MoodSlider>
             <MoodTimelinePicker {...MoodTimelineProps} />
             <ExploreWindow

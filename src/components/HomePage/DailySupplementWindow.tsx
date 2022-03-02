@@ -106,9 +106,10 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
 
     return(
         <>
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        showsVerticalScrollIndicator={false}
                         data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
                         renderItem={({ item }) => (
                             <View style={{ flexDirection: "row", justifyContent: "center" }}>

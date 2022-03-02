@@ -41,7 +41,7 @@ export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplem
     }
 
     return(
-        <View style={{ flexDirection: "column", height: "20%",  margin: 10 }}>
+        <View style={{ flexDirection: "column", height: "25%",  margin: 10 }}>
             <TouchableOpacity onPress={() => handleTouch(SupplementList[randomSupplement])}>
                 <LinearGradient colors={["#ee0979", "#ff6a00"]} style={{ justifyContent: "space-evenly", borderRadius: 10, padding: 10, alignItems: "center", height: "100%" }} >
                     <Text style={{ fontSize: 26, fontWeight: "600" }}>Explore</Text>
