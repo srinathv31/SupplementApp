@@ -150,7 +150,7 @@ export default function ChangeMoodModal({ userData, setUserData, supplementMap, 
         }
 
         // Close modal if there are no more moods
-        if (supplementMapCopy[daySelected].DailyMood["1"].mood === ""){
+        if (supplementMapCopy[daySelected] === undefined){
             setModalVisible({ modal: "hide-modal" });
         }
 
