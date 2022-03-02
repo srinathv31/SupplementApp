@@ -16,6 +16,7 @@
     "ansi-regex": "^5.0.1",
     "node-fetch": "^2.6.7",
     "nth-check": "^2.0.1",
+    "prop-types": "^15.8.1",
     "react": "17.0.2",
     "react-native": "0.66.4",
     "react-native-calendars": "^1.1274.0",
