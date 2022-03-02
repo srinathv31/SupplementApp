@@ -3,12 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Animated, KeyboardAvoidingView, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AppProps } from "../../interfaces/Props";
-
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 
-export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood, setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
+export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
+    setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     
     const MoodProps = {

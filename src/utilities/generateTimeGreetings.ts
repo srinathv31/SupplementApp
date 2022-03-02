@@ -40,3 +40,27 @@ export function generateGreeting() {
 
     return greeting;
 }
+
+export function generateLoginPeriod() {
+    let time = grabTime();
+    let greeting = "Hello";
+    if (time.length === 7) {
+        time = "0"+time;
+    }
+
+    // 3AM - 7AM Early Bird achievement
+    if (time.substring(6,7) === "A"){
+        if (time.substring(0,2) > "03" && time.substring(0,2) < "07"){
+            greeting = "Bird";
+        }
+    }
+
+    // 1AM - 3AM Night Owl achievement
+    if (time.substring(6,7) === "A"){
+        if (time.substring(0,2) > "00" && time.substring(0,2) < "04"){
+            greeting = "Owl";
+        }
+    }
+
+    return greeting;
+}

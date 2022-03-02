@@ -3,13 +3,13 @@ import React from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import { journalDot } from "../../utilities/calendarDots";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import JournalTextEntry from "./JournalTextEntry";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Toast from "react-native-toast-message";
 // import Tooltip from "rn-tooltip";
 
-export default function JournalEntryModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, objDaySelected }: 
+export default function JournalEntryModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, objDaySelected, completedAchievements, setCompletedAchievements }: 
 	AppProps): JSX.Element {
 
 
@@ -49,6 +49,9 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
         else if (supplementMapCopy[daySelected].JournalEntry.trim()){
             if (!selectedDatesCopy[stringDate].dots.includes(journalDot)) {
                 selectedDatesCopy[stringDate].dots.push(journalDot);
+                if (completedAchievements[1].color === "white"){
+                    achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 1);
+                }
             }
             selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
         }
@@ -73,20 +76,6 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
                 <View style={styles.modalView}>
                     <View style={{ flexDirection: "row" }}>
                         <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
-                        {/* <Tooltip
-                            popover={ <Text>{(supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "") 
-                                ? `Selected Mood for today ${supplementMap[daySelected].DailyMood.mood}: ${supplementMap[daySelected].DailyMood.range}`
-                                : "No Mood Selected for Today"}</Text> }
-                            actionType="press"
-                            withOverlay={false}
-                            width={120}
-                            height={100}
-                            containerStyle={{ height: 80, marginTop: -30 }}
-                            pointerStyle={{ marginTop: -30 }}
-                        >
-                            <Icon
-                                style={{ alignSelf: "flex-start" }} name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.mood !== "" ? "lime" : "white" }/>
-                        </Tooltip> */}
                     </View>
                     <JournalTextEntry
                         setJournalText={setJournalText}
@@ -99,7 +88,6 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
                         <Text style={styles.textStyle}>Close Journal</Text>
                     </Pressable>
                 </View>
-                <Toast />
 
             </View>
         </Modal>

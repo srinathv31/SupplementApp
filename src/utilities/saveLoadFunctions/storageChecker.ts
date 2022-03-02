@@ -4,7 +4,7 @@ import { AppProps } from "../../interfaces/Props";
 import CalendarDotObject from "../../interfaces/Calendar";
 import { generateCurrentDateObject } from "../getCurrentDate";
 
-export const checkForSave = async ({ userData, setUserData, setSupplementMap }: AppProps) => {
+export const checkForSave = async ({ userData, setUserData, setSupplementMap, setCompletedAchievements }: AppProps) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(userCopy.name);
@@ -18,7 +18,9 @@ export const checkForSave = async ({ userData, setUserData, setSupplementMap }: 
             userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
             userCopy.data.selectedDates = adjustedSelectedDates;
             userCopy.picture = parsedJsonValue.picture;
+            userCopy.achievements = parsedJsonValue.achievements;
             setUserData(userCopy);
+            setCompletedAchievements(parsedJsonValue.achievements);
 
             setSupplementMap(parsedJsonValue.data.supplementMap);
         }

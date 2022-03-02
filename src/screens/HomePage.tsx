@@ -20,6 +20,8 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
         modalVisible: AllProps.modalVisible,
         setSupplementMap: AllProps.setSupplementMap,
         supplementMap: AllProps.supplementMap,
+        completedAchievements: AllProps.completedAchievements,
+        setCompletedAchievements: AllProps.setCompletedAchievements
     };
 
     const modalizeRef = useRef<Modalize>(null);

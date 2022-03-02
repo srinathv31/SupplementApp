@@ -21,6 +21,11 @@ import UserInfoPage from "./UserInfoPage";
 import WelcomePage from "./WelcomePage";
 import SupplementList from "../assets/SupplementList.json";
 import Page from "../interfaces/Page";
+import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
+import CustomToast from "../components/Toast/customToast";
+import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
+import { achievementUnlocked } from "../utilities/handleAchievementEvents";
+import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 
 LogBox.ignoreLogs(["Sending"]);
 
@@ -29,7 +34,7 @@ export default function MainScreen({ page, setPage }: {
 }): JSX.Element {
    
     // Data structure for User Data
-    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true });
+    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
@@ -54,13 +59,33 @@ export default function MainScreen({ page, setPage }: {
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>({ Supplement: SupplementList[0], time: "", taken: "not-taken" });
     // Sets app in multipleAdd State mode
     const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
-
+    // Tracks selected mood for analysis and inputting mood trends
     const [mood, setMood] = useState<string>("");
+    // Updates achievements list throughout app
+    const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
         checkForSave(AllProps);
     }, []);
+
+    // Checks login time for achievements
+    useEffect(() => {
+        const greeting = generateLoginPeriod();
+        if (greeting === "Bird" && completedAchievements[12].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 12);
+        }
+        if (greeting === "Owl" && completedAchievements[11].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 11);
+        }
+    },[]);
+
+    useEffect(() => {
+        const userCopy = { ...userData };
+        userCopy.achievements = completedAchievements;
+        setUserData(userCopy);
+        saveUserToPhone(userCopy);
+    }, [completedAchievements]);
 
     const [routes] = useState([
         { key: "cal", title: "Calendar" },
@@ -100,7 +125,9 @@ export default function MainScreen({ page, setPage }: {
         setMultipleAddMode,
         multipleAddMode,
         setMood,
-        mood
+        mood,
+        setCompletedAchievements,
+        completedAchievements
     };
 
     const CalendarRoute = (): JSX.Element => {
@@ -149,6 +176,7 @@ export default function MainScreen({ page, setPage }: {
                 </View>
 
             </SafeAreaView>
+            <CustomToast />
         </View>
     );
 }

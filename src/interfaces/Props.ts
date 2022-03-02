@@ -1,4 +1,5 @@
 import { DateData } from "react-native-calendars/src/types";
+import { Achievement } from "./Achievements";
 import ModalObject from "./Modal";
 import Page from "./Page";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
@@ -35,6 +36,8 @@ export interface AppProps {
     setMultipleAddMode: (m: boolean) => void,
     multipleAddMode: boolean,
     setMood: (m: string) => void,
-    mood: string
+    mood: string,
+    setCompletedAchievements: (a: Achievement[]) => void,
+    completedAchievements: Achievement[]
 }
 

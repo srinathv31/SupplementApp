@@ -7,11 +7,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import AchievementsList from "../components/Achievements/AchievementsList";
 import ScoreCard from "../components/Achievements/ScoreCard";
 
-export default function AchievementScreen({ userData, modalVisible, setModalVisible }: {
+export default function AchievementScreen({ userData, modalVisible, setModalVisible, completedAchievements }: {
     userData: AppProps["userData"],
-    setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"]
+    setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"],
+    completedAchievements: AppProps["completedAchievements"]
 }): JSX.Element {
-    const [completedAchievements, setCompletedAchievements] = useState<number>(0);
+    const [numberOfAchievements, setNumberOfAchievements] = useState<number>(0);
 
     return(
         <Modal
@@ -37,12 +38,13 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
                         
                         <ScoreCard
                             userData={userData}
-                            completedAchievements={completedAchievements}
+                            numberOfAchievements={numberOfAchievements}
                         ></ScoreCard>
                         
                         <Divider length="small"></Divider>
                         <AchievementsList
-                            setCompletedAchievements={setCompletedAchievements}
+                            setNumberOfAchievements={setNumberOfAchievements}
+                            completedAchievements={completedAchievements}
                         ></AchievementsList>
                     </View>
                 </View>

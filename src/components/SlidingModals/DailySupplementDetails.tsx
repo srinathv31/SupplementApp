@@ -9,11 +9,14 @@ import { SupplementObject } from "../../interfaces/Supplement";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
-export default function DailySupplemenyDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected }: {
+export default function DailySupplementDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setCompletedAchievements, completedAchievements, setModalVisible }: {
     selectedSupplement: AppProps["selectedSupplement"], setSelectedSupplement: AppProps["setSelectedSupplement"],
     setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"]
+    daySelected: AppProps["daySelected"],
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
+    setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
@@ -96,6 +99,9 @@ export default function DailySupplemenyDetails({ selectedSupplement, supplementM
         }
         selectedSupplement.note = supplementNotes;
         setSupplementMap(supplementMap);
+        if(completedAchievements[9].color === "white"){
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 9);
+        }
     }, [supplementNotes]);
 
     useEffect(() => {

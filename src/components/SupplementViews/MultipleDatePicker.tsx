@@ -10,8 +10,9 @@ import sortDailyList from "../../utilities/sortDailyList";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
-export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode }: AppProps): JSX.Element {
+export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode, completedAchievements, setCompletedAchievements }: AppProps): JSX.Element {
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
     function addSupplement(item: Supplement, dayString: string) {
@@ -29,6 +30,10 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken", dosage: selectedSupplement.dosage });
 
         supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
+
+        if (completedAchievements[0].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 0);
+        }
 
         return supplementMapCopy[dayString].SupplementSchedule;
     }
@@ -78,6 +83,9 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         setModalVisible({ modal: "hide-modal" });
         setSchedule({});
         setMultipleAddMode(false);
+        if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 3);
+        }
     }
 
     function addDayToSchedule(day: DateData) {

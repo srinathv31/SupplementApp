@@ -1,3 +1,4 @@
+import { Achievement } from "./Achievements";
 import ModalObject from "./Modal";
 import MoodObject from "./Mood";
 import { SupplementMapObject } from "./Supplement";
@@ -24,6 +25,8 @@ export interface MoodTimelinePickerProps {
     modalVisible: ModalObject,
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
+    setCompletedAchievements: (a: Achievement[]) => void,
+    completedAchievements: Achievement[]
 }
 
 export interface MoodTimelineSupplementProps {
