@@ -1,7 +1,8 @@
 // Source Imports
 import React, { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { Modalize } from "react-native-modalize";
+import Icon from "react-native-vector-icons/Ionicons";
 import Divider from "../components/Design/Divider";
 import DailySupplementWindow from "../components/HomePage/DailySupplementWindow";
 import ExploreWindow from "../components/HomePage/ExploreWindow";
@@ -10,9 +11,11 @@ import MoodTimelinePicker from "../components/Mood/MoodTimelinePicker";
 import WebModal from "../components/SlidingModals/WebModal";
 import { MoodTimelinePickerProps } from "../interfaces/MoodTimelineProps";
 import { AppProps } from "../interfaces/Props";
+import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
+    const [categorySelect, setCategorySelect] = useState<"supplement"|"food"|"water"|"exercise"|"home">("home");
 
     const MoodTimelineProps: MoodTimelinePickerProps = {
         daySelected: AllProps.daySelected,
@@ -51,9 +54,17 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
                 {...AllProps}
             ></ExploreWindow>
             <Divider length="full"></Divider>
-            <DailySupplementWindow
-                {...AllProps}
-            ></DailySupplementWindow>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
+                { categorySelect !== "home" && <Icon onPress={() => setCategorySelect("home")}
+                    name="expand" style={{ color: "white", padding: 10, justifyContent: "flex-start" }} size={30}></Icon>}
+                <Text style={{ color: "white", fontSize: 20 }}>{categorySelect}</Text>
+            </View>
+            { categorySelect === "home" && <CategoryBoxes setCategorySelect={setCategorySelect} />}
+            { categorySelect === "supplement"
+                    && <DailySupplementWindow
+                        {...AllProps}
+                    ></DailySupplementWindow>
+            }
             <WebModal
                 modalizeRef={modalizeRef}
                 url={AllProps.selectedSupplement.Supplement.url}
