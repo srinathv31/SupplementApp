@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, KeyboardAvoidingView, Pressable, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import IconI from "react-native-vector-icons/Ionicons";
 import { AppProps } from "../../interfaces/Props";
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
@@ -9,7 +10,7 @@ import MoodPicker from "../Mood/MoodPicker";
 import Share from "react-native-share";
 
 export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
-    setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
+    setSupplementMap, supplementMap, daySelected, objDaySelected, selectedSupplement }: AppProps): JSX.Element {
     const [open, setOpen] = useState(false);
     
     const MoodProps = {
@@ -47,9 +48,9 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
             setOpen(!open);
     }
 
-    const fun = async () => {
+    const shareUrl = async (urlToShare: string) => {
         try { 
-            await Share.open({ url: "www.apple.com" });
+            await Share.open({ url: urlToShare, message: `Check out this Supplement called ${selectedSupplement.Supplement.name}!` });
         } catch (e) {
             console.log(e);
         }
@@ -85,7 +86,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
                                 name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
-                            <Icon onPress={() => fun()}
+                            <Icon onPress={() => console.log("FORK")}
                                 name="silverware-fork-knife" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                                 name="clock" size={30} color="white"/>
@@ -100,9 +101,14 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                         <Icon
                             name={ index === 1 ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                     </Pressable>
-                    <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
-                        <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
-                    </Pressable>
+                    {modalVisible.modal !== "disable-header" ? 
+                        <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
+                            <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
+                        </Pressable> : 
+                        <Pressable onPress={() => shareUrl(selectedSupplement.Supplement.url)} disabled={ index === 3 ? true : false }>
+                            <IconI name="share-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
+                        </Pressable>
+                    }
                     <Pressable onPress={() => (setIndex(2))} disabled={ showButtons ? true : false }>
                         <Icon
                             name={ index === 2 ? "text-box-search" : "text-box-search-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>

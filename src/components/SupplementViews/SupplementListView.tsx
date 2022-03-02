@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../interfaces/Props";
@@ -16,11 +16,12 @@ import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
 
-export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, multipleAddMode, setModalVisible, index, setCompletedAchievements, completedAchievements }: {
+export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, selectedSupplement, multipleAddMode, setModalVisible, index, setCompletedAchievements, completedAchievements }: {
     fontSizeNumber: number,
 	query: string,
     setUserData: (u: User) => void, userData: User,
-	setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
+	setSupplementMap: AppProps["setSupplementMap"], selectedSupplement: AppProps["selectedSupplement"],
+    supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
 	objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
 	index: AppProps["index"],
@@ -33,7 +34,6 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         setModalVisible({ modal: "disable-header" });
         modalizeRef.current?.open();
     };
-    const [supplementUrl, setSupplementUrl] = useState<string>("");
 
     function addSupplement(item: Supplement) {
         const supplementMapCopy = { ...supplementMap };
@@ -88,7 +88,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         if (completedAchievements[2].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
         }
-        setSupplementUrl(item.url);
+        setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();
     }
 
@@ -126,7 +126,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
             </View>
             <WebModal
                 modalizeRef={modalizeRef}
-                url={supplementUrl}
+                url={selectedSupplement.Supplement.url}
                 index={index}
                 setModalVisible={setModalVisible}
             ></WebModal>
