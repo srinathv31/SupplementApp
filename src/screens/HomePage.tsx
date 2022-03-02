@@ -15,7 +15,7 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
-    const [categorySelect, setCategorySelect] = useState<"supplement"|"food"|"water"|"exercise"|"home">("home");
+    const [categorySelect, setCategorySelect] = useState<"Supplement"|"Food"|"Water"|"Exercise"|"Home">("Home");
 
     const MoodTimelineProps: MoodTimelinePickerProps = {
         daySelected: AllProps.daySelected,
@@ -55,12 +55,16 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             ></ExploreWindow>
             <Divider length="full"></Divider>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                { categorySelect !== "home" && <Icon onPress={() => setCategorySelect("home")}
+                { categorySelect !== "Home" && <Icon onPress={() => setCategorySelect("Home")}
                     name="expand" style={{ color: "white", padding: 10, justifyContent: "flex-start" }} size={30}></Icon>}
-                <Text style={{ color: "white", fontSize: 20 }}>{categorySelect}</Text>
+                <Text style={{ color: "white", fontSize: 20, padding: 10 }}>{categorySelect}</Text>
             </View>
-            { categorySelect === "home" && <CategoryBoxes setCategorySelect={setCategorySelect} />}
-            { categorySelect === "supplement"
+            
+            { categorySelect === "Home" && 
+            <><Divider length="small"></Divider>
+                <CategoryBoxes setCategorySelect={setCategorySelect} />
+            </>}
+            { categorySelect === "Supplement"
                     && <DailySupplementWindow
                         {...AllProps}
                     ></DailySupplementWindow>

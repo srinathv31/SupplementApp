@@ -5,17 +5,17 @@ import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function CategoryBoxes({ setCategorySelect }: {
-    setCategorySelect: (c: "supplement"|"food"|"water"|"exercise"|"home") => void
+    setCategorySelect: (c: "Supplement"|"Food"|"Water"|"Exercise"|"Home") => void
 }) {
 
     const categories1 = [
-        { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("supplement") },
-        { name: "Food", colors: ["#c31432", "#240b36"], icon: "food-variant", function: () => setCategorySelect("food") },
+        { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("Supplement") },
+        { name: "Food", colors: ["#c31432", "#240b36"], icon: "food-variant", function: () => setCategorySelect("Food") },
     ];
 
     const categories2 = [
-        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => setCategorySelect("water") },
-        { name: "Exercise", colors: ["#8E2DE2", "#4A00E0"], icon: "bicycle", function: () => setCategorySelect("exercise") }
+        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => setCategorySelect("Water") },
+        { name: "Exercise", colors: ["#8E2DE2", "#4A00E0"], icon: "bicycle", function: () => setCategorySelect("Exercise") }
     ];
 
     return(
