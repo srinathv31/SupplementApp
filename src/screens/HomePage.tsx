@@ -29,13 +29,17 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
 
 
     useEffect(() => {
-        modalizeRefStatus === true ? modalizeRef.current?.open() : modalizeRef.current?.close();
+        modalizeRefStatus === true ? onOpen() : modalizeRef.current?.close();
     }, [modalizeRefStatus]);
 
     useEffect(() => {
         setModalizeRefStatus(false);
     }, [AllProps.index]);
 
+    function onOpen() {
+        AllProps.setModalVisible({ modal: "disable-header" });
+        modalizeRef.current?.open();
+    }
     
     return(
         <View>
@@ -54,6 +58,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
                 url={AllProps.selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
                 index={AllProps.index}
+                setModalVisible={AllProps.setModalVisible}
             ></WebModal>
         </View>
     );

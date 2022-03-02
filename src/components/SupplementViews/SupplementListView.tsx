@@ -30,6 +30,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
+        setModalVisible({ modal: "disable-header" });
         modalizeRef.current?.open();
     };
     const [supplementUrl, setSupplementUrl] = useState<string>("");
@@ -127,6 +128,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
                 modalizeRef={modalizeRef}
                 url={supplementUrl}
                 index={index}
+                setModalVisible={setModalVisible}
             ></WebModal>
         </>
     );

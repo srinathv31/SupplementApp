@@ -6,6 +6,7 @@ import { AppProps } from "../../interfaces/Props";
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
+import Share from "react-native-share";
 
 export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
     setSupplementMap, supplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
@@ -46,6 +47,14 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
             setOpen(!open);
     }
 
+    const fun = async () => {
+        try { 
+            await Share.open({ url: "www.apple.com" });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     return(
         <KeyboardAvoidingView
             behavior="position"
@@ -76,7 +85,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
                                 name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
-                            <Icon onPress={() => console.log("FORK")}
+                            <Icon onPress={() => fun()}
                                 name="silverware-fork-knife" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                                 name="clock" size={30} color="white"/>
