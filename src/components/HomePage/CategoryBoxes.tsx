@@ -23,9 +23,9 @@ export default function CategoryBoxes({ setCategorySelect }: {
             <View style={{ flexDirection: "row", height: "40%" }}>
                 {categories1.map((item, index) => {
                     return (
-                        <LinearGradient onTouchEnd={item.function} key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
+                        <LinearGradient key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
                             <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
-                            <Icon name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
+                            <Icon onPress={item.function} name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
                         </LinearGradient>
                     );
                 })}
@@ -33,9 +33,9 @@ export default function CategoryBoxes({ setCategorySelect }: {
             <View style={{ flexDirection: "row", height: "40%" }}>
                 {categories2.map((item, index) => {
                     return (
-                        <LinearGradient onTouchEnd={item.function} key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
+                        <LinearGradient key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
                             <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
-                            <IconI name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
+                            <IconI onPress={item.function} name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
                         </LinearGradient>
                     );
                 })}
