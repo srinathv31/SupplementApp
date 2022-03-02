@@ -46,10 +46,7 @@ export default function MoodBarGraph({ graphType }: {
                 // adding the material theme provided with Victory
                 theme={VictoryTheme.material}
                 domainPadding={20}
-                animate={{
-                    duration: 1000,
-                    onLoad: { duration: 1000 }
-                }}
+                animate={{ duration: 1000 }}
             >
                 <VictoryAxis
                     tickValues={[1, 2, 3, 4]}
