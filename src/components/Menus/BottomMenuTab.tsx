@@ -7,7 +7,7 @@ import { AppProps } from "../../interfaces/Props";
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
-import Share from "react-native-share";
+import { shareUrl } from "../../utilities/shareFunctions";
 
 export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
     setSupplementMap, supplementMap, daySelected, objDaySelected, selectedSupplement }: AppProps): JSX.Element {
@@ -47,14 +47,6 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
             setModalVisible({ modal: "mood-change-modal" }) :
             setOpen(!open);
     }
-
-    const shareUrl = async (urlToShare: string) => {
-        try { 
-            await Share.open({ url: urlToShare, message: `Check out this Supplement called ${selectedSupplement.Supplement.name}!` });
-        } catch (e) {
-            console.log(e);
-        }
-    };
 
     return(
         <KeyboardAvoidingView
@@ -105,7 +97,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                         <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
                             <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
                         </Pressable> : 
-                        <Pressable onPress={() => shareUrl(selectedSupplement.Supplement.url)} disabled={ index === 3 ? true : false }>
+                        <Pressable onPress={() => shareUrl(selectedSupplement.Supplement.url, selectedSupplement)} disabled={ index === 3 ? true : false }>
                             <IconI name="share-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
                         </Pressable>
                     }
