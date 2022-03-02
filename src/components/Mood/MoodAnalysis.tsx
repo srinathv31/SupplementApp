@@ -3,10 +3,11 @@ import React, { useRef, useState } from "react";
 import { Animated, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import Divider from "../Design/Divider";
+import MoodBarGraph from "./MoodBarGraph";
 import MoodPicker from "./MoodPicker";
-// import { VictoryBar, VictoryChart, VictoryTheme, VictoryAxis, VictoryLabel } from "victory-native";
 
 export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
+    const [graphType, setGraphType] = useState<string>("data1");
     const [open, setOpen] = useState<boolean>(false);
     const MoodProps = {
         open,
@@ -115,24 +116,6 @@ export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
         } 
     }
 
-    // const chartTheme = {
-    //     axis: {
-    //         style: {
-    //             tickLabels: {
-    //                 // this changed the color of my numbers to white
-    //                 fill: "white",
-    //             },
-    //         },
-    //     },
-    // };
-
-    // const data = [
-    //     { quarter: 1, earnings: 95 },
-    //     { quarter: 2, earnings: 80 },
-    //     { quarter: 3, earnings: 99 },
-    //     { quarter: 4, earnings: 65 }
-    // ];
-
 
     return(
         <View style={{ flex: 1, flexDirection: "column" }}>
@@ -144,39 +127,19 @@ export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
                     dropDirection="BOTTOM"
                     mode="analysis"
                 />
-                {/* <VictoryChart
-                    theme={ chartTheme } 
-                    width={350}
-                    animate={{
-                        duration: 2000,
-                        onLoad: { duration: 1000 }
-                    }}
-                >
-                    <VictoryBar 
-                        data={data} 
-                        x="quarter" 
-                        y="earnings" 
-                        alignment="start" 
-                        horizontal 
-                        style={{
-                            data: { fill: "#05fffb" },
-                        }}
-                        labels={({ data }) => data.y}
-                        labelComponent={<VictoryLabel dy={30}/>}
-                    />
-                </VictoryChart> */}
+                <MoodBarGraph graphType={graphType}></MoodBarGraph>
                 <View style={{ flexDirection: "row", alignSelf: "center" }}>
                     <Animated.View style={{ opacity: fadeAnimWeek }}>
-                        <Text onPress={() => handleTab("weekly")} style={[styles.modalText, { padding: 10, marginRight: 30 }]}>Weekly</Text>
+                        <Text onPress={() => (handleTab("weekly"), setGraphType("data0"))} style={[styles.modalText, { padding: 10, marginRight: 30 }]}>Weekly</Text>
                     </Animated.View> 
                     <Animated.View style={{ opacity: fadeAnimDaily }}>
-                        <Text onPress={() => handleTab("daily")} style={[styles.modalText, { padding: 10, marginHorizontal: 15 }]}>Daily</Text>
+                        <Text onPress={() => (handleTab("weekly"), setGraphType("data1"))} style={[styles.modalText, { padding: 10, marginHorizontal: 15 }]}>Daily</Text>
                         <Animated.View style={ [slideAnim.getLayout(), { opacity: 1 }] }>
                             <Divider length="small"></Divider>
                         </Animated.View>
                     </Animated.View>
                     <Animated.View style={{ opacity: fadeAnimMon }}>
-                        <Text onPress={() => handleTab("monthly")} style={[styles.modalText, { padding: 10, marginLeft: 30 }]}>Monthly</Text>
+                        <Text onPress={() => (handleTab("weekly"), setGraphType("data2"))} style={[styles.modalText, { padding: 10, marginLeft: 30 }]}>Monthly</Text>
                     </Animated.View>
                 </View>
             </View>
