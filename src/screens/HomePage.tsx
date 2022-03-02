@@ -38,6 +38,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
 
     function onOpen() {
         AllProps.setModalVisible({ modal: "disable-header" });
+        AllProps.setShowButtons(false);
         modalizeRef.current?.open();
     }
     

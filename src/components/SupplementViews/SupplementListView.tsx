@@ -16,7 +16,8 @@ import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
 
-export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, selectedSupplement, multipleAddMode, setModalVisible, index, setCompletedAchievements, completedAchievements }: {
+export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, selectedSupplement,
+    multipleAddMode, setModalVisible, index, setCompletedAchievements, completedAchievements, setShowButtons }: {
     fontSizeNumber: number,
 	query: string,
     setUserData: (u: User) => void, userData: User,
@@ -25,13 +26,15 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
 	objDaySelected: AppProps["objDaySelected"],
 	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
 	index: AppProps["index"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"]
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
+    setShowButtons: AppProps["setShowButtons"]
 }): JSX.Element {
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
         setModalVisible({ modal: "disable-header" });
+        setShowButtons(false);
         modalizeRef.current?.open();
     };
 

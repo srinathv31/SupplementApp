@@ -7,5 +7,5 @@ export interface WebModalProps {
     modalHeight?: number,
     setModalizeRefStatus?: (m: boolean) => void,
     index: number,
-    setModalVisible: AppProps["setModalVisible"]
+    setModalVisible: AppProps["setModalVisible"],
 }

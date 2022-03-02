@@ -7,7 +7,7 @@ import { AppProps } from "../../interfaces/Props";
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
-import { shareUrl } from "../../utilities/shareFunctions";
+import { sharePlan, shareUrl } from "../../utilities/shareFunctions";
 
 export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
     setSupplementMap, supplementMap, daySelected, objDaySelected, selectedSupplement }: AppProps): JSX.Element {
@@ -78,8 +78,8 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
                                 name="pill" size={30} color="white"/>
                             <Icon onPress={() => handleMoodOpen()} 
                                 name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" }/>
-                            <Icon onPress={() => console.log("FORK")}
-                                name="silverware-fork-knife" size={30} color="white"/>
+                            <IconI onPress={() => sharePlan(supplementMap, daySelected)}
+                                name="share-outline" size={30} color="white"/>
                             <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
                                 name="clock" size={30} color="white"/>
                         </View>

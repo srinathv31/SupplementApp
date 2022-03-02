@@ -20,7 +20,7 @@ export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index
 
     return(
         <View>
-            <Modalize ref={modalizeRef} modalHeight={index === 2 ? height*0.65 : height*1.05} onClosed={() => webModalClose()} >
+            <Modalize ref={modalizeRef} modalHeight={index === 2 ? height*0.65 : height*0.70} onClosed={() => webModalClose()} >
                 <WebView
                     ref={webViewRef}
                     source={{ uri: url }}

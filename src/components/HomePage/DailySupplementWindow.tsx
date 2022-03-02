@@ -139,7 +139,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.85} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
                 <DailySupplementDetails
                     selectedSupplement={selectedSupplement}
                     setSupplementMap={setSupplementMap}
