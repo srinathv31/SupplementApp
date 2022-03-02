@@ -129,10 +129,10 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                                         <Text style={styles.ListName}>
                                             {item.Supplement.name}
                                         </Text>
-                                        <Icon onPress={() => removeSupplement(item)}
-                                            name="delete-forever" style={styles.IconPadding}/>
                                     </View>
                                 </TouchableOpacity>
+                                <Icon onPress={() => removeSupplement(item)}
+                                    name="delete-forever" style={{ color: "white", alignSelf: "center" }} size={25}/>
                             </View>
                         )}
                     ></FlatList>
