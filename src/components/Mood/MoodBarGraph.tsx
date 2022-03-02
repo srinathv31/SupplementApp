@@ -4,10 +4,28 @@ import { StyleSheet, View, Text } from "react-native";
 import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from "victory-native";
 import { AppProps } from "../../interfaces/Props";
 
-export default function MoodBarGraph({ graphType, week }: {
+export default function MoodBarGraph({ graphType, week, supplementMap, daySelected }: {
     graphType: string,
-    week: AppProps["week"]
+    week: AppProps["week"],
+    supplementMap: AppProps["supplementMap"],
+    daySelected: AppProps["daySelected"]
 }): JSX.Element {
+
+    function grabDailyGraph() {
+        const dailyGraph: { quarter: string; earnings: number; }[] = [];
+
+        if (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood !== undefined) {
+            Object.values(supplementMap[daySelected].DailyMood).forEach(item => {
+                dailyGraph.push({ quarter: item.mood, earnings: item.range });
+            });
+            return dailyGraph;
+        }
+        return [
+            { quarter: "", earnings: 0 },
+            { quarter: "", earnings: 0 },
+            { quarter: "", earnings: 0 },
+        ];
+    }
 
     const data2013 = [
         { quarter: 1, earnings: 12 },
@@ -19,11 +37,7 @@ export default function MoodBarGraph({ graphType, week }: {
         { quarter: 7, earnings: 11 }
     ];
       
-    const data2014 = [
-        { quarter: 1, earnings: 3 },
-        { quarter: 2, earnings: 1 },
-        { quarter: 3, earnings: 5 }
-    ];
+    const data2014 = grabDailyGraph();
 
     const data2015 = [
         { quarter: 1, earnings: 12 },
@@ -50,7 +64,7 @@ export default function MoodBarGraph({ graphType, week }: {
 
         if (selectGraph !== undefined){
             Object.values(selectGraph).forEach(item => {
-                tickFormatList.push(`Mood: ${item.quarter}`);
+                tickFormatList.push(`${item.quarter}`);
             });
         }
 
@@ -87,12 +101,12 @@ export default function MoodBarGraph({ graphType, week }: {
 
     return(
         <View style={styles.container}>
-            <Text style={{ color: "white", fontSize: 20 }}>{graphType}</Text>
+            <Text style={{ color: "white", fontSize: 20 }}>{supplementMap[daySelected] === undefined ? "No Data To Show" : graphType}</Text>
             <VictoryChart
                 // adding the material theme provided with Victory
                 theme={VictoryTheme.material}
                 domainPadding={20}
-                
+            
             >
                 <VictoryAxis
                     tickValues={grabTickValuesList()}
