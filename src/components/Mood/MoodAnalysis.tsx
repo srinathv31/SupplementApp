@@ -13,7 +13,7 @@ export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
         <View style={{ flex: 1, flexDirection: "column" }}>
             <Text style={styles.modalText}>{AllProps.week[0].dateString+""} - {AllProps.week[6].dateString+""}</Text>
             <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}>
-                <MoodBarGraph graphType={graphType}></MoodBarGraph>
+                <MoodBarGraph graphType={graphType} week={AllProps.week}></MoodBarGraph>
                 <BottomTabBar   setTabSelect={setTabSelect} setGraphType={setGraphType} tabSelect={tabSelect}  />
             </View>
         </View>
