@@ -40,6 +40,9 @@ module.exports = {
         ],
         "object-curly-spacing": [
             "error", "always"
+        ],
+        "eol-last": [
+            "error", "always"
         ]
     }
 };
