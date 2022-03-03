@@ -25,7 +25,7 @@ import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import CustomToast from "../components/Toast/customToast";
 import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
-import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
+import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import PropTypes from "prop-types";
 LogBox.ignoreLogs(["Sending"]);
@@ -87,6 +87,10 @@ export default function MainScreen({ page, setPage }: {
         setUserData(userCopy);
         saveUserToPhone(userCopy);
     }, [completedAchievements]);
+    
+    useEffect(() => {
+        saveUserData(userData, setUserData, supplementMap);
+    }, [supplementMap]);
 
     const [routes] = useState([
         { key: "cal", title: "Calendar" },
