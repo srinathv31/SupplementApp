@@ -49,10 +49,10 @@ export default function AppleSignIn({ setUserData, userData }: {
     return(
         <View>
             <AppleButton
-                buttonStyle={AppleButton.Style.BLACK}
+                buttonStyle={AppleButton.Style.WHITE}
                 buttonType={AppleButton.Type.SIGN_IN}
                 style={{
-                    width: 160,
+                    width: 250,
                     height: 45,
                 }}
                 onPress={() => onAppleButtonPress().then( response => handleAppleSignIn(response))}
