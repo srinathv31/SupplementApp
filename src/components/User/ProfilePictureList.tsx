@@ -14,7 +14,7 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
     const pictureList = [
         require("../../assets/images/pitbull.jpg"),
         require("../../assets/images/husky.jpg"),
-        require("../../assets/images/trippy_astronaut.png")
+        require("../../assets/images/tiger.jpg")
     ];
 
     function changeProfilePicture(index: number) {
@@ -32,7 +32,7 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
             userCopy.picture = "../assets/images/husky.jpg";
             break;
         case 2:
-            userCopy.picture = "../assets/images/trippy_astronaut.png";
+            userCopy.picture = "../assets/images/tiger.jpg";
             break;
         }
         setUserData(userCopy);
