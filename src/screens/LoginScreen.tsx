@@ -17,7 +17,7 @@ export default function LoginScreen({ setPage, setUserData, userData }: {
                 <StatusBar barStyle={"light-content"} />
         
                 <View style={{ padding: 10, alignItems: "center" }}>
-                    <Text style={{ color: "white", fontSize: 40, textAlign: "center", padding: 10 }}>Welcome</Text>
+                    <Text onPress={() => setPage({ page: "form-screen" })} style={{ color: "white", fontSize: 40, textAlign: "center", padding: 10 }}>Welcome</Text>
                     <Divider length="small"></Divider>
                 </View>
                 <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>

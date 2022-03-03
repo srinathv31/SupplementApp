@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { SafeAreaView, StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
+import InfoForm from "./components/UserSetup/InfoForm";
 import Page from "./interfaces/Page";
 import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
@@ -25,10 +26,11 @@ const App = () => {
                     setUserData={setUserData}
                     userData={userData}
                 ></LoginScreen>}
+                { page.page === "form-screen" && <InfoForm></InfoForm>}
                 {page.page === "onboarding-screen" && <OnboardingTour
                     setPage={setPage}
                 ></OnboardingTour>}
-                {(page.page !== "login-screen" && page.page !== "onboarding-screen") && <MainScreen
+                {(page.page === "loading-screen" || page.page === "app-screen") && <MainScreen
                     setPage={setPage}
                     page={page}
                     setUserData={setUserData}
