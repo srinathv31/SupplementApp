@@ -35,8 +35,6 @@ export default function AgeBox({ setAge, age, setSelectedForm, warningForm, sele
         }
     }, [age]);
 
-   
-
     return(
         <View style={styles.bar}>
             <View style={{ flexDirection: "row" }}>
