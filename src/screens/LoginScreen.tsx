@@ -6,18 +6,26 @@ import Divider from "../components/Design/Divider";
 import AppleSignIn from "../components/SocialAuth/AppleSignIn";
 import Page from "../interfaces/Page";
 import { AppProps } from "../interfaces/Props";
+import { checkIfSaveExistsOnLocal } from "../utilities/saveLoadFunctions/storageChecker";
 
 export default function LoginScreen({ setPage, setUserData, userData }: {
     setPage: (p: Page) => void,
     setUserData: AppProps["setUserData"], userData: AppProps["userData"]
 }): JSX.Element {
+    
+    async function handleLoginButton() {
+        const saveExists = await checkIfSaveExistsOnLocal("Lucky");
+        console.log(saveExists);
+        saveExists === true ? setPage({ page: "loading-screen" }) : setPage({ page: "form-screen" });
+    }
+
     return(
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={"light-content"} />
         
                 <View style={{ padding: 10, alignItems: "center" }}>
-                    <Text onPress={() => setPage({ page: "form-screen" })} style={{ color: "white", fontSize: 40, textAlign: "center", padding: 10 }}>Welcome</Text>
+                    <Text onPress={() => handleLoginButton()} style={{ color: "white", fontSize: 40, textAlign: "center", padding: 10 }}>Welcome</Text>
                     <Divider length="small"></Divider>
                 </View>
                 <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>

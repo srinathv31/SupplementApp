@@ -51,3 +51,15 @@ const adjustSelectedDates = (selectedDates: CalendarDotObject) => {
     return selectedDatesCopy;
 
 };
+
+export const checkIfSaveExistsOnLocal = async (name: string) => {
+    try {
+        const value = await AsyncStorage.getItem(name);
+        if(value !== null) {
+            return true;
+        }
+        return false;
+    } catch(e) {
+        // error reading value
+    }
+};
