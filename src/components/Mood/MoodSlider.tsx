@@ -5,7 +5,6 @@ import Slider from "@react-native-community/slider";
 import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
-import { journalDot } from "../../utilities/calendarDots";
 
 export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
     const [rangeValue, setRangeValue] = useState<number>(0);
@@ -31,9 +30,10 @@ export default function MoodSlider({ setUserData, userData, setModalVisible, mod
         if (userCopy.data.selectedDates[stringDate] === undefined) {
             userCopy.data.selectedDates[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
         }
-        if(!userCopy.data.selectedDates[stringDate].dots.includes(journalDot)) {
-            userCopy.data.selectedDates[stringDate].dots.push(journalDot);
-        }
+        // if(userCopy.data.selectedDates[stringDate].dots.includes(journalDot) === false) {
+        //     // userCopy.data.selectedDates[stringDate].dots.push(journalDot);
+        //     console.log("SOMETHINGS HERE");
+        // }
 
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
