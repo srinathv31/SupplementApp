@@ -1,6 +1,7 @@
 import { Achievement } from "./Achievements";
 import CalendarDotObject from "./Calendar";
 import { SupplementMapObject } from "./Supplement";
+import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 
 interface User {
     name: string,
@@ -13,7 +14,8 @@ interface User {
     },
     premiumStatus: boolean,
     isLoggedIn: boolean,
-    achievements: Achievement[]
+    achievements: Achievement[],
+    userAuthObj?: FirebaseAuthTypes.User
 }
 
 export default User;
