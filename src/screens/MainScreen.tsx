@@ -35,7 +35,7 @@ export default function MainScreen({ page, setPage }: {
 }): JSX.Element {
    
     // Data structure for User Data
-    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
+    const [userData, setUserData] = useState<User>({ name: "Happy", lastName: "", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY

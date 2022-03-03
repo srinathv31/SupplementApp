@@ -4,6 +4,7 @@ import { SupplementMapObject } from "./Supplement";
 
 interface User {
     name: string,
+    lastName: string,
     age: number,
     picture: string,
     data: {
