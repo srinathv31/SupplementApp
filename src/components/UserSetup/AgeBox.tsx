@@ -1,7 +1,6 @@
 // Source Imports
 import React, { useEffect } from "react";
 import { View, TextInput, Text, StyleSheet } from "react-native";
-import { checkIfValidDate } from "../../utilities/checkForValidDate";
 
 export default function AgeBox({ setAge, age, setSelectedForm, warningForm, selectedForm }: {
     setAge: (a: string) => void, age: string,
@@ -33,9 +32,6 @@ export default function AgeBox({ setAge, age, setSelectedForm, warningForm, sele
         }
         if(age.length === 5) {
             setAge(age+"/");
-        }
-        if(age.length === 10) {
-            console.log(checkIfValidDate(age));
         }
     }, [age]);
 
