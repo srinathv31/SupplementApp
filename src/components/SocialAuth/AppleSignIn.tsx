@@ -56,8 +56,9 @@ export default function AppleSignIn({ setUserData, userData }: {
                 buttonStyle={AppleButton.Style.WHITE}
                 buttonType={AppleButton.Type.SIGN_IN}
                 style={{
-                    width: 250,
+                    width: 305,
                     height: 45,
+                    margin: 20
                 }}
                 onPress={() => onAppleButtonPress().then( response => handleAppleSignIn(response))}
             />
