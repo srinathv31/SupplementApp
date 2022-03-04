@@ -13,7 +13,6 @@ interface User {
         selectedDates: CalendarDotObject,
     },
     premiumStatus: boolean,
-    isLoggedIn: boolean,
     achievements: Achievement[],
     userAuthObj?: FirebaseAuthTypes.User
 }
