@@ -29,14 +29,17 @@ export default function GoogleButton({ userData, setUserData, setPage }: {
     }
 
     function handleGoogleSignIn(response: FirebaseAuthTypes.UserCredential | undefined) {
+        if(response === undefined) {
+            return;
+        }        
+
         const userCopy = { ...userData };
         console.log("Google sign-in complete!");
         
         userCopy.userAuthObj = response?.user;
-        setUserData(userCopy);
 
         // Check if uid is stored locally (already signed in before)
-        handleLoginButton(setPage, ""+userCopy.userAuthObj?.uid);
+        handleLoginButton(setPage, userCopy, setUserData);
         // if false => send to account setup => create firestore and local
         // if true => send to loading screen => update firestore with local
     }

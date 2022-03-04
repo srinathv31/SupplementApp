@@ -41,14 +41,17 @@ export default function AppleSignIn({ setUserData, userData, setPage }: {
     }
 
     function handleAppleSignIn(response: FirebaseAuthTypes.UserCredential | undefined) {
+        if(response === undefined) {
+            return;
+        }
+
         const userCopy = { ...userData };
         console.log("Apple sign-in complete!");
         
         userCopy.userAuthObj = response?.user;
-        setUserData(userCopy);
 
         // Check if uid is stored locally (already signed in before)
-        handleLoginButton(setPage, ""+userCopy.userAuthObj?.uid);
+        handleLoginButton(setPage, userCopy, setUserData);
         // if false => send to account setup => create firestore and local
         // if true => send to loading screen => update firestore with local
     }
@@ -63,7 +66,7 @@ export default function AppleSignIn({ setUserData, userData, setPage }: {
                     height: 45,
                     margin: 20
                 }}
-                onPress={() => onAppleButtonPress().then( response => handleAppleSignIn(response))}
+                onPress={() => onAppleButtonPress().then(response => handleAppleSignIn(response))}
             />
         </View>
     );

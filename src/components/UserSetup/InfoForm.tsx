@@ -2,34 +2,22 @@
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+import { AppProps } from "../../interfaces/Props";
 import User from "../../interfaces/User";
 import { checkIfValidDate } from "../../utilities/authentication/checkForValidDate";
 import { createUserDataInCloud } from "../../utilities/authentication/writeUserData";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
-import { checkIfSaveExistsOnLocal } from "../../utilities/saveLoadFunctions/storageChecker";
 import AgeBox from "./AgeBox";
 
-export default function InfoForm({ userData, setUserData }: {
+export default function InfoForm({ userData, setUserData, setPage }: {
     userData: User, setUserData: (u: User) => void,
+    setPage: AppProps["setPage"]
 }): JSX.Element {
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [age, setAge] = useState<string>("");
     const [selectedForm, setSelectedForm] = useState<"firstName"|"lastName"|"age"|"none">("none");
     const [warningForm, setWarningForm] = useState<("firstName"|"lastName"|"age"|"none")[]>([]);
-    // useEffect(() => {
-    //     const queryCopy = { ...query };
-    //     queryCopy["1"] = name;
-    //     setQuery(queryCopy);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [name]);
-
-    // useEffect(() => {
-    //     const queryCopy = { ...query };
-    //     queryCopy["2"] = age;
-    //     setQuery(queryCopy);
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [age]);
 
     // Eliminate whitespace from names
     useEffect(() => {
@@ -57,6 +45,7 @@ export default function InfoForm({ userData, setUserData }: {
         // => create new cloud storage with new user => create new local storage
         // => go to loading screen
         updateUserObjDetails();
+        setPage({ page: "onboarding-screen" });
     }
 
     function updateUserObjDetails() {
@@ -68,7 +57,6 @@ export default function InfoForm({ userData, setUserData }: {
 
         createUserDataInCloud(userCopy);
         saveUserToPhone(userCopy);
-        checkIfSaveExistsOnLocal(""+userCopy.userAuthObj?.uid);
         setUserData(userCopy);
     }
 
