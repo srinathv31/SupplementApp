@@ -1,4 +1,4 @@
-import { checkIfLeapYear } from "./generateNextDate";
+import { checkIfLeapYear } from "../generateNextDate";
 
 export function checkIfValidDate(birthday: string) {
     let flag = true;

@@ -42,7 +42,7 @@ export default function AgeBox({ setAge, age, setSelectedForm, warningForm, sele
                     style={[styles.input, { borderBottomColor: warningForm.includes("age") === true ? "crimson" : selectedForm === "age" ? "#36D1DC" : "gray" }]}
                     onChangeText={setAge}
                     value={age}
-                    placeholder="Enter Age"
+                    placeholder="Enter Birthdate (MM/DD/YYYY)"
                     placeholderTextColor={"gray"}
                     onFocus={() => setSelectedForm("age")}
                     onSubmitEditing={() => setSelectedForm("none")}

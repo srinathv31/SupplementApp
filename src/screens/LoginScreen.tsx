@@ -34,7 +34,8 @@ export default function LoginScreen({ setPage, setUserData, userData }: {
                         <Text onPress={() => setPage({ page: "loading-screen" })} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>LOGIN</Text>
                         <AppleSignIn 
                             setUserData={setUserData}
-                            userData={userData}    
+                            userData={userData}
+                            setPage={setPage}    
                         ></AppleSignIn>
                         <GoogleButton></GoogleButton>
                     </LinearGradient>

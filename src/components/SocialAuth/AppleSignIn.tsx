@@ -5,9 +5,11 @@ import { AppleButton } from "@invertase/react-native-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import { AppProps } from "../../interfaces/Props";
+import { handleLoginButton } from "../../utilities/authentication/handleLoginEvent";
 
-export default function AppleSignIn({ setUserData, userData }: {
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"]
+export default function AppleSignIn({ setUserData, userData, setPage }: {
+    setUserData: AppProps["setUserData"], userData: AppProps["userData"],
+    setPage: AppProps["setPage"]
 }): JSX.Element {
 
     async function onAppleButtonPress() {
@@ -46,6 +48,7 @@ export default function AppleSignIn({ setUserData, userData }: {
         setUserData(userCopy);
 
         // Check if uid is stored locally (already signed in before)
+        // handleLoginButton(setPage, ""+userCopy.userAuthObj?.uid);
         // if false => send to account setup => create firestore and local
         // if true => send to loading screen => update firestore with local
     }
