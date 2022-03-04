@@ -176,7 +176,6 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                                 renderTabBar={() => <BottomMenuTab {...AllProps} />}
                             /></> }
                     </View>
-					
                 </View>
 
             </SafeAreaView>
