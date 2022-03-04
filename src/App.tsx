@@ -4,6 +4,7 @@ import { SafeAreaView, StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
 import InfoForm from "./components/UserSetup/InfoForm";
+import { ListOfAchievements } from "./interfaces/Achievements";
 import Page from "./interfaces/Page";
 import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
@@ -13,7 +14,7 @@ import OnboardingTour from "./screens/OnboardingTour";
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
-    const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: [] });
+    const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements });
     const [page, setPage] = useState<Page>({ page: "login-screen" });
 
     return (
