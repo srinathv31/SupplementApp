@@ -6,7 +6,7 @@ import { FirebaseAuthTypes } from "@react-native-firebase/auth";
 interface User {
     name: string,
     lastName: string,
-    age: number,
+    age: string,
     picture: string,
     data: {
         supplementMap: Record<string, SupplementMapObject>,

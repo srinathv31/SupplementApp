@@ -13,7 +13,7 @@ import OnboardingTour from "./screens/OnboardingTour";
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
-    const [userData, setUserData] = useState<User>({ name: "Happy", lastName: "", age: 0, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
+    const [userData, setUserData] = useState<User>({ name: "Happy", lastName: "", age: "", picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
     const [page, setPage] = useState<Page>({ page: "login-screen" });
 
     return (
