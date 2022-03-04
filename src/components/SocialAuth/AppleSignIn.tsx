@@ -48,7 +48,7 @@ export default function AppleSignIn({ setUserData, userData, setPage }: {
         setUserData(userCopy);
 
         // Check if uid is stored locally (already signed in before)
-        // handleLoginButton(setPage, ""+userCopy.userAuthObj?.uid);
+        handleLoginButton(setPage, ""+userCopy.userAuthObj?.uid);
         // if false => send to account setup => create firestore and local
         // if true => send to loading screen => update firestore with local
     }
