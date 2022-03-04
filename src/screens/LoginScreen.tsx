@@ -27,6 +27,7 @@ export default function LoginScreen({ setPage, setUserData, userData }: {
         
                 <View style={{ padding: 10, alignItems: "center" }}>
                     <Text onPress={() => handleLoginButton()} style={{ color: "white", fontSize: 40, textAlign: "center", padding: 10 }}>Welcome</Text>
+                    <Text onPress={() => checkIfSaveExistsOnLocal("Happy")} style={{ color: "white", fontSize: 40, textAlign: "center", padding: 10 }}>Print local</Text>
                     <Divider length="small"></Divider>
                 </View>
                 <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>

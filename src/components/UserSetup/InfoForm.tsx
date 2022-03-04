@@ -2,10 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+import User from "../../interfaces/User";
 import { checkIfValidDate } from "../../utilities/authentication/checkForValidDate";
+import { createUserDataInCloud } from "../../utilities/authentication/writeUserData";
+import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
+import { checkIfSaveExistsOnLocal } from "../../utilities/saveLoadFunctions/storageChecker";
 import AgeBox from "./AgeBox";
 
-export default function InfoForm(): JSX.Element {
+export default function InfoForm({ userData, setUserData }: {
+    userData: User, setUserData: (u: User) => void,
+}): JSX.Element {
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [age, setAge] = useState<string>("");
@@ -47,9 +53,23 @@ export default function InfoForm(): JSX.Element {
             console.log("Invalid Entries");
             return;
         }
-        console.log("First name: " + "***"+name+"***");
-        console.log("Last name: " + "***"+lastName+"***");
-        console.log("Valid Entries");
+        // If details are valid => update local user object
+        // => create new cloud storage with new user => create new local storage
+        // => go to loading screen
+        updateUserObjDetails();
+    }
+
+    function updateUserObjDetails() {
+        const userCopy = { ...userData };
+        
+        userCopy.name = name;
+        userCopy.lastName = lastName;
+        userCopy.age = age;
+
+        createUserDataInCloud(userCopy);
+        saveUserToPhone(userCopy);
+        checkIfSaveExistsOnLocal(""+userCopy.userAuthObj?.uid);
+        setUserData(userCopy);
     }
 
     return (

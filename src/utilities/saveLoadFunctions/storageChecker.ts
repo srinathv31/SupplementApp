@@ -56,8 +56,10 @@ export const checkIfSaveExistsOnLocal = async (name: string) => {
     try {
         const value = await AsyncStorage.getItem(name);
         if(value !== null) {
+            console.log(value);
             return true;
         }
+        console.log("No Value");
         return false;
     } catch(e) {
         // error reading value
