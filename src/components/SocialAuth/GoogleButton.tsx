@@ -1,12 +1,17 @@
 // Source Imports
 import React from "react";
-import auth from "@react-native-firebase/auth";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
+import { AppProps } from "../../interfaces/Props";
+import { handleLoginButton } from "../../utilities/authentication/handleLoginEvent";
 GoogleSignin.configure({
     webClientId: "628023121641-t2nvq89jpmukfn0ntdiu8cdsfkdmc01d.apps.googleusercontent.com",
 });
 
-export default function GoogleButton(): JSX.Element {
+export default function GoogleButton({ userData, setUserData, setPage }: {
+    setUserData: AppProps["setUserData"], userData: AppProps["userData"],
+    setPage: AppProps["setPage"]
+}): JSX.Element {
 
     async function onGoogleButtonPress() {
         try {
@@ -23,12 +28,25 @@ export default function GoogleButton(): JSX.Element {
         }
     }
 
+    function handleGoogleSignIn(response: FirebaseAuthTypes.UserCredential | undefined) {
+        const userCopy = { ...userData };
+        console.log("Google sign-in complete!");
+        
+        userCopy.userAuthObj = response?.user;
+        setUserData(userCopy);
+
+        // Check if uid is stored locally (already signed in before)
+        handleLoginButton(setPage, ""+userCopy.userAuthObj?.uid);
+        // if false => send to account setup => create firestore and local
+        // if true => send to loading screen => update firestore with local
+    }
+
     return(
         <GoogleSigninButton
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
             onPress={() =>
-                onGoogleButtonPress().then(() => console.log("Signed in with Google!"))}
+                onGoogleButtonPress().then(response => handleGoogleSignIn(response))}
         />
     );
 }

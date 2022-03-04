@@ -38,7 +38,11 @@ export default function LoginScreen({ setPage, setUserData, userData }: {
                             userData={userData}
                             setPage={setPage}    
                         ></AppleSignIn>
-                        <GoogleButton></GoogleButton>
+                        <GoogleButton
+                            setUserData={setUserData}
+                            userData={userData}
+                            setPage={setPage}
+                        ></GoogleButton>
                     </LinearGradient>
                 </View>
 
