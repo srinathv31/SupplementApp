@@ -1,12 +1,16 @@
 // Source Imports
 import React from "react";
 import { Alert, Pressable, Text, View } from "react-native";
+import { ListOfAchievements } from "../../interfaces/Achievements";
 import { AppProps } from "../../interfaces/Props";
+import User from "../../interfaces/User";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import auth from "@react-native-firebase/auth";
 
-export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements }: {
+export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements, setUserData }: {
     setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"]
+    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
+    setUserData: AppProps["setUserData"]
 }): JSX.Element {
 
     const SettingButtons = [
@@ -21,7 +25,7 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
             "You can log back in anytime 😁",
             [
                 { 
-                    text: "Log Out", onPress: () => setPage({ page: "login-screen" }),
+                    text: "Log Out", onPress: () => userSignOut(),
                     style: "destructive"
                 },
                 {
@@ -60,6 +64,24 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
         }
         setModalVisible({ modal: "achievements-modal" });
     };
+
+    function userSignOut() {
+        const userCopy: User = {
+            name: "",
+            lastName: "",
+            age: "",
+            picture: "",
+            data: {
+                supplementMap: {},
+                selectedDates: {}
+            },
+            premiumStatus: true,
+            achievements: ListOfAchievements
+        };
+        setPage({ page: "login-screen" });
+        setUserData(userCopy);
+        auth().signOut().then(() => console.log("Signed Out!"));
+    }
 
     return(
         <>

@@ -161,6 +161,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                             setModalVisible={setModalVisible}
                             setCompletedAchievements={setCompletedAchievements}
                             completedAchievements={completedAchievements}
+                            setUserData={setUserData}
                         ></SettingsList>
                         <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
                             <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
