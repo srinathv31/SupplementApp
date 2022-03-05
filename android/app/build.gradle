@@ -216,6 +216,10 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:${Versions.kaspresso}") {
+        exclude group: "androidx.core", module: "core"
+    }
 }
 
 // Run this once to be able to run the application with BUCK
