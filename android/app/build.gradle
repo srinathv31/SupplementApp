@@ -197,11 +197,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    implementation 'com.android.support:multidex:1.0.3'
-
-    androidTestImplementation("com.kaspersky.android-components:kaspresso:${Versions.kaspresso}") {
-        exclude group: "androidx.core", module: "core"
-    }
+    implementation 'com.android.support:multidex:2.0.1'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
