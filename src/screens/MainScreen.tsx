@@ -81,6 +81,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
         }
     },[]);
 
+    // Notification Permissions
     useEffect(() => {
         requestUserPermission();
     }, []);

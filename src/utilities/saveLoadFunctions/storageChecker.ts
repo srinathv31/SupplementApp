@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppProps } from "../../interfaces/Props";
 import CalendarDotObject from "../../interfaces/Calendar";
 import { generateCurrentDateObject } from "../getCurrentDate";
+import { saveDataToCloud } from "./saveDataToCloud";
 
 export const checkForSave = async ({ userData, setUserData, setSupplementMap, setCompletedAchievements }: AppProps) => {
     const userCopy = { ...userData };
@@ -24,8 +25,10 @@ export const checkForSave = async ({ userData, setUserData, setSupplementMap, se
             userCopy.picture = parsedJsonValue.picture;
             userCopy.achievements = parsedJsonValue.achievements;
             setUserData(userCopy);
-            setCompletedAchievements(parsedJsonValue.achievements);
 
+            saveDataToCloud(userCopy);
+
+            setCompletedAchievements(parsedJsonValue.achievements);
             setSupplementMap(parsedJsonValue.data.supplementMap);
         }
         return jsonValue != null ? JSON.parse(jsonValue) : null;
