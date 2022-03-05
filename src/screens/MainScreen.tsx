@@ -28,6 +28,7 @@ import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import PropTypes from "prop-types";
+import { requestUserPermission } from "../utilities/authentication/notifications";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen({ page, setPage, userData, setUserData }: {
@@ -79,6 +80,10 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 11);
         }
     },[]);
+
+    useEffect(() => {
+        requestUserPermission();
+    }, []);
 
     useEffect(() => {
         const userCopy = { ...userData };

@@ -375,9 +375,14 @@ PODS:
   - Firebase/Firestore (8.12.1):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 8.12.1)
+  - Firebase/InAppMessaging (8.12.1):
+    - Firebase/CoreOnly
+    - FirebaseInAppMessaging (~> 8.12.0-beta)
   - Firebase/Messaging (8.12.1):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.12.0)
+  - FirebaseABTesting (8.12.0):
+    - FirebaseCore (~> 8.0)
   - FirebaseAnalytics (8.12.0):
     - FirebaseAnalytics/AdIdSupport (= 8.12.0)
     - FirebaseCore (~> 8.0)
@@ -422,6 +427,12 @@ PODS:
     - FirebaseCore (~> 8.0)
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
+    - nanopb (~> 2.30908.0)
+  - FirebaseInAppMessaging (8.12.0-beta):
+    - FirebaseABTesting (~> 8.0)
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
     - nanopb (~> 2.30908.0)
   - FirebaseInstallations (8.12.0):
     - FirebaseCore (~> 8.0)
@@ -873,6 +884,10 @@ PODS:
     - Firebase/Firestore (= 8.12.1)
     - React-Core
     - RNFBApp
+  - RNFBInAppMessaging (14.5.0):
+    - Firebase/InAppMessaging (= 8.12.1)
+    - React-Core
+    - RNFBApp
   - RNFBMessaging (14.5.0):
     - Firebase/Messaging (= 8.12.1)
     - React-Core
@@ -956,6 +971,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
+  - "RNFBInAppMessaging (from `../node_modules/@react-native-firebase/in-app-messaging`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
@@ -971,11 +987,13 @@ SPEC REPOS:
     - BoringSSL-GRPC
     - CocoaAsyncSocket
     - Firebase
+    - FirebaseABTesting
     - FirebaseAnalytics
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
+    - FirebaseInAppMessaging
     - FirebaseInstallations
     - FirebaseMessaging
     - Flipper
@@ -1084,6 +1102,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
+  RNFBInAppMessaging:
+    :path: "../node_modules/@react-native-firebase/in-app-messaging"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
@@ -1110,11 +1130,13 @@ SPEC CHECKSUMS:
   FBLazyVector: e5569e42a1c79ca00521846c223173a57aca1fe1
   FBReactNativeSpec: fe08c1cd7e2e205718d77ad14b34957cce949b58
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
+  FirebaseABTesting: 1b05c92327b3f0a9545cea3bab4d93e82550e29b
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
   FirebaseAuth: 5250d7bdba35e57cc34ec7ddc525f82b2757f2a0
   FirebaseCore: 8138de860a90ca7eec5e324da5788fb0ebf1d93c
   FirebaseCoreDiagnostics: 3b40dfadef5b90433a60ae01f01e90fe87aa76aa
   FirebaseFirestore: dfeb58916ee3ae0ef2453d4849a683672705920c
+  FirebaseInAppMessaging: 871e8d04ed0d1ca77c9c0e4c246c13d010d7a8de
   FirebaseInstallations: 25764cf322e77f99449395870a65b2bef88e1545
   FirebaseMessaging: 23db8bf05585e929ada8af0f0968933c25252808
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
@@ -1175,6 +1197,7 @@ SPEC CHECKSUMS:
   RNFBApp: 06c8447270d295edc431bccd55970d8711a07a42
   RNFBAuth: e248a56b1d28d3b53b54b72a296cf9270df1d96e
   RNFBFirestore: 7e4fe3b009a193d2f2fb0a19d1d6ab06355d4a09
+  RNFBInAppMessaging: 2a324b1e1b707f1ae3e1ad822f77a10620c31b12
   RNFBMessaging: 8e3575bb0303b43a852bf5decbe99c3272035048
   RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
   RNGoogleSignin: 233fdfa02522216c19bf02a1e6c60b60a75ffb4c
