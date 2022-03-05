@@ -28,14 +28,14 @@ import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import PropTypes from "prop-types";
+import { requestUserPermission } from "../utilities/authentication/notifications";
 LogBox.ignoreLogs(["Sending"]);
 
-export default function MainScreen({ page, setPage }: {
-    page: Page, setPage: (p: Page) => void
+export default function MainScreen({ page, setPage, userData, setUserData }: {
+    page: Page, setPage: (p: Page) => void,
+    userData: User, setUserData: (u: User) => void
 }): JSX.Element {
    
-    // Data structure for User Data
-    const [userData, setUserData] = useState<User>({ name: "Happy", age: 25, picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, isLoggedIn: true, achievements: [] });
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
@@ -80,6 +80,11 @@ export default function MainScreen({ page, setPage }: {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 11);
         }
     },[]);
+
+    // Notification Permissions
+    useEffect(() => {
+        requestUserPermission();
+    }, []);
 
     useEffect(() => {
         const userCopy = { ...userData };
@@ -177,7 +182,6 @@ export default function MainScreen({ page, setPage }: {
                                 renderTabBar={() => <BottomMenuTab {...AllProps} />}
                             /></> }
                     </View>
-					
                 </View>
 
             </SafeAreaView>

@@ -19,8 +19,8 @@ export default function ScoreCard({ userData, numberOfAchievements }: {
         case "../assets/images/husky.jpg":
             profilePictureCopy.url = require("../../assets/images/husky.jpg");
             break;
-        case "../assets/images/trippy_astronaut.png":
-            profilePictureCopy.url = require("../../assets/images/trippy_astronaut.png");
+        case "../assets/images/tiger.jpg":
+            profilePictureCopy.url = require("../../assets/images/tiger.jpg");
             break;
         }
         setProfilePicture(profilePictureCopy);

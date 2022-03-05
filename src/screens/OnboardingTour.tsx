@@ -16,7 +16,7 @@ export default function OnboardingTour({ setPage }: {
                 {
                     backgroundColor: "#fff",
                     image: <Image source={require("../assets/images/husky.jpg")} style={{ height: 100, width: 100 }} />,
-                    title: "Welcome to Happy",
+                    title: "Welcome to Your New Supplement & Lifestyle Planner",
                     subtitle: "We're excited for you to start your better health journey ❤️",
                 },
                 {
@@ -27,7 +27,7 @@ export default function OnboardingTour({ setPage }: {
                 },
                 {
                     backgroundColor: "skyblue",
-                    image: <Image source={require("../assets/images/trippy_astronaut.png")} style={{ height: 100, width: 100 }} />,
+                    image: <Image source={require("../assets/images/tiger.jpg")} style={{ height: 100, width: 100 }} />,
                     title: "Get Information on New Supplements 🔍",
                     subtitle: "Beautiful, isn't it?",
                 },

@@ -123,6 +123,6 @@ export function generatePrevDate(copyDate: DateData, date: number, month: number
     return copyDate;
 }
 
-function checkIfLeapYear(year: number): boolean {
+export function checkIfLeapYear(year: number): boolean {
     return (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0);
 }

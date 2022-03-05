@@ -7,7 +7,7 @@ import Divider from "../Design/Divider";
 import Supplement from "../../interfaces/Supplement";
 import { AppProps } from "../../interfaces/Props";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-
+import analytics from "@react-native-firebase/analytics";
 
 export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible }: {
     setModalizeRefStatus: (m: boolean) => void,
@@ -38,6 +38,15 @@ export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplem
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
         }
         setModalizeRefStatus(true);
+        exploreAnalytics(supp);
+    }
+
+    async function exploreAnalytics(supp: Supplement) {
+        await analytics().logEvent("explore", {
+            id: 3745092,
+            item: "Explore Window",
+            description: `Clicked on the explore tab for ${supp.name}`
+        });
     }
 
     return(
