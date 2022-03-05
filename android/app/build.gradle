@@ -199,6 +199,10 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
+    androidTestImplementation("com.kaspersky.android-components:kaspresso:${Versions.kaspresso}") {
+        exclude group: "androidx.core", module: "core"
+    }
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
     }
