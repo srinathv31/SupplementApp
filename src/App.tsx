@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
@@ -10,12 +10,18 @@ import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
 import MainScreen from "./screens/MainScreen";
 import OnboardingTour from "./screens/OnboardingTour";
+import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLoggedIn";
 
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
     const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements });
     const [page, setPage] = useState<Page>({ page: "login-screen" });
+
+    // If User is previously logged in => continue to loading screen with previous account
+    useEffect(() => {
+        retrieveLoggedInKey(setPage, setUserData, userData);
+    }, []);
 
     return (
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>

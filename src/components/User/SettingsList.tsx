@@ -6,6 +6,7 @@ import { AppProps } from "../../interfaces/Props";
 import User from "../../interfaces/User";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import auth from "@react-native-firebase/auth";
+import { removeLoggedInKey } from "../../utilities/saveLoadFunctions/updateIsLoggedIn";
 
 export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements, setUserData }: {
     setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"],
@@ -81,6 +82,7 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
         setPage({ page: "login-screen" });
         setUserData(userCopy);
         auth().signOut().then(() => console.log("Signed Out!"));
+        removeLoggedInKey();
     }
 
     return(
