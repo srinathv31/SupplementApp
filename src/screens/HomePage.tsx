@@ -56,7 +56,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             <Divider length="full"></Divider>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                 { categorySelect !== "Home" && <Icon onPress={() => setCategorySelect("Home")}
-                    name="expand" style={{ color: "white", padding: 10, justifyContent: "flex-start" }} size={30}></Icon>}
+                    name="arrow-back-outline" style={{ color: "white", padding: 10, justifyContent: "flex-start" }} size={30}></Icon>}
                 <Text style={{ color: "white", fontSize: 20, padding: 10 }}>{categorySelect}</Text>
             </View>
             
