@@ -2,10 +2,10 @@ import MoodObject from "./Mood";
 interface Supplement {
     name: string,
     smallDescription: string,
-    description: string,
-    benefits: string,
-    safe: string,
-    sideEffects: string,
+    // description: string,
+    // benefits: string,
+    // safe: string,
+    // sideEffects: string,
     url: string
     dosageMetric: string
 }
