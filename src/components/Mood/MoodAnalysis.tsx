@@ -1,6 +1,6 @@
 // Source Imports
 import { BottomTabBar } from "./BottomTabBar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import MoodBarGraph from "./MoodBarGraph";
@@ -8,6 +8,12 @@ import MoodBarGraph from "./MoodBarGraph";
 export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
     const [graphType, setGraphType] = useState<string>("data1");
     const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("daily");
+
+    useEffect(() => {
+        if (AllProps.index === 3) {
+            AllProps.setShowButtons(false);
+        }
+    }, [AllProps.index]);
 
     return(
         <View style={{ flex: 1, flexDirection: "column" }}>
@@ -19,7 +25,7 @@ export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
                     supplementMap={AllProps.supplementMap}
                     daySelected={AllProps.daySelected}
                 ></MoodBarGraph>
-                <BottomTabBar   setTabSelect={setTabSelect} setGraphType={setGraphType} tabSelect={tabSelect}  />
+                <BottomTabBar setTabSelect={setTabSelect} setGraphType={setGraphType} tabSelect={tabSelect}  />
             </View>
         </View>
     );
