@@ -185,7 +185,9 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                 </View>
 
             </SafeAreaView>
-            <CustomToast />
+            {modalVisible.modal !== "achievements-modal" && modalVisible.modal !== "journal" && modalVisible.modal !== "info-modal" && modalVisible.modal !== "user-modal" && modalVisible.modal !== "edit-name"
+                && modalVisible.modal !== "weekly-modal" && modalVisible.modal !== "supplement-modal"
+            && <CustomToast />}
         </View>
     );
 }

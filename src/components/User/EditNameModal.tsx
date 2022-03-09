@@ -2,9 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
+import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
+import CustomToast from "../Toast/customToast";
 
-export default function EditNameModal({ setModalVisible, modalVisible, userData, setUserData }: AppProps): JSX.Element {
+export default function EditNameModal({ setModalVisible, modalVisible, userData, setUserData, completedAchievements, setCompletedAchievements }: AppProps): JSX.Element {
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [selectedForm, setSelectedForm] = useState<"firstName"|"lastName"|"age"|"none">("none");
@@ -39,6 +41,8 @@ export default function EditNameModal({ setModalVisible, modalVisible, userData,
     function updateUserObjDetails() {
         const userCopy = { ...userData };
         
+        achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 6);
+
         userCopy.name = name;
         userCopy.lastName = lastName;
 
@@ -92,6 +96,7 @@ export default function EditNameModal({ setModalVisible, modalVisible, userData,
                     </Pressable>
                 </View>
             </View>
+            <CustomToast />
         </Modal>
     );
 }
