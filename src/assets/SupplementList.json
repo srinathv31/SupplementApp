@@ -1,78 +1,130 @@
 [{
     "name": "Creatine",
     "smallDescription": "Helps Muscles Retain Water for more Power.",
+    "description": "Creatine is a molecule that's produced in the body from amino acids. It's primarily made in the liver and to a lesser extent in the kidneys and pancreas. It stores high-energy phosphate groups in the form of phosphocreatine which are donated to ADP, regenerating it to ATP, the primary energy carrier in the body. This role in energy production is particularly relevant under conditions of high energy demand such as intense physical or mental activity.\n\nCreatine can be found in some foods and is most prevalent in meat and fish. Athletes commonly take it as a powder or in capsules.",
+    "benefits": "The primary benefit of creatine is an improvement in strength and power output during resistance exercise. For this purpose, creatine is well-researched, and the effects are quite notable for a supplement. When used in conjunction with resistance exercise, creatine may modestly increase lean mass. It has also been tested for anaerobic running capacity in many studies, the results of which are fairly mixed but generally suggest a small improvement in performance.",
+    "safe": "Most of the supposed dangers of creatine are unfounded. Due to the bad reputation of performance-enhancing drugs, it has been wrongfully equated with the worst examples. It also increases levels of creatinine in the body, which are a marker of poor kidney function. However, the increase in creatinine isn't due to kidney damage, but simply more creatinine being produced. There is a lack of long-term studies in people with reduced kidney function, however, so caution could still be taken in that instance. Besides the minor gastrointestinal issues from excessive creatine, it is unlikely to be unsafe or bad for you.",
+    "sideEffects": "When taken without sufficient water, stomach cramping can occur. Diarrhea and nausea can occur when too much creatine is taken at once, in which case doses should be spread out throughout the day and taken with meals.",
     "url": "https://examine.com/supplements/creatine/",
     "dosageMetric": "g"
 },
 {
     "name": "Fish Oil",
     "smallDescription": "Cognitive Function",
+    "description": "Fish oil is a common term used to refer to two kinds of omega-3 fatty acids: eicosapentaenoic acid (EPA) and docosahexaenoic acid (DHA). These omega-3 fats are usually found in fish, animal products, and phytoplankton.\n\nThe fatty acids EPA and DHA are involved in regulating various biological processes such as the inflammatory response, various metabolic signaling pathways, and brain function. They can be synthesized in the body from alpha-linolenic acid (ALA), but in small amounts for most people.",
+    "benefits": "Fish oil causes a potent reduction in triglyceride levels, and a more modest reduction in blood pressure in hypertensives. Despite this, long-term trials haven't found a reduction in the rate of cardiovascular events.\n\nIt appears to notably improve mood in people with major depression, though it's unclear if it has an effect in people with minor depression. EPA, in particular, seems to be the most effective omega-3 fatty acid for this purpose which suggests that the effects of fish oil are due to reducing neuroinflammation. Its anti-inflammatory benefits also seem to extend to reducing the symptoms of systemic lupus erythematosus. However, its benefits shouldn't be assumed to extend to inflammatory diseases in general.",
+    "safe": "",
+    "sideEffects": "Many fish oil supplements may contain harmful lipid peroxides (oxidized lipids that can damage cells), but it's unclear if this has notable consequences to health.",
     "url": "https://examine.com/supplements/fish-oil/",
     "dosageMetric": "mg"
 },
 {
     "name": "Melatonin",
     "smallDescription": "Helps with Going to Sleep",
+    "description": "Melatonin is a neurohormone secreted by the pineal gland in the brain and it is well known for causing and regulating sleep. Light suppresses melatonin synthesis. The primary use of melatonin as a supplement is to normalize abnormal sleep patterns.",
+    "benefits": "Irregular sleep patterns are associated with a wide variety of health problems and premature aging. Melatonin is the hormone used by your body to help you fall asleep, and thus supplementation is seen as a way to get regular sleep. This is particularly useful for people who engage in shift work or are jet lagged.\n\nOther benefits of melatonin include general neuroprotective effects, as melatonin is a powerful antioxidant. Melatonin also has several anti-cancer properties, and is currently being investigated for its role in fighting breast cancer. It does not appear to have much of an effect on lean mass or body fat, but it potentially stops your body from gaining more fat. Melatonin supplementation also benefits eye health, possibly reduces tinnitus, and improve mood (by helping you get better sleep).",
+    "safe": "",
+    "sideEffects": "Taking melatonin is not associated with negative feedback (when taking supplementation causes your body to produce less of a hormone). It is also not addictive, and is not toxic.",
     "url": "https://examine.com/supplements/melatonin/",
     "dosageMetric": "mg"
 },
 {
     "name": "Vitamin B12",
     "smallDescription": "Energy Function",
+    "description": "Vitamin B12 is a nutrient that helps keep your body's blood and nerve cells healthy and helps make DNA, the genetic material in all of your cells. Vitamin B12 also helps prevent megaloblastic anemia, a blood condition that makes people tired and weak.",
+    "benefits": "",
+    "safe": "Vitamin B12 has not been shown to cause any harm, even at high doses.",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-b12/",
     "dosageMetric": "mcg"
 },
 {
     "name": "Vitamin D",
     "smallDescription": "Increased cognition, immune health, bone health and well-being.",
+    "description": "Vitamin D is a fat-soluble nutrient. It is one of the 24 micronutrients critical for human survival. The sun is the major natural source of the nutrient, but vitamin D is also found naturally in fish and eggs. It is also added to dairy products.\n\nThe body produces vitamin D from cholesterol, provided there is an adequate amount of UV light from sun exposure. There is only a sufficient amount of UV light coming from the sun when the UV index is 3 or higher, which only occurs year-round near the equator, between the 37th parallels.",
+    "benefits": "Supplemental vitamin D is associated with a wide range of benefits, including increased cognition, immune health, bone health and well-being. Supplementation can also reduce the risks of cancer, heart disease, diabetes and multiple sclerosis. People deficient in vitamin D may also experience increased testosterone levels after supplementation.",
+    "safe": "Most people are not deficient in vitamin D, but they do not have an optimal level of vitamin D either. Due to the many health benefits of vitamin D, supplementation is encouraged if optimal levels are not present in the body.",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-d/",
     "dosageMetric": "IU"
 },
 {
     "name": "Zinc",
     "smallDescription": "Revitilization",
+    "description": "Zinc is an essential dietary mineral that has numerous roles in the body, most notably as a catalytic and structural element in hundreds of metalloproteins. Meat, egg, and legume products are common sources. Oysters are particularly good sources of zinc.",
+    "benefits": "Any benefits of oral zinc supplements or increased dietary intake will depend on the zinc status of the individual. Some research suggests that when zinc levels are low, insulin sensitivity and testosterone can decrease, and supplementation can bring levels closer to normal.\n\nZinc lozenges, in high doses, seem to reduce the duration of common colds, though it's unclear if they reduce the risk of getting colds in the first place or the severity of symptoms. Their effects are largely limited to throat and nasal symptoms, and high doses tend to come with some mild but notable side-effects like nausea and metallic taste in the mouth. Zinc lozenges have not been studied for COVID-19 and extrapolation from colds to COVID-19 is invalid. For more information, see this page.\n\nOther areas of note are depression and acne, which can frequently benefit from increased zinc intake if levels are low.\n\nZinc is lost through sweat, making supplementation very important for athletes that don’t get a lot of zinc through food. Insulin resistance can also decrease zinc levels.",
+    "safe": "Large doses of zinc can produce nausea and other forms of gastrointestinal upset, particularly when taken on an empty stomach. Large doses of zinc can also cause a copper deficiency and lead to overdose. Many supplements use far more than the RDA, and a combination of supplements, fortified foods, and high zinc foods may lead to exceeding the tolerable upper intake level for adults, which is 40 mg per day. High dose zinc lozenges can lead to nausea and a metallic taste in the mouth, and should only be taken for a short time, if at all.",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/zinc/",
     "dosageMetric": "mg"
 },
 {
     "name": "Vitamin C",
     "smallDescription": "It is a very popular dietary supplement due to its antioxidant properties, and safety.",
+    "description": "Vitamin C, or L-ascorbic acid, is a water-soluble essential vitamin. It is a very popular dietary supplement due to its antioxidant properties, safety, and low price.\n\nVitamin C is often supplemented to reduce the symptoms of the common cold.",
+    "benefits": "Vitamin C is unable to reduce the frequency of colds in a healthy population. An athlete who frequently undergoes intense physical activity can expect to cut the risk of getting a cold in half. Supplemental vitamin C is able to reduce the duration of a cold by 8-14% in any population, when it is taken as a daily preventative measure, or at the beginning of a cold. Though superloading vitamin C (5-10g daily) is said to be more effective, further research is needed to determine the accuracy of this claim.\n\nVitamin C is capable of being both an antioxidant and pro-oxidant, depending on what the body needs. This mechanism allows it to serve a variety of functions in the body.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-c/",
     "dosageMetric": "mg"
 },
 {
     "name": "Calcium",
     "smallDescription": "Mitigates the risk of developing osteoporosis.",
+    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
+    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/calcium/",
     "dosageMetric": "mg"
 },
 {
     "name": "Citrulline",
     "smallDescription": "In general, much research suggests a modest reduction in blood pressure and improvement in blood flow from chronic citrulline supplementation",
+    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
+    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/citrulline/",
     "dosageMetric": "mg"
 },
 {
     "name": "Curcumin",
     "smallDescription": "Curcumin is a yellow pigment found primarily in turmeric, a flowering plant of the ginger family.",
+    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
+    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/curcumin/",
     "dosageMetric": "mg"
 },
 {
     "name": "Beta-Alanine",
     "smallDescription": "Beta-alanine has been shown to enhance muscular endurance.",
+    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
+    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/beta-alanine/",
     "dosageMetric": "g"
 },
 {
     "name": "L-Theanine",
     "smallDescription": "A reduction in anxiety, stress, and greater ability to relax.",
+    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
+    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/theanine/",
     "dosageMetric": "mg"
 },
 {
     "name": "Rhodiola Rosea",
     "smallDescription": "Rhodiola rosea is a herb in the rhodiola genera (Crassulaceae family) which has traditional usage as an anti-fatigue agent.",
+    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
+    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "safe": "",
+    "sideEffects": "",
     "url": "https://examine.com/supplements/rhodiola-rosea/",
     "dosageMetric": "mg"
 }
