@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
+import CustomToast from "../Toast/customToast";
 import SearchBar from "./SearchBar";
 import SupplementListView from "./SupplementListView";
-
 
 
 export default function SupplementModal( AllProps: AppProps ): JSX.Element {
@@ -41,8 +41,8 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
                         <Text style={styles.textStyle}>Close</Text>
                     </Pressable>
                 </View>
-
             </View>
+            <CustomToast />
         </Modal>
     );
 }

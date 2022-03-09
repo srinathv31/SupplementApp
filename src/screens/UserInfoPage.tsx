@@ -10,6 +10,7 @@ import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
+import CustomToast from "../components/Toast/customToast";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
@@ -148,6 +149,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                     </View>
                 </View>
             </View>
+            <CustomToast />
         </Modal>
     );
 }

@@ -5,6 +5,7 @@ import { AppProps } from "../../interfaces/Props";
 import { journalDot } from "../../utilities/calendarDots";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
+import CustomToast from "../Toast/customToast";
 import JournalTextEntry from "./JournalTextEntry";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import Tooltip from "rn-tooltip";
@@ -90,6 +91,7 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
                 </View>
 
             </View>
+            <CustomToast />
         </Modal>
     );
 }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
+import CustomToast from "../Toast/customToast";
 
 export default function EditNameModal({ setModalVisible, modalVisible, userData, setUserData }: AppProps): JSX.Element {
     const [name, setName] = useState<string>("");
@@ -92,6 +93,7 @@ export default function EditNameModal({ setModalVisible, modalVisible, userData,
                     </Pressable>
                 </View>
             </View>
+            <CustomToast />
         </Modal>
     );
 }

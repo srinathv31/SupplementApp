@@ -8,6 +8,7 @@ import { styles } from "../styles/WeekStyles";
 import { WeekProps } from "../interfaces/WeekProps";
 import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
 import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
+import CustomToast from "../components/Toast/customToast";
 
 export default function WeeklySupplementModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
@@ -106,6 +107,7 @@ export default function WeeklySupplementModal({ setUserData, userData, setModalV
                     </View>
                 </View>
             </Animated.View>
+            <CustomToast />
         </Modal>
     );
 }

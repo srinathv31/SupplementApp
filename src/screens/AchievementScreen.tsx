@@ -6,6 +6,7 @@ import { AppProps } from "../interfaces/Props";
 import Icon from "react-native-vector-icons/Ionicons";
 import AchievementsList from "../components/Achievements/AchievementsList";
 import ScoreCard from "../components/Achievements/ScoreCard";
+import CustomToast from "../components/Toast/customToast";
 
 export default function AchievementScreen({ userData, modalVisible, setModalVisible, completedAchievements }: {
     userData: AppProps["userData"],
@@ -50,6 +51,7 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
                     </View>
                 </View>
             </View>
+            <CustomToast />
         </Modal>
     );
 }
