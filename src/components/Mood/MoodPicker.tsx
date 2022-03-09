@@ -1,5 +1,6 @@
 // Source Imports
 import React, { useState } from "react";
+import { Dimensions } from "react-native";
 import DropDownPicker, { ItemType, DropDownDirectionType } from "react-native-dropdown-picker";
 import { MoodProps } from "../../interfaces/MoodProps";
 import { AppProps } from "../../interfaces/Props";
@@ -10,6 +11,8 @@ export default function MoodPicker({ open, setOpen, setMood, setModalVisible, dr
     setMood: AppProps["setMood"], setModalVisible: AppProps["setModalVisible"],
     dropDirection: DropDownDirectionType, mode: "analysis" | "setting"
 }): JSX.Element {
+    const { height: initialHeight } = Dimensions.get("window");
+
     const [value, setValue] = useState("");
     const [items, setItems] = useState([
         { label: "Energetic", value: "Energetic" },
@@ -60,6 +63,7 @@ export default function MoodPicker({ open, setOpen, setMood, setModalVisible, dr
             onSelectItem={(item) => {
                 mode === "setting" ? addMood(item) : showMood(item);
             }}
+            maxHeight={initialHeight*0.55}
         ></DropDownPicker>
     );
 }
