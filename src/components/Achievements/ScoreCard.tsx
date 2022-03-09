@@ -8,19 +8,19 @@ export default function ScoreCard({ userData, numberOfAchievements }: {
     userData: AppProps["userData"],
     numberOfAchievements: number
 }): JSX.Element {
-    const [profilePicture, setProfilePicture] = useState({ url: require("../../assets/images/pitbull.jpg") });
+    const [profilePicture, setProfilePicture] = useState({ url: require("../../assets/images/penguin.jpg") });
 
     useEffect(() => {
         const profilePictureCopy = { ...profilePicture };
         switch (userData.picture){
-        case "../assets/images/pitbull.jpg":
-            profilePictureCopy.url = require("../../assets/images/pitbull.jpg");
+        case "../assets/images/penguin.jpg":
+            profilePictureCopy.url = require("../../assets/images/penguin.jpg");
             break;
         case "../assets/images/husky.jpg":
             profilePictureCopy.url = require("../../assets/images/husky.jpg");
             break;
-        case "../assets/images/tiger.jpg":
-            profilePictureCopy.url = require("../../assets/images/tiger.jpg");
+        case "../assets/images/corgi.jpg":
+            profilePictureCopy.url = require("../../assets/images/corgi.jpg");
             break;
         }
         setProfilePicture(profilePictureCopy);

@@ -21,13 +21,13 @@ export default function OnboardingTour({ setPage }: {
                 },
                 {
                     backgroundColor: "#fe6e58",
-                    image: <Image source={require("../assets/images/pitbull.jpg")} style={{ height: 100, width: 100 }} />,
+                    image: <Image source={require("../assets/images/penguin.jpg")} style={{ height: 100, width: 100 }} />,
                     title: "Start by Scheduling a Supplement 💪",
                     subtitle: "This is the subtitle that sumplements the title.",
                 },
                 {
                     backgroundColor: "skyblue",
-                    image: <Image source={require("../assets/images/tiger.jpg")} style={{ height: 100, width: 100 }} />,
+                    image: <Image source={require("../assets/images/corgi.jpg")} style={{ height: 100, width: 100 }} />,
                     title: "Get Information on New Supplements 🔍",
                     subtitle: "Beautiful, isn't it?",
                 },

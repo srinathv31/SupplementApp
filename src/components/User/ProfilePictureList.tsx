@@ -12,9 +12,10 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
     setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
     const pictureList = [
-        require("../../assets/images/pitbull.jpg"),
+        require("../../assets/images/penguin.jpg"),
         require("../../assets/images/husky.jpg"),
-        require("../../assets/images/tiger.jpg")
+        require("../../assets/images/corgi.jpg"),
+        require("../../assets/images/add.png"),
     ];
 
     function changeProfilePicture(index: number) {
@@ -26,13 +27,16 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
 
         switch(index){
         case 0:
-            userCopy.picture = "../assets/images/pitbull.jpg";
+            userCopy.picture = "../assets/images/penguin.jpg";
             break;
         case 1:
             userCopy.picture = "../assets/images/husky.jpg";
             break;
         case 2:
-            userCopy.picture = "../assets/images/tiger.jpg";
+            userCopy.picture = "../assets/images/corgi.jpg";
+            break;
+        case 3:
+            console.log("ADD PHOTO");
             break;
         }
         setUserData(userCopy);
@@ -45,8 +49,8 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
             {pictureList.map((item, index) => {
                 return (
                     <TouchableOpacity key={index} onPress={() => changeProfilePicture(index)}>
-                        <View style={{ borderRadius: 30, overflow: "hidden", margin: 10 }}>
-                            <Image source={item} style={{ width: 75, height: 75 }}></Image>
+                        <View style={{ borderRadius: 10, overflow: "hidden", margin: 10 }}>
+                            <Image source={item} style={{ width: 65, height: 65 }}></Image>
                         </View>
                     </TouchableOpacity>
                 );
