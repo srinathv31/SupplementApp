@@ -19,7 +19,7 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
     };
 
     useEffect(() => {
-        showButtons ? fadeIn() : fadeOut();
+        showButtons ? fadeIn() : (fadeOut(), setOpen(false));
     }, [showButtons]);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
