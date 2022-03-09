@@ -15,7 +15,7 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
-    const [categorySelect, setCategorySelect] = useState<"Supplement"|"Food"|"Water"|"Exercise"|"Home">("Home");
+    const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
 
     const MoodTimelineProps: MoodTimelinePickerProps = {
         daySelected: AllProps.daySelected,
@@ -54,17 +54,20 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
                 {...AllProps}
             ></ExploreWindow>
             <Divider length="full"></Divider>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-                { categorySelect !== "Home" && <Icon onPress={() => setCategorySelect("Home")}
-                    name="arrow-back-outline" style={{ color: "white", padding: 10, justifyContent: "flex-start" }} size={30}></Icon>}
-                <Text style={{ color: "white", fontSize: 20, padding: 10 }}>{categorySelect}</Text>
+            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                { categorySelect !== "Home" && 
+                <Icon onPress={() => setCategorySelect("Home")}
+                    name="arrow-back-outline" style={{ color: "white", padding: 10 }} size={30}></Icon>}
+                <View style={{ alignItems: "center", justifyContent: "center" }}>
+                    <Text style={{ color: "white", fontSize: 20, padding: 10, alignSelf: "center" }}>{categorySelect}</Text>
+                </View>
             </View>
             
             { categorySelect === "Home" && 
             <><Divider length="small"></Divider>
                 <CategoryBoxes setCategorySelect={setCategorySelect} />
             </>}
-            { categorySelect === "Supplement"
+            { categorySelect === "Supplement Schedule"
                     && <DailySupplementWindow
                         {...AllProps}
                     ></DailySupplementWindow>

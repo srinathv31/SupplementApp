@@ -5,11 +5,11 @@ import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function CategoryBoxes({ setCategorySelect }: {
-    setCategorySelect: (c: "Supplement"|"Food"|"Water"|"Exercise"|"Home") => void
+    setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void
 }) {
 
     const categories1 = [
-        { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("Supplement") },
+        { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("Supplement Schedule") },
         { name: "Food", colors: ["#c31432", "#240b36"], icon: "food-variant", function: () => console.log("Food") },
     ];
 
