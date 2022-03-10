@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
+import { launchImageLibrary } from "react-native-image-picker";
 import { AppProps } from "../../interfaces/Props";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
@@ -18,7 +19,7 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
         require("../../assets/images/add.png"),
     ];
 
-    function changeProfilePicture(index: number) {
+    async function changeProfilePicture(index: number) {
         const userCopy = { ...userData };
 
         if (completedAchievements[5].color === "white") {
@@ -28,15 +29,22 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
         switch(index){
         case 0:
             userCopy.picture = "../assets/images/penguin.jpg";
+            userCopy.uri = undefined;
             break;
         case 1:
             userCopy.picture = "../assets/images/husky.jpg";
+            userCopy.uri = undefined;
             break;
         case 2:
             userCopy.picture = "../assets/images/corgi.jpg";
+            userCopy.uri = undefined;
             break;
         case 3:
-            console.log("ADD PHOTO");
+            // eslint-disable-next-line no-case-declarations
+            const result = await launchImageLibrary({ mediaType: "photo" });
+            if (result.assets !== undefined) {
+                userCopy.uri = ""+result.assets[0].uri;
+            }
             break;
         }
         setUserData(userCopy);

@@ -118,9 +118,10 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                             />
                         </View>
                         <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{`${generateGreeting()}${userData.name}`}</Text>
-                        {!changePictureMode ? <View style={{ borderRadius: 30, overflow: "hidden" }}>
-                            <Image source={profilePicture.url} style={{ width: 80, height: 80 }}></Image>
-                        </View> :
+                        {!changePictureMode ? 
+                            <View style={{ borderRadius: 30, overflow: "hidden" }}>
+                                <Image source={userData.uri !== undefined ? { uri: userData.uri } : profilePicture.url} style={{ width: 80, height: 80 }}></Image>
+                            </View> :
                             <ProfilePictureList {...pictureProps}></ProfilePictureList>}
                         <Icon onPress={() => createSettingsButtonAlert()}
                             name="options-outline" style={{ padding: 10 }} size={25} color="white"></Icon>

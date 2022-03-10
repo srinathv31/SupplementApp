@@ -35,7 +35,7 @@ export default function UserPageButton( { setShowButtons, setModalVisible, modal
                 disabled={modalVisible.modal === "disable-header"}
             >
                 <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>
-                    <Image source={profilePicture.url} style={{ width: 40, height: 40 }}></Image>
+                    <Image source={userData.uri !== undefined ? { uri: userData.uri } : profilePicture.url} style={{ width: 40, height: 40 }}></Image>
                 </View>
             </Pressable>
         </>
