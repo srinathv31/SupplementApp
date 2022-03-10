@@ -4,7 +4,7 @@ This is the codebase for the Supplement App, Vital (final name pending). It help
 (if you would like to test and be involved in the future development of this app)
 
 # Technologies
-This project is built using **React Native**, **Typescript**, and **Firebase**. **Eslint** to keep uniform code style.
+This project is built using **React Native**, **Typescript**, and **Firebase** (Cloud Saving, Social Authentication, In-App Messaging, Campaign Push Notifications, Analytics). **Eslint** to keep uniform code style.
 
 Using **App Store Connect** to release the app on iOS devices/App Store.
 
@@ -19,7 +19,7 @@ Features, bugs, and other tasks are broken up into cards (issues) with relevant 
 Using **Google Forms** to invite users to the beta to test new features and build a list of potential customers.
 
 # Packages Used (npm)
-React-native Packages:
+### React-native Packages:
 * @react-native-async-storage/async-storage
 * react-native-tab-view
 * react-native-webview
@@ -42,3 +42,12 @@ React-native Packages:
 * react-native-vector-icons
 * rn-tooltip
 
+### Firebase and Authentication Packages
+* @react-native-firebase/app
+* @react-native-firebase/analytics
+* @react-native-firebase/auth
+* @react-native-firebase/firestore
+* @react-native-firebase/in-app-messaging
+* @react-native-firebase/messaging
+* @react-native-google-signin/google-signin
+* @invertase/react-native-apple-authentication
