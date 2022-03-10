@@ -4,7 +4,7 @@ This is the codebase for the Supplement App, Vital (final name pending). It help
 (if you would like to test and be involved in the future development of this app)
 
 # Technologies
-This project is built using **React Native**, **Typescript**, and **Firebase**.
+This project is built using **React Native**, **Typescript**, and **Firebase**. **Eslint** to keep uniform code style.
 
 Using **App Store Connect** to release the app on iOS devices/App Store.
 
