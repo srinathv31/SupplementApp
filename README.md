@@ -1,7 +1,7 @@
 # Codename Project Asceplius
 This is the codebase for the Supplement App, Vital (final name pending) [App Store Link](https://apps.apple.com/us/app/supplementapp/id1612971376). 
 
-It helps users track and organize supplement, exercise, food, and water intake. Along with providing a one-stop-shop for, "researched and up-to-date" information on supplements.
+The goal of Vital is to assist individuals seeking to optimize their physical and mental health via a user-friendly tracking system for mood, food and water intake, supplementation and exercise. Additionally, Vital provides users with access to the latest peer-reviewed research on a variety of dietary supplements.
 ### Beta Invite - https://docs.google.com/forms/d/1v5-KyHnOMVaSlnyx3vvoeis8ReU-gdKghMWqVGyX2GI/edit
 (if you would like to test and be involved in the future development of this app)
 
