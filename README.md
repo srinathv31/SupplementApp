@@ -21,6 +21,8 @@ After PRs are merged, I created a github Actions **(.github/workflows/build.yml)
 ***First*** (install and test): installs all npm packages, checks eslint, and runs tests  
 ***Second*** (build-android): builds Android Release and creates an "app-release.apk" file that can be used to run the app on any android device
 
+**_This ensures that only stable builds are on the master branch_**
+
 # Customer Discovery
 * Using **Google Forms** to invite users to the beta to test new features and build a list of potential customers.
 * Posting on popular subreddits on reddit.com: r/Supplements, r/reactnative
