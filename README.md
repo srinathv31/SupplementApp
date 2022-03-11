@@ -17,6 +17,10 @@ The "Projects" tab holds the kanban boards "SupplementApp MVP" [CLOSED] and "Sup
 
 Features, bugs, and other tasks are broken up into cards (issues) with relevant information, pictures and pull requests tagged to them. These cards are then organized from To-Do -> In-Progress -> Done, automatically as pull requests are merged to the main.
 
+After PRs are merged, I created a github Actions **(.github/workflows/build.yml)** that:  
+***First*** (install and test): installs all npm packages, checks eslint, and runs tests  
+***Second*** (build-android): builds Android Release and creates an "app-release.apk" file that can be used to run the app on any android device
+
 # Customer Discovery
 * Using **Google Forms** to invite users to the beta to test new features and build a list of potential customers.
 * Posting on popular subreddits on reddit.com: r/Supplements, r/reactnative
