@@ -1,5 +1,7 @@
 # Project Asceplius
-This is the codebase for the Supplement App, Vital (final name pending). It helps users track and organize supplement, exercise, food, and water intake. Along with providing a one-stop-shop for, "researched and up-to-date" information on supplements.
+This is the codebase for the Supplement App, Vital (final name pending) [App Store Link](https://apps.apple.com/us/app/supplementapp/id1612971376). 
+
+It helps users track and organize supplement, exercise, food, and water intake. Along with providing a one-stop-shop for, "researched and up-to-date" information on supplements.
 ### Beta Invite - https://docs.google.com/forms/d/1v5-KyHnOMVaSlnyx3vvoeis8ReU-gdKghMWqVGyX2GI/edit
 (if you would like to test and be involved in the future development of this app)
 
@@ -8,7 +10,7 @@ This project is built using **React Native**, **Typescript**, and **Firebase** (
 
 Using **App Store Connect** to release the app on iOS devices/App Store.
 
-**TestFlight** (through App Store Connect) - to beta test app with select users.
+**TestFlight** (through App Store Connect) - to beta test app with select users (up to 10,000 users).
 
 # Workflow
 The "Projects" tab holds the kanban boards "SupplementApp MVP" [CLOSED] and "SupplementApp Beta"
@@ -16,7 +18,8 @@ The "Projects" tab holds the kanban boards "SupplementApp MVP" [CLOSED] and "Sup
 Features, bugs, and other tasks are broken up into cards (issues) with relevant information, pictures and pull requests tagged to them. These cards are then organized from To-Do -> In-Progress -> Done, automatically as pull requests are merged to the main.
 
 # Customer Discovery
-Using **Google Forms** to invite users to the beta to test new features and build a list of potential customers.
+* Using **Google Forms** to invite users to the beta to test new features and build a list of potential customers.
+* Posting on popular subreddits on reddit.com: r/Supplements, r/reactnative
 
 # Packages Used (npm)
 ### React-native Packages:
