@@ -56,7 +56,7 @@ This project is built using:
 * react-native-vector-icons
 * rn-tooltip
 
-### Firebase and Authentication Packages
+### Firebase (v14.5.0) and Authentication Packages
 * @react-native-firebase/app
 * @react-native-firebase/analytics
 * @react-native-firebase/auth
