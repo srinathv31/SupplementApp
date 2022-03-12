@@ -381,6 +381,9 @@ PODS:
   - Firebase/Messaging (8.12.1):
     - Firebase/CoreOnly
     - FirebaseMessaging (~> 8.12.0)
+  - Firebase/Storage (8.12.1):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 8.12.0)
   - FirebaseABTesting (8.12.0):
     - FirebaseCore (~> 8.0)
   - FirebaseAnalytics (8.12.0):
@@ -448,6 +451,9 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - nanopb (~> 2.30908.0)
+  - FirebaseStorage (8.12.0):
+    - FirebaseCore (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.5)
   - Flipper (0.99.0):
     - Flipper-Folly (~> 2.6)
     - Flipper-RSocket (~> 1.4)
@@ -894,6 +900,10 @@ PODS:
     - Firebase/Messaging (= 8.12.1)
     - React-Core
     - RNFBApp
+  - RNFBStorage (14.5.0):
+    - Firebase/Storage (= 8.12.1)
+    - React-Core
+    - RNFBApp
   - RNGestureHandler (2.1.1):
     - React-Core
   - RNGoogleSignin (7.1.0):
@@ -976,6 +986,7 @@ DEPENDENCIES:
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBInAppMessaging (from `../node_modules/@react-native-firebase/in-app-messaging`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
+  - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNShare (from `../node_modules/react-native-share`)
@@ -999,6 +1010,7 @@ SPEC REPOS:
     - FirebaseInAppMessaging
     - FirebaseInstallations
     - FirebaseMessaging
+    - FirebaseStorage
     - Flipper
     - Flipper-Boost-iOSX
     - Flipper-DoubleConversion
@@ -1111,6 +1123,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/in-app-messaging"
   RNFBMessaging:
     :path: "../node_modules/@react-native-firebase/messaging"
+  RNFBStorage:
+    :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -1144,6 +1158,7 @@ SPEC CHECKSUMS:
   FirebaseInAppMessaging: 871e8d04ed0d1ca77c9c0e4c246c13d010d7a8de
   FirebaseInstallations: 25764cf322e77f99449395870a65b2bef88e1545
   FirebaseMessaging: 23db8bf05585e929ada8af0f0968933c25252808
+  FirebaseStorage: 4b75458c35d8b728e4c1fc1371942997456ab299
   Flipper: 30e8eeeed6abdc98edaf32af0cda2f198be4b733
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
   Flipper-DoubleConversion: 57ffbe81ef95306cc9e69c4aa3aeeeeb58a6a28c
@@ -1205,6 +1220,7 @@ SPEC CHECKSUMS:
   RNFBFirestore: 7e4fe3b009a193d2f2fb0a19d1d6ab06355d4a09
   RNFBInAppMessaging: 2a324b1e1b707f1ae3e1ad822f77a10620c31b12
   RNFBMessaging: 8e3575bb0303b43a852bf5decbe99c3272035048
+  RNFBStorage: e061bbb005be42225e95cb62af7768bda4d24e3a
   RNGestureHandler: e1ad51d31a580755079d5124d3ab66f0fcaa8311
   RNGoogleSignin: 233fdfa02522216c19bf02a1e6c60b60a75ffb4c
   RNShare: b955e66f1af2849711f13c193debda72b94f8aa0
