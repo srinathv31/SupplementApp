@@ -43,6 +43,7 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
             // eslint-disable-next-line no-case-declarations
             const result = await launchImageLibrary({ mediaType: "photo" });
             if (result.assets !== undefined) {
+                console.log(""+result.assets[0].uri);
                 userCopy.uri = ""+result.assets[0].uri;
             }
             break;
@@ -59,6 +60,7 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
                     <TouchableOpacity key={index} onPress={() => changeProfilePicture(index)}>
                         <View style={{ borderRadius: 10, overflow: "hidden", margin: 10 }}>
                             <Image source={item} style={{ width: 65, height: 65 }}></Image>
+                            <Image source={{ uri: "~/1A99FCB1-B2FF-4864-80E4-4BB3E694BEAB.png" }} style={{ width: 65, height: 65 }}></Image>
                         </View>
                     </TouchableOpacity>
                 );
