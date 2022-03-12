@@ -1,10 +1,11 @@
 // Source Imports
-import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, Image, Platform, TouchableOpacity, View } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { AppProps } from "../../interfaces/Props";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
+import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
 
 export default function ProfilePictureList({ setUserData, userData, setChangePictureMode, setCompletedAchievements, completedAchievements, setModalVisible }: {
     setUserData: AppProps["setUserData"], userData: AppProps["userData"],
@@ -12,6 +13,8 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
     setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
     setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const pictureList = [
         require("../../assets/images/penguin.jpg"),
         require("../../assets/images/husky.jpg"),
@@ -40,11 +43,15 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
             userCopy.uri = undefined;
             break;
         case 3:
+            setIsLoading(true);
             // eslint-disable-next-line no-case-declarations
             const result = await launchImageLibrary({ mediaType: "photo" });
             if (result.assets !== undefined) {
                 console.log(""+result.assets[0].uri);
                 userCopy.uri = ""+result.assets[0].uri;
+
+                const uploadUri = Platform.OS === "ios" ? userCopy.uri.replace("file://", "") : userCopy.uri;
+                saveProfilePictureToCloud(userData, uploadUri, userCopy.uri, setIsLoading);
             }
             break;
         }
@@ -55,16 +62,18 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
 
     return(
         <View style={{ flexDirection: "row" }}>
-            {pictureList.map((item, index) => {
-                return (
-                    <TouchableOpacity key={index} onPress={() => changeProfilePicture(index)}>
-                        <View style={{ borderRadius: 10, overflow: "hidden", margin: 10 }}>
-                            <Image source={item} style={{ width: 65, height: 65 }}></Image>
-                            <Image source={{ uri: "~/1A99FCB1-B2FF-4864-80E4-4BB3E694BEAB.png" }} style={{ width: 65, height: 65 }}></Image>
-                        </View>
-                    </TouchableOpacity>
-                );
-            })}
+            { isLoading === false ? 
+                pictureList.map((item, index) => {
+                    return (
+                        <TouchableOpacity key={index} onPress={() => changeProfilePicture(index)}>
+                            <View style={{ borderRadius: 10, overflow: "hidden", margin: 10 }}>
+                                <Image source={item} style={{ width: 65, height: 65 }}></Image>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                }) :
+                <ActivityIndicator />
+            }
         </View>
     );
 }
