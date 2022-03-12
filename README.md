@@ -63,5 +63,6 @@ This project is built using:
 * @react-native-firebase/firestore
 * @react-native-firebase/in-app-messaging
 * @react-native-firebase/messaging
+* @react-native-firebase/storage
 * @react-native-google-signin/google-signin
 * @invertase/react-native-apple-authentication
