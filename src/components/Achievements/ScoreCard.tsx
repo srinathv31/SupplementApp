@@ -30,7 +30,7 @@ export default function ScoreCard({ userData, numberOfAchievements }: {
         
         <View style={{ flexDirection: "row" }}>
             <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>
-                <Image source={userData.uri !== undefined ? { uri: userData.uri } : profilePicture.url} style={{ width: 80, height: 80 }}></Image>
+                <Image source={userData.uri !== "" ? { uri: userData.uri } : profilePicture.url} style={{ width: 80, height: 80 }}></Image>
             </View>
             <View style={{ flexDirection: "column", justifyContent: "center" }}>
                 <Text style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10, paddingBottom: 0 }}>Completed: {numberOfAchievements}/15</Text>

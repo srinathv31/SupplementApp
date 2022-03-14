@@ -77,7 +77,8 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
                 selectedDates: {}
             },
             premiumStatus: true,
-            achievements: ListOfAchievements
+            achievements: ListOfAchievements,
+            uri: ""
         };
         setPage({ page: "login-screen" });
         setUserData(userCopy);

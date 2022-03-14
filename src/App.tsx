@@ -15,7 +15,7 @@ import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLogge
 LogBox.ignoreLogs(["Sending"]);
 
 const App = () => {
-    const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements });
+    const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: "", data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements, uri: "" });
     const [page, setPage] = useState<Page>({ page: "login-screen" });
 
     // If User is previously logged in => continue to loading screen with previous account

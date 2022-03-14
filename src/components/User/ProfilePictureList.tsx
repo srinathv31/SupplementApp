@@ -6,6 +6,7 @@ import { AppProps } from "../../interfaces/Props";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
+import RNFS from "react-native-fs";
 
 export default function ProfilePictureList({ setUserData, userData, setChangePictureMode, setCompletedAchievements, completedAchievements, setModalVisible }: {
     setUserData: AppProps["setUserData"], userData: AppProps["userData"],
@@ -32,26 +33,38 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
         switch(index){
         case 0:
             userCopy.picture = "../assets/images/penguin.jpg";
-            userCopy.uri = undefined;
+            userCopy.uri = "";
             break;
         case 1:
             userCopy.picture = "../assets/images/husky.jpg";
-            userCopy.uri = undefined;
+            userCopy.uri = "";
             break;
         case 2:
             userCopy.picture = "../assets/images/corgi.jpg";
-            userCopy.uri = undefined;
+            userCopy.uri = "";
             break;
         case 3:
             setIsLoading(true);
             // eslint-disable-next-line no-case-declarations
             const result = await launchImageLibrary({ mediaType: "photo" });
             if (result.assets !== undefined) {
-                console.log(""+result.assets[0].uri);
-                userCopy.uri = ""+result.assets[0].uri;
 
-                const uploadUri = Platform.OS === "ios" ? userCopy.uri.replace("file://", "") : userCopy.uri;
-                saveProfilePictureToCloud(userData, uploadUri, userCopy.uri, setIsLoading);
+                const newPath = `${RNFS.DocumentDirectoryPath}/${""+result.assets[0].fileName}`;
+                // Save the image to the local machine
+                RNFS.copyFile(""+result.assets[0].uri, newPath)
+                    .then((success) => {
+                        console.log("IMG COPIED!"+success);
+                    })
+                    .catch((err) => {
+                        console.log(err.message);
+                    });
+                userCopy.uri = newPath;
+
+                // Save the image to the firebase storage for backup
+                if(result.assets[0].uri !== undefined) {
+                    const uploadUri = Platform.OS === "ios" ? ""+result.assets[0].uri.replace("file://", "") : ""+result.assets[0].uri;
+                    saveProfilePictureToCloud(userData, uploadUri, userCopy.uri);
+                }
             }
             break;
         }

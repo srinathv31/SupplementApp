@@ -15,7 +15,7 @@ interface User {
     premiumStatus: boolean,
     achievements: Achievement[],
     userAuthObj?: FirebaseAuthTypes.User,
-    uri?: string
+    uri: string
 }
 
 export default User;
