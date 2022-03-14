@@ -23,7 +23,7 @@ export async function grabCloudSave(uid: string, userData: User, setUserData: (u
         premiumStatus: cloudData.premiumStatus,
         achievements: cloudData.achievements,
         userAuthObj: userData.userAuthObj,
-        uri: cloudData.uri
+        uri: ""
     };
     console.log("GRABBING FROM CLOUD...");
     saveUserToPhone(userToLoad);

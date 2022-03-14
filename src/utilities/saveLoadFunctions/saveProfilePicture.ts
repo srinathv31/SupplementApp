@@ -10,10 +10,12 @@ export function saveProfilePictureToCloud(userData: User, uploadUri: string, loc
         .then(() => {
         //You can check the image is now uploaded in the storage bucket
             console.log(`${localImagePath} has been successfully uploaded.`);
+            saveDataToCloud(userData);
         })
         .catch((e) => console.log("uploading image error => ", e));
 }
 
+// Function is not being used currently, but will be used to grab user profile picture from cloud
 export async function grabProfilePictureFromCloud(userData: User) {
     const userCopy = { ...userData };
     
