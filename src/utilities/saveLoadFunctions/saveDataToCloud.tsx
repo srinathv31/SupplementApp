@@ -13,7 +13,6 @@ export function saveDataToCloud(userData: User) {
             data: userData.data,
             premiumStatus: userData.premiumStatus,
             achievements: userData.achievements,
-            uri: userData.uri
         })
         .then(() => {
             console.log("User updated!");

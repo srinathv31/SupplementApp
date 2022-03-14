@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Alert, Image, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
@@ -14,25 +14,8 @@ import CustomToast from "../components/Toast/customToast";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
-    const [profilePicture, setProfilePicture] = useState({ url: require("../assets/images/penguin.jpg") });
 
     const pictureProps = { setUserData, userData, setChangePictureMode, completedAchievements, setCompletedAchievements, setModalVisible };
-
-    useEffect(() => {
-        const profilePictureCopy = { ...profilePicture };
-        switch (userData.picture){
-        case "../assets/images/penguin.jpg":
-            profilePictureCopy.url = require("../assets/images/penguin.jpg");
-            break;
-        case "../assets/images/husky.jpg":
-            profilePictureCopy.url = require("../assets/images/husky.jpg");
-            break;
-        case "../assets/images/corgi.jpg":
-            profilePictureCopy.url = require("../assets/images/corgi.jpg");
-            break;
-        }
-        setProfilePicture(profilePictureCopy);
-    }, [userData]);
 
     function clearEntirePlan() {
         const userCopy = { ...userData };
@@ -120,7 +103,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{`${generateGreeting()}${userData.name}`}</Text>
                         {!changePictureMode ? 
                             <View style={{ borderRadius: 30, overflow: "hidden" }}>
-                                <Image source={userData.uri !== "" ? { uri: userData.uri } : profilePicture.url} style={{ width: 80, height: 80 }}></Image>
+                                <Image source={{ uri: userData.picture }} style={{ width: 80, height: 80 }}></Image>
                             </View> :
                             <ProfilePictureList {...pictureProps}></ProfilePictureList>}
                         <Icon onPress={() => createSettingsButtonAlert()}

@@ -24,7 +24,7 @@ export async function grabProfilePictureFromCloud(userData: User) {
         .ref(`profilePictures/${userData.userAuthObj?.uid}-profile-pic.png`)
         .getDownloadURL()
         .then((url) => {
-            userCopy.uri = url;
+            userCopy.picture = url;
             console.log(`${url} has been successfully downloaded.`);
             saveDataToCloud(userCopy);
         })

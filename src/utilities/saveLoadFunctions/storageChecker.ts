@@ -24,9 +24,7 @@ export const checkForSave = async ({ userData, setUserData, setSupplementMap, se
             userCopy.data.selectedDates = adjustedSelectedDates;
             userCopy.picture = parsedJsonValue.picture;
             userCopy.achievements = parsedJsonValue.achievements;
-            if (parsedJsonValue.uri !== undefined){
-                userCopy.uri = parsedJsonValue.uri;
-            }
+
             setUserData(userCopy);
 
             saveDataToCloud(userCopy);

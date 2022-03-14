@@ -58,6 +58,3 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
-
-# Image assets
-/src/assets/images

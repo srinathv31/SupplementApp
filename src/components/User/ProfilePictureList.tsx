@@ -7,6 +7,7 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
 import RNFS from "react-native-fs";
+import { addPic, corgiPic, huskyPic, penguinPic } from "../../assets/imageURLs/profilePictureURLs";
 
 export default function ProfilePictureList({ setUserData, userData, setChangePictureMode, setCompletedAchievements, completedAchievements, setModalVisible }: {
     setUserData: AppProps["setUserData"], userData: AppProps["userData"],
@@ -17,33 +18,20 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const pictureList = [
-        require("../../assets/images/penguin.jpg"),
-        require("../../assets/images/husky.jpg"),
-        require("../../assets/images/corgi.jpg"),
-        require("../../assets/images/add.png"),
+        penguinPic,
+        huskyPic,
+        corgiPic,
+        addPic,
     ];
 
-    async function changeProfilePicture(index: number) {
+    async function changeProfilePicture(item: string) {
         const userCopy = { ...userData };
 
         if (completedAchievements[5].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 5);
         }
 
-        switch(index){
-        case 0:
-            userCopy.picture = "../assets/images/penguin.jpg";
-            userCopy.uri = "";
-            break;
-        case 1:
-            userCopy.picture = "../assets/images/husky.jpg";
-            userCopy.uri = "";
-            break;
-        case 2:
-            userCopy.picture = "../assets/images/corgi.jpg";
-            userCopy.uri = "";
-            break;
-        case 3:
+        if (item === addPic) {
             setIsLoading(true);
             // eslint-disable-next-line no-case-declarations
             const result = await launchImageLibrary({ mediaType: "photo" });
@@ -58,16 +46,18 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
                     .catch((err) => {
                         console.log(err.message);
                     });
-                userCopy.uri = newPath;
+                userCopy.picture = newPath;
 
                 // Save the image to the firebase storage for backup
                 if(result.assets[0].uri !== undefined) {
                     const uploadUri = Platform.OS === "ios" ? ""+result.assets[0].uri.replace("file://", "") : ""+result.assets[0].uri;
-                    saveProfilePictureToCloud(userData, uploadUri, userCopy.uri);
+                    saveProfilePictureToCloud(userData, uploadUri, userCopy.picture);
                 }
             }
-            break;
+        } else {
+            userCopy.picture = item;
         }
+
         setUserData(userCopy);
         saveUserToPhone(userCopy);
         setChangePictureMode(false);
@@ -78,9 +68,9 @@ export default function ProfilePictureList({ setUserData, userData, setChangePic
             { isLoading === false ? 
                 pictureList.map((item, index) => {
                     return (
-                        <TouchableOpacity key={index} onPress={() => changeProfilePicture(index)}>
+                        <TouchableOpacity key={index} onPress={() => changeProfilePicture(item)}>
                             <View style={{ borderRadius: 10, overflow: "hidden", margin: 10 }}>
-                                <Image source={item} style={{ width: 65, height: 65 }}></Image>
+                                <Image source={{ uri: item }} style={{ width: 65, height: 65 }}></Image>
                             </View>
                         </TouchableOpacity>
                     );
