@@ -7,4 +7,4 @@ export const calendarPic = "https://i.imgur.com/C7cXzIP.png";
 export const sharePic = "https://i.imgur.com/jOLqbfN.png";
 export const LogoPic = "https://i.imgur.com/XNAFF1e.png";
 export const moodPic = "https://i.imgur.com/poBSxY9.png";
-export const feedbackGIF = "https://i.imgur.com/MscQgPx.mp4";
+export const feedbackGIF = "https://i.imgur.com/mu49WYD.mp4";

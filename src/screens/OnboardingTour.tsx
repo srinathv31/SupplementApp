@@ -1,9 +1,10 @@
 // Source Imports
 import React from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import { addBatchPic, addButtonPic, calendarPic, dailyPic, feedbackGIF, introPic, LogoPic, moodPic, researchPic, sharePic } from "../assets/imageURLs/onboardingURLs";
 import { AppProps } from "../interfaces/Props";
+import Video from "react-native-video";
 
 export default function OnboardingTour({ setPage }: {
     setPage: AppProps["setPage"]
@@ -35,7 +36,7 @@ export default function OnboardingTour({ setPage }: {
                 {
                     backgroundColor: "#0B172A",
                     image: <Image source={{ uri: researchPic }} style={{ height: 215, width: 375 }} />,
-                    title: "Start your Research on Supplement Now",
+                    title: "Start your Research on Supplements Now",
                     subtitle: "Tap any Supplement Card to Get Up-To-Date Research, Recomended Dosage, and more 🔍",
                 },
                 {
@@ -65,9 +66,17 @@ export default function OnboardingTour({ setPage }: {
                 },
                 {
                     backgroundColor: "#0B172A",
-                    image: <Image source={{ uri: feedbackGIF }} style={{ height: 200, width: 375 }} />,
-                    title: "Beta",
-                    subtitle: "Cool",
+                    image: 
+                    <Video 
+                        source={{ uri: feedbackGIF }}   // Can be a URL or a local file.
+                        paused={false}
+                        repeat={true}
+                        muted={false}
+                        style={styles.backgroundVideo} 
+                    />,
+                    title: "Screenshot to Send Feedback Directly to the Dev Team ✅",
+                    subtitle: "",
+                    titleStyles: { color: "white", position: "absolute", bottom: 325, left: "-45%" }
                 },
                 {
                     backgroundColor: "#0B172A",
@@ -79,3 +88,13 @@ export default function OnboardingTour({ setPage }: {
         />
     );
 }
+const styles = StyleSheet.create({
+    backgroundVideo: {
+        position: "absolute",
+        top: -250,
+        left: 0,
+        bottom: 0,
+        right: 0,
+        height: 600
+    },
+});
