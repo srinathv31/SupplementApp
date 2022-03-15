@@ -1,27 +1,10 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Image, Pressable, View } from "react-native";
 import { AppProps } from "../../interfaces/Props";
 
 
 export default function UserPageButton( { setShowButtons, setModalVisible, modalVisible, userData }: AppProps ): JSX.Element {
-    const [profilePicture, setProfilePicture] = useState({ url: require("../../assets/images/pitbull.jpg") });
-
-    useEffect(() => {
-        const profilePictureCopy = { ...profilePicture };
-        switch (userData.picture){
-        case "../assets/images/pitbull.jpg":
-            profilePictureCopy.url = require("../../assets/images/pitbull.jpg");
-            break;
-        case "../assets/images/husky.jpg":
-            profilePictureCopy.url = require("../../assets/images/husky.jpg");
-            break;
-        case "../assets/images/tiger.jpg":
-            profilePictureCopy.url = require("../../assets/images/tiger.jpg");
-            break;
-        }
-        setProfilePicture(profilePictureCopy);
-    }, [userData]);
 
     function buttonHandle(){
         setShowButtons(false);
@@ -35,7 +18,7 @@ export default function UserPageButton( { setShowButtons, setModalVisible, modal
                 disabled={modalVisible.modal === "disable-header"}
             >
                 <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>
-                    <Image source={profilePicture.url} style={{ width: 40, height: 40 }}></Image>
+                    <Image source={{ uri: userData.picture }} style={{ width: 40, height: 40 }}></Image>
                 </View>
             </Pressable>
         </>

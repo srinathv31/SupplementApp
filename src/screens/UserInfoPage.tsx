@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Pressable, Alert, Image, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
@@ -14,25 +14,8 @@ import CustomToast from "../components/Toast/customToast";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
-    const [profilePicture, setProfilePicture] = useState({ url: require("../assets/images/pitbull.jpg") });
 
     const pictureProps = { setUserData, userData, setChangePictureMode, completedAchievements, setCompletedAchievements, setModalVisible };
-
-    useEffect(() => {
-        const profilePictureCopy = { ...profilePicture };
-        switch (userData.picture){
-        case "../assets/images/pitbull.jpg":
-            profilePictureCopy.url = require("../assets/images/pitbull.jpg");
-            break;
-        case "../assets/images/husky.jpg":
-            profilePictureCopy.url = require("../assets/images/husky.jpg");
-            break;
-        case "../assets/images/tiger.jpg":
-            profilePictureCopy.url = require("../assets/images/tiger.jpg");
-            break;
-        }
-        setProfilePicture(profilePictureCopy);
-    }, [userData]);
 
     function clearEntirePlan() {
         const userCopy = { ...userData };
@@ -118,9 +101,10 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                             />
                         </View>
                         <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{`${generateGreeting()}${userData.name}`}</Text>
-                        {!changePictureMode ? <View style={{ borderRadius: 30, overflow: "hidden" }}>
-                            <Image source={profilePicture.url} style={{ width: 80, height: 80 }}></Image>
-                        </View> :
+                        {!changePictureMode ? 
+                            <View style={{ borderRadius: 30, overflow: "hidden" }}>
+                                <Image source={{ uri: userData.picture }} style={{ width: 80, height: 80 }}></Image>
+                            </View> :
                             <ProfilePictureList {...pictureProps}></ProfilePictureList>}
                         <Icon onPress={() => createSettingsButtonAlert()}
                             name="options-outline" style={{ padding: 10 }} size={25} color="white"></Icon>

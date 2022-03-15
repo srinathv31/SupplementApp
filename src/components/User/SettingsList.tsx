@@ -7,6 +7,7 @@ import User from "../../interfaces/User";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import auth from "@react-native-firebase/auth";
 import { removeLoggedInKey } from "../../utilities/saveLoadFunctions/updateIsLoggedIn";
+import { penguinPic } from "../../assets/imageURLs/profilePictureURLs";
 
 export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements, setUserData }: {
     setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"],
@@ -71,7 +72,7 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
             name: "",
             lastName: "",
             age: "",
-            picture: "",
+            picture: penguinPic,
             data: {
                 supplementMap: {},
                 selectedDates: {}
