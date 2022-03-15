@@ -2,7 +2,9 @@
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 
-export default function ExploreFooterText(): JSX.Element {
+export default function ExploreFooterText({ setAllOpen }: {
+    setAllOpen: (s: boolean) => void
+}): JSX.Element {
     return(
         <View style={[styles.headerBlock, { flexDirection: "row", justifyContent: "space-between" }]}>
             <View>
@@ -10,7 +12,7 @@ export default function ExploreFooterText(): JSX.Element {
                 <Text style={styles.headerText}>{"These Supplements"}</Text>
             </View>
             <View>
-                <Text style={styles.seeAllText}>{"See All"}</Text>
+                <Text onPress={() => setAllOpen(true)} style={styles.seeAllText}>{"See All"}</Text>
             </View>
         </View>
     );

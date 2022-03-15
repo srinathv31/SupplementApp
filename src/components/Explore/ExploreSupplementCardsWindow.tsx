@@ -17,7 +17,9 @@ export default function ExploreSupplementCardsWindow({ setModalizeRefStatus, All
         for (let i=0; i<4; i++){
             let index = grabRandomSupplement();
             if (randomSupplementListCopy.includes(index)){
-                index++;
+                while(randomSupplementListCopy.includes(index)) {
+                    index = grabRandomSupplement();
+                }
             }
             randomSupplementListCopy.push(index);
         }

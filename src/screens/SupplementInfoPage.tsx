@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Divider from "../components/Design/Divider";
+import AllSupplementsHeader from "../components/Explore/AllSupplementsHeader";
 import CategoriesList from "../components/Explore/CategoriesList";
 import ExploreHeader from "../components/Explore/ExploreHeader";
 import ExploreSupplementsFooter from "../components/Explore/ExploreSupplementsFooter";
@@ -14,7 +15,8 @@ import { AppProps } from "../interfaces/Props";
 
 export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
     const [query, setQuery] = useState<string>("");
-    
+    const [allOpen, setAllOpen] = useState<boolean>(false);
+
     const [modalizeRefStatus, setModalizeRefStatus] = useState<boolean>(false);
     const modalizeRef = useRef<Modalize>(null);
 
@@ -36,23 +38,25 @@ export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
 
     return(
         <>
-            <ExploreHeader></ExploreHeader>
+            { allOpen === false ? <ExploreHeader></ExploreHeader> : <AllSupplementsHeader setAllOpen={setAllOpen} />}
             <SearchBar
                 setQuery={setQuery}
                 query={query}
             ></SearchBar>
-            { query === "" ? 
+            { query === "" && allOpen === false ? 
                 <View style={{ flex: 1 }}> 
                     <CategoriesList/>
                     <Divider length="small"></Divider>
-                    <ExploreSupplementsFooter setModalizeRefStatus={setModalizeRefStatus} AllProps={AllProps} />
+                    <ExploreSupplementsFooter setModalizeRefStatus={setModalizeRefStatus} AllProps={AllProps} setAllOpen={setAllOpen} />
                 </View>
                 :
-                <SupplementListView
-                    {...AllProps}
-                    fontSizeNumber={24}
-                    query={query}
-                ></SupplementListView>}
+                <View style={{ flex: 1 }}>
+                    <SupplementListView
+                        {...AllProps}
+                        fontSizeNumber={24}
+                        query={query}
+                    ></SupplementListView>
+                </View>}
             <WebModal
                 modalizeRef={modalizeRef}
                 url={AllProps.selectedSupplement.Supplement.url}
