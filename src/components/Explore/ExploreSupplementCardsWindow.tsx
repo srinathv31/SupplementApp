@@ -4,8 +4,12 @@ import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ExploreSupplementCard from "./ExploreSupplementCard";
 import SupplementList from "../../assets/SupplementList.json";
+import { AppProps } from "../../interfaces/Props";
 
-export default function ExploreSupplementCardsWindow(): JSX.Element {
+export default function ExploreSupplementCardsWindow({ setModalizeRefStatus, AllProps }: {
+    setModalizeRefStatus: (m: boolean) => void,
+    AllProps: AppProps
+}): JSX.Element {
     const [randomSupplementList, setRandomSupplementList] = useState<number[]>([0,1,2,3]);
 
     useEffect(() => {
@@ -30,12 +34,12 @@ export default function ExploreSupplementCardsWindow(): JSX.Element {
             <ScrollView>
                 <View style={{ flexDirection: "row", justifyContent: "center" }}>
                     <View>
-                        <ExploreSupplementCard supplementData={SupplementList[randomSupplementList[0]]} />
-                        <ExploreSupplementCard supplementData={SupplementList[randomSupplementList[1]]} />
+                        <ExploreSupplementCard setModalizeRefStatus={setModalizeRefStatus} supplementData={SupplementList[randomSupplementList[0]]} AllProps={AllProps} />
+                        <ExploreSupplementCard setModalizeRefStatus={setModalizeRefStatus} supplementData={SupplementList[randomSupplementList[1]]} AllProps={AllProps} />
                     </View>
                     <View>
-                        <ExploreSupplementCard supplementData={SupplementList[randomSupplementList[2]]} />
-                        <ExploreSupplementCard supplementData={SupplementList[randomSupplementList[3]]} />
+                        <ExploreSupplementCard setModalizeRefStatus={setModalizeRefStatus} supplementData={SupplementList[randomSupplementList[2]]} AllProps={AllProps} />
+                        <ExploreSupplementCard setModalizeRefStatus={setModalizeRefStatus} supplementData={SupplementList[randomSupplementList[3]]} AllProps={AllProps} />
                     </View>
                 </View>
             </ScrollView>
