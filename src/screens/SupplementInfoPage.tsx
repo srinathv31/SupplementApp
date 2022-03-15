@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { Modalize } from "react-native-modalize";
+import Divider from "../components/Design/Divider";
 import CategoriesList from "../components/Explore/CategoriesList";
 import ExploreHeader from "../components/Explore/ExploreHeader";
 import ExploreSupplementsFooter from "../components/Explore/ExploreSupplementsFooter";
@@ -43,6 +44,7 @@ export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
             { query === "" ? 
                 <View style={{ flex: 1 }}> 
                     <CategoriesList/>
+                    <Divider length="small"></Divider>
                     <ExploreSupplementsFooter setModalizeRefStatus={setModalizeRefStatus} AllProps={AllProps} />
                 </View>
                 :

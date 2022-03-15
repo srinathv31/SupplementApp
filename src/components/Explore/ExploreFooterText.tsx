@@ -6,8 +6,8 @@ export default function ExploreFooterText(): JSX.Element {
     return(
         <View style={[styles.headerBlock, { flexDirection: "row", justifyContent: "space-between" }]}>
             <View>
-                <Text style={styles.headerText}>{"Check Out These"}</Text>
-                <Text style={styles.headerText}>{"Supplements"}</Text>
+                <Text style={styles.headerText}>{"Check Out"}</Text>
+                <Text style={styles.headerText}>{"These Supplements"}</Text>
             </View>
             <View>
                 <Text style={styles.seeAllText}>{"See All"}</Text>
@@ -25,7 +25,9 @@ const styles = StyleSheet.create({
     },
     headerBlock: {
         paddingHorizontal: 5,
-        marginHorizontal: 10
+        marginHorizontal: 10,
+        paddingTop: 5,
+        marginTop: 5
     },
     seeAllText: {
         color: "white",
