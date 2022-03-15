@@ -65,7 +65,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             
             { categorySelect === "Home" && 
             <><Divider length="small"></Divider>
-                <CategoryBoxes setCategorySelect={setCategorySelect} />
+                <CategoryBoxes setCategorySelect={setCategorySelect} supplementMap={AllProps.supplementMap} daySelected={AllProps.daySelected} />
             </>}
             { categorySelect === "Supplement Schedule"
                     && <DailySupplementWindow

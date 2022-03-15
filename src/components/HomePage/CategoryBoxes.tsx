@@ -3,9 +3,14 @@ import { Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { AppProps } from "../../interfaces/Props";
+import CategoryBoxesStyles from "../../styles/CategoryBoxStyles";
+import { countDailySupplements } from "../../utilities/countDailySupplements";
 
-export default function CategoryBoxes({ setCategorySelect }: {
-    setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void
+export default function CategoryBoxes({ setCategorySelect, supplementMap, daySelected }: {
+    setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void,
+    supplementMap: AppProps["supplementMap"],
+    daySelected: AppProps["daySelected"]
 }) {
 
     const categories1 = [
@@ -24,6 +29,7 @@ export default function CategoryBoxes({ setCategorySelect }: {
                 {categories1.map((item, index) => {
                     return (
                         <LinearGradient onTouchEnd={item.function} key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
+                            {item.name === "Supplements" && <Text style={CategoryBoxesStyles.suppPillCount}>{`${countDailySupplements(supplementMap, daySelected)} Scheduled`}</Text>}
                             <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
                             <Icon name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
                             {item.name === "Food" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
@@ -45,3 +51,5 @@ export default function CategoryBoxes({ setCategorySelect }: {
         </View>
     );
 }
+
+
