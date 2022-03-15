@@ -11,6 +11,7 @@ import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import CustomToast from "../components/Toast/customToast";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
@@ -112,24 +113,26 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <StatsBoxes
                             userData={userData}
                         ></StatsBoxes>
-                        <SettingsList
-                            setPage={setPage}
-                            setModalVisible={setModalVisible}
-                            setCompletedAchievements={setCompletedAchievements}
-                            completedAchievements={completedAchievements}
-                            setUserData={setUserData}
-                        ></SettingsList>
-                        <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
-                            <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
-                                {
-                                    backgroundColor: pressed
-                                        ? "#111f36"
-                                        : "#112442"
-                                }
-                            ]}>
-                                <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
-                            </Pressable>
-                        </View>
+                        <ScrollView style={{ flex: 1, width: "100%" }} showsVerticalScrollIndicator={false}>
+                            <SettingsList
+                                setPage={setPage}
+                                setModalVisible={setModalVisible}
+                                setCompletedAchievements={setCompletedAchievements}
+                                completedAchievements={completedAchievements}
+                                setUserData={setUserData}
+                            ></SettingsList>
+                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
+                                <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
+                                    {
+                                        backgroundColor: pressed
+                                            ? "#111f36"
+                                            : "#112442"
+                                    }
+                                ]}>
+                                    <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
+                                </Pressable>
+                            </View>
+                        </ScrollView>
                     </View>
                 </View>
             </View>
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
     },
     modalView: {
-        width: "100%", padding: 10,
+        width: "95%", padding: 10,
         height: "95%",
         borderRadius: 10,
         borderWidth: 1,
