@@ -12,8 +12,9 @@ export default function SearchBar({ setQuery, query }: {
                 style={styles.input}
                 onChangeText={setQuery}
                 value={query}
-                multiline
                 placeholder="Search Supplement"
+                placeholderTextColor={"gray"}
+                returnKeyType="search"
             />
         </View>
     );
@@ -21,16 +22,16 @@ export default function SearchBar({ setQuery, query }: {
 
 const styles = StyleSheet.create({
     input: {
-        height: 40,
+        height: 50,
         minWidth: "65%",
         margin: 12,
-        borderWidth: 1,
+        borderColor: "#36D1DC",
+        borderBottomWidth: 1,
         padding: 10,
         paddingTop: 10,
-        backgroundColor: "white",
-        textAlign: "center"
+        color: "white"
     },
     bar: {
-        alignSelf: "center"
+        alignSelf: "center",
     }
 });
