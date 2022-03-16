@@ -11,6 +11,8 @@ import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import CustomToast from "../components/Toast/customToast";
+import { openComposer } from "react-native-email-link";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
@@ -112,24 +114,40 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <StatsBoxes
                             userData={userData}
                         ></StatsBoxes>
-                        <SettingsList
-                            setPage={setPage}
-                            setModalVisible={setModalVisible}
-                            setCompletedAchievements={setCompletedAchievements}
-                            completedAchievements={completedAchievements}
-                            setUserData={setUserData}
-                        ></SettingsList>
-                        <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
-                            <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
-                                {
-                                    backgroundColor: pressed
-                                        ? "#111f36"
-                                        : "#112442"
-                                }
-                            ]}>
-                                <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
-                            </Pressable>
-                        </View>
+                        <ScrollView style={{ flex: 1 }}>
+                            <SettingsList
+                                setPage={setPage}
+                                setModalVisible={setModalVisible}
+                                setCompletedAchievements={setCompletedAchievements}
+                                completedAchievements={completedAchievements}
+                                setUserData={setUserData}
+                            ></SettingsList>
+                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
+                                <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
+                                    {
+                                        backgroundColor: pressed
+                                            ? "#111f36"
+                                            : "#112442"
+                                    }
+                                ]}>
+                                    <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
+                                </Pressable>
+                            </View>
+                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
+                                <Pressable onPress={() => openComposer({
+                                    to: "happysvstudio@gmail.com",
+                                    subject: "Hey Dev Team!"
+                                })} style={({ pressed }) => [
+                                    {
+                                        backgroundColor: pressed
+                                            ? "#111f36"
+                                            : "#112442"
+                                    }
+                                ]}>
+                                    <Text style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Contact Us 😁: happysvstudio@gmail.com</Text>
+                                </Pressable>
+                            </View>
+                        </ScrollView>
                     </View>
                 </View>
             </View>
