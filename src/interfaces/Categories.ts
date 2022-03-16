@@ -1,5 +1,5 @@
 export interface Category {
-    name: string,
+    name: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
     picture: string,
-    icon: string
+    bio?: string,
 }

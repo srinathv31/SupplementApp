@@ -15,6 +15,7 @@ export default function SearchBar({ setQuery, query }: {
                 placeholder="Search Supplement"
                 placeholderTextColor={"gray"}
                 returnKeyType="search"
+                clearButtonMode="always"
             />
         </View>
     );

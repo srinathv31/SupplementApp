@@ -6,14 +6,14 @@ import { AppProps } from "../interfaces/Props";
 
 
 export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
-    const [expand, setExpand] = useState<boolean>(false);
+    const [expand, setExpand] = useState<"none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep">("none");
 
     return(
         <>
-            { expand === false ? 
+            { expand === "none" ? 
                 <MainExplorePage AllProps={AllProps} setExpand={setExpand}></MainExplorePage>
                 : 
-                <ExpandedCategoryPage AllProps={AllProps} setExpand={setExpand}></ExpandedCategoryPage>
+                <ExpandedCategoryPage AllProps={AllProps} setExpand={setExpand} expand={expand}></ExpandedCategoryPage>
             }
         </>
     );

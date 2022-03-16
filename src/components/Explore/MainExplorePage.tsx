@@ -15,7 +15,7 @@ import { AppProps } from "../../interfaces/Props";
 
 export default function MainExplorePage({ AllProps, setExpand }: {
     AllProps: AppProps,
-    setExpand: (e: boolean) => void
+    setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void
 }): JSX.Element {
     const [query, setQuery] = useState<string>("");
     const [allOpen, setAllOpen] = useState<boolean>(false);
@@ -39,9 +39,15 @@ export default function MainExplorePage({ AllProps, setExpand }: {
         modalizeRef.current?.open();
     }
 
+    useEffect(() => {
+        if (!query.trim()){
+            setQuery("");
+        }
+    }, [query]);
+
     return(
         <>
-            { allOpen === false ? <ExploreHeader></ExploreHeader> : <AllSupplementsHeader setAllOpen={setAllOpen} />}
+            { allOpen === false ? <ExploreHeader></ExploreHeader> : <AllSupplementsHeader setQuery={setQuery} setAllOpen={setAllOpen} />}
             <SearchBar
                 setQuery={setQuery}
                 query={query}

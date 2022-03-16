@@ -1,4 +1,5 @@
-export const generalHealthPic = "https://i.imgur.com/JjDolY8.jpg";
+export const generalHealthPic = "https://i.imgur.com/MhIfq0w.jpg";
 export const exercisePic = "https://i.imgur.com/m1TQY02.jpg";
-export const brainPic = "https://i.imgur.com/o9t0sa1.jpgg";
-export const allergiesPic = "https://i.imgur.com/WuxIgbD.jpg";
+export const brainPic = "https://i.imgur.com/RpZ8JLt.jpg";
+export const boneJointPic = "https://i.imgur.com/G74ktEY.jpg";
+export const anxietySleepPic = "https://i.imgur.com/26QlUj3.jpg";
