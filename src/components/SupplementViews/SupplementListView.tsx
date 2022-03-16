@@ -98,7 +98,6 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
     return(
         <>
             <View style={{ alignSelf: "center", flex: 1 }}>
-                { fontSizeNumber === 24 && <Text style={{ color: "white", fontSize: fontSizeNumber, textAlign: "center" }}>Supplement Info</Text>} 
                 <View style={{ flex: 1 }}>
                     <FlatList
                         contentContainerStyle={{ flexGrow: 1 }}
@@ -148,18 +147,20 @@ const styles = StyleSheet.create({
         overflow:"hidden",
         flexDirection: "row",
         justifyContent: "space-evenly",
-        color: "white"
+        color: "white",
+        width: 200
     },
     ListItemSmall: {
         fontSize: 20,
         fontWeight: "500",
         textAlign: "center",
-        padding: 5,
+        padding: 10,
         margin: 10,
         color: "white",
         borderWidth: 1,
         borderRadius: 10,
         backgroundColor: "#112442",
-        overflow:"hidden"
+        overflow:"hidden",
+        width: 180
     }
 });

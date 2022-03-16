@@ -1,24 +1,20 @@
 // Source Imports
 import React, { useState } from "react";
-import SearchBar from "../components/SupplementViews/SearchBar";
-import SupplementListView from "../components/SupplementViews/SupplementListView";
+import ExpandedCategoryPage from "../components/Explore/ExpandedCategoryPage";
+import MainExplorePage from "../components/Explore/MainExplorePage";
 import { AppProps } from "../interfaces/Props";
 
 
 export default function SupplementInfoPage(AllProps: AppProps): JSX.Element {
-    const [query, setQuery] = useState<string>("");
+    const [expand, setExpand] = useState<"none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep">("none");
 
     return(
         <>
-            <SearchBar
-                setQuery={setQuery}
-                query={query}
-            ></SearchBar>
-            <SupplementListView
-                {...AllProps}
-                fontSizeNumber={24}
-                query={query}
-            ></SupplementListView>
+            { expand === "none" ? 
+                <MainExplorePage AllProps={AllProps} setExpand={setExpand}></MainExplorePage>
+                : 
+                <ExpandedCategoryPage AllProps={AllProps} setExpand={setExpand} expand={expand}></ExpandedCategoryPage>
+            }
         </>
     );
 }

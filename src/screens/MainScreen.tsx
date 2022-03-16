@@ -180,6 +180,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                                 initialLayout={{ width: layout.width }}
                                 tabBarPosition="bottom"
                                 renderTabBar={() => <BottomMenuTab {...AllProps} />}
+                                onSwipeEnd={() => setShowButtons(false)}
                             /></> }
                     </View>
                 </View>
