@@ -11,6 +11,8 @@ export default function ExploreSupplementCard({ supplementData, setModalizeRefSt
     AllProps: AppProps
 }): JSX.Element {
 
+    const longSupplementNames = ["N-Acetylcysteine", "Scutellaria baicalensis", "Ashwagandha", "Rhodiola Rosea"];
+
     function handleWebOpen() {
         AllProps.setSelectedSupplement({ Supplement: supplementData, time: "", taken: "not-taken" });
         if (AllProps.completedAchievements[2].color === "white") {
@@ -23,7 +25,7 @@ export default function ExploreSupplementCard({ supplementData, setModalizeRefSt
         <View>
             <TouchableOpacity onPress={() => handleWebOpen()}>
                 <View>
-                    <Text style={styles.ListItem}>{supplementData.name}</Text>
+                    <Text style={[styles.ListItem, { fontSize: longSupplementNames.includes(supplementData.name) ? 18 : 24 }]}>{supplementData.name}</Text>
                 </View>
             </TouchableOpacity>
         </View>
