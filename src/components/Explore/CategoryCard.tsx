@@ -1,17 +1,20 @@
 // Source Imports
 import React from "react";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import { ImageBackground, TouchableOpacity, StyleSheet, Text, View } from "react-native";
 import { Category } from "../../interfaces/Categories";
 
-export default function CategoryCard({ category }: {
-    category: Category
+export default function CategoryCard({ category, setExpand }: {
+    category: Category,
+    setExpand: (e: boolean) => void
 }): JSX.Element {
     return(
         <View style={[styles.card, { flex: 1, width: 200 }]}>
-            <ImageBackground source={{ uri: category.picture }} style={{ flex: 1, padding: 10, margin: 10, borderRadius: 20, overflow: "hidden", justifyContent: "flex-end" }}>
-                <Text style={styles.cardText}>{""}</Text>
-                <Text style={styles.cardText}>{category.name}</Text>
-            </ImageBackground>
+            <TouchableOpacity onPress={() => setExpand(true)} style={{ flex: 1 }}>
+                <ImageBackground source={{ uri: category.picture }} style={{ flex: 1, padding: 10, margin: 10, borderRadius: 20, overflow: "hidden", justifyContent: "flex-end" }}>
+                    <Text style={styles.cardText}>{""}</Text>
+                    <Text style={styles.cardText}>{category.name}</Text>
+                </ImageBackground>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -36,4 +39,3 @@ const styles = StyleSheet.create({
         fontWeight: "600"
     }
 });
-

@@ -6,7 +6,9 @@ import { allergiesPic, brainPic, exercisePic, generalHealthPic } from "../../ass
 import { Category } from "../../interfaces/Categories";
 import CategoryCard from "./CategoryCard";
 
-export default function CategoriesList(): JSX.Element {
+export default function CategoriesList({ setExpand }: {
+    setExpand: (e: boolean) => void
+}): JSX.Element {
 
     const categories: Category[] = [
         { name: "Exercise", picture: exercisePic, icon: "home" },
@@ -23,7 +25,7 @@ export default function CategoriesList(): JSX.Element {
             <View style={{ flexDirection: "row", flex: 1 }}>
                 {categories.map((item, index) => {
                     return (
-                        <CategoryCard key={index} category={item}></CategoryCard>
+                        <CategoryCard key={index} category={item} setExpand={setExpand}></CategoryCard>
                     );
                 })}
             </View>
