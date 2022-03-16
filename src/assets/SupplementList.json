@@ -7,7 +7,7 @@
     "sideEffects": "When taken without sufficient water, stomach cramping can occur. Diarrhea and nausea can occur when too much creatine is taken at once, in which case doses should be spread out throughout the day and taken with meals.",
     "url": "https://examine.com/supplements/creatine/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "Fish Oil",
@@ -18,7 +18,7 @@
     "sideEffects": "Many fish oil supplements may contain harmful lipid peroxides (oxidized lipids that can damage cells), but it's unclear if this has notable consequences to health.",
     "url": "https://examine.com/supplements/fish-oil/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Brain Health"]
 },
 {
     "name": "Melatonin",
@@ -29,7 +29,7 @@
     "sideEffects": "Taking melatonin is not associated with negative feedback (when taking supplementation causes your body to produce less of a hormone). It is also not addictive, and is not toxic.",
     "url": "https://examine.com/supplements/melatonin/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Anxiety/Sleep"]
 },
 {
     "name": "Vitamin B12",
@@ -40,7 +40,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-b12/",
     "dosageMetric": "mcg",
-    "categories": []
+    "categories": ["General Health", "Brain Health"]
 },
 {
     "name": "Vitamin D",
@@ -51,7 +51,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-d/",
     "dosageMetric": "IU",
-    "categories": []
+    "categories": ["Brain Health"]
 },
 {
     "name": "Zinc",
@@ -62,7 +62,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/zinc/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["General Health"]
 },
 {
     "name": "Calcium",
@@ -73,7 +73,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/calcium/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Bone and Joint"]
 },
 {
     "name": "Citrulline",
@@ -84,7 +84,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/citrulline/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "Curcumin",
@@ -95,7 +95,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/curcumin/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Anxiety/Sleep"]
 },
 {
     "name": "Beta-Alanine",
@@ -106,7 +106,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/beta-alanine/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "L-Theanine",
@@ -117,7 +117,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/theanine/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Anxiety/Sleep"]
 },
 {
     "name": "Rhodiola Rosea",
@@ -128,7 +128,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/rhodiola-rosea/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Brain Health"]
 },
 {
     "name": "Glycine",
@@ -139,7 +139,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/glycine/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["General Health", "Bone and Joint"]
 },
 {
     "name": "Olive Oil",
@@ -150,7 +150,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/olive-oil/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["General Health"]
 },
 {
     "name": "Ashwagandha",
@@ -161,7 +161,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/ashwagandha/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Anxiety/Sleep"]
 },
 {
     "name": "Saffron",
@@ -183,7 +183,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-k/",
     "dosageMetric": "mcg",
-    "categories": []
+    "categories": ["General Health"]
 },
 {
     "name": "Vitamin C",
@@ -194,7 +194,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-c/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["General Health"]
 },
 {
     "name": "Magnesium",
@@ -205,7 +205,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/magnesium/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["General Health"]
 },
 {
     "name": "Alpha-GPC",
@@ -216,7 +216,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/alpha-gpc/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Brain Health"]
 },
 {
     "name": "D-Serine",
@@ -227,7 +227,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/d-serine/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Brain Health"]
 },
 {
     "name": "Scutellaria baicalensis",
@@ -238,7 +238,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/scutellaria-baicalensis/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Bone and Joint"]
 },
 {
     "name": "Glucosamine",
@@ -249,7 +249,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/glucosamine/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Bone and Joint"]
 },
 {
     "name": "Chondroitin",
@@ -260,7 +260,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/chondroitin/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Bone and Joint"]
 },
 {
     "name": "Beetroot",
@@ -271,7 +271,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/beet-root/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["General Health"]
 },
 {
     "name": "Whey Protein",
@@ -282,7 +282,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/whey-protein/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "Casein",
@@ -293,7 +293,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/casein-protein/",
     "dosageMetric": "g",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "L-Carnitine",
@@ -304,7 +304,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/carnitine/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "Ornithine",
@@ -315,7 +315,7 @@
     "sideEffects": "",
     "url": "https://examine.com/supplements/ornithine/",
     "dosageMetric": "mg",
-    "categories": []
+    "categories": ["Exercise"]
 },
 {
     "name": "N-Acetylcysteine",
