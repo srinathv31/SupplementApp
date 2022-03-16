@@ -6,7 +6,8 @@
     "safe": "Most of the supposed dangers of creatine are unfounded. Due to the bad reputation of performance-enhancing drugs, it has been wrongfully equated with the worst examples. It also increases levels of creatinine in the body, which are a marker of poor kidney function. However, the increase in creatinine isn't due to kidney damage, but simply more creatinine being produced. There is a lack of long-term studies in people with reduced kidney function, however, so caution could still be taken in that instance. Besides the minor gastrointestinal issues from excessive creatine, it is unlikely to be unsafe or bad for you.",
     "sideEffects": "When taken without sufficient water, stomach cramping can occur. Diarrhea and nausea can occur when too much creatine is taken at once, in which case doses should be spread out throughout the day and taken with meals.",
     "url": "https://examine.com/supplements/creatine/",
-    "dosageMetric": "g"
+    "dosageMetric": "g",
+    "categories": []
 },
 {
     "name": "Fish Oil",
@@ -16,7 +17,8 @@
     "safe": "",
     "sideEffects": "Many fish oil supplements may contain harmful lipid peroxides (oxidized lipids that can damage cells), but it's unclear if this has notable consequences to health.",
     "url": "https://examine.com/supplements/fish-oil/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Melatonin",
@@ -26,7 +28,8 @@
     "safe": "",
     "sideEffects": "Taking melatonin is not associated with negative feedback (when taking supplementation causes your body to produce less of a hormone). It is also not addictive, and is not toxic.",
     "url": "https://examine.com/supplements/melatonin/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Vitamin B12",
@@ -36,7 +39,8 @@
     "safe": "Vitamin B12 has not been shown to cause any harm, even at high doses.",
     "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-b12/",
-    "dosageMetric": "mcg"
+    "dosageMetric": "mcg",
+    "categories": []
 },
 {
     "name": "Vitamin D",
@@ -46,7 +50,8 @@
     "safe": "Most people are not deficient in vitamin D, but they do not have an optimal level of vitamin D either. Due to the many health benefits of vitamin D, supplementation is encouraged if optimal levels are not present in the body.",
     "sideEffects": "",
     "url": "https://examine.com/supplements/vitamin-d/",
-    "dosageMetric": "IU"
+    "dosageMetric": "IU",
+    "categories": []
 },
 {
     "name": "Zinc",
@@ -56,17 +61,8 @@
     "safe": "Large doses of zinc can produce nausea and other forms of gastrointestinal upset, particularly when taken on an empty stomach. Large doses of zinc can also cause a copper deficiency and lead to overdose. Many supplements use far more than the RDA, and a combination of supplements, fortified foods, and high zinc foods may lead to exceeding the tolerable upper intake level for adults, which is 40 mg per day. High dose zinc lozenges can lead to nausea and a metallic taste in the mouth, and should only be taken for a short time, if at all.",
     "sideEffects": "",
     "url": "https://examine.com/supplements/zinc/",
-    "dosageMetric": "mg"
-},
-{
-    "name": "Vitamin C",
-    "smallDescription": "It is a very popular dietary supplement due to its antioxidant properties, and safety.",
-    "description": "Vitamin C, or L-ascorbic acid, is a water-soluble essential vitamin. It is a very popular dietary supplement due to its antioxidant properties, safety, and low price.\n\nVitamin C is often supplemented to reduce the symptoms of the common cold.",
-    "benefits": "Vitamin C is unable to reduce the frequency of colds in a healthy population. An athlete who frequently undergoes intense physical activity can expect to cut the risk of getting a cold in half. Supplemental vitamin C is able to reduce the duration of a cold by 8-14% in any population, when it is taken as a daily preventative measure, or at the beginning of a cold. Though superloading vitamin C (5-10g daily) is said to be more effective, further research is needed to determine the accuracy of this claim.\n\nVitamin C is capable of being both an antioxidant and pro-oxidant, depending on what the body needs. This mechanism allows it to serve a variety of functions in the body.",
-    "safe": "",
-    "sideEffects": "",
-    "url": "https://examine.com/supplements/vitamin-c/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Calcium",
@@ -76,56 +72,260 @@
     "safe": "",
     "sideEffects": "",
     "url": "https://examine.com/supplements/calcium/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Citrulline",
-    "smallDescription": "In general, much research suggests a modest reduction in blood pressure and improvement in blood flow from chronic citrulline supplementation",
-    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
-    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "smallDescription": "Research suggests a modest reduction in blood pressure and improvement in blood flow from chronic citrulline supplementation",
+    "description": "",
+    "benefits": "",
     "safe": "",
     "sideEffects": "",
     "url": "https://examine.com/supplements/citrulline/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Curcumin",
     "smallDescription": "Curcumin is a yellow pigment found primarily in turmeric, a flowering plant of the ginger family.",
-    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
-    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "description": "",
+    "benefits": "",
     "safe": "",
     "sideEffects": "",
     "url": "https://examine.com/supplements/curcumin/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Beta-Alanine",
     "smallDescription": "Beta-alanine has been shown to enhance muscular endurance.",
-    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
-    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "description": "",
+    "benefits": "",
     "safe": "",
     "sideEffects": "",
     "url": "https://examine.com/supplements/beta-alanine/",
-    "dosageMetric": "g"
+    "dosageMetric": "g",
+    "categories": []
 },
 {
     "name": "L-Theanine",
     "smallDescription": "A reduction in anxiety, stress, and greater ability to relax.",
-    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
-    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "description": "",
+    "benefits": "",
     "safe": "",
     "sideEffects": "",
     "url": "https://examine.com/supplements/theanine/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
 },
 {
     "name": "Rhodiola Rosea",
     "smallDescription": "Rhodiola rosea is a herb in the rhodiola genera (Crassulaceae family) which has traditional usage as an anti-fatigue agent.",
-    "description": "Calcium is one of the 24 vitamins and minerals required for good health in the human body. It is a macromineral due to the relatively large amounts required in the diet (at times exceeding a gram a day) and is predominately found in dairy products and vegetables. Similar to many other nutrients, calcium does follow the general advice of 'if the diet is sufficient in calcium then supplementation is unnecessary' and excessive intakes of calcium do not promote greater benefits to health and may simply promote constipation.",
-    "benefits": "The major benefit of calcium is preventative, mitigating the risk of developing osteoporosis during the aging process. Osteoporosis can be at least partially seen as a condition resulting from long-term calcium insufficiency and, while not fully preventative, maintaining adequate calcium intake throughout life is associated with significantly reduced risk.",
+    "description": "",
+    "benefits": "",
     "safe": "",
     "sideEffects": "",
     "url": "https://examine.com/supplements/rhodiola-rosea/",
-    "dosageMetric": "mg"
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Glycine",
+    "smallDescription": "Glycine is an amino acid and neurotransmitter. It can play both stimulatory and depressant roles in the brain.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/glycine/",
+    "dosageMetric": "g",
+    "categories": []
+},
+{
+    "name": "Olive Oil",
+    "smallDescription": "It contains various anti-oxidant and anti-microbial compounds and is one of the healthier cooking oils.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/olive-oil/",
+    "dosageMetric": "g",
+    "categories": []
+},
+{
+    "name": "Ashwagandha",
+    "smallDescription": "Ashwagandha has been called the king of Ayurvedic herbs. It's best known for reducing stress and anxiety.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/ashwagandha/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Saffron",
+    "smallDescription": "Saffron is typically used as a spice. Low dose supplementation appears to confer antidepressive effects.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/saffron/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Vitamin K",
+    "smallDescription": "Vitamin K is an essential vitamin found in plants and plays an essential role in bone health and regulates blood clotting.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/vitamin-k/",
+    "dosageMetric": "mcg",
+    "categories": []
+},
+{
+    "name": "Vitamin C",
+    "smallDescription": "Vitamin C is an essential vitamin with antioxidant properties. It is frequently supplemented to ward off the common cold.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/vitamin-c/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Magnesium",
+    "smallDescription": "Magnesium deficiencies are common in developed countries. A lack of magnesium will raise blood pressure and reduce insulin sensitivity.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/magnesium/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Alpha-GPC",
+    "smallDescription": "It is a cholinergic compound that is used for cognitive-enhancement, and to increase power output in athletes.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/alpha-gpc/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "D-Serine",
+    "smallDescription": "D-Serine is an amino acid that plays a role in cognitive enhancement and schizophrenia treatment.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/d-serine/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Scutellaria baicalensis",
+    "smallDescription": "It is a traditional chinese medicine for the purposes of cardiovascular and cognitive health as well as longevity.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/scutellaria-baicalensis/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Glucosamine",
+    "smallDescription": "Glucosamine is a supplement derived from shellfish that can provide minor pain relief.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/glucosamine/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Chondroitin",
+    "smallDescription": "Chondroitin is a supplement frequently paired with Glucosamine to help with joint pain and stiffness.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/chondroitin/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Beetroot",
+    "smallDescription": "Beetroot (usually as juice) is a supplement with a high nitrate content that is said to improve physical performance secondary.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/beet-root/",
+    "dosageMetric": "g",
+    "categories": []
+},
+{
+    "name": "Whey Protein",
+    "smallDescription": "Whey protein powder is very popular due to its well-researched benefits for both muscle gain and fat loss.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/whey-protein/",
+    "dosageMetric": "g",
+    "categories": []
+},
+{
+    "name": "Casein",
+    "smallDescription": "Cow milk protein is 80% casein and 20% whey protein.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/casein-protein/",
+    "dosageMetric": "g",
+    "categories": []
+},
+{
+    "name": "L-Carnitine",
+    "smallDescription": "L-Carnitine and its many forms are useful in liver diseases, as well depression, metabolic health.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/carnitine/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Ornithine",
+    "smallDescription": "Preliminary evidence suggests that ornithine can improve athletic performance by reducing elevated levels of ammonia.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/ornithine/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "N-Acetylcysteine",
+    "smallDescription": "One of NAC's most important jobs is to help your body replenish its glutathione stores. Glutathione helps to get rid of cell-damaging free radicals.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://www.webmd.com/diet/health-benefits-nac#1",
+    "dosageMetric": "mg",
+    "categories": []
 }
 ]
