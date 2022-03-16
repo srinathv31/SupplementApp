@@ -55,6 +55,9 @@ This project is built using:
 * react-native-toast-message
 * react-native-vector-icons
 * rn-tooltip
+* react-native-fs
+* react-native-email-link
+* react-native-video
 
 ### Firebase (v14.5.0) and Authentication Packages
 * @react-native-firebase/app
