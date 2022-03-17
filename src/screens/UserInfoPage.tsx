@@ -1,60 +1,19 @@
 // Source Imports
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable, Alert, Image, Modal } from "react-native";
+import { View, Text, StyleSheet, Alert, Image, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import { AppProps } from "../interfaces/Props";
 import Icon from "react-native-vector-icons/Ionicons";
-import { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 import StatsBoxes from "../components/User/StatsBoxes";
 import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
-import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import CustomToast from "../components/Toast/customToast";
-import { openComposer } from "react-native-email-link";
-import { ScrollView } from "react-native-gesture-handler";
-import { shareEntirePlan } from "../utilities/shareFunctions";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
 
     const pictureProps = { setUserData, userData, setChangePictureMode, completedAchievements, setCompletedAchievements, setModalVisible };
-
-    function clearEntirePlan() {
-        const userCopy = { ...userData };
-
-        Object.keys(userCopy.data.supplementMap).forEach(date => {
-            delete userCopy.data.supplementMap[date];
-        });
-        Object.keys(userCopy.data.selectedDates).forEach(date => {
-            delete userCopy.data.selectedDates[date];
-        });
-
-        setUserData(userCopy);
-        saveUserToPhone(userCopy);
-
-        if (completedAchievements[8].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 8);
-        }
-    }
-
-    const createTwoButtonAlert = () => {
-        Alert.alert(
-            "Are You Sure You Want to Erase Your Entire Plan?",
-            "This cannot be undone",
-            [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                },
-                { 
-                    text: "Erase Entire Plan", onPress: () => clearEntirePlan(),
-                    style: "destructive"
-                }
-            ]
-        );
-    };
 
     const createSettingsButtonAlert = () => {
         if (changePictureMode === true) {
@@ -115,51 +74,14 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <StatsBoxes
                             userData={userData}
                         ></StatsBoxes>
-                        <ScrollView style={{ flex: 1 }}>
-                            <SettingsList
-                                setPage={setPage}
-                                setModalVisible={setModalVisible}
-                                setCompletedAchievements={setCompletedAchievements}
-                                completedAchievements={completedAchievements}
-                                setUserData={setUserData}
-                            ></SettingsList>
-                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
-                                <Pressable onPress={() => createTwoButtonAlert()} style={({ pressed }) => [
-                                    {
-                                        backgroundColor: pressed
-                                            ? "#111f36"
-                                            : "#112442"
-                                    }
-                                ]}>
-                                    <Text style={{ color: "crimson", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Erase Entire Plan</Text>
-                                </Pressable>
-                            </View>
-                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
-                                <Pressable onPress={() => openComposer({
-                                    to: "happysvstudio@gmail.com",
-                                    subject: "Hey Dev Team!"
-                                })} style={({ pressed }) => [
-                                    {
-                                        backgroundColor: pressed
-                                            ? "#111f36"
-                                            : "#112442"
-                                    }
-                                ]}>
-                                    <Text style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Contact Us 😁: happysvstudio@gmail.com</Text>
-                                </Pressable>
-                            </View>
-                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
-                                <Pressable onPress={() => shareEntirePlan(userData.data.supplementMap)} style={({ pressed }) => [
-                                    {
-                                        backgroundColor: pressed
-                                            ? "#111f36"
-                                            : "#112442"
-                                    }
-                                ]}>
-                                    <Text style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Export Your Entire Schedule</Text>
-                                </Pressable>
-                            </View>
-                        </ScrollView>
+                        <SettingsList
+                            setPage={setPage}
+                            setModalVisible={setModalVisible}
+                            setCompletedAchievements={setCompletedAchievements}
+                            completedAchievements={completedAchievements}
+                            setUserData={setUserData}
+                            userData={userData}
+                        ></SettingsList>
                     </View>
                 </View>
             </View>
