@@ -23,9 +23,9 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
         { name: "Achievements", color: "white", function: () => openAchievementPage() },
         { name: "Help", color: "white", function: () => createHelpAlert() },
         { name: "Log Out", color: "crimson", function: () => createLogOutAlert() },
-        { name: "Erase Entire Plan", color: "crimson", function: () => createTwoButtonAlert() },
         { name: "Contact Us 😁: happysvstudio@gmail.com", color: "white", function: () => sendEmail() },
-        { name: "Export/Share Your Entire Schedule", color: "#36D1DC", function: () => shareEntirePlan(userData.data.supplementMap) },
+        { name: "Share Your Entire Schedule (CSV/Excel)", color: "#36D1DC", function: () => shareEntirePlan(userData.data.supplementMap) },
+        { name: "Erase Entire Plan", color: "crimson", function: () => createTwoButtonAlert() },
     ];
 
     const createLogOutAlert = () => {

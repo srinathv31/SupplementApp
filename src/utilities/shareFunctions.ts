@@ -2,7 +2,7 @@ import Share from "react-native-share";
 import { Achievement } from "../interfaces/Achievements";
 import { AppProps } from "../interfaces/Props";
 import { SupplementObject } from "../interfaces/Supplement";
-
+import RNFS from "react-native-fs";
 interface SupplementShareObject {
     name: string,
     time: string,
@@ -39,7 +39,7 @@ export const sharePlan = async (supplementMap: AppProps["supplementMap"], daySel
 
 export const shareEntirePlan = async (supplementMap: AppProps["supplementMap"]) => {
     try {
-        await Share.open({ message: `My Supplement Schedule:\n\n${grabEntireSupplementPlan(supplementMap)}` });
+        await Share.open({ url: grabEntireSupplementPlan(supplementMap) });
     } catch (e) {
         console.log(e);
     }
@@ -63,6 +63,7 @@ function grabEntireSupplementPlan(supplementMap: AppProps["supplementMap"]){
 
     const listOfSortedDates: string[] = sortDates(listOfDates);
 
+    // Add each day into the supplementPlan Object in chronological order
     Object.values(listOfSortedDates).forEach(date => {
         Object.values(supplementMap[date].SupplementSchedule).forEach(item => {
             if (supplementPlan[date] === undefined){
@@ -81,8 +82,9 @@ function grabEntireSupplementPlan(supplementMap: AppProps["supplementMap"]){
         });
     });
     
-    console.log(JSON.stringify(supplementPlan, null, 2));
-    return JSON.stringify(supplementPlan, null, 2);
+    // convertJSONtoCSV returns a path where the .csv file is saved on the local machine
+    const csvPath = convertJSONtoCSV(supplementPlan);
+    return csvPath;
 }
 
 function sortDates(listOfDates: string[]){
@@ -108,4 +110,30 @@ function sortDates(listOfDates: string[]){
         listOfDateObjects.splice(tmpIndex, 1);
     }
     return sortedListOfDates;
+}
+
+function convertJSONtoCSV(supplementPlan: Record<string, SupplementShareObject[]>) {
+    let convertedCSVFile = "Date,Name,Time,Taken,TakenOffTime,Note,Dosage,Unit";
+    Object.keys(supplementPlan).forEach(date => {
+        Object.values(supplementPlan[date]).forEach(item => {
+            convertedCSVFile = convertedCSVFile.concat(`\n${date},${item.name},${item.time},${item.taken},${item.takenOffTime === undefined ? "" : item.takenOffTime},${item.note === undefined ? "" : item.note},${item.dosage === undefined ? "" : item.dosage},${item.unit}`);
+        });
+    });
+    const csvPath = createCSV(convertedCSVFile);
+    return csvPath;
+}
+
+function createCSV(convertedCSV: string) {
+    const path = RNFS.DocumentDirectoryPath + "/Supplement-Schedule-from-Vital-App.csv";
+
+    // write the .csv file to the local machine
+    RNFS.writeFile(path, convertedCSV, "utf8")
+        .then((success) => {
+            console.log("CSV FILE WRITTEN!", success);
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+
+    return path;
 }
