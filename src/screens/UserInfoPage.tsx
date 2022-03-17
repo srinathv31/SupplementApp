@@ -13,6 +13,7 @@ import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import CustomToast from "../components/Toast/customToast";
 import { openComposer } from "react-native-email-link";
 import { ScrollView } from "react-native-gesture-handler";
+import { shareEntirePlan } from "../utilities/shareFunctions";
 
 export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
@@ -145,6 +146,17 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                                     }
                                 ]}>
                                     <Text style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Contact Us 😁: happysvstudio@gmail.com</Text>
+                                </Pressable>
+                            </View>
+                            <View style={{ backgroundColor: "#112442", padding: 10, margin: 5, borderRadius: 5, width: "100%" }}>
+                                <Pressable onPress={() => shareEntirePlan(userData.data.supplementMap)} style={({ pressed }) => [
+                                    {
+                                        backgroundColor: pressed
+                                            ? "#111f36"
+                                            : "#112442"
+                                    }
+                                ]}>
+                                    <Text style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>Export Your Entire Schedule</Text>
                                 </Pressable>
                             </View>
                         </ScrollView>
