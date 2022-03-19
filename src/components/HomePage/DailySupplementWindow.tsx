@@ -93,6 +93,8 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
         item.taken = taken;
         setSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
+        setUserData(userData);
+        saveUserData(userData, setUserData, supplementMapCopy);
     }
 
     function handleStatusToggle(item: SupplementObject) {
