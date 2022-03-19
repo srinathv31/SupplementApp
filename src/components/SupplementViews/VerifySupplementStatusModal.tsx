@@ -14,7 +14,7 @@ export default function VerifySupplementStatusModal({ AllProps, supplementsToUpd
 
     const ExitButtons = [
         { name: "Submit", color: "#36D1DC", function: () => handleSubmit() },
-        { name: "Don't Change Taken Status", color: "red", function: () => AllProps.setModalVisible({ modal: "hide-modal" }) },
+        { name: "Don't Change Taken Status", color: "red", function: () => handleExit() },
     ];
 
     function handleButtonPress(item: SupplementObject, status: "not-taken" | "missed" | "taken-off-time" | "taken-on-time") {
@@ -42,6 +42,16 @@ export default function VerifySupplementStatusModal({ AllProps, supplementsToUpd
             if (supplement.taken !== "taken-off-time") {
                 supplementsToUpdateStatusCopy.splice(index,1);
             }
+        });
+        setSupplementsToUpdateStatus(supplementsToUpdateStatusCopy);
+        AllProps.setModalVisible({ modal: "hide-modal" });
+    }
+
+    function handleExit() {
+        const supplementsToUpdateStatusCopy = [...supplementsToUpdateStatus];
+
+        Object.values(supplementsToUpdateStatusCopy).forEach(supplement => {
+            supplement.taken = "not-taken";
         });
         setSupplementsToUpdateStatus(supplementsToUpdateStatusCopy);
         AllProps.setModalVisible({ modal: "hide-modal" });

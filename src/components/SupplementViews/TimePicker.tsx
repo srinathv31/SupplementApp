@@ -6,15 +6,18 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 
 export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, 
-    daySelected, multipleAddMode, completedAchievements, setCompletedAchievements }: 
+    daySelected, multipleAddMode, completedAchievements, setCompletedAchievements, setUserData, userData }: 
 	AppProps): JSX.Element {
     const [time, setTime] = useState<Date>(new Date());
 
     function handleJournal() {
-        multipleAddMode ? setModalVisible({ modal: "dosage-modal" }) : setModalVisible({ modal: "hide-modal" });
+        multipleAddMode ? 
+            setModalVisible({ modal: "dosage-modal" }) : 
+            (setModalVisible({ modal: "hide-modal" }), saveUserData(userData, setUserData, supplementMap));
     }
 	
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,8 +38,9 @@ export default function TimePicker({ setModalVisible, modalVisible, selectedSupp
         if(completedAchievements[13].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 13);
         }
-        setSupplementMap(supplementMap);
+        setSupplementMap(supplementMapCopy);
         setTime(currentDate);
+        setUserData(userData);
     };
 
     return(
