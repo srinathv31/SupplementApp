@@ -9,13 +9,17 @@ import ExploreWindow from "../components/HomePage/ExploreWindow";
 import MoodSlider from "../components/Mood/MoodSlider";
 import MoodTimelinePicker from "../components/Mood/MoodTimelinePicker";
 import WebModal from "../components/SlidingModals/WebModal";
+import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
 import { MoodTimelinePickerProps } from "../interfaces/MoodTimelineProps";
 import { AppProps } from "../interfaces/Props";
+import { SupplementObject } from "../interfaces/Supplement";
+import { checkUserSupplementStatus } from "../utilities/checkSupplementStatus";
 import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(AllProps: AppProps): JSX.Element {
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
+    const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);
 
     const MoodTimelineProps: MoodTimelinePickerProps = {
         daySelected: AllProps.daySelected,
@@ -27,9 +31,13 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
         setCompletedAchievements: AllProps.setCompletedAchievements
     };
 
+    // Check if user took supplement if applicable
+    useEffect(() => {
+        checkUserSupplementStatus(AllProps.supplementMap, AllProps.daySelected, AllProps.setModalVisible, setSupplementsToUpdateStatus);
+    }, []);
+
     const modalizeRef = useRef<Modalize>(null);
     const [modalizeRefStatus, setModalizeRefStatus] = useState<boolean>(false);
-
 
     useEffect(() => {
         modalizeRefStatus === true ? onOpen() : modalizeRef.current?.close();
@@ -40,7 +48,8 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
     }, [AllProps.index]);
 
     function onOpen() {
-        AllProps.setModalVisible({ modal: "disable-header" });
+        // Removed disable-header only for home web page so status-check-modal can work
+        // AllProps.setModalVisible({ modal: "disable-header" });
         AllProps.setShowButtons(false);
         modalizeRef.current?.open();
     }
@@ -49,6 +58,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
         <View style={{ flex: 1 }}>
             <MoodSlider {...AllProps}></MoodSlider>
             <MoodTimelinePicker {...MoodTimelineProps} />
+            <VerifySupplementStatusModal AllProps={AllProps} supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
             <ExploreWindow
                 setModalizeRefStatus={setModalizeRefStatus}
                 {...AllProps}
