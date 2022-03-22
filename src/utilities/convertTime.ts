@@ -23,15 +23,32 @@ export default function convertDateTimeToStringTime(currentDate: Date) {
     return hour + ":" + minutes + " " + ""+timeTag;
 }
 
-export function convertStringTimeToDateTime(supplement: SupplementObject) {
-	
+export function convertStringTimeToDateTime(supplement: SupplementObject, daySelected: string) {
+    const supplementCopy = { ...supplement };
+    let daySelectedCopy = daySelected.slice();
+
     // Set time strings to same length
-    if (supplement.time.length === 7) {
-        supplement.time = "0"+supplement.time;
+    if (supplementCopy.time.length === 7) {
+        supplementCopy.time = "0"+supplementCopy.time;
+    }
+    // Set date strings to same length
+    if (daySelectedCopy.length === 9) {
+        daySelectedCopy = "0"+daySelectedCopy;
     }
 
-    const time = supplement.time.substring(0,5);
-	
-    return new Date("2019-05-17T"+ time +":00");
+    // Set the hours in military format
+    if (supplementCopy.time.substring(6,8) === "PM" && supplementCopy.time.substring(0,2) !== "12") {
+        const militaryHour = +supplementCopy.time.substring(0,2) + 12;
+        const stringMinute = supplementCopy.time.substring(3,5);
+        const timeTagString = supplementCopy.time.substring(6,8);
+        supplementCopy.time = ""+militaryHour + ":" + stringMinute + timeTagString;
+    }
 
+    const time = supplementCopy.time.substring(0,5);
+
+    const year = daySelected.substring(5,9);
+    const day = daySelected.substring(2,4);
+    const month = daySelectedCopy.substring(0,2);
+    
+    return new Date(`${year}-${month}-${day}T${time}:00`);
 }
