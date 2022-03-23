@@ -14,6 +14,7 @@ import OnboardingTour from "./screens/OnboardingTour";
 import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLoggedIn";
 
 LogBox.ignoreLogs(["Sending"]);
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
     const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: penguinPic, data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements });
