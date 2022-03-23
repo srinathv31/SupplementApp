@@ -10,18 +10,15 @@ export default function StatsBoxes({ userData }: {
     function grabNumberOfDaysTakenSupplement() {
         const supplementMapCopy = { ...userData.data.supplementMap };
         let count = 0;
-        let flag = false;
 
         Object.keys(supplementMapCopy).forEach(day => {
-            Object.values(supplementMapCopy[day].SupplementSchedule).forEach( supp => {
-                if (!flag){
-                    if(supp.taken === "taken-on-time" || supp.taken === "taken-off-time"){
-                        count++;
-                        flag = true;
-                    }
+            for (let i=0;i<supplementMapCopy[day].SupplementSchedule.length;i++){
+                const supp = supplementMapCopy[day].SupplementSchedule[i];
+                if(supp.taken === "taken-on-time" || supp.taken === "taken-off-time"){
+                    count++;
+                    break;
                 }
-            });
-            flag = false;
+            }
         });
 
         return count;
