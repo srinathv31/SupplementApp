@@ -7,6 +7,7 @@ const BottomMenuTabStyles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-around",
         padding: 10,
+        alignItems: "center"
     },
     secondaryButtonRow: {
         flexDirection: "row",
