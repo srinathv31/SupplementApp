@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -28,11 +28,13 @@ export default function CategoryBoxes({ setCategorySelect, supplementMap, daySel
             <View style={{ flexDirection: "row", height: "40%" }}>
                 {categories1.map((item, index) => {
                     return (
-                        <LinearGradient onTouchEnd={item.function} key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
-                            {item.name === "Supplements" && <Text style={CategoryBoxesStyles.suppPillCount}>{`${countDailySupplements(supplementMap, daySelected)} Scheduled`}</Text>}
-                            <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
-                            <Icon name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
-                            {item.name === "Food" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
+                        <LinearGradient key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
+                            <TouchableOpacity onPress={item.function}>
+                                {item.name === "Supplements" && <Text style={CategoryBoxesStyles.suppPillCount}>{`${countDailySupplements(supplementMap, daySelected)} Scheduled`}</Text>}
+                                <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
+                                <Icon name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
+                                {item.name === "Food" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
+                            </TouchableOpacity>
                         </LinearGradient>
                     );
                 })}
@@ -40,10 +42,13 @@ export default function CategoryBoxes({ setCategorySelect, supplementMap, daySel
             <View style={{ flexDirection: "row", height: "40%" }}>
                 {categories2.map((item, index) => {
                     return (
-                        <LinearGradient onTouchEnd={item.function} key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
-                            <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
-                            <IconI name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
-                            <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>
+                        <LinearGradient key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
+                            <TouchableOpacity onPress={item.function}>
+                                {item.name === "Water" && <Text style={CategoryBoxesStyles.waterIntakeCount}>{"700/1000 ml"}</Text>}
+                                <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
+                                <IconI name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
+                                {item.name !== "Water" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
+                            </TouchableOpacity>
                         </LinearGradient>
                     );
                 })}
