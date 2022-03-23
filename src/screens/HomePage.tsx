@@ -62,6 +62,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             <VerifySupplementStatusModal AllProps={AllProps} supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
             <ExploreWindow
                 setModalizeRefStatus={setModalizeRefStatus}
+                categorySelect={categorySelect}
                 {...AllProps}
             ></ExploreWindow>
             <Divider length="full"></Divider>
