@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.1.5",
-    "@react-native-async-storage/async-storage": "^1.15.15",
+    "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-community/slider": "^4.1.12",
     "@react-native-firebase/analytics": "^14.5.0",
@@ -25,7 +25,6 @@
     "@types/download": "^8.0.1",
     "@types/react-native-snap-carousel": "^3.8.5",
     "ansi-regex": "^5.0.1",
-    "async": "^2.6.4",
     "node-fetch": "^2.6.7",
     "nth-check": "^2.0.1",
     "prop-types": "^15.8.1",
