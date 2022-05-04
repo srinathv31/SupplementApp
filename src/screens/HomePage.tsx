@@ -10,6 +10,7 @@ import MoodSlider from "../components/Mood/MoodSlider";
 import MoodTimelinePicker from "../components/Mood/MoodTimelinePicker";
 import WebModal from "../components/SlidingModals/WebModal";
 import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
+import SurveyModal from "../components/WaterTracking/SurveyModal";
 import WaterScreen from "../components/WaterTracking/WaterScreen";
 import { MoodTimelinePickerProps } from "../interfaces/MoodTimelineProps";
 import { AppProps } from "../interfaces/Props";
@@ -87,6 +88,7 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             { categorySelect === "Water"
                     && <WaterScreen />
             }
+            <SurveyModal {...AllProps}/>
             <WebModal
                 modalizeRef={modalizeRef}
                 url={AllProps.selectedSupplement.Supplement.url}
