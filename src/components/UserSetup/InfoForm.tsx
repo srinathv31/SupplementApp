@@ -1,6 +1,6 @@
 // Source Imports
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { AppProps } from "../../interfaces/Props";
 import User from "../../interfaces/User";
@@ -61,45 +61,47 @@ export default function InfoForm({ userData, setUserData, setPage }: {
     }
 
     return (
-        <KeyboardAvoidingView style={{ flex: 1, justifyContent: "center" }} behavior={"padding"}>
-            <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>{"Let's Get Your Details"}</Text>
-            <View style={styles.bar}>
-                <TextInput
-                    style={[styles.input, { borderBottomColor: warningForm.includes("firstName") === true ? "crimson" : selectedForm === "firstName" ? "#36D1DC" : "gray" }]}
-                    onChangeText={setName}
-                    value={name}
-                    placeholder="Enter First Name"
-                    placeholderTextColor={"gray"}
-                    onFocus={() => setSelectedForm("firstName")}
-                    onSubmitEditing={() => setSelectedForm("none")}
-                    returnKeyType="next"
-                />
-                <Text style={{ color: warningForm.includes("firstName") === true ? "crimson" : "gray", fontSize: 10, marginHorizontal: 12, paddingHorizontal: 10 }}>First Name</Text>
-            </View>
-            <View style={styles.bar}>
-                <TextInput
-                    style={[styles.input, { borderBottomColor: warningForm.includes("lastName") === true ? "crimson" : selectedForm === "lastName" ? "#36D1DC" : "gray" }]}
-                    onChangeText={setLastName}
-                    value={lastName}
-                    placeholder="Enter Last Name"
-                    placeholderTextColor={"gray"}
-                    onFocus={() => setSelectedForm("lastName")}
-                    onSubmitEditing={() => setSelectedForm("none")}
-                    returnKeyType="next"
-                />
-                <Text style={{ color: warningForm.includes("lastName") === true ? "crimson" : "gray", fontSize: 10, marginHorizontal: 12, paddingHorizontal: 10 }}>Last Name</Text>
-            </View>
-            <AgeBox
-                setSelectedForm={setSelectedForm}
-                selectedForm={selectedForm}
-                setAge={setAge}
-                age={age}
-                warningForm={warningForm}
-            ></AgeBox>
-            <LinearGradient colors={["#2193b0", "#6dd5ed"]} style={{ width: "80%", alignSelf: "center", borderRadius: 10, margin: 20 }}>
-                <Text onPress={() => handleSubmit()} style={styles.button}>Continue</Text>
-            </LinearGradient>
-        </KeyboardAvoidingView>
+        <SafeAreaView style={{ flex: 1 }}>
+            <KeyboardAvoidingView style={{ flex: 1, justifyContent: "center" }} behavior={"padding"}>
+                <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>{"Let's Get Your Details"}</Text>
+                <View style={styles.bar}>
+                    <TextInput
+                        style={[styles.input, { borderBottomColor: warningForm.includes("firstName") === true ? "crimson" : selectedForm === "firstName" ? "#36D1DC" : "gray" }]}
+                        onChangeText={setName}
+                        value={name}
+                        placeholder="Enter First Name"
+                        placeholderTextColor={"gray"}
+                        onFocus={() => setSelectedForm("firstName")}
+                        onSubmitEditing={() => setSelectedForm("none")}
+                        returnKeyType="next"
+                    />
+                    <Text style={{ color: warningForm.includes("firstName") === true ? "crimson" : "gray", fontSize: 10, marginHorizontal: 12, paddingHorizontal: 10 }}>First Name</Text>
+                </View>
+                <View style={styles.bar}>
+                    <TextInput
+                        style={[styles.input, { borderBottomColor: warningForm.includes("lastName") === true ? "crimson" : selectedForm === "lastName" ? "#36D1DC" : "gray" }]}
+                        onChangeText={setLastName}
+                        value={lastName}
+                        placeholder="Enter Last Name"
+                        placeholderTextColor={"gray"}
+                        onFocus={() => setSelectedForm("lastName")}
+                        onSubmitEditing={() => setSelectedForm("none")}
+                        returnKeyType="next"
+                    />
+                    <Text style={{ color: warningForm.includes("lastName") === true ? "crimson" : "gray", fontSize: 10, marginHorizontal: 12, paddingHorizontal: 10 }}>Last Name</Text>
+                </View>
+                <AgeBox
+                    setSelectedForm={setSelectedForm}
+                    selectedForm={selectedForm}
+                    setAge={setAge}
+                    age={age}
+                    warningForm={warningForm}
+                ></AgeBox>
+                <LinearGradient colors={["#2193b0", "#6dd5ed"]} style={{ width: "80%", alignSelf: "center", borderRadius: 10, margin: 20 }}>
+                    <Text onPress={() => handleSubmit()} style={styles.button}>Continue</Text>
+                </LinearGradient>
+            </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({

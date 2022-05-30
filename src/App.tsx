@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StatusBar, View } from "react-native";
+import { StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
 import { penguinPic } from "./assets/imageURLs/profilePictureURLs";
@@ -27,38 +27,36 @@ const App = () => {
 
     return (
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
-            <SafeAreaView style={{ flex: 1 }}>
-                <StatusBar barStyle={"light-content"} />
+            <StatusBar barStyle={"light-content"} />
         
-                { page.page === "login-screen" && 
+            { page.page === "login-screen" && 
                     <LoginScreen
                         setPage={setPage}
                         setUserData={setUserData}
                         userData={userData}
                     ></LoginScreen>
-                }
-                { page.page === "form-screen" && 
+            }
+            { page.page === "form-screen" && 
                     <InfoForm 
                         userData={userData} 
                         setUserData={setUserData} 
                         setPage={setPage}
                     ></InfoForm>
-                }
-                {page.page === "onboarding-screen" && 
+            }
+            {page.page === "onboarding-screen" && 
                     <OnboardingTour
                         setPage={setPage}
                     ></OnboardingTour>
-                }
-                {(page.page === "loading-screen" || page.page === "app-screen") && 
+            }
+            {(page.page === "loading-screen" || page.page === "app-screen") && 
                     <MainScreen
                         setPage={setPage}
                         page={page}
                         setUserData={setUserData}
                         userData={userData}
                     />
-                }
+            }
 
-            </SafeAreaView>
         </View>
     );
 };
