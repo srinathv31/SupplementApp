@@ -6,7 +6,7 @@ import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth 
 
 const weekString = generateWeekList(generateCurrentDateObject());
 
-export const countContext = createContext<AppProps>({
+export const allPropsContext = createContext<AppProps>({
     setUserData: () => userDefaultValue,
     userData: userDefaultValue,
     setDaySelected: () => getCurrentDate,

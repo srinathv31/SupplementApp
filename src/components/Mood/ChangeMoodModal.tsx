@@ -1,20 +1,18 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
 import MoodObject from "../../interfaces/Mood";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function ChangeMoodModal({ userData, setUserData, supplementMap, setSupplementMap, daySelected, setModalVisible, modalVisible, setOpen, objDaySelected }: {
-    supplementMap: AppProps["supplementMap"], setSupplementMap: AppProps["setSupplementMap"],
-    daySelected: AppProps["daySelected"], setModalVisible: AppProps["setModalVisible"],
-    modalVisible: AppProps["modalVisible"], setOpen: (o: boolean) => void,
-    userData: AppProps["userData"], setUserData: AppProps["setUserData"],
-    objDaySelected: AppProps["objDaySelected"]
+export default function ChangeMoodModal({ setOpen }: {
+    setOpen: (o: boolean) => void
 }): JSX.Element {
+    const { setModalVisible, modalVisible, setUserData, userData, setSupplementMap, supplementMap, objDaySelected, daySelected,  } = useContext(allPropsContext);
+
     const [moodList, setMoodList] = useState<MoodObject[]>([]);
     
     function changeMood() {

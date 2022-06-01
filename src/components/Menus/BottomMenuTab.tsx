@@ -1,16 +1,17 @@
 // Source Imports
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Animated, KeyboardAvoidingView, Pressable, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
-import { AppProps } from "../../interfaces/Props";
 import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 import { sharePlan, shareUrl } from "../../utilities/shareFunctions";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function BottomMenuTab({ userData, setUserData, setModalVisible, modalVisible, showButtons, setShowButtons, index, setIndex, setMultipleAddMode, setMood,
-    setSupplementMap, supplementMap, daySelected, objDaySelected, selectedSupplement }: AppProps): JSX.Element {
+export default function BottomMenuTab(): JSX.Element {
+    const { setShowButtons, showButtons, supplementMap, daySelected, setModalVisible, setMultipleAddMode, setIndex, index, selectedSupplement, modalVisible } = useContext(allPropsContext);
+
     const [open, setOpen] = useState(false);
     
     const MoodProps = {
@@ -54,20 +55,10 @@ export default function BottomMenuTab({ userData, setUserData, setModalVisible, 
         >
             <View style={{ zIndex: 100 }}>
                 <ChangeMoodModal
-                    setModalVisible={setModalVisible}
-                    modalVisible={modalVisible}
                     setOpen={setOpen}
-                    setSupplementMap={setSupplementMap}
-                    supplementMap={supplementMap}
-                    daySelected={daySelected}
-                    userData={userData}
-                    setUserData={setUserData}
-                    objDaySelected={objDaySelected}
                 ></ChangeMoodModal>
                 { open && <MoodPicker
                     {...MoodProps}
-                    setModalVisible={setModalVisible}
-                    setMood={setMood}
                     dropDirection="TOP"
                     mode="setting"
                 ></MoodPicker> }

@@ -19,13 +19,13 @@ import HomePage from "./HomePage";
 import SupplementInfoPage from "./SupplementInfoPage";
 import UserInfoPage from "./UserInfoPage";
 import WelcomePage from "./WelcomePage";
-import SupplementList from "../assets/SupplementList.json";
 import Page from "../interfaces/Page";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import CustomToast from "../components/Toast/customToast";
 import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
+import { allPropsContext } from "../contextHooks/AllPropsContext";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import PropTypes from "prop-types";
 import { requestUserPermission } from "../utilities/authentication/notifications";
@@ -166,25 +166,26 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={"light-content"} />
-        
-                <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal" && modalVisible.modal !== "disable-header") ? 0.5 : 1 }}>
-                    <View style={{ flex: 1 }}>
-                        { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
-                        { page.page === "app-screen" && <>
-                            <UserInfoPage {...AllProps}></UserInfoPage>
-                            <SupplementModal {...AllProps}></SupplementModal>
-                            <HeaderWindow {...AllProps}></HeaderWindow>
-                            <TabView
-                                navigationState={{ index, routes }}
-                                renderScene={renderScene}
-                                onIndexChange={setIndex}
-                                initialLayout={{ width: layout.width }}
-                                tabBarPosition="bottom"
-                                renderTabBar={() => <BottomMenuTab {...AllProps} />}
-                                onSwipeEnd={() => setShowButtons(false)}
-                            /></> }
+                <allPropsContext.Provider value={AllProps}>
+                    <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal" && modalVisible.modal !== "disable-header") ? 0.5 : 1 }}>
+                        <View style={{ flex: 1 }}>
+                            { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
+                            { page.page === "app-screen" && <>
+                                <UserInfoPage {...AllProps}></UserInfoPage>
+                                <SupplementModal {...AllProps}></SupplementModal>
+                                <HeaderWindow {...AllProps}></HeaderWindow>
+                                <TabView
+                                    navigationState={{ index, routes }}
+                                    renderScene={renderScene}
+                                    onIndexChange={setIndex}
+                                    initialLayout={{ width: layout.width }}
+                                    tabBarPosition="bottom"
+                                    renderTabBar={() => <BottomMenuTab />}
+                                    onSwipeEnd={() => setShowButtons(false)}
+                                /></> }
+                        </View>
                     </View>
-                </View>
+                </allPropsContext.Provider>
 
             </SafeAreaView>
             {modalVisible.modal !== "achievements-modal" && modalVisible.modal !== "journal" && modalVisible.modal !== "info-modal" && modalVisible.modal !== "user-modal" && modalVisible.modal !== "edit-name"
