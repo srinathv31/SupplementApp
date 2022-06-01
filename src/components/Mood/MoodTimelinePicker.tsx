@@ -1,15 +1,17 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import MoodTimelineFlatlist from "./MoodTimelineFlatlist";
 import IconI from "react-native-vector-icons/Ionicons";
 import { TimeLineObject } from "../../interfaces/TimeLine";
-import { MoodTimelinePickerProps } from "../../interfaces/MoodTimelineProps";
 import MoodObject from "../../interfaces/Mood";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MoodTimelinePicker({ setModalVisible, modalVisible, supplementMap, daySelected, setSupplementMap, completedAchievements, setCompletedAchievements }: MoodTimelinePickerProps): JSX.Element {
+export default function MoodTimelinePicker(): JSX.Element {
+    const { modalVisible, setSupplementMap, supplementMap, daySelected, setModalVisible, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
+
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(0);

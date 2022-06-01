@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import CategoryBoxesStyles from "../../styles/CategoryBoxStyles";
 import { countDailySupplements } from "../../utilities/countDailySupplements";
 
-export default function CategoryBoxes({ setCategorySelect, supplementMap, daySelected }: {
+export default function CategoryBoxes({ setCategorySelect }: {
     setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void,
-    supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"]
 }) {
+    const { supplementMap, daySelected } = useContext(allPropsContext);
 
     const categories1 = [
         { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("Supplement Schedule") },

@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -12,30 +12,21 @@ import WebModal from "../components/SlidingModals/WebModal";
 import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
 import SurveyModal from "../components/WaterTracking/SurveyModal";
 import WaterScreen from "../components/WaterTracking/WaterScreen";
-import { MoodTimelinePickerProps } from "../interfaces/MoodTimelineProps";
-import { AppProps } from "../interfaces/Props";
+import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { SupplementObject } from "../interfaces/Supplement";
 import { checkUserSupplementStatus } from "../utilities/checkSupplementStatus";
 import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
-export default function HomePage(AllProps: AppProps): JSX.Element {
+export default function HomePage(): JSX.Element {
+    const { supplementMap, daySelected, setModalVisible, selectedSupplement, index, setShowButtons } = useContext(allPropsContext);
+
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);
 
-    const MoodTimelineProps: MoodTimelinePickerProps = {
-        daySelected: AllProps.daySelected,
-        setModalVisible: AllProps.setModalVisible,
-        modalVisible: AllProps.modalVisible,
-        setSupplementMap: AllProps.setSupplementMap,
-        supplementMap: AllProps.supplementMap,
-        completedAchievements: AllProps.completedAchievements,
-        setCompletedAchievements: AllProps.setCompletedAchievements
-    };
-
     // Check if user took supplement if applicable
     useEffect(() => {
-        checkUserSupplementStatus(AllProps.supplementMap, AllProps.daySelected, AllProps.setModalVisible, setSupplementsToUpdateStatus);
+        checkUserSupplementStatus(supplementMap, daySelected, setModalVisible, setSupplementsToUpdateStatus);
     }, []);
 
     const modalizeRef = useRef<Modalize>(null);
@@ -47,25 +38,21 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
 
     useEffect(() => {
         setModalizeRefStatus(false);
-    }, [AllProps.index]);
+    }, [index]);
 
     function onOpen() {
         // Removed disable-header only for home web page so status-check-modal can work
-        // AllProps.setModalVisible({ modal: "disable-header" });
-        AllProps.setShowButtons(false);
+        // setModalVisible({ modal: "disable-header" });
+        setShowButtons(false);
         modalizeRef.current?.open();
     }
     
     return(
         <View style={{ flex: 1 }}>
-            <MoodSlider {...AllProps}></MoodSlider>
-            <MoodTimelinePicker {...MoodTimelineProps} />
-            <VerifySupplementStatusModal AllProps={AllProps} supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
-            <ExploreWindow
-                setModalizeRefStatus={setModalizeRefStatus}
-                categorySelect={categorySelect}
-                {...AllProps}
-            ></ExploreWindow>
+            <MoodSlider />
+            <MoodTimelinePicker />
+            <VerifySupplementStatusModal supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
+            <ExploreWindow setModalizeRefStatus={setModalizeRefStatus} categorySelect={categorySelect}></ExploreWindow>
             <Divider length="full"></Divider>
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                 { categorySelect !== "Home" && 
@@ -78,23 +65,21 @@ export default function HomePage(AllProps: AppProps): JSX.Element {
             
             { categorySelect === "Home" && 
             <><Divider length="small"></Divider>
-                <CategoryBoxes setCategorySelect={setCategorySelect} supplementMap={AllProps.supplementMap} daySelected={AllProps.daySelected} />
+                <CategoryBoxes setCategorySelect={setCategorySelect} />
             </>}
             { categorySelect === "Supplement Schedule"
-                    && <DailySupplementWindow
-                        {...AllProps}
-                    ></DailySupplementWindow>
+                    && <DailySupplementWindow />
             }
             { categorySelect === "Water"
                     && <WaterScreen />
             }
-            <SurveyModal {...AllProps}/>
+            <SurveyModal />
             <WebModal
                 modalizeRef={modalizeRef}
-                url={AllProps.selectedSupplement.Supplement.url}
+                url={selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
-                index={AllProps.index}
-                setModalVisible={AllProps.setModalVisible}
+                index={index}
+                setModalVisible={setModalVisible}
             ></WebModal>
         </View>
     );

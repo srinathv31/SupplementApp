@@ -1,12 +1,13 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Modal, View, StyleSheet, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import WaterSurveyForm from "./WaterSurveyForm";
 
-export default function SurveyModal({ setModalVisible, modalVisible }: AppProps): JSX.Element {
+export default function SurveyModal(): JSX.Element {
+    const { setModalVisible, modalVisible } = useContext(allPropsContext);
 
     return(
         <Modal
@@ -33,7 +34,7 @@ export default function SurveyModal({ setModalVisible, modalVisible }: AppProps)
                             data={[ "1", "2", "3" ]}
                             renderItem= {({ item, index }) => {
                                 return (
-                                    <WaterSurveyForm formType={item}/>
+                                    <WaterSurveyForm key={index} formType={item}/>
                                 );
                             }}
                             showsVerticalScrollIndicator={false}

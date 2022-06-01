@@ -151,7 +151,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
 	}) => {
         switch (route.key) {
         case "home":
-            return <HomePage {...AllProps}/>;
+            return <HomePage />;
         case "cal":
             return <CalendarRoute />;
         case "supp":

@@ -1,12 +1,17 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { MoodTimelineSupplementProps } from "../../interfaces/MoodTimelineProps";
 import MoodTimelineFlatlist from "./MoodTimelineFlatlist";
 import IconI from "react-native-vector-icons/Ionicons";
 import { TimeLineObject } from "../../interfaces/TimeLine";
+import MoodObject from "../../interfaces/Mood";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MoodTimlineSupplement({ supplementMap, daySelected, setSupplementMap, timelineData }: MoodTimelineSupplementProps): JSX.Element {
+export default function MoodTimlineSupplement({ timelineData }: {
+    timelineData: MoodObject
+}): JSX.Element {
+    const { setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
+
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(grabInitialStart);

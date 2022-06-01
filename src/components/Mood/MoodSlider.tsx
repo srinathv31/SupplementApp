@@ -1,12 +1,14 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
-import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
+export default function MoodSlider(): JSX.Element {
+    const { setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, objDaySelected } = useContext(allPropsContext);
+
     const [rangeValue, setRangeValue] = useState<number>(0);
     
     function handleSlider() {
