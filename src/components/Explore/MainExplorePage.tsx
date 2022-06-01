@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Divider from "../../components/Design/Divider";
@@ -10,13 +10,14 @@ import ExploreSupplementsFooter from "../../components/Explore/ExploreSupplement
 import WebModal from "../../components/SlidingModals/WebModal";
 import SearchBar from "../../components/SupplementViews/SearchBar";
 import SupplementListView from "../../components/SupplementViews/SupplementListView";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 
-export default function MainExplorePage({ AllProps, setExpand }: {
-    AllProps: AppProps,
+export default function MainExplorePage({ setExpand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void
 }): JSX.Element {
+    const { setModalVisible, index, setShowButtons, selectedSupplement } = useContext(allPropsContext);
+
     const [query, setQuery] = useState<string>("");
     const [allOpen, setAllOpen] = useState<boolean>(false);
 
@@ -31,11 +32,11 @@ export default function MainExplorePage({ AllProps, setExpand }: {
 
     useEffect(() => {
         setModalizeRefStatus(false);
-    }, [AllProps.index]);
+    }, [index]);
 
     function onOpen() {
-        AllProps.setModalVisible({ modal: "disable-header" });
-        AllProps.setShowButtons(false);
+        setModalVisible({ modal: "disable-header" });
+        setShowButtons(false);
         modalizeRef.current?.open();
     }
 
@@ -47,7 +48,7 @@ export default function MainExplorePage({ AllProps, setExpand }: {
 
     return(
         <>
-            { allOpen === false ? <ExploreHeader></ExploreHeader> : <AllSupplementsHeader setQuery={setQuery} setAllOpen={setAllOpen} />}
+            { allOpen === false ? <ExploreHeader /> : <AllSupplementsHeader setQuery={setQuery} setAllOpen={setAllOpen} />}
             <SearchBar
                 setQuery={setQuery}
                 query={query}
@@ -56,22 +57,21 @@ export default function MainExplorePage({ AllProps, setExpand }: {
                 <View style={{ flex: 1 }}> 
                     <CategoriesList setExpand={setExpand}/>
                     <Divider length="small"></Divider>
-                    <ExploreSupplementsFooter setModalizeRefStatus={setModalizeRefStatus} AllProps={AllProps} setAllOpen={setAllOpen} />
+                    <ExploreSupplementsFooter setModalizeRefStatus={setModalizeRefStatus} setAllOpen={setAllOpen} />
                 </View>
                 :
                 <View style={{ flex: 1 }}>
                     <SupplementListView
-                        {...AllProps}
                         fontSizeNumber={24}
                         query={query}
                     ></SupplementListView>
                 </View>}
             <WebModal
                 modalizeRef={modalizeRef}
-                url={AllProps.selectedSupplement.Supplement.url}
+                url={selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
-                index={AllProps.index}
-                setModalVisible={AllProps.setModalVisible}
+                index={index}
+                setModalVisible={setModalVisible}
             ></WebModal>
         </>
     );

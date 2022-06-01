@@ -155,7 +155,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
         case "cal":
             return <CalendarRoute />;
         case "supp":
-            return <SupplementInfoPage {...AllProps}/>;
+            return <SupplementInfoPage />;
         case "work":
             return <MoodAnalysis {...AllProps} />;
         default:
