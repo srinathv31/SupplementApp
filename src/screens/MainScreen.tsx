@@ -173,7 +173,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                             { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
                             { page.page === "app-screen" && <>
                                 <UserInfoPage />
-                                <SupplementModal {...AllProps}></SupplementModal>
+                                <SupplementModal />
                                 <HeaderWindow {...AllProps}></HeaderWindow>
                                 <TabView
                                     navigationState={{ index, routes }}
