@@ -1,10 +1,11 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Image, Pressable, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 
-export default function UserPageButton( { setShowButtons, setModalVisible, modalVisible, userData }: AppProps ): JSX.Element {
+export default function UserPageButton(): JSX.Element {
+    const { setShowButtons, setModalVisible, modalVisible, userData } = useContext(allPropsContext);
 
     function buttonHandle(){
         setShowButtons(false);

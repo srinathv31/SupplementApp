@@ -1,10 +1,12 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Text, Pressable, StyleSheet, View, TextInput } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function DosagePickerModal({ setModalVisible, modalVisible, selectedSupplement }: AppProps): JSX.Element {
+export default function DosagePickerModal(): JSX.Element {
+    const { setModalVisible, modalVisible, selectedSupplement } = useContext(allPropsContext);
+
     const [dosage, setDosage] = useState<string>("0");
 
     function handleDosageInput() {

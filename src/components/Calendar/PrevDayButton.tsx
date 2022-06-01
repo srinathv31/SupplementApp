@@ -1,14 +1,15 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 
-export default function PrevDayButton({ userData, setUserData, setDaySelected, setObjDaySelected, objDaySelected, modalVisible }: AppProps): JSX.Element {
+export default function PrevDayButton(): JSX.Element {
+    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, modalVisible } = useContext(allPropsContext);
 
     function grabPrevDay(day: DateData) {
         const userCopy = { ...userData };

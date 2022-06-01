@@ -1,17 +1,17 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 
-export default function TimePicker({ setModalVisible, modalVisible, selectedSupplement, setSupplementMap, supplementMap, 
-    daySelected, multipleAddMode, completedAchievements, setCompletedAchievements, setUserData, userData }: 
-	AppProps): JSX.Element {
+export default function TimePicker(): JSX.Element {
+    const { multipleAddMode, setModalVisible, setUserData, userData, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setSupplementMap, modalVisible } = useContext(allPropsContext);
+
     const [time, setTime] = useState<Date>(new Date());
 
     function handleJournal() {

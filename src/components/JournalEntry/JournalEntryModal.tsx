@@ -1,7 +1,7 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { journalDot } from "../../utilities/calendarDots";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
@@ -10,9 +10,8 @@ import JournalTextEntry from "./JournalTextEntry";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import Tooltip from "rn-tooltip";
 
-export default function JournalEntryModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, daySelected, setJournalText, journalText, objDaySelected, completedAchievements, setCompletedAchievements }: 
-	AppProps): JSX.Element {
-
+export default function JournalEntryModal(): JSX.Element {
+    const { setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, journalText } = useContext(allPropsContext);
 
     function handleJournal() {
         const userCopy = { ...userData };
@@ -78,10 +77,7 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
                     <View style={{ flexDirection: "row" }}>
                         <Text style={styles.modalText}>{daySelected + " Journal Entry"}</Text>
                     </View>
-                    <JournalTextEntry
-                        setJournalText={setJournalText}
-                        journalText={journalText}
-                    />
+                    <JournalTextEntry />
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => handleJournal()}
@@ -89,7 +85,6 @@ export default function JournalEntryModal({ setUserData, userData, setModalVisib
                         <Text style={styles.textStyle}>Close Journal</Text>
                     </Pressable>
                 </View>
-
             </View>
             <CustomToast />
         </Modal>

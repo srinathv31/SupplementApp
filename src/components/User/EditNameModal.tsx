@@ -1,12 +1,14 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import CustomToast from "../Toast/customToast";
 
-export default function EditNameModal({ setModalVisible, modalVisible, userData, setUserData, completedAchievements, setCompletedAchievements }: AppProps): JSX.Element {
+export default function EditNameModal(): JSX.Element {
+    const { setModalVisible, userData, setCompletedAchievements, completedAchievements, setUserData, modalVisible } = useContext(allPropsContext);
+
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [selectedForm, setSelectedForm] = useState<"firstName"|"lastName"|"age"|"none">("none");

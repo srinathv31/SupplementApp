@@ -1,18 +1,16 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
-import { AppProps } from "../interfaces/Props";
 import Icon from "react-native-vector-icons/Ionicons";
 import AchievementsList from "../components/Achievements/AchievementsList";
 import ScoreCard from "../components/Achievements/ScoreCard";
 import CustomToast from "../components/Toast/customToast";
+import { allPropsContext } from "../contextHooks/AllPropsContext";
 
-export default function AchievementScreen({ userData, modalVisible, setModalVisible, completedAchievements }: {
-    userData: AppProps["userData"],
-    setModalVisible: AppProps["setModalVisible"], modalVisible: AppProps["modalVisible"],
-    completedAchievements: AppProps["completedAchievements"]
-}): JSX.Element {
+export default function AchievementScreen(): JSX.Element {
+    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+
     const [numberOfAchievements, setNumberOfAchievements] = useState<number>(0);
 
     return(
@@ -36,18 +34,9 @@ export default function AchievementScreen({ userData, modalVisible, setModalVisi
                             />
                         </View>
                         <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10, paddingBottom: 0 }}>{`${userData.name}'s Achievements`}</Text>
-                        
-                        <ScoreCard
-                            userData={userData}
-                            numberOfAchievements={numberOfAchievements}
-                        ></ScoreCard>
-                        
+                        <ScoreCard numberOfAchievements={numberOfAchievements} />
                         <Divider length="small"></Divider>
-                        <AchievementsList
-                            setNumberOfAchievements={setNumberOfAchievements}
-                            completedAchievements={completedAchievements}
-                            numberOfAchievements={numberOfAchievements}
-                        ></AchievementsList>
+                        <AchievementsList  setNumberOfAchievements={setNumberOfAchievements} numberOfAchievements={numberOfAchievements} />
                     </View>
                 </View>
             </View>

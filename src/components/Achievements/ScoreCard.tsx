@@ -1,13 +1,14 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Image, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import * as Progress from "react-native-progress";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function ScoreCard({ userData, numberOfAchievements }: {
-    userData: AppProps["userData"],
+export default function ScoreCard({ numberOfAchievements }: {
     numberOfAchievements: number
 }): JSX.Element {
+    const { userData } = useContext(allPropsContext);
+
     return(
         <View style={{ flexDirection: "row" }}>
             <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>

@@ -174,7 +174,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                             { page.page === "app-screen" && <>
                                 <UserInfoPage />
                                 <SupplementModal />
-                                <HeaderWindow {...AllProps}></HeaderWindow>
+                                <HeaderWindow />
                                 <TabView
                                     navigationState={{ index, routes }}
                                     renderScene={renderScene}
@@ -187,7 +187,6 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                         </View>
                     </View>
                 </allPropsContext.Provider>
-
             </SafeAreaView>
             {modalVisible.modal !== "achievements-modal" && modalVisible.modal !== "journal" && modalVisible.modal !== "info-modal" && modalVisible.modal !== "user-modal" && modalVisible.modal !== "edit-name"
                 && modalVisible.modal !== "weekly-modal" && modalVisible.modal !== "supplement-modal"

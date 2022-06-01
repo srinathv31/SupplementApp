@@ -1,11 +1,12 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Pressable } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 
-export default function JournalButton( { setModalVisible, setJournalText, daySelected, setSupplementMap, supplementMap, modalVisible }: AppProps): JSX.Element {
+export default function JournalButton(): JSX.Element {
+    const { setSupplementMap, supplementMap, setModalVisible, modalVisible, daySelected, setJournalText } = useContext(allPropsContext);
 
     function HandleJournalOpen() {
         const supplementMapCopy = { ...supplementMap };

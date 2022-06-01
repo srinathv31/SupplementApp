@@ -1,7 +1,6 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import { Calendar } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
 import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
@@ -11,8 +10,11 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode, completedAchievements, setCompletedAchievements }: AppProps): JSX.Element {
+export default function MultipleDatePicker(): JSX.Element {
+    const { setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap, setMultipleAddMode } = useContext(allPropsContext);
+
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
     function addSupplement(item: Supplement, dayString: string) {
