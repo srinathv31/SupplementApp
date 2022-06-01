@@ -22,7 +22,7 @@ export interface AppProps {
     setIndex: (i: number) => void,
     index: number,
     setPage: (p: Page) => void,
-    page: Page
+    page: Page,
     setJournalText: (j: string) => void,
     journalText: string,
     setWeek: (w: WeekDay[]) => void,

@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
-import { penguinPic } from "./assets/imageURLs/profilePictureURLs";
 import InfoForm from "./components/UserSetup/InfoForm";
-import { ListOfAchievements } from "./interfaces/Achievements";
+import { userDefaultValue } from "./interfaces/DefaultValues";
 import Page from "./interfaces/Page";
 import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
@@ -17,7 +16,7 @@ LogBox.ignoreLogs(["Sending"]);
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
-    const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: penguinPic, data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements });
+    const [userData, setUserData] = useState<User>(userDefaultValue);
     const [page, setPage] = useState<Page>({ page: "login-screen" });
 
     // If User is previously logged in => continue to loading screen with previous account

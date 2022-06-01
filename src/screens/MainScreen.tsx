@@ -29,6 +29,7 @@ import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/sa
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import PropTypes from "prop-types";
 import { requestUserPermission } from "../utilities/authentication/notifications";
+import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen({ page, setPage, userData, setUserData }: {
@@ -57,7 +58,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
     // Sets Animation for Weekly modal
     const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
     // Tracks selected supplement for mass adding and time changing features
-    const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>({ Supplement: SupplementList[0], time: "", taken: "not-taken" });
+    const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
     // Sets app in multipleAdd State mode
     const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
     // Tracks selected mood for analysis and inputting mood trends
