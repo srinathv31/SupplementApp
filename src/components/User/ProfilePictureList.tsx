@@ -1,20 +1,19 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ActivityIndicator, Image, Platform, TouchableOpacity, View } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
-import { AppProps } from "../../interfaces/Props";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
 import RNFS from "react-native-fs";
 import { addPic, corgiPic, huskyPic, penguinPic } from "../../assets/imageURLs/profilePictureURLs";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function ProfilePictureList({ setUserData, userData, setChangePictureMode, setCompletedAchievements, completedAchievements, setModalVisible }: {
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"],
+export default function ProfilePictureList({ setChangePictureMode }: {
     setChangePictureMode: (p: boolean) => void,
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
-    setModalVisible: AppProps["setModalVisible"]
 }): JSX.Element {
+    const { setUserData, userData, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const pictureList = [

@@ -1,8 +1,7 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { ListOfAchievements } from "../../interfaces/Achievements";
-import { AppProps } from "../../interfaces/Props";
 import User from "../../interfaces/User";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import auth from "@react-native-firebase/auth";
@@ -12,12 +11,10 @@ import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData"
 import { openComposer } from "react-native-email-link";
 import { shareEntirePlan } from "../../utilities/shareFunctions";
 import { FlatList } from "react-native-gesture-handler";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements, setUserData, userData }: {
-    setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"]
-}): JSX.Element {
+export default function SettingsList(): JSX.Element {
+    const { setCompletedAchievements, completedAchievements, setModalVisible, setPage, userData, setUserData } = useContext(allPropsContext);
 
     const SettingButtons = [
         { name: "Achievements", color: "white", function: () => openAchievementPage() },

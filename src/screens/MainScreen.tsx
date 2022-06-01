@@ -172,7 +172,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                         <View style={{ flex: 1 }}>
                             { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
                             { page.page === "app-screen" && <>
-                                <UserInfoPage {...AllProps}></UserInfoPage>
+                                <UserInfoPage />
                                 <SupplementModal {...AllProps}></SupplementModal>
                                 <HeaderWindow {...AllProps}></HeaderWindow>
                                 <TabView
