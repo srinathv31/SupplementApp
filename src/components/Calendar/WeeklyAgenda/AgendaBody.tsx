@@ -1,5 +1,5 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { View, FlatList, TouchableHighlight, Pressable, Text } from "react-native";
@@ -12,9 +12,11 @@ import { SupplementObject } from "../../../interfaces/Supplement";
 import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../../interfaces/Props";
+import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 
-export default function AgendaBody({ setUserData, userData, setShowStatusButtons, setSupplementMap, setWeek, week, setMonthText, setSelectedSupplement, setIndex, showStatusButtons, daySelected, supplementMap, selectedSupplement, setModalVisible, setSwipeAnimation, setObjDaySelected, setDaySelected }: WeekProps): JSX.Element {
-    
+export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
+    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, setIndex, setModalVisible, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
         const parentDataMapKey = parentData.dateString;

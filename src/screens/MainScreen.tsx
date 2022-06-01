@@ -141,8 +141,9 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
         completedAchievements
     };
 
+    // Using route for animation to play through
     const CalendarRoute = (): JSX.Element => {
-        return <CalendarPage {...AllProps} ></CalendarPage>;
+        return <CalendarPage />;
     };
 
     const renderScene = ({ route }: {

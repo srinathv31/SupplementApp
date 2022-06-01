@@ -1,7 +1,6 @@
 // Source Imports
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Animated, PanResponder, Pressable, Text, View } from "react-native";
-import { AppProps } from "../interfaces/Props";
 import { generateNextWeek, generatePrevWeek, grabMonth } from "../utilities/getCurrentDate";
 import Modal from "react-native-modal";
 import { styles } from "../styles/WeekStyles";
@@ -9,28 +8,16 @@ import { WeekProps } from "../interfaces/WeekProps";
 import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
 import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 import CustomToast from "../components/Toast/customToast";
+import { allPropsContext } from "../contextHooks/AllPropsContext";
 
-export default function WeeklySupplementModal({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, setDaySelected, daySelected, setObjDaySelected, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setSelectedSupplement, selectedSupplement, setIndex }: AppProps): JSX.Element {
+export default function WeeklySupplementModal(): JSX.Element {
+    const { setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setModalVisible, modalVisible } = useContext(allPropsContext);
+
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
     const WeekPropValues: WeekProps = {
-        setWeek,
-        week,
-        setMonthText,
-        setSwipeAnimation,
-        daySelected,
-        setModalVisible,
-        supplementMap,
-        selectedSupplement,
-        setObjDaySelected,
-        setDaySelected,
-        setIndex,
-        setSelectedSupplement,
         setShowStatusButtons,
         showStatusButtons,
-        setUserData,
-        userData,
-        setSupplementMap
     };
 
     function switchWeek(direction: string) {
@@ -92,12 +79,8 @@ export default function WeeklySupplementModal({ setUserData, userData, setModalV
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <Text style={{ fontSize: 24, color: "white", padding: 10, textAlign: "center" }}>{monthText}</Text>
-                        <AgendaHeader
-                            {...WeekPropValues}
-                        ></AgendaHeader>
-                        <AgendaBody
-                            {...WeekPropValues}
-                        ></AgendaBody>
+                        <AgendaHeader />
+                        <AgendaBody {...WeekPropValues}/>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => (setModalVisible({ modal: "hide-modal" }), setSwipeAnimation("fadeIn"))}
