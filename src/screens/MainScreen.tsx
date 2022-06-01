@@ -157,7 +157,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
         case "supp":
             return <SupplementInfoPage />;
         case "work":
-            return <MoodAnalysis {...AllProps} />;
+            return <MoodAnalysis />;
         default:
             return null;
         }
