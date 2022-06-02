@@ -9,14 +9,14 @@ export default function UserPageButton(): JSX.Element {
 
     function buttonHandle(){
         setShowButtons(false);
-        setModalVisible({ modal: "user-modal" });
+        setModalVisible("user-modal");
     }
 
     return(
         <>
             <Pressable 
                 onPress={() => buttonHandle()}
-                disabled={modalVisible.modal === "disable-header"}
+                disabled={modalVisible === "disable-header"}
             >
                 <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>
                     <Image source={{ uri: userData.picture }} style={{ width: 40, height: 40 }}></Image>

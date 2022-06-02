@@ -44,7 +44,7 @@ export default function NextDayButton(): JSX.Element {
         <>
             <Pressable 
                 onPress={() => setDaySelected(grabNextDay(objDaySelected))}
-                disabled={modalVisible.modal === "disable-header"}>
+                disabled={modalVisible === "disable-header"}>
                 <Icon
                     style={{ padding: 10,
                         margin: 15,

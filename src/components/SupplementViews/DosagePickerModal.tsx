@@ -15,16 +15,16 @@ export default function DosagePickerModal(): JSX.Element {
             return;
         }
         selectedSupplement.dosage = dosage;
-        setModalVisible({ modal: "calendar-modal" });
+        setModalVisible("calendar-modal");
     }
 
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "dosage-modal" ? true : false}
+            visible={modalVisible === "dosage-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

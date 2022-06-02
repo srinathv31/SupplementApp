@@ -20,7 +20,7 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
-        setModalVisible({ modal: "disable-header" });
+        setModalVisible("disable-header");
         setShowButtons(false);
         modalizeRef.current?.open();
     };

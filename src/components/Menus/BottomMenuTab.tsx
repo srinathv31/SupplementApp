@@ -45,7 +45,7 @@ export default function BottomMenuTab(): JSX.Element {
 
     function handleMoodOpen() {
         (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "") ? 
-            setModalVisible({ modal: "mood-change-modal" }) :
+            setModalVisible("mood-change-modal") :
             setOpen(!open);
     }
 
@@ -66,7 +66,7 @@ export default function BottomMenuTab(): JSX.Element {
                     {showButtons && <Animated.View style={{ opacity: fadeAnim }}>
                         <View style={BottomMenuTabStyles.secondaryButtonRow}>
                             <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => setModalVisible({ modal: "supplement-modal" })}
+                                <Icon onPress={() => setModalVisible("supplement-modal")}
                                     name="pill" size={30} color="white" style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Add Supp"}</Text>
                             </View>
@@ -81,7 +81,7 @@ export default function BottomMenuTab(): JSX.Element {
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Share"}</Text>
                             </View>
                             <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => (setModalVisible({ modal: "supplement-modal" }), setMultipleAddMode(true))} 
+                                <Icon onPress={() => (setModalVisible("supplement-modal"), setMultipleAddMode(true))} 
                                     name="clock" size={30} color="white" style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Schedule"}</Text>
                             </View>
@@ -97,7 +97,7 @@ export default function BottomMenuTab(): JSX.Element {
                         <Icon name={ index === 1 ? "home" : "home-outline"} size={30} color="white" style={{ opacity: showButtons ? 0.5 : 1, padding: 5, overflow: "hidden" }}/>
                         {index === 1 && <Text style={{ color: "white", fontSize: 12 }}>{"Home"}</Text>}
                     </Pressable>
-                    {modalVisible.modal !== "disable-header" ? 
+                    {modalVisible !== "disable-header" ? 
                         <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
                             <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
                         </Pressable> : 

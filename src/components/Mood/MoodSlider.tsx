@@ -40,7 +40,7 @@ export default function MoodSlider(): JSX.Element {
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
 
-        setModalVisible({ modal: "mood-timeline" });
+        setModalVisible("mood-timeline");
     }
 
     function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
@@ -59,9 +59,9 @@ export default function MoodSlider(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "mood-modal" ? true : false}
+            visible={modalVisible === "mood-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

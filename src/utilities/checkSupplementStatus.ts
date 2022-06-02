@@ -21,7 +21,7 @@ export function checkUserSupplementStatus(supplementMap: AppProps["supplementMap
     
     setSupplementsToUpdateStatus(supplementToCheck);
     if (supplementToCheck.length > 0){
-        setModalVisible({ modal: "status-check-modal" });
+        setModalVisible("status-check-modal");
     }
     return supplementToCheck.length > 0;
 }

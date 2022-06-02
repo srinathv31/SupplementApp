@@ -44,7 +44,7 @@ export default function VerifySupplementStatusModal({ supplementsToUpdateStatus,
             }
         });
         setSupplementsToUpdateStatus(supplementsToUpdateStatusCopy);
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
     }
 
     function handleExit() {
@@ -54,14 +54,14 @@ export default function VerifySupplementStatusModal({ supplementsToUpdateStatus,
             supplement.taken = "not-taken";
         });
         setSupplementsToUpdateStatus(supplementsToUpdateStatusCopy);
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
     }
 
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "status-check-modal" ? true : false}
+            visible={modalVisible === "status-check-modal" ? true : false}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>

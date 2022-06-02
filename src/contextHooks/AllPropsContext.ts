@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { ListOfAchievements } from "../interfaces/Achievements";
-import { modalDefaultValue, pageDefaultValue, selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
+import { pageDefaultValue, selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { AppProps } from "../interfaces/Props";
 import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 
@@ -11,8 +11,8 @@ export const allPropsContext = createContext<AppProps>({
     userData: userDefaultValue,
     setDaySelected: () => getCurrentDate,
     daySelected: getCurrentDate(),
-    setModalVisible: () => modalDefaultValue,
-    modalVisible: modalDefaultValue,
+    setModalVisible: () => "hide-modal",
+    modalVisible: "hide-modal",
     setSupplementMap: () => supplementMapDefaultValue,
     supplementMap: supplementMapDefaultValue,
     setObjDaySelected: () => generateCurrentDateObject,

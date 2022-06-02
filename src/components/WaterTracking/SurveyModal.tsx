@@ -13,9 +13,9 @@ export default function SurveyModal(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "water-survey-modal" ? true : false}
+            visible={modalVisible === "water-survey-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
@@ -24,7 +24,7 @@ export default function SurveyModal(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible({ modal: "hide-modal" })}
+                                onPress={() => setModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

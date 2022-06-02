@@ -17,9 +17,9 @@ export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }:
         <Modal
             animationType="slide"
             transparent={true}
-            visible={AllProps.modalVisible.modal === "time-update-modal" ? true : false}
+            visible={AllProps.modalVisible === "time-update-modal" ? true : false}
             onRequestClose={() => {
-                AllProps.setModalVisible({ modal: "hide-modal" });
+                AllProps.setModalVisible("hide-modal");
             }}
         >
             <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
@@ -53,7 +53,7 @@ export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }:
                             )}
                         ></FlatList>
                         <View style={styles.button}>
-                            <TouchableOpacity onPress={() => AllProps.setModalVisible({ modal: "hide-modal" })}>
+                            <TouchableOpacity onPress={() => AllProps.setModalVisible("hide-modal")}>
                                 <Text
                                     style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>{"Update Time"}</Text>
                             </TouchableOpacity>

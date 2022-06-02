@@ -82,7 +82,7 @@ export default function MultipleDatePicker(): JSX.Element {
         saveUserData(userData, setUserData, supplementMapCopy);
         
         setSupplementMap(supplementMapCopy);
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
         setSchedule({});
         setMultipleAddMode(false);
         if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
@@ -109,9 +109,9 @@ export default function MultipleDatePicker(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "calendar-modal" ? true : false}
+            visible={modalVisible === "calendar-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

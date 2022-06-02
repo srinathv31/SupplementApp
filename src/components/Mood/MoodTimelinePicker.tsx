@@ -107,7 +107,7 @@ export default function MoodTimelinePicker(): JSX.Element {
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setTimelineInDailyMoodObj(supplementMapCopy);
         setSupplementMap(supplementMapCopy);
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
         if (completedAchievements[10].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 10);
         }
@@ -144,9 +144,9 @@ export default function MoodTimelinePicker(): JSX.Element {
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible !== undefined && modalVisible.modal === "mood-timeline" ? true : false}
+                visible={modalVisible !== undefined && modalVisible === "mood-timeline" ? true : false}
                 onRequestClose={() => {
-                    setModalVisible({ modal: "hide-modal" });
+                    setModalVisible("hide-modal");
                 }}
             >
                 <View style={styles.centeredView}>

@@ -17,9 +17,9 @@ export default function AchievementScreen(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "achievements-modal" ? true : false}
+            visible={modalVisible === "achievements-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -29,7 +29,7 @@ export default function AchievementScreen(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible({ modal: "hide-modal" })}
+                                onPress={() => setModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

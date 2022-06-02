@@ -30,7 +30,7 @@ export default function UserInfoPage(): JSX.Element {
                     style: "default"
                 },
                 { 
-                    text: "Change Name", onPress: () => setModalVisible({ modal: "edit-name" }),
+                    text: "Change Name", onPress: () => setModalVisible("edit-name"),
                     style: "default"
                 },
                 {
@@ -46,9 +46,9 @@ export default function UserInfoPage(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "user-modal" ? true : false}
+            visible={modalVisible === "user-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -58,7 +58,7 @@ export default function UserInfoPage(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible({ modal: "hide-modal" })}
+                                onPress={() => setModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

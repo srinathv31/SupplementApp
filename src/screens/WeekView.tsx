@@ -68,7 +68,7 @@ export default function WeeklySupplementModal(): JSX.Element {
         <Modal
             animationIn={swipeAnimation}
             animationOut="slideOutDown"
-            isVisible={modalVisible.modal === "weekly-modal" ? true : false}
+            isVisible={modalVisible === "weekly-modal" ? true : false}
             useNativeDriver={true}
             backdropTransitionOutTiming={0}
             hideModalContentWhileAnimating
@@ -83,7 +83,7 @@ export default function WeeklySupplementModal(): JSX.Element {
                         <AgendaBody {...WeekPropValues}/>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => (setModalVisible({ modal: "hide-modal" }), setSwipeAnimation("fadeIn"))}
+                            onPress={() => (setModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
                         >
                             <Text style={styles.textStyle}>Close</Text>
                         </Pressable>

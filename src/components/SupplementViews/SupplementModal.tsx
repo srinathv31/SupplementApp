@@ -16,9 +16,9 @@ export default function SupplementModal(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "supplement-modal" ? true : false}
+            visible={modalVisible === "supplement-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -37,7 +37,7 @@ export default function SupplementModal(): JSX.Element {
                     </View>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={() => (setModalVisible({ modal: "hide-modal" }), setMultipleAddMode(false))}
+                        onPress={() => (setModalVisible("hide-modal"), setMultipleAddMode(false))}
                     >
                         <Text style={styles.textStyle}>Close</Text>
                     </Pressable>

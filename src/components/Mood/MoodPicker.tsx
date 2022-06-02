@@ -37,7 +37,7 @@ export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
 
     function addMood(item: ItemType) {
         setMood(""+item.label);
-        setModalVisible({ modal: "mood-modal" });
+        setModalVisible("mood-modal");
     }
 
     function showMood(item: ItemType) {

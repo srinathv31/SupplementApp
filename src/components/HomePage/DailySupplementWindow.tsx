@@ -22,7 +22,7 @@ export default function DailySupplementWindow(): JSX.Element {
     const height = initialHeight;
     const onOpen = (item: SupplementObject) => {
         setShowButtons(false);
-        setModalVisible({ modal: "disable-header" });
+        setModalVisible("disable-header");
         setSelectedSupplement(item);
         modalizeRef.current?.open();
     };
@@ -62,7 +62,7 @@ export default function DailySupplementWindow(): JSX.Element {
 
     function changeTime(item: SupplementObject) {
         setSelectedSupplement(item);
-        setModalVisible({ modal: "time-modal" });
+        setModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -143,7 +143,7 @@ export default function DailySupplementWindow(): JSX.Element {
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible("hide-modal")}>
                 <DailySupplementDetails />
             </Modalize>
         </>

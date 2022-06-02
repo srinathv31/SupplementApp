@@ -26,14 +26,14 @@ export default function JournalButton(): JSX.Element {
         }
 		
         setSupplementMap(supplementMapCopy);
-        setModalVisible({ modal: "journal" });
+        setModalVisible("journal");
     }
 
     return(
         <>
             <Pressable 
                 onPress={() => HandleJournalOpen()}
-                disabled={modalVisible.modal === "disable-header"}
+                disabled={modalVisible === "disable-header"}
             >
                 <Icon
                     style={{ padding: 10,

@@ -37,7 +37,7 @@ export default function EditNameModal(): JSX.Element {
         // => create new cloud storage with new user => create new local storage
         // => go to loading screen
         updateUserObjDetails();
-        setModalVisible({ modal: "user-modal" });
+        setModalVisible("user-modal");
     }
 
     function updateUserObjDetails() {
@@ -56,9 +56,9 @@ export default function EditNameModal(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "edit-name" ? true : false}
+            visible={modalVisible === "edit-name" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

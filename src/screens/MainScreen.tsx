@@ -6,7 +6,7 @@ import { TabView } from "react-native-tab-view";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
 import MoodAnalysis from "../components/Mood/MoodAnalysis";
 import SupplementModal from "../components/SupplementViews/SupplementModal";
-import ModalObject from "../interfaces/Modal";
+import { ModalType } from "../interfaces/AppTypes";
 import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
 import User from "../interfaces/User";
@@ -48,7 +48,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
     // Returns journal entry text
     const [journalText, setJournalText] = useState<string>("");
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
-    const [modalVisible, setModalVisible] = useState<ModalObject>({ modal: "hide-modal" });
+    const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
     // Index for page sliding
     const [index, setIndex] = React.useState(1);
     // Renders the selected day's week for the weekly modal
@@ -168,7 +168,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={"light-content"} />
                 <allPropsContext.Provider value={AllProps}>
-                    <View style={{ flex: 1, opacity: (modalVisible.modal !== "hide-modal" && modalVisible.modal !== "time-modal" && modalVisible.modal !== "disable-header") ? 0.5 : 1 }}>
+                    <View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal" && modalVisible !== "disable-header") ? 0.5 : 1 }}>
                         <View style={{ flex: 1 }}>
                             { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
                             { page.page === "app-screen" && <>
@@ -188,8 +188,8 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                     </View>
                 </allPropsContext.Provider>
             </SafeAreaView>
-            {modalVisible.modal !== "achievements-modal" && modalVisible.modal !== "journal" && modalVisible.modal !== "info-modal" && modalVisible.modal !== "user-modal" && modalVisible.modal !== "edit-name"
-                && modalVisible.modal !== "weekly-modal" && modalVisible.modal !== "supplement-modal"
+            {modalVisible !== "achievements-modal" && modalVisible !== "journal" && modalVisible !== "info-modal" && modalVisible !== "user-modal" && modalVisible !== "edit-name"
+                && modalVisible !== "weekly-modal" && modalVisible !== "supplement-modal"
             && <CustomToast />}
         </View>
     );

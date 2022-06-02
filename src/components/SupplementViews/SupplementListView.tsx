@@ -25,7 +25,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
-        setModalVisible({ modal: "disable-header" });
+        setModalVisible("disable-header");
         setShowButtons(false);
         modalizeRef.current?.open();
     };
@@ -76,7 +76,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
 
     // function expandSupplement(item: Supplement) {
     //     setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
-    //     setModalVisible({ modal: "info-modal" });
+    //     setModalVisible("info-modal");
     // }
 
     function jumpToWeb(item: Supplement) {
@@ -106,7 +106,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
                             <TouchableOpacity
                                 key={item.name}
                                 onPress={ 
-                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
+                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible("time-modal"))
                                         : index === 2 ? () => jumpToWeb(item) : () => addSupplement(item)
                                 }
                             >

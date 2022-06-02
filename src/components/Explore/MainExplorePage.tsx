@@ -35,7 +35,7 @@ export default function MainExplorePage({ setExpand }: {
     }, [index]);
 
     function onOpen() {
-        setModalVisible({ modal: "disable-header" });
+        setModalVisible("disable-header");
         setShowButtons(false);
         modalizeRef.current?.open();
     }

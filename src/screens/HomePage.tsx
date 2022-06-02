@@ -42,7 +42,7 @@ export default function HomePage(): JSX.Element {
 
     function onOpen() {
         // Removed disable-header only for home web page so status-check-modal can work
-        // setModalVisible({ modal: "disable-header" });
+        // setModalVisible("disable-header");
         setShowButtons(false);
         modalizeRef.current?.open();
     }

@@ -60,16 +60,16 @@ export default function JournalEntryModal(): JSX.Element {
         setUserData(userCopy);
         setSupplementMap(supplementMapCopy);
 
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
     }
 
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "journal" ? true : false}
+            visible={modalVisible === "journal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

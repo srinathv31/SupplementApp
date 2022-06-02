@@ -68,7 +68,7 @@ export default function SettingsList(): JSX.Element {
         if (completedAchievements[7].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 7);
         }
-        setModalVisible({ modal: "achievements-modal" });
+        setModalVisible("achievements-modal");
     };
 
     function userSignOut() {

@@ -1,6 +1,6 @@
 import { DateData } from "react-native-calendars/src/types";
 import { Achievement } from "./Achievements";
-import ModalObject from "./Modal";
+import { ModalType } from "./AppTypes";
 import Page from "./Page";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
@@ -11,8 +11,8 @@ export interface AppProps {
     userData: User,
     setDaySelected: (d: string) => void,
     daySelected: string,
-    setModalVisible: (j: ModalObject) => void,
-    modalVisible: ModalObject,
+    setModalVisible: (j: ModalType) => void,
+    modalVisible: ModalType,
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
     setObjDaySelected: (o: DateData) => void,

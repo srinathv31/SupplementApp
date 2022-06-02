@@ -16,7 +16,7 @@ export default function ChangeMoodModal({ setOpen }: {
     const [moodList, setMoodList] = useState<MoodObject[]>([]);
     
     function changeMood() {
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
         setOpen(true);
     }
 
@@ -50,7 +50,7 @@ export default function ChangeMoodModal({ setOpen }: {
         setSupplementMap(supplementMapCopy);
         saveUserData(userCopy, setUserData, supplementMapCopy);
 
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
         setOpen(false);
     }
 
@@ -149,7 +149,7 @@ export default function ChangeMoodModal({ setOpen }: {
 
         // Close modal if there are no more moods
         if (supplementMapCopy[daySelected] === undefined){
-            setModalVisible({ modal: "hide-modal" });
+            setModalVisible("hide-modal");
         }
 
         setUserData(userCopy);
@@ -174,9 +174,9 @@ export default function ChangeMoodModal({ setOpen }: {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "mood-change-modal" ? true : false}
+            visible={modalVisible === "mood-change-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
@@ -210,7 +210,7 @@ export default function ChangeMoodModal({ setOpen }: {
                         </Pressable>
                         <Pressable
                             style={[styles.button, styles.buttonClose, { backgroundColor: "green" }]}
-                            onPress={() => setModalVisible({ modal: "hide-modal" })}
+                            onPress={() => setModalVisible("hide-modal")}
                         >
                             <Text style={styles.textStyle}>{"Don't Change Any Moods"}</Text>
                         </Pressable>

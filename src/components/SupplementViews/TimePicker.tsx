@@ -16,8 +16,8 @@ export default function TimePicker(): JSX.Element {
 
     function handleJournal() {
         multipleAddMode ? 
-            setModalVisible({ modal: "dosage-modal" }) : 
-            (setModalVisible({ modal: "hide-modal" }), saveUserData(userData, setUserData, supplementMap));
+            setModalVisible("dosage-modal") : 
+            (setModalVisible("hide-modal"), saveUserData(userData, setUserData, supplementMap));
     }
 	
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,9 +47,9 @@ export default function TimePicker(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "time-modal" ? true : false}
+            visible={modalVisible === "time-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
