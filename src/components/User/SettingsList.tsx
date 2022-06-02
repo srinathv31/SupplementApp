@@ -53,7 +53,7 @@ export default function SettingsList(): JSX.Element {
             [
                 {
                     text: "Continue",
-                    onPress: () => setPage({ page: "onboarding-screen" }),
+                    onPress: () => setPage("onboarding-screen"),
                     style: "default"
                 },
                 { 
@@ -84,7 +84,7 @@ export default function SettingsList(): JSX.Element {
             premiumStatus: true,
             achievements: ListOfAchievements
         };
-        setPage({ page: "login-screen" });
+        setPage("login-screen");
         setUserData(userCopy);
         auth().signOut().then(() => console.log("Signed Out!"));
         removeLoggedInKey();

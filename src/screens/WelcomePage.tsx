@@ -70,7 +70,7 @@ export default function WelcomePage({ userData, setPage }: AppProps): JSX.Elemen
             </Animated.View>
             <Divider length="small"></Divider>
             <Animated.View style={[{ opacity: fadeAnimSub }]}>
-                <Text onPress={() => setPage({ page: "app-screen" })} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>Enter</Text>
+                <Text onPress={() => setPage("app-screen")} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>Enter</Text>
             </Animated.View>
         </View>
     );

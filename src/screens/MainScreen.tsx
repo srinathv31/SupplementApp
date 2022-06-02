@@ -6,7 +6,7 @@ import { TabView } from "react-native-tab-view";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
 import MoodAnalysis from "../components/Mood/MoodAnalysis";
 import SupplementModal from "../components/SupplementViews/SupplementModal";
-import { ModalType } from "../interfaces/AppTypes";
+import { ModalType, PageType } from "../interfaces/AppTypes";
 import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
 import User from "../interfaces/User";
@@ -19,7 +19,6 @@ import HomePage from "./HomePage";
 import SupplementInfoPage from "./SupplementInfoPage";
 import UserInfoPage from "./UserInfoPage";
 import WelcomePage from "./WelcomePage";
-import Page from "../interfaces/Page";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import CustomToast from "../components/Toast/customToast";
 import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
@@ -33,7 +32,7 @@ import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen({ page, setPage, userData, setUserData }: {
-    page: Page, setPage: (p: Page) => void,
+    page: PageType, setPage: (p: PageType) => void,
     userData: User, setUserData: (u: User) => void
 }): JSX.Element {
    
@@ -170,8 +169,8 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                 <allPropsContext.Provider value={AllProps}>
                     <View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal" && modalVisible !== "disable-header") ? 0.5 : 1 }}>
                         <View style={{ flex: 1 }}>
-                            { page.page === "loading-screen" && <WelcomePage {...AllProps} /> }
-                            { page.page === "app-screen" && <>
+                            { page === "loading-screen" && <WelcomePage {...AllProps} /> }
+                            { page === "app-screen" && <>
                                 <UserInfoPage />
                                 <SupplementModal />
                                 <HeaderWindow />

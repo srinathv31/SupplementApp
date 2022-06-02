@@ -48,7 +48,7 @@ export const retrieveLoggedInKey = async (setPage: AppProps["setPage"], setUserD
             if(isLoggedInKey.loggedIn === true) {
                 userCopy.userAuthObj = isLoggedInKey.uid;
                 setUserData(userCopy);
-                setPage({ page: "loading-screen" });
+                setPage("loading-screen");
             }
         }
         

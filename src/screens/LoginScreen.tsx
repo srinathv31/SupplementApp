@@ -6,11 +6,11 @@ import { logoWithNameTransparent } from "../assets/imageURLs/brandImageURLs";
 import Divider from "../components/Design/Divider";
 import AppleSignIn from "../components/SocialAuth/AppleSignIn";
 import GoogleButton from "../components/SocialAuth/GoogleButton";
-import Page from "../interfaces/Page";
+import { PageType } from "../interfaces/AppTypes";
 import { AppProps } from "../interfaces/Props";
 
 export default function LoginScreen({ setPage, setUserData, userData }: {
-    setPage: (p: Page) => void,
+    setPage: (p: PageType) => void,
     setUserData: AppProps["setUserData"], userData: AppProps["userData"]
 }): JSX.Element {
 

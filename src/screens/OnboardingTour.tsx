@@ -12,7 +12,7 @@ export default function OnboardingTour({ setPage }: {
     return(
         <SafeAreaView style={{ flex: 1 }}>
             <Onboarding
-                onDone={() => setPage({ page: "loading-screen" })}
+                onDone={() => setPage("loading-screen")}
                 controlStatusBar={false}
                 showSkip={false}
                 pages={[

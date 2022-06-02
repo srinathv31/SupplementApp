@@ -1,7 +1,6 @@
 import { DateData } from "react-native-calendars/src/types";
 import { Achievement } from "./Achievements";
-import { ModalType } from "./AppTypes";
-import Page from "./Page";
+import { ModalType, PageType } from "./AppTypes";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
 import { WeekDay } from "./WeekDay";
@@ -21,8 +20,8 @@ export interface AppProps {
     showButtons: boolean,
     setIndex: (i: number) => void,
     index: number,
-    setPage: (p: Page) => void,
-    page: Page,
+    setPage: (p: PageType) => void,
+    page: PageType,
     setJournalText: (j: string) => void,
     journalText: string,
     setWeek: (w: WeekDay[]) => void,

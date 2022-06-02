@@ -45,7 +45,7 @@ export default function InfoForm({ userData, setUserData, setPage }: {
         // => create new cloud storage with new user => create new local storage
         // => go to loading screen
         updateUserObjDetails();
-        setPage({ page: "onboarding-screen" });
+        setPage("onboarding-screen");
     }
 
     function updateUserObjDetails() {

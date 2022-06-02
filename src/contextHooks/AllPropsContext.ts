@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { ListOfAchievements } from "../interfaces/Achievements";
-import { pageDefaultValue, selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
+import { selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { AppProps } from "../interfaces/Props";
 import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 
@@ -21,8 +21,8 @@ export const allPropsContext = createContext<AppProps>({
     showButtons: false,
     setIndex: () => 1,
     index: 0,
-    setPage: () => pageDefaultValue,
-    page: pageDefaultValue,
+    setPage: () => "login-screen",
+    page: "login-screen",
     setJournalText: () => "",
     journalText: "",
     setWeek: () => weekString,

@@ -4,8 +4,8 @@ import { StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
 import InfoForm from "./components/UserSetup/InfoForm";
+import { PageType } from "./interfaces/AppTypes";
 import { userDefaultValue } from "./interfaces/DefaultValues";
-import Page from "./interfaces/Page";
 import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
 import MainScreen from "./screens/MainScreen";
@@ -17,7 +17,7 @@ LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
     const [userData, setUserData] = useState<User>(userDefaultValue);
-    const [page, setPage] = useState<Page>({ page: "login-screen" });
+    const [page, setPage] = useState<PageType>("login-screen");
 
     // If User is previously logged in => continue to loading screen with previous account
     useEffect(() => {
@@ -28,26 +28,26 @@ const App = () => {
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
             <StatusBar barStyle={"light-content"} />
         
-            { page.page === "login-screen" && 
+            { page === "login-screen" && 
                     <LoginScreen
                         setPage={setPage}
                         setUserData={setUserData}
                         userData={userData}
                     ></LoginScreen>
             }
-            { page.page === "form-screen" && 
+            { page === "form-screen" && 
                     <InfoForm 
                         userData={userData} 
                         setUserData={setUserData} 
                         setPage={setPage}
                     ></InfoForm>
             }
-            {page.page === "onboarding-screen" && 
+            {page === "onboarding-screen" && 
                     <OnboardingTour
                         setPage={setPage}
                     ></OnboardingTour>
             }
-            {(page.page === "loading-screen" || page.page === "app-screen") && 
+            {(page === "loading-screen" || page === "app-screen") && 
                     <MainScreen
                         setPage={setPage}
                         page={page}
