@@ -5,9 +5,7 @@ import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
 import { WeekDay } from "./WeekDay";
 
-export interface AppProps {
-    setUserData: (u: User) => void,
-    userData: User,
+export interface AppProps extends GlobalProps {
     setDaySelected: (d: string) => void,
     daySelected: string,
     setModalVisible: (j: ModalType) => void,
@@ -20,8 +18,6 @@ export interface AppProps {
     showButtons: boolean,
     setIndex: (i: number) => void,
     index: number,
-    setPage: (p: PageType) => void,
-    page: PageType,
     setJournalText: (j: string) => void,
     journalText: string,
     setWeek: (w: WeekDay[]) => void,
@@ -40,3 +36,9 @@ export interface AppProps {
     completedAchievements: Achievement[]
 }
 
+export interface GlobalProps {
+    setUserData: (u: User) => void,
+    userData: User,
+    setPage: (p: PageType) => void,
+    page: PageType,
+}

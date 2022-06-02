@@ -1,18 +1,16 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { AppProps } from "../../interfaces/Props";
-import User from "../../interfaces/User";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { checkIfValidDate } from "../../utilities/authentication/checkForValidDate";
 import { createUserDataInCloud } from "../../utilities/authentication/writeUserData";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import AgeBox from "./AgeBox";
 
-export default function InfoForm({ userData, setUserData, setPage }: {
-    userData: User, setUserData: (u: User) => void,
-    setPage: AppProps["setPage"]
-}): JSX.Element {
+export default function InfoForm(): JSX.Element {
+    const { setUserData, userData, setPage } = useContext(globalPropsContext);
+
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [age, setAge] = useState<string>("");

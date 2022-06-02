@@ -1,16 +1,14 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
 import { AppleButton } from "@invertase/react-native-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
-import { AppProps } from "../../interfaces/Props";
 import { handleLoginButton } from "../../utilities/authentication/handleLoginEvent";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
-export default function AppleSignIn({ setUserData, userData, setPage }: {
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"],
-    setPage: AppProps["setPage"]
-}): JSX.Element {
+export default function AppleSignIn(): JSX.Element {
+    const { setUserData, userData, setPage } = useContext(globalPropsContext);
 
     async function onAppleButtonPress() {
         // Start the sign-in request

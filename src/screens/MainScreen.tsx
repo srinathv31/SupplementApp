@@ -1,41 +1,36 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LogBox, Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
-import { DateData } from "react-native-calendars/src/types";
 import { TabView } from "react-native-tab-view";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
 import MoodAnalysis from "../components/Mood/MoodAnalysis";
 import SupplementModal from "../components/SupplementViews/SupplementModal";
-import { ModalType, PageType } from "../interfaces/AppTypes";
-import { AppProps } from "../interfaces/Props";
-import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
-import User from "../interfaces/User";
-import { WeekDay } from "../interfaces/WeekDay";
 import BottomMenuTab from "../components/Menus/BottomMenuTab";
-import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 import { checkForSave } from "../utilities/saveLoadFunctions/storageChecker";
 import CalendarPage from "./CalendarPage";
 import HomePage from "./HomePage";
 import SupplementInfoPage from "./SupplementInfoPage";
 import UserInfoPage from "./UserInfoPage";
 import WelcomePage from "./WelcomePage";
-import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import CustomToast from "../components/Toast/customToast";
 import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import PropTypes from "prop-types";
 import { requestUserPermission } from "../utilities/authentication/notifications";
+import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
+import { AppProps } from "../interfaces/Props";
+import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
+import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
+import { DateData } from "react-native-calendars/src/types";
+import { ModalType } from "../interfaces/AppTypes";
+import { WeekDay } from "../interfaces/WeekDay";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
+import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 LogBox.ignoreLogs(["Sending"]);
 
-export default function MainScreen({ page, setPage, userData, setUserData }: {
-    page: PageType, setPage: (p: PageType) => void,
-    userData: User, setUserData: (u: User) => void
-}): JSX.Element {
-   
+export default function MainScreen(): JSX.Element {
+    const { setUserData, userData, setPage, page } = useContext(globalPropsContext);
+
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
@@ -64,6 +59,12 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
     const [mood, setMood] = useState<string>("");
     // Updates achievements list throughout app
     const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
+
+    const AllProps: AppProps = {
+        setUserData, userData, setDaySelected, daySelected, setModalVisible, modalVisible, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
+        setShowButtons, showButtons, setIndex, index, setPage, page, setJournalText, journalText, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
+        setSelectedSupplement, selectedSupplement, setMultipleAddMode, multipleAddMode, setMood, mood, setCompletedAchievements, completedAchievements
+    };
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
@@ -105,41 +106,6 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
     ]);
     const layout = useWindowDimensions();
 
-    const AllProps: AppProps = {
-        setUserData,
-        userData,
-        setDaySelected,
-        daySelected,
-        setModalVisible,
-        modalVisible,
-        setSupplementMap,
-        supplementMap,
-        setObjDaySelected,
-        objDaySelected,
-        setShowButtons,
-        showButtons,
-        setIndex,
-        index,
-        setPage,
-        page,
-        setJournalText,
-        journalText,
-        setWeek,
-        week,
-        setMonthText,
-        monthText,
-        setSwipeAnimation,
-        swipeAnimation,
-        setSelectedSupplement,
-        selectedSupplement,
-        setMultipleAddMode,
-        multipleAddMode,
-        setMood,
-        mood,
-        setCompletedAchievements,
-        completedAchievements
-    };
-
     // Using route for animation to play through
     const CalendarRoute = (): JSX.Element => {
         return <CalendarPage />;
@@ -169,7 +135,7 @@ export default function MainScreen({ page, setPage, userData, setUserData }: {
                 <allPropsContext.Provider value={AllProps}>
                     <View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal" && modalVisible !== "disable-header") ? 0.5 : 1 }}>
                         <View style={{ flex: 1 }}>
-                            { page === "loading-screen" && <WelcomePage {...AllProps} /> }
+                            { page === "loading-screen" && <WelcomePage /> }
                             { page === "app-screen" && <>
                                 <UserInfoPage />
                                 <SupplementModal />

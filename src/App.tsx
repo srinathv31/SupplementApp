@@ -12,12 +12,16 @@ import MainScreen from "./screens/MainScreen";
 import OnboardingTour from "./screens/OnboardingTour";
 import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLoggedIn";
 
+import { globalPropsContext } from "./contextHooks/GlobalPropsContext";
+
 LogBox.ignoreLogs(["Sending"]);
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
     const [userData, setUserData] = useState<User>(userDefaultValue);
     const [page, setPage] = useState<PageType>("login-screen");
+
+    const GlobalProps = { setUserData, userData, setPage, page };
 
     // If User is previously logged in => continue to loading screen with previous account
     useEffect(() => {
@@ -27,35 +31,20 @@ const App = () => {
     return (
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
             <StatusBar barStyle={"light-content"} />
-        
-            { page === "login-screen" && 
-                    <LoginScreen
-                        setPage={setPage}
-                        setUserData={setUserData}
-                        userData={userData}
-                    ></LoginScreen>
-            }
-            { page === "form-screen" && 
-                    <InfoForm 
-                        userData={userData} 
-                        setUserData={setUserData} 
-                        setPage={setPage}
-                    ></InfoForm>
-            }
-            {page === "onboarding-screen" && 
-                    <OnboardingTour
-                        setPage={setPage}
-                    ></OnboardingTour>
-            }
-            {(page === "loading-screen" || page === "app-screen") && 
-                    <MainScreen
-                        setPage={setPage}
-                        page={page}
-                        setUserData={setUserData}
-                        userData={userData}
-                    />
-            }
-
+            <globalPropsContext.Provider value={GlobalProps}>
+                { page === "login-screen" && 
+                    <LoginScreen />
+                }
+                { page === "form-screen" && 
+                    <InfoForm />
+                }
+                {page === "onboarding-screen" && 
+                    <OnboardingTour />
+                }
+                {(page === "loading-screen" || page === "app-screen") && 
+                    <MainScreen />
+                }
+            </globalPropsContext.Provider>
         </View>
     );
 };
