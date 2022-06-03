@@ -5,13 +5,12 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
 import MoodObject from "../../interfaces/Mood";
 import { SupplementMapObject } from "../../interfaces/Supplement";
-import removeEmptyDotObjects, { removeJournalDot } from "../../utilities/removeEmptyDotObjects";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setModalVisible, modalVisible, setUserData, userData, setSupplementMap, supplementMap, objDaySelected, daySelected,  } = useContext(allPropsContext);
+    const { setModalVisible, modalVisible, setUserData, userData, setSupplementMap, supplementMap, daySelected,  } = useContext(allPropsContext);
 
     const [moodList, setMoodList] = useState<MoodObject[]>([]);
     
@@ -23,8 +22,6 @@ export default function ChangeMoodModal({ setOpen }: {
     function clearAllMood() {
         const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
-        const selectedDatesCopy = { ...userData.data.selectedDates };
-        const stringDate = objDaySelected.dateString;
 
         // Clearing all moods
         Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
@@ -34,11 +31,6 @@ export default function ChangeMoodModal({ setOpen }: {
                 TimelineData: []
             };
         });
-
-        // Remove journal dot from calendar + any empty dot objects
-        selectedDatesCopy[stringDate].dots = removeJournalDot(selectedDatesCopy, stringDate);
-        selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
-        userCopy.data.selectedDates = selectedDatesCopy;
 
         // Deleting Empty Date
         if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood["1"].mood === "" ){
@@ -119,8 +111,6 @@ export default function ChangeMoodModal({ setOpen }: {
     function deleteMood(item: MoodObject) {
         const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
-        const selectedDatesCopy = { ...userData.data.selectedDates };
-        const stringDate = objDaySelected.dateString;
         
         if (supplementMapCopy[daySelected].DailyMood["3"] === item){
             supplementMapCopy[daySelected].DailyMood = deleteLastIndex(supplementMapCopy);
@@ -132,13 +122,6 @@ export default function ChangeMoodModal({ setOpen }: {
 
         if (supplementMapCopy[daySelected].DailyMood["1"] === item){
             supplementMapCopy[daySelected].DailyMood = deleteFirstIndex(supplementMapCopy);
-        }
-
-        // if the journal is empty + there are no moods: Remove journal dot from calendar + any empty dot objects
-        if (supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood["1"].mood === ""){
-            selectedDatesCopy[stringDate].dots = removeJournalDot(selectedDatesCopy, stringDate);
-            selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
-            userCopy.data.selectedDates = selectedDatesCopy;
         }
 
         // Deleting Empty Date
@@ -212,7 +195,9 @@ export default function ChangeMoodModal({ setOpen }: {
                             style={[styles.button, styles.buttonClose, { backgroundColor: "green" }]}
                             onPress={() => setModalVisible("hide-modal")}
                         >
-                            <Text style={styles.textStyle}>{"Don't Change Any Moods"}</Text>
+                            <Text style={styles.textStyle}>
+                                {supplementMap[daySelected].DailyMood["1"].mood !== "" ? "Don't Change Any Moods" : "Close This Window"}
+                            </Text>
                         </Pressable>
                     </View>
                 </View>

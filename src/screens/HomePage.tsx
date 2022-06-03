@@ -6,8 +6,6 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Divider from "../components/Design/Divider";
 import DailySupplementWindow from "../components/HomePage/DailySupplementWindow";
 import ExploreWindow from "../components/HomePage/ExploreWindow";
-import MoodSlider from "../components/Mood/MoodSlider";
-import MoodTimelinePicker from "../components/Mood/MoodTimelinePicker";
 import WebModal from "../components/SlidingModals/WebModal";
 import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
 import SurveyModal from "../components/WaterTracking/SurveyModal";
@@ -49,8 +47,6 @@ export default function HomePage(): JSX.Element {
     
     return(
         <View style={{ flex: 1 }}>
-            <MoodSlider />
-            <MoodTimelinePicker />
             <VerifySupplementStatusModal supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
             <ExploreWindow setModalizeRefStatus={setModalizeRefStatus} categorySelect={categorySelect}></ExploreWindow>
             <Divider length="full"></Divider>

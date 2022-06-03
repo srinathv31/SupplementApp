@@ -7,14 +7,12 @@ import { SupplementMapObject } from "../../interfaces/Supplement";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, objDaySelected } = useContext(allPropsContext);
+    const { setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
 
     const [rangeValue, setRangeValue] = useState<number>(0);
     
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
-        const userCopy = { ...userData };
-        const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined){
             supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
@@ -27,15 +25,6 @@ export default function MoodSlider(): JSX.Element {
 
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
-
-        // Adding Green Dot to calendar if there is a mood
-        if (userCopy.data.selectedDates[stringDate] === undefined) {
-            userCopy.data.selectedDates[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
-        }
-        // if(userCopy.data.selectedDates[stringDate].dots.includes(journalDot) === false) {
-        //     // userCopy.data.selectedDates[stringDate].dots.push(journalDot);
-        //     console.log("SOMETHINGS HERE");
-        // }
 
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
@@ -96,7 +85,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems:"center",
-        marginTop: "60%" 
     },
     modalView: {
         width: "75%", padding: 10,
