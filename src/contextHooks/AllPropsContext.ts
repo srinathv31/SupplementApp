@@ -23,8 +23,6 @@ export const allPropsContext = createContext<AppProps>({
     index: 0,
     setPage: () => "login-screen",
     page: "login-screen",
-    setJournalText: () => "",
-    journalText: "",
     setWeek: () => weekString,
     week: weekString,
     setMonthText: () => grabMonth(weekString),

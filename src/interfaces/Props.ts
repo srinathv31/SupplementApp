@@ -18,8 +18,6 @@ export interface AppProps extends GlobalProps {
     showButtons: boolean,
     setIndex: (i: number) => void,
     index: number,
-    setJournalText: (j: string) => void,
-    journalText: string,
     setWeek: (w: WeekDay[]) => void,
     week: WeekDay[],
     setMonthText: (m: string) => void,

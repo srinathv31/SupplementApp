@@ -1,11 +1,10 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-
-export default function JournalTextEntry(): JSX.Element {
-    const { setJournalText, journalText } = useContext(allPropsContext);
+export default function JournalTextEntry({ setJournalText, journalText }: {
+    setJournalText: (j: string) => void, journalText: string
+}): JSX.Element {
 
     return(
         <View>

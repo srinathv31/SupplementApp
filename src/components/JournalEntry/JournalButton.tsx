@@ -5,8 +5,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 
-export default function JournalButton(): JSX.Element {
-    const { setSupplementMap, supplementMap, setModalVisible, modalVisible, daySelected, setJournalText } = useContext(allPropsContext);
+export default function JournalButton({ setJournalText }: {
+    setJournalText: (j: string) => void
+}): JSX.Element {
+    const { setSupplementMap, supplementMap, setModalVisible, modalVisible, daySelected } = useContext(allPropsContext);
 
     function HandleJournalOpen() {
         const supplementMapCopy = { ...supplementMap };

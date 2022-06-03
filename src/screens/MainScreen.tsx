@@ -39,8 +39,6 @@ export default function MainScreen(): JSX.Element {
     const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
     // Boolean that toggles sub menu
     const [showButtons, setShowButtons] = useState<boolean>(false);
-    // Returns journal entry text
-    const [journalText, setJournalText] = useState<string>("");
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
     const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
     // Index for page sliding
@@ -62,7 +60,7 @@ export default function MainScreen(): JSX.Element {
 
     const AllProps: AppProps = {
         setUserData, userData, setDaySelected, daySelected, setModalVisible, modalVisible, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
-        setShowButtons, showButtons, setIndex, index, setPage, page, setJournalText, journalText, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
+        setShowButtons, showButtons, setIndex, index, setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
         setSelectedSupplement, selectedSupplement, setMultipleAddMode, multipleAddMode, setMood, mood, setCompletedAchievements, completedAchievements
     };
 

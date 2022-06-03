@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import UserPageButton from "./UserPageButton";
 import NextDayButton from "../Calendar/NextDayButton";
@@ -12,10 +12,14 @@ import DosagePickerModal from "../SupplementViews/DosagePickerModal";
 import AchievementScreen from "../../screens/AchievementScreen";
 import EditNameModal from "../User/EditNameModal";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import JournalTextEntry from "../JournalEntry/JournalTextEntry";
+import JournalCloseButton from "../JournalEntry/JournalCloseButton";
 
 
 export default function HeaderWindow(): JSX.Element {
     const { daySelected } = useContext(allPropsContext);
+
+    const [journalText, setJournalText] = useState<string>("");
 
     return(
         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
@@ -23,8 +27,15 @@ export default function HeaderWindow(): JSX.Element {
             <PrevDayButton />
             <Text style={styles.sectionTitle}>{daySelected}</Text>
             <NextDayButton />
-            <JournalEntryModal />
-            <JournalButton />
+
+            <JournalEntryModal>
+                <JournalTextEntry setJournalText={setJournalText} journalText={journalText}/>
+                <JournalCloseButton journalText={journalText} />
+            </JournalEntryModal>
+
+            <JournalButton setJournalText={setJournalText}/>
+
+            {/* Modals */}
             <TimePicker />
             <DosagePickerModal />
             <MultipleDatePicker />
