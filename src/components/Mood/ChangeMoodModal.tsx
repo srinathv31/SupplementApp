@@ -196,7 +196,9 @@ export default function ChangeMoodModal({ setOpen }: {
                             onPress={() => setModalVisible("hide-modal")}
                         >
                             <Text style={styles.textStyle}>
-                                {supplementMap[daySelected].DailyMood["1"].mood !== "" ? "Don't Change Any Moods" : "Close This Window"}
+                                {supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== ""
+                                    ? "Don't Change Any Moods" 
+                                    : "Close This Window"}
                             </Text>
                         </Pressable>
                     </View>
