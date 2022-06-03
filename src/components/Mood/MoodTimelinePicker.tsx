@@ -26,6 +26,17 @@ export default function MoodTimelinePicker(): JSX.Element {
         setTimelineState(timelineStateCopy);
     }, [modalVisible]);
 
+    // Find last mood to properly display name
+    useEffect(() => {
+        let lastKey = "1";
+        Object.keys(supplementMap[daySelected].DailyMood).forEach(key => {
+            if (supplementMap[daySelected].DailyMood[key].mood !== "") {
+                lastKey = key;
+            }
+        });
+        setCurrentKey(lastKey);
+    }, [modalVisible]);
+
     const MoodTimelineProps = {
         setTimelineState,
         timelineState,
