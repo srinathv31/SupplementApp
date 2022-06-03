@@ -5,6 +5,7 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import CustomToast from "../Toast/customToast";
+import Icon from "react-native-vector-icons/Ionicons";
 
 export default function EditNameModal(): JSX.Element {
     const { setModalVisible, userData, setCompletedAchievements, completedAchievements, setUserData, modalVisible } = useContext(allPropsContext);
@@ -63,7 +64,8 @@ export default function EditNameModal(): JSX.Element {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>{"Editing Name"}</Text>
+                    <Icon onPress={() => setModalVisible("hide-modal")} name="close-circle-outline" size={20} color={"white"} style={{ margin: 10 }}></Icon>
+                    <Text style={{ color: "white", fontSize: 24, textAlign: "center", fontWeight: "300" }}>{"Editing Name..."}</Text>
                     <View style={styles.bar}>
                         <TextInput
                             style={[styles.input, { borderBottomColor: warningForm.includes("firstName") === true ? "crimson" : selectedForm === "firstName" ? "#36D1DC" : "gray" }]}
