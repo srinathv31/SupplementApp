@@ -13,6 +13,7 @@ import { randomDateGenerator } from "../src/utilities/testingFunctions/randomDat
 import SupplementList from "../src/assets/SupplementList.json";
 import { SupplementObject } from "../src/interfaces/Supplement";
 import { convertStringTimeToDateTime } from "../src/utilities/convertTime";
+import { generateTimelineObject } from "../src/utilities/generateTimelineObject";
 
 // it("renders correctly", () => {
 // 	renderer.create(<App />);
@@ -39,4 +40,11 @@ it("Creates a Date Object from the given Date String 50 times", () => {
         }
     });
     expect(correctDateFormatList.length).toEqual(50);
+});
+
+it("Creates a TimeLineObject List", () => {
+    const data = generateTimelineObject();
+
+    expect(data.length).toEqual(32);
+    expect(data[12].time).toEqual("12:00 P");
 });
