@@ -1,10 +1,8 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
-import MoodObject from "../../interfaces/Mood";
-import { SupplementMapObject } from "../../interfaces/Supplement";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 export default function ChangeMoodModal({ setOpen }: {
@@ -12,8 +10,6 @@ export default function ChangeMoodModal({ setOpen }: {
 }): JSX.Element {
     const { setModalVisible, modalVisible, setUserData, userData, setSupplementMap, supplementMap, daySelected,  } = useContext(allPropsContext);
 
-    const [moodList, setMoodList] = useState<MoodObject[]>([]);
-    
     function changeMood() {
         setModalVisible("hide-modal");
         setOpen(true);
@@ -23,19 +19,11 @@ export default function ChangeMoodModal({ setOpen }: {
         const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
 
-        // Clearing all moods
-        Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
-            supplementMapCopy[daySelected].DailyMood[key] = { 
-                mood: "",
-                range: 0,
-                TimelineData: []
-            };
-        });
+        supplementMapCopy[daySelected].DailyMood = [];
 
         // Deleting Empty Date
-        if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood["1"].mood === "" ){
+        if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood.length === 0 ){
             delete supplementMapCopy[daySelected];
-            setMoodList([]);
         }
 
         setUserData(userCopy);
@@ -46,88 +34,16 @@ export default function ChangeMoodModal({ setOpen }: {
         setOpen(false);
     }
 
-    function deleteLastIndex(supplementMapCopy: Record<string, SupplementMapObject>) {
-        supplementMapCopy[daySelected].DailyMood["3"] = { 
-            mood: "",
-            range: 0,
-            TimelineData: []
-        };
-        return supplementMapCopy[daySelected].DailyMood;
-    }
-
-    function deleteMiddleIndex(supplementMapCopy: Record<string, SupplementMapObject>) {
-        if (supplementMapCopy[daySelected].DailyMood["3"].mood !== ""){
-            supplementMapCopy[daySelected].DailyMood["2"] = supplementMapCopy[daySelected].DailyMood["3"];
-            
-            // Delete Third Index
-            supplementMapCopy[daySelected].DailyMood["3"] = { 
-                mood: "",
-                range: 0,
-                TimelineData: []
-            };
-        } else {
-            // Delete Second Index
-            supplementMapCopy[daySelected].DailyMood["2"] = { 
-                mood: "",
-                range: 0,
-                TimelineData: []
-            };
-        }
-
-        return supplementMapCopy[daySelected].DailyMood;
-    }
-
-    function deleteFirstIndex(supplementMapCopy: Record<string, SupplementMapObject>) {
-        if (supplementMapCopy[daySelected].DailyMood["2"].mood !== ""){
-            supplementMapCopy[daySelected].DailyMood["1"] = supplementMapCopy[daySelected].DailyMood["2"];
-            if (supplementMapCopy[daySelected].DailyMood["3"].mood !== ""){
-                supplementMapCopy[daySelected].DailyMood["2"] = supplementMapCopy[daySelected].DailyMood["3"];
-                
-                // Delete Third Index
-                supplementMapCopy[daySelected].DailyMood["3"] = { 
-                    mood: "",
-                    range: 0,
-                    TimelineData: []
-                };
-                return supplementMapCopy[daySelected].DailyMood;
-            }
-            // Delete Second Index
-            supplementMapCopy[daySelected].DailyMood["2"] = { 
-                mood: "",
-                range: 0,
-                TimelineData: []
-            };
-            return supplementMapCopy[daySelected].DailyMood;
-        }
-        // Delete First Index
-        supplementMapCopy[daySelected].DailyMood["1"] = { 
-            mood: "",
-            range: 0,
-            TimelineData: []
-        };
-        return supplementMapCopy[daySelected].DailyMood;
-    }
-
-    function deleteMood(item: MoodObject) {
+    function deleteMood(index: number) {
         const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
         
-        if (supplementMapCopy[daySelected].DailyMood["3"] === item){
-            supplementMapCopy[daySelected].DailyMood = deleteLastIndex(supplementMapCopy);
-        }
-
-        if (supplementMapCopy[daySelected].DailyMood["2"] === item){
-            supplementMapCopy[daySelected].DailyMood = deleteMiddleIndex(supplementMapCopy);
-        }
-
-        if (supplementMapCopy[daySelected].DailyMood["1"] === item){
-            supplementMapCopy[daySelected].DailyMood = deleteFirstIndex(supplementMapCopy);
-        }
+        // Delete Mood
+        supplementMapCopy[daySelected].DailyMood.splice(index, 1);
 
         // Deleting Empty Date
-        if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood["1"].mood === "" ){
+        if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && supplementMapCopy[daySelected].DailyMood.length === 0 ){
             delete supplementMapCopy[daySelected];
-            setMoodList([]);
         }
 
         // Close modal if there are no more moods
@@ -139,19 +55,6 @@ export default function ChangeMoodModal({ setOpen }: {
         setSupplementMap(supplementMapCopy);
         saveUserData(userCopy, setUserData, supplementMapCopy);
     }
-
-    useEffect(() => {
-        if (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood !== undefined){
-            const dailyMoodObject = supplementMap[daySelected].DailyMood;
-            const moodListCopy: MoodObject[] = [];
-            Object.keys(dailyMoodObject).forEach(key => {
-                if (dailyMoodObject[key].mood !== ""){
-                    moodListCopy.push(dailyMoodObject[key]);
-                }
-            });
-            setMoodList(moodListCopy);
-        }
-    }, [supplementMap, modalVisible]);
 
     return(
         <Modal
@@ -166,8 +69,8 @@ export default function ChangeMoodModal({ setOpen }: {
                 <View style={styles.modalView}>
                     <Text style={styles.modalText}>Add or Delete Mood?</Text>
                     <FlatList
-                        data={moodList}
-                        renderItem={({ item }) => (
+                        data={supplementMap[daySelected] !== undefined ? supplementMap[daySelected].DailyMood : []}
+                        renderItem={({ item, index }) => (
                             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                 <Pressable
                                     style={[styles.button, styles.buttonClose]}
@@ -175,12 +78,12 @@ export default function ChangeMoodModal({ setOpen }: {
                                 >
                                     <Text style={styles.textStyle}>{`${item.mood}: ${item.range}`}</Text>
                                 </Pressable>
-                                <Icon onPress={() => deleteMood(item)}
+                                <Icon onPress={() => deleteMood(index)}
                                     name="trash-outline" style={{ color: "white", fontSize: 23, alignSelf: "center", paddingHorizontal: 10 }}></Icon>
                             </View>
                         )}
                     ></FlatList>
-                    {supplementMap[daySelected] && supplementMap[daySelected].DailyMood["3"].mood === "" && 
+                    {supplementMap[daySelected] && supplementMap[daySelected].DailyMood.length !== 3 && 
                         <Icon onPress={() => changeMood()}
                             name="add-circle-outline" style={{ color: "white", fontSize: 25, alignSelf: "center", padding: 10 }}></Icon>
                     }
@@ -196,7 +99,7 @@ export default function ChangeMoodModal({ setOpen }: {
                             onPress={() => setModalVisible("hide-modal")}
                         >
                             <Text style={styles.textStyle}>
-                                {supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== ""
+                                {supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length !== 0
                                     ? "Don't Change Any Moods" 
                                     : "Close This Window"}
                             </Text>

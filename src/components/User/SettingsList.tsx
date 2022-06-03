@@ -44,16 +44,18 @@ export default function SettingsList(): JSX.Element {
     };
 
     const createHelpAlert = () => {
-        if(completedAchievements[4].color === "white"){
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 4);
-        }
         Alert.alert(
             "Do You Wish to Start the Walkthrough Tutorial?",
             "",
             [
                 {
                     text: "Continue",
-                    onPress: () => setPage("onboarding-screen"),
+                    onPress: () => {
+                        setPage("onboarding-screen");
+                        if(completedAchievements[4].color === "white"){
+                            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 4);
+                        }
+                    },
                     style: "default"
                 },
                 { 

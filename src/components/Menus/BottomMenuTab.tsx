@@ -46,7 +46,7 @@ export default function BottomMenuTab(): JSX.Element {
     };
 
     function handleMoodOpen() {
-        (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "") ? 
+        (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length > 0) ? 
             setModalVisible("mood-change-modal") :
             setOpen(!open);
     }
@@ -77,7 +77,7 @@ export default function BottomMenuTab(): JSX.Element {
                             </View>
                             <View style={{ flexDirection: "column" }}>
                                 <Icon onPress={() => handleMoodOpen()} 
-                                    name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood["1"].mood !== "" ? "lime" : "white" } style={{ textAlign: "center" }}/>
+                                    name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length > 0 ? "lime" : "white" } style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Mood"}</Text>
                             </View>
                             <View style={{ flexDirection: "column" }}>

@@ -15,12 +15,7 @@ export default function MoodSlider(): JSX.Element {
         const supplementMapCopy = { ...supplementMap };
 
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-            { 
-                "1": { mood: "", range: 0, TimelineData: [] },
-                "2": { mood: "", range: 0, TimelineData: [] },
-                "3": { mood: "", range: 0, TimelineData: [] }
-            } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
         }
 
         // Add Mood + Range
@@ -33,14 +28,7 @@ export default function MoodSlider(): JSX.Element {
     }
 
     function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
-        let emptyKey = "";
-        
-        Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
-            if (supplementMapCopy[daySelected].DailyMood[key].mood === "" && emptyKey === ""){
-                emptyKey = key;
-            }
-        });
-        supplementMapCopy[daySelected].DailyMood[emptyKey] = { mood: mood, range: rangeValue, TimelineData: [] };
+        supplementMapCopy[daySelected].DailyMood.push({ mood: mood, range: rangeValue, TimelineData: [] });
         return supplementMapCopy[daySelected].DailyMood;
     }
 

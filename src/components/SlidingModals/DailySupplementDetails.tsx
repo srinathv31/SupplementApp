@@ -174,18 +174,18 @@ export default function DailySupplementDetails(): JSX.Element {
                         <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
-                    {supplementMap[daySelected].DailyMood["1"].mood === "" && 
+                    {supplementMap[daySelected].DailyMood.length === 0 && 
                         <Text style={{ color: "silver", fontSize: 15, opacity: 0.8, fontWeight: "600", padding: 10, margin: 10, textAlign: "center" }}>
                             {"You can add moods from the menu using the "}
                             <Icon name="emoticon-happy-outline" size={20} color={ "white" }/>
                             {" Icon"}
                         </Text>
                     }
-                    {Object.keys(supplementMap[daySelected].DailyMood).map(eachMood => {
+                    {(supplementMap[daySelected].DailyMood).map((eachMood, index) => {
                         return (
                             <MoodTimlineSupplement
-                                key={""+eachMood}
-                                timelineData={supplementMap[daySelected].DailyMood[eachMood]}
+                                key={index}
+                                timelineData={eachMood}
                             ></MoodTimlineSupplement>);
                     })}
                     <View style={{ flexDirection: "row" }}>

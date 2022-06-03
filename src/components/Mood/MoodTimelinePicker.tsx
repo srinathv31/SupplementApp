@@ -17,24 +17,12 @@ export default function MoodTimelinePicker(): JSX.Element {
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(0);
     const [startSelected, setStartSelected] = useState<boolean>(false);
-    const [currentKey, setCurrentKey] = useState<string>("1");
 
     const [timelineState, setTimelineState] = useState<TimeLineObject[]>(generateTimelineObject());
 
     useEffect(() => {
         const timelineStateCopy = generateTimelineObject();
         setTimelineState(timelineStateCopy);
-    }, [modalVisible]);
-
-    // Find last mood to properly display name
-    useEffect(() => {
-        let lastKey = "1";
-        Object.keys(supplementMap[daySelected].DailyMood).forEach(key => {
-            if (supplementMap[daySelected].DailyMood[key].mood !== "") {
-                lastKey = key;
-            }
-        });
-        setCurrentKey(lastKey);
     }, [modalVisible]);
 
     const MoodTimelineProps = {
@@ -92,29 +80,17 @@ export default function MoodTimelinePicker(): JSX.Element {
     }
     
     function setTimelineInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
-        let emptyKey = "";
-        
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-            { 
-                "1": { mood: "", range: 0, TimelineData: [] },
-                "2": { mood: "", range: 0, TimelineData: [] },
-                "3": { mood: "", range: 0, TimelineData: [] }
-            } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
         }
 
-        Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
-            if (supplementMapCopy[daySelected].DailyMood[key].mood !== ""){
-                emptyKey = key;
-            }
-        });
-        setCurrentKey(emptyKey);
-        supplementMapCopy[daySelected].DailyMood[emptyKey].TimelineData = timelineState;
+        supplementMapCopy[daySelected].DailyMood[supplementMap[daySelected].DailyMood.length - 1].TimelineData = timelineState;
+
         return supplementMapCopy[daySelected].DailyMood;
     }
 
     const lastMood: MoodObject = supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood !== undefined ? 
-        supplementMap[daySelected].DailyMood[currentKey] :
+        supplementMap[daySelected].DailyMood[supplementMap[daySelected].DailyMood.length - 1] :
         { mood: "", range: 0 , TimelineData: generateTimelineObject() };
 
     return(
