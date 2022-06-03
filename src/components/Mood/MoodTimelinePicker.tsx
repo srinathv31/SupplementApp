@@ -204,9 +204,6 @@ const styles = StyleSheet.create({
         width: 100,
         alignSelf: "center"
     },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
     buttonClose: {
         backgroundColor: "#2196F3",
     },
@@ -221,25 +218,12 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: "center"
     },
-    IconTimelinePadding: {
-        paddingHorizontal: 1,
-        fontSize: 18,
-        color: "#EEE",
-        alignSelf: "center",
-        marginTop: -11
-    },
     IconPadding: {
         paddingHorizontal: "50%",
         paddingVertical: 5,
         margin: 1,
         fontSize: 18,
         color: "#EEE"
-    },
-    AddIconPadding: {
-        paddingTop: 20,
-        fontSize: 18,
-        color: "silver",
-        textAlign: "center"
     },
     ColorIconPadding: {
         paddingTop: 20,
