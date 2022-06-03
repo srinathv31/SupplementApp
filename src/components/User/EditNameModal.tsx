@@ -35,8 +35,6 @@ export default function EditNameModal(): JSX.Element {
             return;
         }
         // If details are valid => update local user object
-        // => create new cloud storage with new user => create new local storage
-        // => go to loading screen
         updateUserObjDetails();
         setModalVisible("user-modal");
     }
@@ -64,7 +62,7 @@ export default function EditNameModal(): JSX.Element {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Icon onPress={() => setModalVisible("hide-modal")} name="close-circle-outline" size={20} color={"white"} style={{ margin: 10 }}></Icon>
+                    <Icon onPress={() => setModalVisible("user-modal")} name="close-circle-outline" size={20} color={"white"} style={{ margin: 10 }}></Icon>
                     <Text style={{ color: "white", fontSize: 24, textAlign: "center", fontWeight: "300" }}>{"Editing Name..."}</Text>
                     <View style={styles.bar}>
                         <TextInput
