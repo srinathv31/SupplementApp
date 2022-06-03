@@ -4,6 +4,7 @@ import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
 import { TimeLineObject } from "../../interfaces/TimeLine";
 import IconI from "react-native-vector-icons/Ionicons";
 import { MoodTimelineFlatlistProps } from "../../interfaces/MoodTimelineProps";
+import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 
 export default function MoodTimelineFlatlist({ timelineState, setTimelineState, colorString, setInitialStart, setColorEditMode, startSelected, initialStart, colorEditMode }: MoodTimelineFlatlistProps): JSX.Element {
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
@@ -131,7 +132,7 @@ export default function MoodTimelineFlatlist({ timelineState, setTimelineState, 
     return(
         <>
             <FlatList
-                data={timelineState}
+                data={timelineState !== [] ? timelineState : generateTimelineObject()}
                 renderItem={({ item }) => (
                     <View style={{ flexDirection: "column" }}>
                         <View style={{ borderBottomColor: item.passThrough || item.start || item.end ? item.color : "transparent", borderBottomWidth: 2 }}>
