@@ -1,15 +1,16 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import generateNextDate from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 
 
-export default function NextDayButton({ userData, setUserData, setDaySelected, setObjDaySelected, objDaySelected, modalVisible }: AppProps ): JSX.Element {
-
+export default function NextDayButton(): JSX.Element {
+    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, modalVisible } = useContext(allPropsContext);
+    
     function grabNextDay(day: DateData) {
         const userCopy = { ...userData };
         let copyDate = day;
@@ -43,7 +44,7 @@ export default function NextDayButton({ userData, setUserData, setDaySelected, s
         <>
             <Pressable 
                 onPress={() => setDaySelected(grabNextDay(objDaySelected))}
-                disabled={modalVisible.modal === "disable-header"}>
+                disabled={modalVisible === "disable-header"}>
                 <Icon
                     style={{ padding: 10,
                         margin: 15,

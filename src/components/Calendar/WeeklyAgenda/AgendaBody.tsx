@@ -1,5 +1,5 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { View, FlatList, TouchableHighlight, Pressable, Text } from "react-native";
@@ -12,9 +12,11 @@ import { SupplementObject } from "../../../interfaces/Supplement";
 import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../../interfaces/Props";
+import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 
-export default function AgendaBody({ setUserData, userData, setShowStatusButtons, setSupplementMap, setWeek, week, setMonthText, setSelectedSupplement, setIndex, showStatusButtons, daySelected, supplementMap, selectedSupplement, setModalVisible, setSwipeAnimation, setObjDaySelected, setDaySelected }: WeekProps): JSX.Element {
-    
+export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
+    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, setIndex, setModalVisible, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
         const parentDataMapKey = parentData.dateString;
@@ -62,7 +64,7 @@ export default function AgendaBody({ setUserData, userData, setShowStatusButtons
         handleDayClick(parentData);
         setSelectedSupplement(item);
         setIndex(1);
-        setModalVisible({ modal: "time-modal" });
+        setModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -114,7 +116,7 @@ export default function AgendaBody({ setUserData, userData, setShowStatusButtons
                     return (
                         <TouchableHighlight key={item.date}>
                             <View style={styles.ListItem}>
-                                <Pressable onPress={() => (handleDayClick(item), setModalVisible({ modal: "hide-modal" }), setIndex(1))}>
+                                <Pressable onPress={() => (handleDayClick(item), setModalVisible("hide-modal"), setIndex(1))}>
                                     <Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
                                 </Pressable>
                                 <Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>

@@ -1,15 +1,13 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from "victory-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MoodBarGraph({ graphType, week, supplementMap, daySelected }: {
+export default function MoodBarGraph({ graphType }: {
     graphType: string,
-    week: AppProps["week"],
-    supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"]
 }): JSX.Element {
+    const { supplementMap, daySelected, week } = useContext(allPropsContext);
 
     function grabDailyGraph() {
         const dailyGraph: { quarter: string; earnings: number; }[] = [];

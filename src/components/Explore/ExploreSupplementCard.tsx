@@ -1,22 +1,22 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import Supplement from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 
-export default function ExploreSupplementCard({ supplementData, setModalizeRefStatus, AllProps }: {
+export default function ExploreSupplementCard({ supplementData, setModalizeRefStatus }: {
     supplementData: Supplement,
     setModalizeRefStatus: (m: boolean) => void,
-    AllProps: AppProps
 }): JSX.Element {
+    const { setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
 
     const longSupplementNames = ["N-Acetylcysteine", "Scutellaria baicalensis", "Ashwagandha", "Rhodiola Rosea"];
 
     function handleWebOpen() {
-        AllProps.setSelectedSupplement({ Supplement: supplementData, time: "", taken: "not-taken" });
-        if (AllProps.completedAchievements[2].color === "white") {
-            achievementUnlocked(AllProps.completedAchievements, AllProps.setCompletedAchievements, AllProps.setModalVisible, 2);
+        setSelectedSupplement({ Supplement: supplementData, time: "", taken: "not-taken" });
+        if (completedAchievements[2].color === "white") {
+            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
         }
         setModalizeRefStatus(true);
     }

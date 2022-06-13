@@ -1,11 +1,10 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function StatsBoxes({ userData }: {
-    userData: AppProps["userData"]
-}): JSX.Element {
+export default function StatsBoxes(): JSX.Element {
+    const { userData } = useContext(allPropsContext);
 
     function grabNumberOfDaysTakenSupplement() {
         const supplementMapCopy = { ...userData.data.supplementMap };
@@ -57,7 +56,7 @@ export default function StatsBoxes({ userData }: {
         let count = 0;
 
         Object.keys(supplementMapCopy).forEach(day => {
-            if(supplementMapCopy[day].DailyMood[1].mood !== ""){
+            if(supplementMapCopy[day].DailyMood.length > 0){
                 count++;
             }
         });

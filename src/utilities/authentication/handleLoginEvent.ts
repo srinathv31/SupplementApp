@@ -10,16 +10,16 @@ export async function handleLoginButton(setPage: AppProps["setPage"], userData: 
     saveLoggedInKey(userData);
 
     if (saveExists === true) {
-        setPage({ page: "loading-screen" });
+        setPage("loading-screen");
         return;
     }
 
     if (cloudSaveExists === true) {
         console.log("cloud exists... loading cloud data...");
         grabCloudSave(""+userData.userAuthObj?.uid, userData, setUserData)
-            .then(() => setPage({ page: "loading-screen" }));
+            .then(() => setPage("loading-screen"));
         return;
     }
 
-    setPage({ page: "form-screen" });
+    setPage("form-screen");
 }

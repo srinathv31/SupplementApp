@@ -31,10 +31,22 @@ export function convertStringTimeToDateTime(supplement: SupplementObject, daySel
     if (supplementCopy.time.length === 7) {
         supplementCopy.time = "0"+supplementCopy.time;
     }
-    // Set date strings to same length
-    if (daySelectedCopy.length === 9) {
+
+    // Making all Date Strings the same length
+    // First append "0" to month if single-digit
+    let firstSlashIndex = daySelectedCopy.indexOf("/");
+    if (firstSlashIndex === 1) {
         daySelectedCopy = "0"+daySelectedCopy;
     }
+    // Append "0" to date if single-digit
+    firstSlashIndex = daySelectedCopy.indexOf("/");
+    const secondSlashIndex = daySelectedCopy.indexOf("/", firstSlashIndex + 1);
+    if (secondSlashIndex - firstSlashIndex === 2) {
+        daySelectedCopy = daySelectedCopy.slice(0, firstSlashIndex+1) + "0" + daySelectedCopy.slice(firstSlashIndex+1);
+    }
+    const year = daySelectedCopy.substring(6,10);
+    const day = daySelectedCopy.substring(3,5);
+    const month = daySelectedCopy.substring(0,2);
 
     // Set the hours in military format
     if (supplementCopy.time.substring(6,8) === "PM" && supplementCopy.time.substring(0,2) !== "12") {
@@ -43,12 +55,7 @@ export function convertStringTimeToDateTime(supplement: SupplementObject, daySel
         const timeTagString = supplementCopy.time.substring(6,8);
         supplementCopy.time = ""+militaryHour + ":" + stringMinute + timeTagString;
     }
-
     const time = supplementCopy.time.substring(0,5);
 
-    const year = daySelected.substring(5,9);
-    const day = daySelected.substring(2,4);
-    const month = daySelectedCopy.substring(0,2);
-    
     return new Date(`${year}-${month}-${day}T${time}:00`);
 }

@@ -1,13 +1,14 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { View, FlatList, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { WeekProps } from "../../../interfaces/WeekProps";
+import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import { styles } from "../../../styles/WeekStyles";
 import { generateNextWeek, generatePrevWeek, grabMonth } from "../../../utilities/getCurrentDate";
 
-export default function AgendaHeader({ setWeek, week, setMonthText, setSwipeAnimation, daySelected }: WeekProps): JSX.Element {
-    
+export default function AgendaHeader(): JSX.Element {
+    const { setWeek, week, setMonthText, setSwipeAnimation, daySelected } = useContext(allPropsContext);
+
     function switchWeek(direction: string) {
         if (direction === "next") {
             const nextWeek = generateNextWeek(week);

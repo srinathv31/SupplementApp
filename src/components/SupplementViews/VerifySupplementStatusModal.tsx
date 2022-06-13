@@ -1,16 +1,16 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { AppProps } from "../../interfaces/Props";
 import { SupplementObject } from "../../interfaces/Supplement";
 import IconI from "react-native-vector-icons/Ionicons";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function VerifySupplementStatusModal({ AllProps, supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
-    AllProps: AppProps,
+export default function VerifySupplementStatusModal({ supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void
 }): JSX.Element {
+    const { supplementMap, daySelected, setUserData, userData, setSupplementMap, setModalVisible, modalVisible } = useContext(allPropsContext);
 
     const ExitButtons = [
         { name: "Submit", color: "#36D1DC", function: () => handleSubmit() },
@@ -18,9 +18,9 @@ export default function VerifySupplementStatusModal({ AllProps, supplementsToUpd
     ];
 
     function handleButtonPress(item: SupplementObject, status: "not-taken" | "missed" | "taken-off-time" | "taken-on-time") {
-        const supplementMapCopy = { ...AllProps.supplementMap };
+        const supplementMapCopy = { ...supplementMap };
 
-        Object.values(supplementMapCopy[AllProps.daySelected].SupplementSchedule).forEach(supplement => {
+        Object.values(supplementMapCopy[daySelected].SupplementSchedule).forEach(supplement => {
             if (supplement === item) {
                 supplement.taken === status 
                     ? (supplement.taken = "not-taken", item.taken = "not-taken")
@@ -29,10 +29,10 @@ export default function VerifySupplementStatusModal({ AllProps, supplementsToUpd
         });
 
         setSupplementsToUpdateStatus(supplementsToUpdateStatus);
-        saveUserData(AllProps.userData, AllProps.setUserData, supplementMapCopy);
-        AllProps.setUserData(AllProps.userData);
+        saveUserData(userData, setUserData, supplementMapCopy);
+        setUserData(userData);
 
-        AllProps.setSupplementMap(supplementMapCopy);
+        setSupplementMap(supplementMapCopy);
     }
 
     function handleSubmit() {
@@ -44,7 +44,7 @@ export default function VerifySupplementStatusModal({ AllProps, supplementsToUpd
             }
         });
         setSupplementsToUpdateStatus(supplementsToUpdateStatusCopy);
-        AllProps.setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
     }
 
     function handleExit() {
@@ -54,18 +54,18 @@ export default function VerifySupplementStatusModal({ AllProps, supplementsToUpd
             supplement.taken = "not-taken";
         });
         setSupplementsToUpdateStatus(supplementsToUpdateStatusCopy);
-        AllProps.setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
     }
 
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={AllProps.modalVisible.modal === "status-check-modal" ? true : false}
+            visible={modalVisible === "status-check-modal" ? true : false}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={[styles.ListName, { textAlign: "center" }]}>{AllProps.daySelected}</Text>
+                    <Text style={[styles.ListName, { textAlign: "center" }]}>{daySelected}</Text>
                     <Text style={[styles.ListName, { textAlign: "center" }]}>{"\nDid you take these supplements today?"}</Text>
                     <FlatList
                         data={supplementsToUpdateStatus}

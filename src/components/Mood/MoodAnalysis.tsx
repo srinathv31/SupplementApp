@@ -1,30 +1,27 @@
 // Source Imports
 import { BottomTabBar } from "./BottomTabBar";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import MoodBarGraph from "./MoodBarGraph";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MoodAnalysis(AllProps: AppProps): JSX.Element {
+export default function MoodAnalysis(): JSX.Element {
+    const { setShowButtons, index, week } = useContext(allPropsContext);
+
     const [graphType, setGraphType] = useState<string>("data1");
     const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("daily");
 
     useEffect(() => {
-        if (AllProps.index === 3) {
-            AllProps.setShowButtons(false);
+        if (index === 3) {
+            setShowButtons(false);
         }
-    }, [AllProps.index]);
+    }, [index]);
 
     return(
         <View style={{ flex: 1, flexDirection: "column" }}>
-            <Text style={styles.modalText}>{AllProps.week[0].dateString+""} - {AllProps.week[6].dateString+""}</Text>
+            <Text style={styles.modalText}>{week[0].dateString+""} - {week[6].dateString+""}</Text>
             <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}>
-                <MoodBarGraph 
-                    graphType={graphType}
-                    week={AllProps.week}
-                    supplementMap={AllProps.supplementMap}
-                    daySelected={AllProps.daySelected}
-                ></MoodBarGraph>
+                <MoodBarGraph graphType={graphType} />
                 <BottomTabBar setTabSelect={setTabSelect} setGraphType={setGraphType} tabSelect={tabSelect}  />
             </View>
         </View>

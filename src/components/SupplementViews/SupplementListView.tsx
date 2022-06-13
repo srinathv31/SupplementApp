@@ -1,8 +1,7 @@
 // Source Imports
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
-import { AppProps } from "../../interfaces/Props";
 import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
 import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
@@ -14,26 +13,19 @@ import User from "../../interfaces/User";
 import { Modalize } from "react-native-modalize";
 import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
 
-export default function SupplementListView({ userData, setUserData, fontSizeNumber, query, setSupplementMap, supplementMap, daySelected, objDaySelected, setSelectedSupplement, selectedSupplement,
-    multipleAddMode, setModalVisible, index, setCompletedAchievements, completedAchievements, setShowButtons }: {
+export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
-    setUserData: (u: User) => void, userData: User,
-	setSupplementMap: AppProps["setSupplementMap"], selectedSupplement: AppProps["selectedSupplement"],
-    supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"], 
-	objDaySelected: AppProps["objDaySelected"],
-	setSelectedSupplement: AppProps["setSelectedSupplement"], multipleAddMode: AppProps["multipleAddMode"], setModalVisible: AppProps["setModalVisible"],
-	index: AppProps["index"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
-    setShowButtons: AppProps["setShowButtons"]
 }): JSX.Element {
+    const { setModalVisible, setShowButtons, supplementMap, daySelected, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement, index, multipleAddMode  } = useContext(allPropsContext);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
-        setModalVisible({ modal: "disable-header" });
+        setModalVisible("disable-header");
         setShowButtons(false);
         modalizeRef.current?.open();
     };
@@ -42,12 +34,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-            { 
-                "1": { mood: "", range: 0, TimelineData: [] },
-                "2": { mood: "", range: 0, TimelineData: [] },
-                "3": { mood: "", range: 0, TimelineData: [] }
-            } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
         }
         
         supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });
@@ -84,7 +71,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
 
     // function expandSupplement(item: Supplement) {
     //     setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
-    //     setModalVisible({ modal: "info-modal" });
+    //     setModalVisible("info-modal");
     // }
 
     function jumpToWeb(item: Supplement) {
@@ -114,7 +101,7 @@ export default function SupplementListView({ userData, setUserData, fontSizeNumb
                             <TouchableOpacity
                                 key={item.name}
                                 onPress={ 
-                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible({ modal: "time-modal" }))
+                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible("time-modal"))
                                         : index === 2 ? () => jumpToWeb(item) : () => addSupplement(item)
                                 }
                             >

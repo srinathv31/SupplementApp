@@ -6,13 +6,8 @@ import { logoWithNameTransparent } from "../assets/imageURLs/brandImageURLs";
 import Divider from "../components/Design/Divider";
 import AppleSignIn from "../components/SocialAuth/AppleSignIn";
 import GoogleButton from "../components/SocialAuth/GoogleButton";
-import Page from "../interfaces/Page";
-import { AppProps } from "../interfaces/Props";
 
-export default function LoginScreen({ setPage, setUserData, userData }: {
-    setPage: (p: Page) => void,
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"]
-}): JSX.Element {
+export default function LoginScreen(): JSX.Element {
 
     return(
         <ImageBackground style={{ flex: 1 }} source={require("../assets/images/login-background.jpg")} resizeMode="cover">
@@ -32,16 +27,8 @@ export default function LoginScreen({ setPage, setUserData, userData }: {
                             <Image source={{ uri: logoWithNameTransparent }} style={{ height: 100, width: 275 }} />
                             <Text style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10, fontWeight: "600" }}>Sign Up/Log In</Text>
                             <Divider length="small"></Divider>
-                            <AppleSignIn 
-                                setUserData={setUserData}
-                                userData={userData}
-                                setPage={setPage}    
-                            ></AppleSignIn>
-                            <GoogleButton
-                                setUserData={setUserData}
-                                userData={userData}
-                                setPage={setPage}
-                            ></GoogleButton>
+                            <AppleSignIn />
+                            <GoogleButton />
                         </View>
                     </View>
 

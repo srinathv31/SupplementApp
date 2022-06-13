@@ -17,7 +17,7 @@ export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index
         }
         if (index === 2){
             // disable-header only activates on the explore page for web modal
-            setModalVisible({ modal: "hide-modal" });            
+            setModalVisible("hide-modal");            
         }
     }
 

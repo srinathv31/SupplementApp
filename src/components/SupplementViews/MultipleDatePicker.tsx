@@ -1,7 +1,6 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import { Calendar } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
 import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
@@ -11,20 +10,18 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MultipleDatePicker({ setUserData, userData, setModalVisible, modalVisible, setSupplementMap, supplementMap, selectedSupplement, setMultipleAddMode, completedAchievements, setCompletedAchievements }: AppProps): JSX.Element {
+export default function MultipleDatePicker(): JSX.Element {
+    const { setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap, setMultipleAddMode } = useContext(allPropsContext);
+
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
     function addSupplement(item: Supplement, dayString: string) {
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[dayString] === undefined){
-            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-            { 
-                "1": { mood: "", range: 0, TimelineData: [] },
-                "2": { mood: "", range: 0, TimelineData: [] },
-                "3": { mood: "", range: 0, TimelineData: [] }
-            } };
+            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
         }
         
         supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken", dosage: selectedSupplement.dosage });
@@ -61,12 +58,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
             Object.values(schedule).forEach(item => {
                 const strDate = getDateString(item.day);
                 if (supplementMapCopy[strDate] === undefined) {
-                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-                    { 
-                        "1": { mood: "", range: 0, TimelineData: [] },
-                        "2": { mood: "", range: 0, TimelineData: [] },
-                        "3": { mood: "", range: 0, TimelineData: [] }
-                    } };
+                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
                 }
                 supplementMapCopy[strDate].SupplementSchedule = addSupplement(selectedSupplement.Supplement, strDate);
                 if (selectedDatesCopy[item.day.dateString] === undefined) {
@@ -80,7 +72,7 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         saveUserData(userData, setUserData, supplementMapCopy);
         
         setSupplementMap(supplementMapCopy);
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
         setSchedule({});
         setMultipleAddMode(false);
         if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
@@ -107,9 +99,9 @@ export default function MultipleDatePicker({ setUserData, userData, setModalVisi
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "calendar-modal" ? true : false}
+            visible={modalVisible === "calendar-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

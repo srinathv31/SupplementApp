@@ -1,7 +1,6 @@
 // Source Imports
-import React from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import UserPageButton from "./UserPageButton";
 import NextDayButton from "../Calendar/NextDayButton";
 import PrevDayButton from "../Calendar/PrevDayButton";
@@ -12,23 +11,36 @@ import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
 import DosagePickerModal from "../SupplementViews/DosagePickerModal";
 import AchievementScreen from "../../screens/AchievementScreen";
 import EditNameModal from "../User/EditNameModal";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import JournalTextEntry from "../JournalEntry/JournalTextEntry";
+import JournalCloseButton from "../JournalEntry/JournalCloseButton";
 
 
-export default function HeaderWindow(AllProps: AppProps): JSX.Element {
-  
+export default function HeaderWindow(): JSX.Element {
+    const { daySelected } = useContext(allPropsContext);
+
+    const [journalText, setJournalText] = useState<string>("");
+
     return(
         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
-            <UserPageButton {...AllProps}></UserPageButton>
-            <PrevDayButton  {...AllProps}></PrevDayButton>
-            <Text style={styles.sectionTitle}>{AllProps.daySelected}</Text>
-            <NextDayButton {...AllProps}></NextDayButton>
-            <JournalEntryModal {...AllProps}></JournalEntryModal>
-            <JournalButton {...AllProps}></JournalButton>
-            <TimePicker {...AllProps}></TimePicker>
-            <DosagePickerModal {...AllProps}></DosagePickerModal>
-            <MultipleDatePicker {...AllProps}></MultipleDatePicker>
-            <AchievementScreen {...AllProps}></AchievementScreen>
-            <EditNameModal {...AllProps}></EditNameModal>
+            <UserPageButton />
+            <PrevDayButton />
+            <Text style={styles.sectionTitle}>{daySelected}</Text>
+            <NextDayButton />
+
+            <JournalEntryModal>
+                <JournalTextEntry setJournalText={setJournalText} journalText={journalText}/>
+                <JournalCloseButton journalText={journalText} />
+            </JournalEntryModal>
+
+            <JournalButton setJournalText={setJournalText}/>
+
+            {/* Modals */}
+            <TimePicker />
+            <DosagePickerModal />
+            <MultipleDatePicker />
+            <AchievementScreen />
+            <EditNameModal />
         </View>
     );
 }

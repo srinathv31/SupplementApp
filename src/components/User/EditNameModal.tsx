@@ -1,12 +1,15 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import CustomToast from "../Toast/customToast";
+import Icon from "react-native-vector-icons/Ionicons";
 
-export default function EditNameModal({ setModalVisible, modalVisible, userData, setUserData, completedAchievements, setCompletedAchievements }: AppProps): JSX.Element {
+export default function EditNameModal(): JSX.Element {
+    const { setModalVisible, userData, setCompletedAchievements, completedAchievements, setUserData, modalVisible } = useContext(allPropsContext);
+
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [selectedForm, setSelectedForm] = useState<"firstName"|"lastName"|"age"|"none">("none");
@@ -32,10 +35,8 @@ export default function EditNameModal({ setModalVisible, modalVisible, userData,
             return;
         }
         // If details are valid => update local user object
-        // => create new cloud storage with new user => create new local storage
-        // => go to loading screen
         updateUserObjDetails();
-        setModalVisible({ modal: "user-modal" });
+        setModalVisible("user-modal");
     }
 
     function updateUserObjDetails() {
@@ -54,14 +55,15 @@ export default function EditNameModal({ setModalVisible, modalVisible, userData,
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "edit-name" ? true : false}
+            visible={modalVisible === "edit-name" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>{"Editing Name"}</Text>
+                    <Icon onPress={() => setModalVisible("user-modal")} name="close-circle-outline" size={20} color={"white"} style={{ margin: 10 }}></Icon>
+                    <Text style={{ color: "white", fontSize: 24, textAlign: "center", fontWeight: "300" }}>{"Editing Name..."}</Text>
                     <View style={styles.bar}>
                         <TextInput
                             style={[styles.input, { borderBottomColor: warningForm.includes("firstName") === true ? "crimson" : selectedForm === "firstName" ? "#36D1DC" : "gray" }]}

@@ -1,19 +1,19 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Text, StyleSheet, Alert, Image, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
-import { AppProps } from "../interfaces/Props";
 import Icon from "react-native-vector-icons/Ionicons";
 import StatsBoxes from "../components/User/StatsBoxes";
 import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import CustomToast from "../components/Toast/customToast";
+import { allPropsContext } from "../contextHooks/AllPropsContext";
 
-export default function UserInfoPage({ userData, modalVisible, setModalVisible, setUserData, setPage, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
+export default function UserInfoPage(): JSX.Element {
+    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
-
-    const pictureProps = { setUserData, userData, setChangePictureMode, completedAchievements, setCompletedAchievements, setModalVisible };
 
     const createSettingsButtonAlert = () => {
         if (changePictureMode === true) {
@@ -30,7 +30,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                     style: "default"
                 },
                 { 
-                    text: "Change Name", onPress: () => setModalVisible({ modal: "edit-name" }),
+                    text: "Change Name", onPress: () => setModalVisible("edit-name"),
                     style: "default"
                 },
                 {
@@ -46,9 +46,9 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "user-modal" ? true : false}
+            visible={modalVisible === "user-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -58,7 +58,7 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible({ modal: "hide-modal" })}
+                                onPress={() => setModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>
@@ -67,21 +67,12 @@ export default function UserInfoPage({ userData, modalVisible, setModalVisible, 
                             <View style={{ borderRadius: 30, overflow: "hidden" }}>
                                 <Image source={{ uri: userData.picture }} style={{ width: 80, height: 80 }}></Image>
                             </View> :
-                            <ProfilePictureList {...pictureProps}></ProfilePictureList>}
+                            <ProfilePictureList setChangePictureMode={setChangePictureMode} />}
                         <Icon onPress={() => createSettingsButtonAlert()}
                             name="options-outline" style={{ padding: 10 }} size={25} color="white"></Icon>
                         <Divider length="small"></Divider>
-                        <StatsBoxes
-                            userData={userData}
-                        ></StatsBoxes>
-                        <SettingsList
-                            setPage={setPage}
-                            setModalVisible={setModalVisible}
-                            setCompletedAchievements={setCompletedAchievements}
-                            completedAchievements={completedAchievements}
-                            setUserData={setUserData}
-                            userData={userData}
-                        ></SettingsList>
+                        <StatsBoxes />
+                        <SettingsList />
                     </View>
                 </View>
             </View>

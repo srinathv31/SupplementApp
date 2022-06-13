@@ -1,18 +1,15 @@
 import { DateData } from "react-native-calendars/src/types";
 import { Achievement } from "./Achievements";
-import ModalObject from "./Modal";
-import Page from "./Page";
+import { ModalType, PageType } from "./AppTypes";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
 import { WeekDay } from "./WeekDay";
 
-export interface AppProps {
-    setUserData: (u: User) => void,
-    userData: User,
+export interface AppProps extends GlobalProps {
     setDaySelected: (d: string) => void,
     daySelected: string,
-    setModalVisible: (j: ModalObject) => void,
-    modalVisible: ModalObject,
+    setModalVisible: (j: ModalType) => void,
+    modalVisible: ModalType,
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
     setObjDaySelected: (o: DateData) => void,
@@ -21,10 +18,6 @@ export interface AppProps {
     showButtons: boolean,
     setIndex: (i: number) => void,
     index: number,
-    setPage: (p: Page) => void,
-    page: Page
-    setJournalText: (j: string) => void,
-    journalText: string,
     setWeek: (w: WeekDay[]) => void,
     week: WeekDay[],
     setMonthText: (m: string) => void,
@@ -41,3 +34,9 @@ export interface AppProps {
     completedAchievements: Achievement[]
 }
 
+export interface GlobalProps {
+    setUserData: (u: User) => void,
+    userData: User,
+    setPage: (p: PageType) => void,
+    page: PageType,
+}

@@ -1,23 +1,19 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
-import { AppProps } from "../../interfaces/Props";
 import Divider from "../Design/Divider";
 import { SupplementObject } from "../../interfaces/Supplement";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function DailySupplementDetails({ selectedSupplement, supplementMap, setSupplementMap, daySelected, setCompletedAchievements, completedAchievements, setModalVisible }: {
-    selectedSupplement: AppProps["selectedSupplement"], setSelectedSupplement: AppProps["setSelectedSupplement"],
-    setSupplementMap: AppProps["setSupplementMap"], supplementMap: AppProps["supplementMap"],
-    daySelected: AppProps["daySelected"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
-    setModalVisible: AppProps["setModalVisible"]
-}): JSX.Element {
+export default function DailySupplementDetails(): JSX.Element {
+    const { setSupplementMap, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
     const grabDosage = selectedSupplement.dosage !== undefined ? selectedSupplement.dosage : "0";
@@ -26,12 +22,6 @@ export default function DailySupplementDetails({ selectedSupplement, supplementM
     const [supplementNotes, setSupplementNotes] = useState<string>(grabSupplementNote);
     const [time, setTime] = useState<Date>(grabOffTime);
     const [dosage, setDosage] = useState<string>(grabDosage);
-
-    const MoodTimelineProps = {
-        setSupplementMap,
-        supplementMap,
-        daySelected
-    };
 
     function toggleTakenStatus(taken: "not-taken" | "missed" | "taken-off-time" | "taken-on-time", item: SupplementObject) {
         const supplementMapCopy = { ... supplementMap };
@@ -184,19 +174,18 @@ export default function DailySupplementDetails({ selectedSupplement, supplementM
                         <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
-                    {supplementMap[daySelected].DailyMood["1"].mood === "" && 
+                    {supplementMap[daySelected].DailyMood.length === 0 && 
                         <Text style={{ color: "silver", fontSize: 15, opacity: 0.8, fontWeight: "600", padding: 10, margin: 10, textAlign: "center" }}>
                             {"You can add moods from the menu using the "}
                             <Icon name="emoticon-happy-outline" size={20} color={ "white" }/>
                             {" Icon"}
                         </Text>
                     }
-                    {Object.keys(supplementMap[daySelected].DailyMood).map(eachMood => {
+                    {(supplementMap[daySelected].DailyMood).map((eachMood, index) => {
                         return (
                             <MoodTimlineSupplement
-                                key={""+eachMood}
-                                {...MoodTimelineProps}
-                                timelineData={supplementMap[daySelected].DailyMood[eachMood]}
+                                key={index}
+                                timelineData={eachMood}
                             ></MoodTimlineSupplement>);
                     })}
                     <View style={{ flexDirection: "row" }}>

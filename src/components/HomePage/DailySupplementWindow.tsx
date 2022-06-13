@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,9 +9,11 @@ import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function DailySupplementWindow({ index, setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setModalVisible, setSelectedSupplement, selectedSupplement, 
-    setShowButtons, showButtons, setCompletedAchievements, completedAchievements }: AppProps): JSX.Element {
+export default function DailySupplementWindow(): JSX.Element {
+    const { setModalVisible, setShowButtons, setSelectedSupplement, index, showButtons, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
     // used to open sliding modal
@@ -20,7 +22,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
     const height = initialHeight;
     const onOpen = (item: SupplementObject) => {
         setShowButtons(false);
-        setModalVisible({ modal: "disable-header" });
+        setModalVisible("disable-header");
         setSelectedSupplement(item);
         modalizeRef.current?.open();
     };
@@ -60,7 +62,7 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
 
     function changeTime(item: SupplementObject) {
         setSelectedSupplement(item);
-        setModalVisible({ modal: "time-modal" });
+        setModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -141,17 +143,8 @@ export default function DailySupplementWindow({ index, setUserData, userData, se
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible({ modal: "hide-modal" })}>
-                <DailySupplementDetails
-                    selectedSupplement={selectedSupplement}
-                    setSupplementMap={setSupplementMap}
-                    supplementMap={supplementMap}
-                    daySelected={daySelected}
-                    setSelectedSupplement={setSelectedSupplement}
-                    setCompletedAchievements={setCompletedAchievements}
-                    completedAchievements={completedAchievements}
-                    setModalVisible={setModalVisible}
-                />
+            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible("hide-modal")}>
+                <DailySupplementDetails />
             </Modalize>
         </>
     );

@@ -1,23 +1,21 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import SupplementList from "../../assets/SupplementList.json";
 import LinearGradient from "react-native-linear-gradient";
 import Divider from "../Design/Divider";
 import Supplement from "../../interfaces/Supplement";
-import { AppProps } from "../../interfaces/Props";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import analytics from "@react-native-firebase/analytics";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function ExploreWindow({ setModalizeRefStatus, setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible, categorySelect }: {
+export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: {
     setModalizeRefStatus: (m: boolean) => void,
-    setSelectedSupplement: AppProps["setSelectedSupplement"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
-    setModalVisible: AppProps["setModalVisible"],
     categorySelect: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home"
 }): JSX.Element {
-    const [randomSupplement, setRandomSupplement] = useState<number>(0);
+    const { setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
 
+    const [randomSupplement, setRandomSupplement] = useState<number>(0);
 
     useEffect(() => {
         const interval = setInterval(() => {

@@ -1,59 +1,27 @@
 // Source Imports
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import MoodTimelineFlatlist from "./MoodTimelineFlatlist";
 import IconI from "react-native-vector-icons/Ionicons";
 import { TimeLineObject } from "../../interfaces/TimeLine";
-import { MoodTimelinePickerProps } from "../../interfaces/MoodTimelineProps";
 import MoodObject from "../../interfaces/Mood";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 
-export default function MoodTimelinePicker({ setModalVisible, modalVisible, supplementMap, daySelected, setSupplementMap, completedAchievements, setCompletedAchievements }: MoodTimelinePickerProps): JSX.Element {
+export default function MoodTimelinePicker(): JSX.Element {
+    const { modalVisible, setSupplementMap, supplementMap, daySelected, setModalVisible, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
+
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(0);
     const [startSelected, setStartSelected] = useState<boolean>(false);
-    const [currentKey, setCurrentKey] = useState<string>("1");
 
-    const data: TimeLineObject[] = [
-        { time: "12:00 A" },
-        { time: "01:00 A" },
-        { time: "02:00 A" },
-        { time: "03:00 A" },
-        { time: "04:00 A" },
-        { time: "05:00 A" },
-        { time: "06:00 A" },
-        { time: "07:00 A" },
-        { time: "08:00 A" },
-        { time: "09:00 A" },
-        { time: "10:00 A" },
-        { time: "11:00 A" },
-        { time: "12:00 P" },
-        { time: "01:00 P" },
-        { time: "02:00 P" },
-        { time: "03:00 P" },
-        { time: "04:00 P" },
-        { time: "05:00 P" },
-        { time: "06:00 P" },
-        { time: "07:00 P" },
-        { time: "08:00 P" },
-        { time: "09:00 P" },
-        { time: "10:00 P" },
-        { time: "11:00 P" },
-        { time: "12:00 A" },
-        { time: "01:00 A" },
-        { time: "02:00 A" },
-        { time: "03:00 A" },
-        { time: "04:00 A" },
-        { time: "05:00 A" },
-        { time: "06:00 A" },
-        { time: "07:00 A" },
-    ];
-    const [timelineState, setTimelineState] = useState<TimeLineObject[]>(data);
+    const [timelineState, setTimelineState] = useState<TimeLineObject[]>(generateTimelineObject());
 
     useEffect(() => {
-        const timelineStateCopy = data;
+        const timelineStateCopy = generateTimelineObject();
         setTimelineState(timelineStateCopy);
     }, [modalVisible]);
 
@@ -105,46 +73,34 @@ export default function MoodTimelinePicker({ setModalVisible, modalVisible, supp
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setTimelineInDailyMoodObj(supplementMapCopy);
         setSupplementMap(supplementMapCopy);
-        setModalVisible({ modal: "hide-modal" });
+        setModalVisible("hide-modal");
         if (completedAchievements[10].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 10);
         }
     }
     
     function setTimelineInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
-        let emptyKey = "";
-        
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-            { 
-                "1": { mood: "", range: 0, TimelineData: [] },
-                "2": { mood: "", range: 0, TimelineData: [] },
-                "3": { mood: "", range: 0, TimelineData: [] }
-            } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
         }
 
-        Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
-            if (supplementMapCopy[daySelected].DailyMood[key].mood !== ""){
-                emptyKey = key;
-            }
-        });
-        setCurrentKey(emptyKey);
-        supplementMapCopy[daySelected].DailyMood[emptyKey].TimelineData = timelineState;
+        supplementMapCopy[daySelected].DailyMood[supplementMap[daySelected].DailyMood.length - 1].TimelineData = timelineState;
+
         return supplementMapCopy[daySelected].DailyMood;
     }
 
     const lastMood: MoodObject = supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood !== undefined ? 
-        supplementMap[daySelected].DailyMood[currentKey] :
-        { mood: "", range: 0 , TimelineData: data };
+        supplementMap[daySelected].DailyMood[supplementMap[daySelected].DailyMood.length - 1] :
+        { mood: "", range: 0 , TimelineData: generateTimelineObject() };
 
     return(
         <>
             <Modal
                 animationType="slide"
                 transparent={true}
-                visible={modalVisible !== undefined && modalVisible.modal === "mood-timeline" ? true : false}
+                visible={modalVisible !== undefined && modalVisible === "mood-timeline" ? true : false}
                 onRequestClose={() => {
-                    setModalVisible({ modal: "hide-modal" });
+                    setModalVisible("hide-modal");
                 }}
             >
                 <View style={styles.centeredView}>
@@ -202,9 +158,6 @@ const styles = StyleSheet.create({
         width: 100,
         alignSelf: "center"
     },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
     buttonClose: {
         backgroundColor: "#2196F3",
     },
@@ -219,25 +172,12 @@ const styles = StyleSheet.create({
         color: "white",
         textAlign: "center"
     },
-    IconTimelinePadding: {
-        paddingHorizontal: 1,
-        fontSize: 18,
-        color: "#EEE",
-        alignSelf: "center",
-        marginTop: -11
-    },
     IconPadding: {
         paddingHorizontal: "50%",
         paddingVertical: 5,
         margin: 1,
         fontSize: 18,
         color: "#EEE"
-    },
-    AddIconPadding: {
-        paddingTop: 20,
-        fontSize: 18,
-        color: "silver",
-        textAlign: "center"
     },
     ColorIconPadding: {
         paddingTop: 20,

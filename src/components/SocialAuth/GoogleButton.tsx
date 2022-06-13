@@ -1,17 +1,15 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
-import { AppProps } from "../../interfaces/Props";
 import { handleLoginButton } from "../../utilities/authentication/handleLoginEvent";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 GoogleSignin.configure({
     webClientId: "628023121641-t2nvq89jpmukfn0ntdiu8cdsfkdmc01d.apps.googleusercontent.com",
 });
 
-export default function GoogleButton({ userData, setUserData, setPage }: {
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"],
-    setPage: AppProps["setPage"]
-}): JSX.Element {
+export default function GoogleButton(): JSX.Element {
+    const { setUserData, userData, setPage } = useContext(globalPropsContext);
 
     async function onGoogleButtonPress() {
         try {

@@ -1,10 +1,12 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Text, Pressable, StyleSheet, View, TextInput } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function DosagePickerModal({ setModalVisible, modalVisible, selectedSupplement }: AppProps): JSX.Element {
+export default function DosagePickerModal(): JSX.Element {
+    const { setModalVisible, modalVisible, selectedSupplement } = useContext(allPropsContext);
+
     const [dosage, setDosage] = useState<string>("0");
 
     function handleDosageInput() {
@@ -13,16 +15,16 @@ export default function DosagePickerModal({ setModalVisible, modalVisible, selec
             return;
         }
         selectedSupplement.dosage = dosage;
-        setModalVisible({ modal: "calendar-modal" });
+        setModalVisible("calendar-modal");
     }
 
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "dosage-modal" ? true : false}
+            visible={modalVisible === "dosage-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

@@ -3,22 +3,25 @@ import React, { useEffect, useState } from "react";
 import { StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
-import { penguinPic } from "./assets/imageURLs/profilePictureURLs";
 import InfoForm from "./components/UserSetup/InfoForm";
-import { ListOfAchievements } from "./interfaces/Achievements";
-import Page from "./interfaces/Page";
+import { PageType } from "./interfaces/AppTypes";
+import { userDefaultValue } from "./interfaces/DefaultValues";
 import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
 import MainScreen from "./screens/MainScreen";
 import OnboardingTour from "./screens/OnboardingTour";
 import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLoggedIn";
 
+import { globalPropsContext } from "./contextHooks/GlobalPropsContext";
+
 LogBox.ignoreLogs(["Sending"]);
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
-    const [userData, setUserData] = useState<User>({ name: "", lastName: "", age: "", picture: penguinPic, data: { supplementMap: {}, selectedDates: {} }, premiumStatus: true, achievements: ListOfAchievements });
-    const [page, setPage] = useState<Page>({ page: "login-screen" });
+    const [userData, setUserData] = useState<User>(userDefaultValue);
+    const [page, setPage] = useState<PageType>("login-screen");
+
+    const GlobalProps = { setUserData, userData, setPage, page };
 
     // If User is previously logged in => continue to loading screen with previous account
     useEffect(() => {
@@ -28,35 +31,20 @@ const App = () => {
     return (
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
             <StatusBar barStyle={"light-content"} />
-        
-            { page.page === "login-screen" && 
-                    <LoginScreen
-                        setPage={setPage}
-                        setUserData={setUserData}
-                        userData={userData}
-                    ></LoginScreen>
-            }
-            { page.page === "form-screen" && 
-                    <InfoForm 
-                        userData={userData} 
-                        setUserData={setUserData} 
-                        setPage={setPage}
-                    ></InfoForm>
-            }
-            {page.page === "onboarding-screen" && 
-                    <OnboardingTour
-                        setPage={setPage}
-                    ></OnboardingTour>
-            }
-            {(page.page === "loading-screen" || page.page === "app-screen") && 
-                    <MainScreen
-                        setPage={setPage}
-                        page={page}
-                        setUserData={setUserData}
-                        userData={userData}
-                    />
-            }
-
+            <globalPropsContext.Provider value={GlobalProps}>
+                { page === "login-screen" && 
+                    <LoginScreen />
+                }
+                { page === "form-screen" && 
+                    <InfoForm />
+                }
+                {page === "onboarding-screen" && 
+                    <OnboardingTour />
+                }
+                {(page === "loading-screen" || page === "app-screen") && 
+                    <MainScreen />
+                }
+            </globalPropsContext.Provider>
         </View>
     );
 };

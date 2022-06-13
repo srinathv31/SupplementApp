@@ -1,8 +1,7 @@
 // Source Imports
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { ListOfAchievements } from "../../interfaces/Achievements";
-import { AppProps } from "../../interfaces/Props";
 import User from "../../interfaces/User";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import auth from "@react-native-firebase/auth";
@@ -12,12 +11,10 @@ import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData"
 import { openComposer } from "react-native-email-link";
 import { shareEntirePlan } from "../../utilities/shareFunctions";
 import { FlatList } from "react-native-gesture-handler";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function SettingsList({ setPage, setModalVisible, setCompletedAchievements, completedAchievements, setUserData, userData }: {
-    setPage: AppProps["setPage"], setModalVisible: AppProps["setModalVisible"],
-    setCompletedAchievements: AppProps["setCompletedAchievements"], completedAchievements: AppProps["completedAchievements"],
-    setUserData: AppProps["setUserData"], userData: AppProps["userData"]
-}): JSX.Element {
+export default function SettingsList(): JSX.Element {
+    const { setCompletedAchievements, completedAchievements, setModalVisible, setPage, userData, setUserData } = useContext(allPropsContext);
 
     const SettingButtons = [
         { name: "Achievements", color: "white", function: () => openAchievementPage() },
@@ -47,16 +44,18 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
     };
 
     const createHelpAlert = () => {
-        if(completedAchievements[4].color === "white"){
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 4);
-        }
         Alert.alert(
             "Do You Wish to Start the Walkthrough Tutorial?",
             "",
             [
                 {
                     text: "Continue",
-                    onPress: () => setPage({ page: "onboarding-screen" }),
+                    onPress: () => {
+                        setPage("onboarding-screen");
+                        if(completedAchievements[4].color === "white"){
+                            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 4);
+                        }
+                    },
                     style: "default"
                 },
                 { 
@@ -71,7 +70,7 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
         if (completedAchievements[7].color === "white") {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 7);
         }
-        setModalVisible({ modal: "achievements-modal" });
+        setModalVisible("achievements-modal");
     };
 
     function userSignOut() {
@@ -87,7 +86,7 @@ export default function SettingsList({ setPage, setModalVisible, setCompletedAch
             premiumStatus: true,
             achievements: ListOfAchievements
         };
-        setPage({ page: "login-screen" });
+        setPage("login-screen");
         setUserData(userCopy);
         auth().signOut().then(() => console.log("Signed Out!"));
         removeLoggedInKey();

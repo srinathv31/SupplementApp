@@ -1,11 +1,9 @@
 // Source Imports
 import React from "react";
 import { StyleSheet, TextInput, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
-
 
 export default function JournalTextEntry({ setJournalText, journalText }: {
-    setJournalText: AppProps["setJournalText"], journalText: AppProps["journalText"]
+    setJournalText: (j: string) => void, journalText: string
 }): JSX.Element {
 
     return(

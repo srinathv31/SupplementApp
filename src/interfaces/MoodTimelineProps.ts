@@ -1,6 +1,3 @@
-import { Achievement } from "./Achievements";
-import ModalObject from "./Modal";
-import MoodObject from "./Mood";
 import { SupplementMapObject } from "./Supplement";
 import { TimeLineObject } from "./TimeLine";
 
@@ -17,21 +14,4 @@ export interface MoodTimelineFlatlistProps {
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
     daySelected: string
-}
-
-export interface MoodTimelinePickerProps {
-    daySelected: string,
-    setModalVisible: (j: ModalObject) => void,
-    modalVisible: ModalObject,
-    setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
-    supplementMap: Record<string, SupplementMapObject>,
-    setCompletedAchievements: (a: Achievement[]) => void,
-    completedAchievements: Achievement[]
-}
-
-export interface MoodTimelineSupplementProps {
-    daySelected: string,
-    setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
-    supplementMap: Record<string, SupplementMapObject>,
-    timelineData: MoodObject
 }

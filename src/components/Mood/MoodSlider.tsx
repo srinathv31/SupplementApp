@@ -1,55 +1,34 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
-import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 
-export default function MoodSlider({ setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected, objDaySelected }: AppProps): JSX.Element {
+export default function MoodSlider(): JSX.Element {
+    const { setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
+
     const [rangeValue, setRangeValue] = useState<number>(0);
     
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
-        const userCopy = { ...userData };
-        const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: 
-            { 
-                "1": { mood: "", range: 0, TimelineData: [] },
-                "2": { mood: "", range: 0, TimelineData: [] },
-                "3": { mood: "", range: 0, TimelineData: [] }
-            } };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
         }
 
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
-        // Adding Green Dot to calendar if there is a mood
-        if (userCopy.data.selectedDates[stringDate] === undefined) {
-            userCopy.data.selectedDates[stringDate] = { dots: [{ key: "", color: "" }], selected: true };
-        }
-        // if(userCopy.data.selectedDates[stringDate].dots.includes(journalDot) === false) {
-        //     // userCopy.data.selectedDates[stringDate].dots.push(journalDot);
-        //     console.log("SOMETHINGS HERE");
-        // }
-
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
 
-        setModalVisible({ modal: "mood-timeline" });
+        setModalVisible("mood-timeline");
     }
 
     function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
-        let emptyKey = "";
-        
-        Object.keys(supplementMapCopy[daySelected].DailyMood).forEach(key => {
-            if (supplementMapCopy[daySelected].DailyMood[key].mood === "" && emptyKey === ""){
-                emptyKey = key;
-            }
-        });
-        supplementMapCopy[daySelected].DailyMood[emptyKey] = { mood: mood, range: rangeValue, TimelineData: [] };
+        supplementMapCopy[daySelected].DailyMood.push({ mood: mood, range: rangeValue, TimelineData: [] });
         return supplementMapCopy[daySelected].DailyMood;
     }
 
@@ -57,9 +36,9 @@ export default function MoodSlider({ setUserData, userData, setModalVisible, mod
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible.modal === "mood-modal" ? true : false}
+            visible={modalVisible === "mood-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
@@ -94,7 +73,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems:"center",
-        marginTop: "60%" 
     },
     modalView: {
         width: "75%", padding: 10,

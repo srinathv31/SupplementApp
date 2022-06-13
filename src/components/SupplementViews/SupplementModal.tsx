@@ -1,22 +1,24 @@
 // Source Imports
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import CustomToast from "../Toast/customToast";
 import SearchBar from "./SearchBar";
 import SupplementListView from "./SupplementListView";
 
 
-export default function SupplementModal( AllProps: AppProps ): JSX.Element {
+export default function SupplementModal(): JSX.Element {
+    const { setModalVisible, modalVisible, setMultipleAddMode } = useContext(allPropsContext);
+
     const [query, setQuery] = useState<string>("");
 
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={AllProps.modalVisible.modal === "supplement-modal" ? true : false}
+            visible={modalVisible === "supplement-modal" ? true : false}
             onRequestClose={() => {
-                AllProps.setModalVisible({ modal: "hide-modal" });
+                setModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -29,14 +31,13 @@ export default function SupplementModal( AllProps: AppProps ): JSX.Element {
                     ></SearchBar>
                     <View style={{ height: "80%" }}>
                         <SupplementListView
-                            {...AllProps}
                             fontSizeNumber={18}
                             query={query}
                         ></SupplementListView>
                     </View>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={() => (AllProps.setModalVisible({ modal: "hide-modal" }), AllProps.setMultipleAddMode(false))}
+                        onPress={() => (setModalVisible("hide-modal"), setMultipleAddMode(false))}
                     >
                         <Text style={styles.textStyle}>Close</Text>
                     </Pressable>
