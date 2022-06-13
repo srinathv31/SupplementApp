@@ -18,7 +18,7 @@ export default function CategoryBoxes({ setCategorySelect }: {
     ];
 
     const categories2 = [
-        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => setCategorySelect("Water") },
+        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => console.log("Water") },
         { name: "Exercise", colors: ["#8E2DE2", "#4A00E0"], icon: "bicycle", function: () => console.log("Exercise") }
     ];
 
@@ -43,10 +43,10 @@ export default function CategoryBoxes({ setCategorySelect }: {
                     return (
                         <LinearGradient key={index} colors={item.colors} style={{ padding: 10, margin: 10, width: "50%", borderRadius: 10, backgroundColor: "#163059", justifyContent: "center" }}>
                             <TouchableOpacity onPress={item.function}>
-                                {item.name === "Water" && <Text style={CategoryBoxesStyles.waterIntakeCount}>{"700/1000 ml"}</Text>}
+                                {/* {item.name === "Water" && <Text style={CategoryBoxesStyles.waterIntakeCount}>{"700/1000 ml"}</Text>} */}
                                 <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
                                 <IconI name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
-                                {item.name !== "Water" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
+                                <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>
                             </TouchableOpacity>
                         </LinearGradient>
                     );
