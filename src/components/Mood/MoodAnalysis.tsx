@@ -8,8 +8,8 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 export default function MoodAnalysis(): JSX.Element {
     const { setShowButtons, index, week } = useContext(allPropsContext);
 
-    const [graphType, setGraphType] = useState<string>("data1");
-    const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("daily");
+    const [graphType, setGraphType] = useState<string>("data0");
+    const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("weekly");
 
     useEffect(() => {
         if (index === 3) {

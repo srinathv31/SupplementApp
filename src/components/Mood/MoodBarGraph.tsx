@@ -99,7 +99,7 @@ export default function MoodBarGraph({ graphType }: {
 
     return(
         <View style={styles.container}>
-            <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>{supplementMap[daySelected] === undefined ? `No Data To Show for\n${daySelected}` : daySelected}</Text>
+            <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>{daySelected}</Text>
             <VictoryChart
                 // adding the material theme provided with Victory
                 theme={VictoryTheme.material}
