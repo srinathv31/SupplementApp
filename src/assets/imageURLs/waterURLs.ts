@@ -1,6 +1,7 @@
 // Water Sizes
-export const fiveHundredMl = "https://i.imgur.com/SYqIQGc.png";
-export const thousandMl = "https://i.imgur.com/LnYCohi.png";
+export const twoHundredMl = "https://i.imgur.com/gFtFpLD.png";
+export const fiveHundredMl = "https://i.imgur.com/cjmojDE.png";
+export const thousandMl = "https://i.imgur.com/uNOsMn0.png";
 
 // Tree Growth Progress
 export const stageOne = "https://i.imgur.com/uHGGaeZ.jpg";

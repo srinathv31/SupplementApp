@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import Svg, { G, Circle } from "react-native-svg";
 import IconI from "react-native-vector-icons/Ionicons";
-import { fiveHundredMl, thousandMl } from "../../assets/imageURLs/waterURLs";
+import { fiveHundredMl, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
 import Carousel from "react-native-snap-carousel";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -60,7 +60,7 @@ export default function WaterScreen(): JSX.Element {
                     </View>
                 </TouchableOpacity>
                 <Carousel
-                    data={[ { name: fiveHundredMl, ml: 500 }, { name: thousandMl, ml: 1000 }, { name: "cafe", ml: 200 } ]}
+                    data={[ { name: fiveHundredMl, ml: 500 }, { name: thousandMl, ml: 1000 }, { name: twoHundredMl, ml: 200 } ]}
                     renderItem= {({ item, index }) => {
                         return (
                             <View key={index} style={[styles.card, { flexDirection: "column", backgroundColor: "#163059", padding: 5, paddingHorizontal: 10, borderRadius: 20, marginRight: 25, justifyContent: "center" }]}>
