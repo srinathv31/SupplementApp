@@ -18,7 +18,7 @@ export default function CategoryBoxes({ setCategorySelect }: {
     ];
 
     const categories2 = [
-        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => setCategorySelect("Water") },
+        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => console.log("Water") },
         { name: "Exercise", colors: ["#8E2DE2", "#4A00E0"], icon: "bicycle", function: () => console.log("Exercise") }
     ];
 
