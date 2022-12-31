@@ -1,15 +1,18 @@
 // Source Imports
-import { BottomTabBar } from "./BottomTabBar";
-import React, { useContext, useEffect, useState } from "react";
+// import { BottomTabBar } from "./BottomTabBar";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MoodBarGraph from "./MoodBarGraph";
+// import MoodBarGraph from "./MoodBarGraph";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodAnalysis(): JSX.Element {
-    const { setShowButtons, index, week } = useContext(allPropsContext);
+    const { setShowButtons, week } = useContext(allPropsContext);
 
-    const [graphType, setGraphType] = useState<string>("data0");
-    const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("weekly");
+    const index = useClientStore(state => state.index);
+
+    // const [graphType, setGraphType] = useState<string>("data0");
+    // const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("weekly");
 
     useEffect(() => {
         if (index === 3) {
@@ -20,10 +23,10 @@ export default function MoodAnalysis(): JSX.Element {
     return(
         <View style={{ flex: 1, flexDirection: "column" }}>
             <Text style={styles.modalText}>{week[0].dateString+""} - {week[6].dateString+""}</Text>
-            <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}>
+            {/* <View style={{ flex: 1, flexDirection: "column", justifyContent: "space-between" }}>
                 <MoodBarGraph graphType={graphType} />
                 <BottomTabBar setTabSelect={setTabSelect} setGraphType={setGraphType} tabSelect={tabSelect}  />
-            </View>
+            </View> */}
         </View>
     );
 }

@@ -139,7 +139,7 @@ export default function MoodTimelineFlatlist({ timelineState, setTimelineState, 
     return(
         <>
             <FlatList
-                data={timelineState !== [] ? timelineState : generateTimelineObject()}
+                data={timelineState.length < 1 ? timelineState : generateTimelineObject()}
                 renderItem={({ item }) => (
                     <View style={{ flexDirection: "column" }}>
                         <View style={{ borderBottomColor: item.passThrough || item.start || item.end ? item.color : "transparent", borderBottomWidth: 2 }}>

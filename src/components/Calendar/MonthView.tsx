@@ -7,10 +7,13 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, setWeek, setMonthText, supplementMap, setModalVisible, setIndex } = useContext(allPropsContext);
+    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, setWeek, setMonthText, supplementMap, setModalVisible } = useContext(allPropsContext);
+
+    const updateIndex = useClientStore(state => state.updateIndex);
 
     function handleDayClick(day: DateData) {
         const userCopy = { ...userData };
@@ -31,7 +34,7 @@ export default function MonthView(): JSX.Element {
             <CalendarList
                 style={styles.calendar}
                 onDayPress={(day) => (handleDayClick(day), setModalVisible("weekly-modal"))}
-                onDayLongPress={(day) => (handleDayClick(day), setIndex(1))}
+                onDayLongPress={(day) => (handleDayClick(day), updateIndex(1))}
                 markingType={"multi-dot"}
                 markedDates={userData.data.selectedDates}
                 current={objDaySelected.dateString}

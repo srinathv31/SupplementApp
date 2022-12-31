@@ -10,12 +10,15 @@ import { Modalize } from "react-native-modalize";
 import Supplement from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function ExpandedCategoryPage({ setExpand, expand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void,
     expand: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
 }): JSX.Element {
-    const { setModalVisible, setShowButtons, setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement, index } = useContext(allPropsContext);
+    const { setModalVisible, setShowButtons, setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+
+    const index = useClientStore(state => state.index);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);

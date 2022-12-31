@@ -13,11 +13,14 @@ import WaterScreen from "../components/WaterTracking/WaterScreen";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { SupplementObject } from "../interfaces/Supplement";
 import { checkUserSupplementStatus } from "../utilities/checkSupplementStatus";
+import useClientStore from "../zustand/clientStore";
 import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(): JSX.Element {
-    const { supplementMap, daySelected, setModalVisible, selectedSupplement, index, setShowButtons } = useContext(allPropsContext);
+    const { supplementMap, daySelected, setModalVisible, selectedSupplement, setShowButtons } = useContext(allPropsContext);
+
+    const index = useClientStore(state => state.index);
 
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);

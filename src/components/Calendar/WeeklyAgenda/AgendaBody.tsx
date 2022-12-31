@@ -13,9 +13,12 @@ import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../../interfaces/Props";
 import { allPropsContext } from "../../../contextHooks/AllPropsContext";
+import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, setIndex, setModalVisible, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, setModalVisible, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+
+    const updateIndex = useClientStore(state => state.updateIndex);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
@@ -63,7 +66,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
     function changeTime(item: SupplementObject, parentData: WeekDay) {
         handleDayClick(parentData);
         setSelectedSupplement(item);
-        setIndex(1);
+        updateIndex(1);
         setModalVisible("time-modal");
     }
 
@@ -116,7 +119,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
                     return (
                         <TouchableHighlight key={item.date}>
                             <View style={styles.ListItem}>
-                                <Pressable onPress={() => (handleDayClick(item), setModalVisible("hide-modal"), setIndex(1))}>
+                                <Pressable onPress={() => (handleDayClick(item), setModalVisible("hide-modal"), updateIndex(1))}>
                                     <Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
                                 </Pressable>
                                 <Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>

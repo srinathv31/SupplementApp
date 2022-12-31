@@ -10,9 +10,12 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setModalVisible, setShowButtons, setSelectedSupplement, index, showButtons, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+    const { setModalVisible, setShowButtons, setSelectedSupplement, showButtons, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+
+    const index = useClientStore(state => state.index);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 

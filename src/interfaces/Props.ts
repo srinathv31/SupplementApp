@@ -16,8 +16,6 @@ export interface AppProps extends GlobalProps {
     objDaySelected: DateData,
     setShowButtons: (b: boolean) => void,
     showButtons: boolean,
-    setIndex: (i: number) => void,
-    index: number,
     setWeek: (w: WeekDay[]) => void,
     week: WeekDay[],
     setMonthText: (m: string) => void,

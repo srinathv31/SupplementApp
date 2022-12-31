@@ -27,7 +27,7 @@ export default function MoodTimlineSupplement({ timelineData }: {
     ];
 
     const [timelineState, setTimelineState] = useState<TimeLineObject[]>(
-        timelineData.TimelineData !== [] ? 
+        timelineData.TimelineData.length < 1 ? 
         timelineData.TimelineData as TimeLineObject[] :
             generateTimelineObject()
     );

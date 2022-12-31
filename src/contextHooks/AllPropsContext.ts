@@ -19,8 +19,6 @@ export const allPropsContext = createContext<AppProps>({
     objDaySelected: generateCurrentDateObject(),
     setShowButtons: () => false,
     showButtons: false,
-    setIndex: () => 1,
-    index: 0,
     setPage: () => "login-screen",
     page: "login-screen",
     setWeek: () => weekString,

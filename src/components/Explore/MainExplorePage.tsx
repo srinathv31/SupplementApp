@@ -11,12 +11,15 @@ import WebModal from "../../components/SlidingModals/WebModal";
 import SearchBar from "../../components/SupplementViews/SearchBar";
 import SupplementListView from "../../components/SupplementViews/SupplementListView";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function MainExplorePage({ setExpand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void
 }): JSX.Element {
-    const { setModalVisible, index, setShowButtons, selectedSupplement } = useContext(allPropsContext);
+    const { setModalVisible, setShowButtons, selectedSupplement } = useContext(allPropsContext);
+
+    const index = useClientStore(state => state.index);
 
     const [query, setQuery] = useState<string>("");
     const [allOpen, setAllOpen] = useState<boolean>(false);

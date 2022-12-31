@@ -14,13 +14,16 @@ import { Modalize } from "react-native-modalize";
 import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { setModalVisible, setShowButtons, supplementMap, daySelected, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement, index, multipleAddMode  } = useContext(allPropsContext);
+    const { setModalVisible, setShowButtons, supplementMap, daySelected, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement, multipleAddMode  } = useContext(allPropsContext);
+
+    const index = useClientStore(state => state.index);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);

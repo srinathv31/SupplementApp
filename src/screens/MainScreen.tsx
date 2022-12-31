@@ -26,6 +26,7 @@ import { ModalType } from "../interfaces/AppTypes";
 import { WeekDay } from "../interfaces/WeekDay";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
+import useClientStore from "../zustand/clientStore";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
@@ -42,7 +43,8 @@ export default function MainScreen(): JSX.Element {
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
     const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
     // Index for page sliding
-    const [index, setIndex] = React.useState(1);
+    const index = useClientStore(state => state.index);
+    const updateIndex = useClientStore(state => state.updateIndex);
     // Renders the selected day's week for the weekly modal
     const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
     // Sets the text for the weekly modal
@@ -60,7 +62,7 @@ export default function MainScreen(): JSX.Element {
 
     const AllProps: AppProps = {
         setUserData, userData, setDaySelected, daySelected, setModalVisible, modalVisible, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
-        setShowButtons, showButtons, setIndex, index, setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
+        setShowButtons, showButtons, setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
         setSelectedSupplement, selectedSupplement, setMultipleAddMode, multipleAddMode, setMood, mood, setCompletedAchievements, completedAchievements
     };
 
@@ -141,7 +143,7 @@ export default function MainScreen(): JSX.Element {
                                 <TabView
                                     navigationState={{ index, routes }}
                                     renderScene={renderScene}
-                                    onIndexChange={setIndex}
+                                    onIndexChange={updateIndex}
                                     initialLayout={{ width: layout.width }}
                                     tabBarPosition="bottom"
                                     renderTabBar={() => <BottomMenuTab />}
