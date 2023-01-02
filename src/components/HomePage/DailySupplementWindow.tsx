@@ -13,8 +13,9 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setModalVisible, setShowButtons, setSelectedSupplement, showButtons, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+    const { setModalVisible, setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
 
+    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
@@ -24,7 +25,7 @@ export default function DailySupplementWindow(): JSX.Element {
     const { height: initialHeight } = Dimensions.get("window");
     const height = initialHeight;
     const onOpen = (item: SupplementObject) => {
-        setShowButtons(false);
+        updateShowButtons(false);
         setModalVisible("disable-header");
         setSelectedSupplement(item);
         modalizeRef.current?.open();

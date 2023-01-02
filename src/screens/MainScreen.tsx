@@ -38,8 +38,10 @@ export default function MainScreen(): JSX.Element {
     const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
     // Returns DateData object of date
     const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
+    
     // Boolean that toggles sub menu
-    const [showButtons, setShowButtons] = useState<boolean>(false);
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
+
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
     const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
     // Index for page sliding
@@ -62,7 +64,7 @@ export default function MainScreen(): JSX.Element {
 
     const AllProps: AppProps = {
         setUserData, userData, setDaySelected, daySelected, setModalVisible, modalVisible, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
-        setShowButtons, showButtons, setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
+        setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
         setSelectedSupplement, selectedSupplement, setMultipleAddMode, multipleAddMode, setMood, mood, setCompletedAchievements, completedAchievements
     };
 
@@ -147,7 +149,7 @@ export default function MainScreen(): JSX.Element {
                                     initialLayout={{ width: layout.width }}
                                     tabBarPosition="bottom"
                                     renderTabBar={() => <BottomMenuTab />}
-                                    onSwipeEnd={() => setShowButtons(false)}
+                                    onSwipeEnd={() => updateShowButtons(false)}
                                 /></> }
                         </View>
                     </View>

@@ -14,8 +14,6 @@ export interface AppProps extends GlobalProps {
     supplementMap: Record<string, SupplementMapObject>,
     setObjDaySelected: (o: DateData) => void,
     objDaySelected: DateData,
-    setShowButtons: (b: boolean) => void,
-    showButtons: boolean,
     setWeek: (w: WeekDay[]) => void,
     week: WeekDay[],
     setMonthText: (m: string) => void,

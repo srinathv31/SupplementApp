@@ -2,13 +2,16 @@
 import React, { useContext } from "react";
 import { Image, Pressable, View } from "react-native";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function UserPageButton(): JSX.Element {
-    const { setShowButtons, setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
 
     function buttonHandle(){
-        setShowButtons(false);
+        updateShowButtons(false);
         setModalVisible("user-modal");
     }
 

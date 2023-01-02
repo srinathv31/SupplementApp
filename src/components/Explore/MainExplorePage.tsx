@@ -17,8 +17,9 @@ import useClientStore from "../../zustand/clientStore";
 export default function MainExplorePage({ setExpand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void
 }): JSX.Element {
-    const { setModalVisible, setShowButtons, selectedSupplement } = useContext(allPropsContext);
+    const { setModalVisible, selectedSupplement } = useContext(allPropsContext);
 
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
 
     const [query, setQuery] = useState<string>("");
@@ -39,7 +40,7 @@ export default function MainExplorePage({ setExpand }: {
 
     function onOpen() {
         setModalVisible("disable-header");
-        setShowButtons(false);
+        updateShowButtons(false);
         modalizeRef.current?.open();
     }
 

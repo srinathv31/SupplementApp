@@ -13,8 +13,9 @@ import MoodTimelinePicker from "../Mood/MoodTimelinePicker";
 import useClientStore from "../../zustand/clientStore";
 
 export default function BottomMenuTab(): JSX.Element {
-    const { setShowButtons, showButtons, supplementMap, daySelected, setModalVisible, setMultipleAddMode, selectedSupplement, modalVisible } = useContext(allPropsContext);
+    const { supplementMap, daySelected, setModalVisible, setMultipleAddMode, selectedSupplement, modalVisible } = useContext(allPropsContext);
 
+    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
 
@@ -107,7 +108,7 @@ export default function BottomMenuTab(): JSX.Element {
                         {index === 1 && <Text style={{ color: "white", fontSize: 12 }}>{"Home"}</Text>}
                     </Pressable>
                     {modalVisible !== "disable-header" ? 
-                        <Pressable onPress={() => setShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
+                        <Pressable onPress={() => updateShowButtons(!showButtons)} disabled={ index === 3 ? true : false }>
                             <Icon name="plus-box-outline" size={30} color="white" style={{ padding: 5, opacity: index === 3 ? 0.5 : 1 }}/>
                         </Pressable> : 
                         <Pressable onPress={() => shareUrl(selectedSupplement.Supplement.url, selectedSupplement)} disabled={ index === 3 ? true : false }>

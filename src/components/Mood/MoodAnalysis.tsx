@@ -7,8 +7,9 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodAnalysis(): JSX.Element {
-    const { setShowButtons, week } = useContext(allPropsContext);
+    const { week } = useContext(allPropsContext);
 
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
 
     // const [graphType, setGraphType] = useState<string>("data0");
@@ -16,7 +17,7 @@ export default function MoodAnalysis(): JSX.Element {
 
     useEffect(() => {
         if (index === 3) {
-            setShowButtons(false);
+            updateShowButtons(false);
         }
     }, [index]);
 

@@ -18,8 +18,9 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(): JSX.Element {
-    const { supplementMap, daySelected, setModalVisible, selectedSupplement, setShowButtons } = useContext(allPropsContext);
+    const { supplementMap, daySelected, setModalVisible, selectedSupplement } = useContext(allPropsContext);
 
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
 
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
@@ -44,7 +45,7 @@ export default function HomePage(): JSX.Element {
     function onOpen() {
         // Removed disable-header only for home web page so status-check-modal can work
         // setModalVisible("disable-header");
-        setShowButtons(false);
+        updateShowButtons(false);
         modalizeRef.current?.open();
     }
     

@@ -16,15 +16,16 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void,
     expand: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
 }): JSX.Element {
-    const { setModalVisible, setShowButtons, setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+    const { setModalVisible, setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
 
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
         setModalVisible("disable-header");
-        setShowButtons(false);
+        updateShowButtons(false);
         modalizeRef.current?.open();
     };
 
