@@ -9,9 +9,12 @@ import { SupplementMapObject } from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodTimelinePicker(): JSX.Element {
-    const { modalVisible, setSupplementMap, supplementMap, daySelected, setModalVisible, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, daySelected, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
+
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
@@ -73,9 +76,9 @@ export default function MoodTimelinePicker(): JSX.Element {
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setTimelineInDailyMoodObj(supplementMapCopy);
         setSupplementMap(supplementMapCopy);
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
         if (completedAchievements[10].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 10);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 10);
         }
     }
     
@@ -100,7 +103,7 @@ export default function MoodTimelinePicker(): JSX.Element {
                 transparent={true}
                 visible={modalVisible !== undefined && modalVisible === "mood-timeline" ? true : false}
                 onRequestClose={() => {
-                    setModalVisible("hide-modal");
+                    updateModalVisible("hide-modal");
                 }}
             >
                 <View style={styles.centeredView}>

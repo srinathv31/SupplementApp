@@ -4,14 +4,17 @@ import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setModalVisible, modalVisible, setUserData, userData, setSupplementMap, supplementMap, daySelected,  } = useContext(allPropsContext);
+    const { setUserData, userData, setSupplementMap, supplementMap, daySelected,  } = useContext(allPropsContext);
+
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
 
     function changeMood() {
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
         setOpen(true);
     }
 
@@ -30,7 +33,7 @@ export default function ChangeMoodModal({ setOpen }: {
         setSupplementMap(supplementMapCopy);
         saveUserData(userCopy, setUserData, supplementMapCopy);
 
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
         setOpen(false);
     }
 
@@ -48,7 +51,7 @@ export default function ChangeMoodModal({ setOpen }: {
 
         // Close modal if there are no more moods
         if (supplementMapCopy[daySelected] === undefined){
-            setModalVisible("hide-modal");
+            updateModalVisible("hide-modal");
         }
 
         setUserData(userCopy);
@@ -62,7 +65,7 @@ export default function ChangeMoodModal({ setOpen }: {
             transparent={true}
             visible={modalVisible === "mood-change-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
@@ -96,7 +99,7 @@ export default function ChangeMoodModal({ setOpen }: {
                         </Pressable>
                         <Pressable
                             style={[styles.button, styles.buttonClose, { backgroundColor: "green" }]}
-                            onPress={() => setModalVisible("hide-modal")}
+                            onPress={() => updateModalVisible("hide-modal")}
                         >
                             <Text style={styles.textStyle}>
                                 {supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length !== 0

@@ -6,13 +6,14 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function UserPageButton(): JSX.Element {
-    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+    const { userData } = useContext(allPropsContext);
 
+    const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }));
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
 
     function buttonHandle(){
         updateShowButtons(false);
-        setModalVisible("user-modal");
+        updateModalVisible("user-modal");
     }
 
     return(

@@ -14,8 +14,9 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
+    const { setCompletedAchievements, completedAchievements, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
 
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
 
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
@@ -32,7 +33,7 @@ export default function MultipleDatePicker(): JSX.Element {
         supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
 
         if (completedAchievements[0].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 0);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 0);
         }
 
         return supplementMapCopy[dayString].SupplementSchedule;
@@ -75,11 +76,11 @@ export default function MultipleDatePicker(): JSX.Element {
         saveUserData(userData, setUserData, supplementMapCopy);
         
         setSupplementMap(supplementMapCopy);
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
         setSchedule({});
         updateMultipleAddMode(false);
         if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 3);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 3);
         }
     }
 
@@ -104,7 +105,7 @@ export default function MultipleDatePicker(): JSX.Element {
             transparent={true}
             visible={modalVisible === "calendar-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

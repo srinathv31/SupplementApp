@@ -12,9 +12,12 @@ import { openComposer } from "react-native-email-link";
 import { shareEntirePlan } from "../../utilities/shareFunctions";
 import { FlatList } from "react-native-gesture-handler";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function SettingsList(): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setModalVisible, setPage, userData, setUserData } = useContext(allPropsContext);
+    const { setCompletedAchievements, completedAchievements, setPage, userData, setUserData } = useContext(allPropsContext);
+
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
     const SettingButtons = [
         { name: "Achievements", color: "white", function: () => openAchievementPage() },
@@ -53,7 +56,7 @@ export default function SettingsList(): JSX.Element {
                     onPress: () => {
                         setPage("onboarding-screen");
                         if(completedAchievements[4].color === "white"){
-                            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 4);
+                            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 4);
                         }
                     },
                     style: "default"
@@ -68,9 +71,9 @@ export default function SettingsList(): JSX.Element {
 
     const openAchievementPage = () => {
         if (completedAchievements[7].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 7);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 7);
         }
-        setModalVisible("achievements-modal");
+        updateModalVisible("achievements-modal");
     };
 
     function userSignOut() {
@@ -106,7 +109,7 @@ export default function SettingsList(): JSX.Element {
         saveUserToPhone(userCopy);
 
         if (completedAchievements[8].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 8);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 8);
         }
     }
 

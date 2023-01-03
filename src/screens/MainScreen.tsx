@@ -22,7 +22,6 @@ import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
 import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 import { DateData } from "react-native-calendars/src/types";
-import { ModalType } from "../interfaces/AppTypes";
 import { WeekDay } from "../interfaces/WeekDay";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
@@ -43,7 +42,10 @@ export default function MainScreen(): JSX.Element {
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
 
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
-    const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
+    // const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const modalVisible = useClientStore(state => state.modalVisible);
+
     // Index for page sliding
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
@@ -65,7 +67,7 @@ export default function MainScreen(): JSX.Element {
     const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
 
     const AllProps: AppProps = {
-        setUserData, userData, setDaySelected, daySelected, setModalVisible, modalVisible, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
+        setUserData, userData, setDaySelected, daySelected, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
         setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
         setSelectedSupplement, selectedSupplement, setMood, mood, setCompletedAchievements, completedAchievements
     };
@@ -79,10 +81,10 @@ export default function MainScreen(): JSX.Element {
     useEffect(() => {
         const greeting = generateLoginPeriod();
         if (greeting === "Bird" && completedAchievements[12].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 12);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 12);
         }
         if (greeting === "Owl" && completedAchievements[11].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 11);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 11);
         }
     },[]);
 

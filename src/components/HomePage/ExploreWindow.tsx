@@ -8,12 +8,15 @@ import Supplement from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import analytics from "@react-native-firebase/analytics";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: {
     setModalizeRefStatus: (m: boolean) => void,
     categorySelect: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home"
 }): JSX.Element {
-    const { setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const { setSelectedSupplement, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
     const [randomSupplement, setRandomSupplement] = useState<number>(0);
 
@@ -34,7 +37,7 @@ export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: 
     function handleTouch(supp: Supplement) {
         setSelectedSupplement({ Supplement: supp, time: "", taken: "not-taken" });
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 2);
         }
         setModalizeRefStatus(true);
         exploreAnalytics(supp);

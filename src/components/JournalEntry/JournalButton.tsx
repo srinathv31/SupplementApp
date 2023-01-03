@@ -3,12 +3,15 @@ import React, { useContext } from "react";
 import { Pressable } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function JournalButton({ setJournalText }: {
     setJournalText: (j: string) => void
 }): JSX.Element {
-    const { setSupplementMap, supplementMap, setModalVisible, modalVisible, daySelected } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
+
+    const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }));
 
     function HandleJournalOpen() {
         const supplementMapCopy = { ...supplementMap };
@@ -23,7 +26,7 @@ export default function JournalButton({ setJournalText }: {
         }
 		
         setSupplementMap(supplementMapCopy);
-        setModalVisible("journal");
+        updateModalVisible("journal");
     }
 
     return(

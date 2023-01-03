@@ -1,13 +1,16 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
+import { ModalType } from "../interfaces/AppTypes";
 
-interface ClientState {
+export interface ClientState {
   index: number;
   updateIndex: (newIdx: number) => void;
   showButtons: boolean,
   updateShowButtons: (status: boolean) => void,
   multipleAddMode: boolean,
-  updateMultipleAddMode: (status: boolean) => void
+  updateMultipleAddMode: (status: boolean) => void,
+  modalVisible: ModalType,
+  updateModalVisible: (modal: ModalType) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -18,7 +21,9 @@ const useClientStore = create<ClientState>()(
             showButtons: false,
             updateShowButtons: (status) => set(() => ({ showButtons: status })),
             multipleAddMode: false,
-            updateMultipleAddMode: (status) => set(() => ({ multipleAddMode: status }))
+            updateMultipleAddMode: (status) => set(() => ({ multipleAddMode: status })),
+            modalVisible: "hide-modal",
+            updateModalVisible: (modal) => set(() => ({ modalVisible: modal }))
         }),
         {
             name: "client-storage",

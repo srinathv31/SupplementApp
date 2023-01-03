@@ -5,12 +5,15 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { journalDot } from "../../utilities/calendarDots";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
+import useClientStore from "../../zustand/clientStore";
 
 export default function JournalCloseButton({ journalText }: {
     journalText: string
 }): JSX.Element {
-    const { setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const { setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
     
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+
     function handleJournalClose() {
         const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
@@ -34,7 +37,7 @@ export default function JournalCloseButton({ journalText }: {
         if (!isJournalDotInList && !isTextEmpty){
             selectedDatesCopy[stringDate].dots.push(journalDot);
             if (completedAchievements[1].color === "white"){
-                achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 1);
+                achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 1);
             }
         }
 
@@ -47,7 +50,7 @@ export default function JournalCloseButton({ journalText }: {
         userCopy.data.selectedDates = selectedDatesCopy;
         setUserData(userCopy);
         setSupplementMap(supplementMapCopy);
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
     }
 
     return(

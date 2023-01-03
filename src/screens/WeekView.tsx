@@ -9,9 +9,11 @@ import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
 import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 import CustomToast from "../components/Toast/customToast";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
+import useClientStore from "../zustand/clientStore";
 
 export default function WeeklySupplementModal(): JSX.Element {
-    const { setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setModalVisible, modalVisible } = useContext(allPropsContext);
+    const { setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation } = useContext(allPropsContext);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
@@ -83,7 +85,7 @@ export default function WeeklySupplementModal(): JSX.Element {
                         <AgendaBody {...WeekPropValues}/>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => (setModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
+                            onPress={() => (updateModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
                         >
                             <Text style={styles.textStyle}>Close</Text>
                         </Pressable>

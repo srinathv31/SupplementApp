@@ -11,7 +11,9 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, setWeek, setMonthText, supplementMap, setModalVisible } = useContext(allPropsContext);
+    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, setWeek, setMonthText, supplementMap } = useContext(allPropsContext);
+
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
     const updateIndex = useClientStore(state => state.updateIndex);
 
@@ -33,7 +35,7 @@ export default function MonthView(): JSX.Element {
         <View style={{ flex: 1 }}>
             <CalendarList
                 style={styles.calendar}
-                onDayPress={(day) => (handleDayClick(day), setModalVisible("weekly-modal"))}
+                onDayPress={(day) => (handleDayClick(day), updateModalVisible("weekly-modal"))}
                 onDayLongPress={(day) => (handleDayClick(day), updateIndex(1))}
                 markingType={"multi-dot"}
                 markedDates={userData.data.selectedDates}

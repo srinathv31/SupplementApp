@@ -5,9 +5,12 @@ import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
+    const { setUserData, userData, mood, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
+
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
 
     const [rangeValue, setRangeValue] = useState<number>(0);
     
@@ -24,7 +27,7 @@ export default function MoodSlider(): JSX.Element {
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
 
-        setModalVisible("mood-timeline");
+        updateModalVisible("mood-timeline");
     }
 
     function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
@@ -38,7 +41,7 @@ export default function MoodSlider(): JSX.Element {
             transparent={true}
             visible={modalVisible === "mood-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

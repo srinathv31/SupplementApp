@@ -2,8 +2,8 @@
 import Toast, {  } from "react-native-toast-message";
 import { Achievement } from "../interfaces/Achievements";
 import MoodObject from "../interfaces/Mood";
-import { AppProps } from "../interfaces/Props";
 import Supplement from "../interfaces/Supplement";
+import { ClientState } from "../zustand/clientStore";
 
 export const showAddToast = (item: Supplement, daySelected: string) => {
     Toast.show({
@@ -21,13 +21,13 @@ export const showMoodToast = (mood: MoodObject) => {
     });
 };
 
-export const showAchievementToast = (item: Achievement, setModalVisible: AppProps["setModalVisible"]) => {
+export const showAchievementToast = (item: Achievement, updateModalVisible: ClientState["updateModalVisible"]) => {
     Toast.show({
         type: "tomatoToast",
         text1: "🎉 Achievement Complete 🎉",
         text2: `${item.name}`,
         visibilityTime: 5000,
-        onPress: () => setModalVisible("achievements-modal"),
+        onPress: () => updateModalVisible("achievements-modal"),
         // And I can pass any custom props I want
         props: { uuid: "bba1a7d0-6ab2-4a0a-a76e-ebbe05ae6d70", 
             spider: item.description === "Create a note for an individual supplement." ? true : false }

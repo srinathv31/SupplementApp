@@ -4,19 +4,22 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import Supplement from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
+import useClientStore from "../../zustand/clientStore";
 
 export default function ExploreSupplementCard({ supplementData, setModalizeRefStatus }: {
     supplementData: Supplement,
     setModalizeRefStatus: (m: boolean) => void,
 }): JSX.Element {
-    const { setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const { setSelectedSupplement, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
 
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    
     const longSupplementNames = ["N-Acetylcysteine", "Scutellaria baicalensis", "Ashwagandha", "Rhodiola Rosea"];
 
     function handleWebOpen() {
         setSelectedSupplement({ Supplement: supplementData, time: "", taken: "not-taken" });
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 2);
         }
         setModalizeRefStatus(true);
     }

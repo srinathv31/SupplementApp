@@ -13,8 +13,9 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setModalVisible, setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+    const { setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
 
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
 
@@ -26,7 +27,7 @@ export default function DailySupplementWindow(): JSX.Element {
     const height = initialHeight;
     const onOpen = (item: SupplementObject) => {
         updateShowButtons(false);
-        setModalVisible("disable-header");
+        updateModalVisible("disable-header");
         setSelectedSupplement(item);
         modalizeRef.current?.open();
     };
@@ -66,7 +67,7 @@ export default function DailySupplementWindow(): JSX.Element {
 
     function changeTime(item: SupplementObject) {
         setSelectedSupplement(item);
-        setModalVisible("time-modal");
+        updateModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -147,7 +148,7 @@ export default function DailySupplementWindow(): JSX.Element {
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible("hide-modal")}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => updateModalVisible("hide-modal")}>
                 <DailySupplementDetails />
             </Modalize>
         </>

@@ -6,11 +6,14 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import generateNextDate from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function NextDayButton(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, modalVisible } = useContext(allPropsContext);
+    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected } = useContext(allPropsContext);
     
+    const modalVisible = useClientStore(state => state.modalVisible);
+
     function grabNextDay(day: DateData) {
         const userCopy = { ...userData };
         let copyDate = day;

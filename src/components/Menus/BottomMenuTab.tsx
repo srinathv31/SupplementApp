@@ -13,8 +13,9 @@ import MoodTimelinePicker from "../Mood/MoodTimelinePicker";
 import useClientStore from "../../zustand/clientStore";
 
 export default function BottomMenuTab(): JSX.Element {
-    const { supplementMap, daySelected, setModalVisible, selectedSupplement, modalVisible } = useContext(allPropsContext);
+    const { supplementMap, daySelected, selectedSupplement } = useContext(allPropsContext);
 
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
@@ -53,7 +54,7 @@ export default function BottomMenuTab(): JSX.Element {
 
     function handleMoodOpen() {
         (supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length > 0) ? 
-            setModalVisible("mood-change-modal") :
+            updateModalVisible("mood-change-modal") :
             setOpen(!open);
     }
 
@@ -77,7 +78,7 @@ export default function BottomMenuTab(): JSX.Element {
                     {showButtons && <Animated.View style={{ opacity: fadeAnim }}>
                         <View style={BottomMenuTabStyles.secondaryButtonRow}>
                             <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => setModalVisible("supplement-modal")}
+                                <Icon onPress={() => updateModalVisible("supplement-modal")}
                                     name="pill" size={30} color="white" style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Add Supp"}</Text>
                             </View>
@@ -92,7 +93,7 @@ export default function BottomMenuTab(): JSX.Element {
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Share"}</Text>
                             </View>
                             <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => (setModalVisible("supplement-modal"), updateMultipleAddMode(true))} 
+                                <Icon onPress={() => (updateModalVisible("supplement-modal"), updateMultipleAddMode(true))} 
                                     name="clock" size={30} color="white" style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Schedule"}</Text>
                             </View>

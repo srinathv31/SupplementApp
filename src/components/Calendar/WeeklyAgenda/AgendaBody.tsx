@@ -16,7 +16,9 @@ import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, setModalVisible, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
     const updateIndex = useClientStore(state => state.updateIndex);
 
@@ -67,7 +69,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         handleDayClick(parentData);
         setSelectedSupplement(item);
         updateIndex(1);
-        setModalVisible("time-modal");
+        updateModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -119,7 +121,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
                     return (
                         <TouchableHighlight key={item.date}>
                             <View style={styles.ListItem}>
-                                <Pressable onPress={() => (handleDayClick(item), setModalVisible("hide-modal"), updateIndex(1))}>
+                                <Pressable onPress={() => (handleDayClick(item), updateModalVisible("hide-modal"), updateIndex(1))}>
                                     <Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
                                 </Pressable>
                                 <Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>

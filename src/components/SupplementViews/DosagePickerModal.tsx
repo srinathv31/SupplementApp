@@ -3,9 +3,12 @@ import React, { useContext, useState } from "react";
 import { Modal, Text, Pressable, StyleSheet, View, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function DosagePickerModal(): JSX.Element {
-    const { setModalVisible, modalVisible, selectedSupplement } = useContext(allPropsContext);
+    const { selectedSupplement } = useContext(allPropsContext);
+
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
 
     const [dosage, setDosage] = useState<string>("0");
 
@@ -15,7 +18,7 @@ export default function DosagePickerModal(): JSX.Element {
             return;
         }
         selectedSupplement.dosage = dosage;
-        setModalVisible("calendar-modal");
+        updateModalVisible("calendar-modal");
     }
 
     return(
@@ -24,7 +27,7 @@ export default function DosagePickerModal(): JSX.Element {
             transparent={true}
             visible={modalVisible === "dosage-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

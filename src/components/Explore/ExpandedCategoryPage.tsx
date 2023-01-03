@@ -16,22 +16,24 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void,
     expand: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
 }): JSX.Element {
-    const { setModalVisible, setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+    const { setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
 
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
-        setModalVisible("disable-header");
+        updateModalVisible("disable-header");
         updateShowButtons(false);
         modalizeRef.current?.open();
     };
 
     function jumpToWeb(item: Supplement) {
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 2);
         }
         setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();
@@ -107,7 +109,6 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
                 modalizeRef={modalizeRef}
                 url={selectedSupplement.Supplement.url}
                 index={index}
-                setModalVisible={setModalVisible}
             ></WebModal>
         </View>
     );

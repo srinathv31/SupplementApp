@@ -4,12 +4,15 @@ import { Dimensions } from "react-native";
 import DropDownPicker, { ItemType, DropDownDirectionType } from "react-native-dropdown-picker";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { MoodProps } from "../../interfaces/MoodProps";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
     open: MoodProps["open"], setOpen: MoodProps["setOpen"],
     dropDirection: DropDownDirectionType, mode: "analysis" | "setting"
 }): JSX.Element {
-    const { setMood, setModalVisible } = useContext(allPropsContext);
+    const { setMood } = useContext(allPropsContext);
+
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
     const { height: initialHeight } = Dimensions.get("window");
 
@@ -37,7 +40,7 @@ export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
 
     function addMood(item: ItemType) {
         setMood(""+item.label);
-        setModalVisible("mood-modal");
+        updateModalVisible("mood-modal");
     }
 
     function showMood(item: ItemType) {

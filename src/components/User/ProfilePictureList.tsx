@@ -8,11 +8,14 @@ import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/sav
 import RNFS from "react-native-fs";
 import { addPic, corgiPic, huskyPic, penguinPic } from "../../assets/imageURLs/profilePictureURLs";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function ProfilePictureList({ setChangePictureMode }: {
     setChangePictureMode: (p: boolean) => void,
 }): JSX.Element {
-    const { setUserData, userData, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const { setUserData, userData, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -27,7 +30,7 @@ export default function ProfilePictureList({ setChangePictureMode }: {
         const userCopy = { ...userData };
 
         if (completedAchievements[5].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 5);
+            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 5);
         }
 
         if (item === addPic) {

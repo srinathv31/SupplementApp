@@ -9,9 +9,11 @@ import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import CustomToast from "../components/Toast/customToast";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
+import useClientStore from "../zustand/clientStore";
 
 export default function UserInfoPage(): JSX.Element {
-    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+    const { userData } = useContext(allPropsContext);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
 
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
 
@@ -30,7 +32,7 @@ export default function UserInfoPage(): JSX.Element {
                     style: "default"
                 },
                 { 
-                    text: "Change Name", onPress: () => setModalVisible("edit-name"),
+                    text: "Change Name", onPress: () => updateModalVisible("edit-name"),
                     style: "default"
                 },
                 {
@@ -48,7 +50,7 @@ export default function UserInfoPage(): JSX.Element {
             transparent={true}
             visible={modalVisible === "user-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -58,7 +60,7 @@ export default function UserInfoPage(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible("hide-modal")}
+                                onPress={() => updateModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

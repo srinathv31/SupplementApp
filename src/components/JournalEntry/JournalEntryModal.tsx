@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 import CustomToast from "../Toast/customToast";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 // import Tooltip from "rn-tooltip";
@@ -9,7 +10,9 @@ import CustomToast from "../Toast/customToast";
 export default function JournalEntryModal({ children }: {
     children: JSX.Element[]
 }): JSX.Element {
-    const { daySelected, setModalVisible, modalVisible } = useContext(allPropsContext);
+    const { daySelected } = useContext(allPropsContext);
+
+    const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }));
 
     return(
         <Modal
@@ -17,7 +20,7 @@ export default function JournalEntryModal({ children }: {
             transparent={true}
             visible={modalVisible === "journal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

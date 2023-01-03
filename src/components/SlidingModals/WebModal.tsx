@@ -5,19 +5,22 @@ import { Modalize } from "react-native-modalize";
 
 import WebView from "react-native-webview";
 import { WebModalProps } from "../../interfaces/WebModalProps";
+import useClientStore from "../../zustand/clientStore";
 
-export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index, setModalVisible }: WebModalProps): JSX.Element {
+export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index }: WebModalProps): JSX.Element {
     const webViewRef = useRef<WebView>(null);
     const { height: initialHeight } = Dimensions.get("window");
     const height = initialHeight;
     
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+
     function webModalClose() {
         if(setModalizeRefStatus !== undefined) {
             setModalizeRefStatus(false);
         }
         if (index === 2){
             // disable-header only activates on the explore page for web modal
-            setModalVisible("hide-modal");            
+            updateModalVisible("hide-modal");            
         }
     }
 

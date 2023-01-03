@@ -1,7 +1,6 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import CustomToast from "../Toast/customToast";
 import SearchBar from "./SearchBar";
@@ -9,8 +8,7 @@ import SupplementListView from "./SupplementListView";
 
 
 export default function SupplementModal(): JSX.Element {
-    const { setModalVisible, modalVisible } = useContext(allPropsContext);
-
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
 
     const [query, setQuery] = useState<string>("");
@@ -21,7 +19,7 @@ export default function SupplementModal(): JSX.Element {
             transparent={true}
             visible={modalVisible === "supplement-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -40,7 +38,7 @@ export default function SupplementModal(): JSX.Element {
                     </View>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
-                        onPress={() => (setModalVisible("hide-modal"), updateMultipleAddMode(false))}
+                        onPress={() => (updateModalVisible("hide-modal"), updateMultipleAddMode(false))}
                     >
                         <Text style={styles.textStyle}>Close</Text>
                     </Pressable>

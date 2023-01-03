@@ -11,8 +11,6 @@ export const allPropsContext = createContext<AppProps>({
     userData: userDefaultValue,
     setDaySelected: () => getCurrentDate,
     daySelected: getCurrentDate(),
-    setModalVisible: () => "hide-modal",
-    modalVisible: "hide-modal",
     setSupplementMap: () => supplementMapDefaultValue,
     supplementMap: supplementMapDefaultValue,
     setObjDaySelected: () => generateCurrentDateObject,

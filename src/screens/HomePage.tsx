@@ -18,8 +18,9 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(): JSX.Element {
-    const { supplementMap, daySelected, setModalVisible, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap, daySelected, selectedSupplement } = useContext(allPropsContext);
 
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
 
@@ -28,7 +29,7 @@ export default function HomePage(): JSX.Element {
 
     // Check if user took supplement if applicable
     useEffect(() => {
-        checkUserSupplementStatus(supplementMap, daySelected, setModalVisible, setSupplementsToUpdateStatus);
+        checkUserSupplementStatus(supplementMap, daySelected, updateModalVisible, setSupplementsToUpdateStatus);
     }, []);
 
     const modalizeRef = useRef<Modalize>(null);
@@ -44,7 +45,7 @@ export default function HomePage(): JSX.Element {
 
     function onOpen() {
         // Removed disable-header only for home web page so status-check-modal can work
-        // setModalVisible("disable-header");
+        // updateModalVisible("disable-header");
         updateShowButtons(false);
         modalizeRef.current?.open();
     }
@@ -79,7 +80,6 @@ export default function HomePage(): JSX.Element {
                 url={selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
                 index={index}
-                setModalVisible={setModalVisible}
             ></WebModal>
         </View>
     );
