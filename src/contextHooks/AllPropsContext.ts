@@ -27,8 +27,6 @@ export const allPropsContext = createContext<AppProps>({
     swipeAnimation: "fadeIn",
     setSelectedSupplement: () => selectedSupplementDefaultValue,
     selectedSupplement: selectedSupplementDefaultValue,
-    setMultipleAddMode: () => false,
-    multipleAddMode: false,
     setMood: () => "",
     mood: "",
     setCompletedAchievements: () => ListOfAchievements,

@@ -7,10 +7,13 @@ import convertDateTimeToStringTime from "../../utilities/convertTime";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function TimePicker(): JSX.Element {
-    const { multipleAddMode, setModalVisible, setUserData, userData, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setSupplementMap, modalVisible } = useContext(allPropsContext);
+    const { setModalVisible, setUserData, userData, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setSupplementMap, modalVisible } = useContext(allPropsContext);
+
+    const multipleAddMode = useClientStore(state => state.multipleAddMode);
 
     const [time, setTime] = useState<Date>(new Date());
 

@@ -11,9 +11,12 @@ import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap, setMultipleAddMode } = useContext(allPropsContext);
+    const { setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
+
+    const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
 
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
@@ -74,7 +77,7 @@ export default function MultipleDatePicker(): JSX.Element {
         setSupplementMap(supplementMapCopy);
         setModalVisible("hide-modal");
         setSchedule({});
-        setMultipleAddMode(false);
+        updateMultipleAddMode(false);
         if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
             achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 3);
         }

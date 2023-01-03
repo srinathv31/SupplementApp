@@ -22,8 +22,6 @@ export interface AppProps extends GlobalProps {
     swipeAnimation: string,
     setSelectedSupplement: (s: SupplementObject) => void,
     selectedSupplement: SupplementObject,
-    setMultipleAddMode: (m: boolean) => void,
-    multipleAddMode: boolean,
     setMood: (m: string) => void,
     mood: string,
     setCompletedAchievements: (a: Achievement[]) => void,

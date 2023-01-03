@@ -55,8 +55,10 @@ export default function MainScreen(): JSX.Element {
     const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
     // Tracks selected supplement for mass adding and time changing features
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
+    
     // Sets app in multipleAdd State mode
-    const [multipleAddMode, setMultipleAddMode] = useState<boolean>(false);
+    // const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
+
     // Tracks selected mood for analysis and inputting mood trends
     const [mood, setMood] = useState<string>("");
     // Updates achievements list throughout app
@@ -65,7 +67,7 @@ export default function MainScreen(): JSX.Element {
     const AllProps: AppProps = {
         setUserData, userData, setDaySelected, daySelected, setModalVisible, modalVisible, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
         setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
-        setSelectedSupplement, selectedSupplement, setMultipleAddMode, multipleAddMode, setMood, mood, setCompletedAchievements, completedAchievements
+        setSelectedSupplement, selectedSupplement, setMood, mood, setCompletedAchievements, completedAchievements
     };
 
     // UseEffect loads in saved data from phone on App Load once

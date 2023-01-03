@@ -13,8 +13,9 @@ import MoodTimelinePicker from "../Mood/MoodTimelinePicker";
 import useClientStore from "../../zustand/clientStore";
 
 export default function BottomMenuTab(): JSX.Element {
-    const { supplementMap, daySelected, setModalVisible, setMultipleAddMode, selectedSupplement, modalVisible } = useContext(allPropsContext);
+    const { supplementMap, daySelected, setModalVisible, selectedSupplement, modalVisible } = useContext(allPropsContext);
 
+    const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
@@ -91,7 +92,7 @@ export default function BottomMenuTab(): JSX.Element {
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Share"}</Text>
                             </View>
                             <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => (setModalVisible("supplement-modal"), setMultipleAddMode(true))} 
+                                <Icon onPress={() => (setModalVisible("supplement-modal"), updateMultipleAddMode(true))} 
                                     name="clock" size={30} color="white" style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Schedule"}</Text>
                             </View>
