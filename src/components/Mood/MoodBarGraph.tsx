@@ -3,11 +3,14 @@ import React, { useContext } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from "victory-native";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodBarGraph({ graphType }: {
     graphType: string,
 }): JSX.Element {
-    const { supplementMap, daySelected, week } = useContext(allPropsContext);
+    const { supplementMap, week } = useContext(allPropsContext);
+
+    const daySelected = useClientStore(state => state.daySelected);
 
     function grabDailyGraph() {
         const dailyGraph: { quarter: string; earnings: number; }[] = [];

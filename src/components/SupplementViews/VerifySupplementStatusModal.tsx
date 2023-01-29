@@ -11,9 +11,10 @@ import useClientStore from "../../zustand/clientStore";
 export default function VerifySupplementStatusModal({ supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void
 }): JSX.Element {
-    const { supplementMap, daySelected, setUserData, userData, setSupplementMap } = useContext(allPropsContext);
+    const { supplementMap, setUserData, userData, setSupplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const daySelected = useClientStore(state => state.daySelected);
 
     const ExitButtons = [
         { name: "Submit", color: "#36D1DC", function: () => handleSubmit() },

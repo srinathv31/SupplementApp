@@ -1,16 +1,15 @@
 // Source Imports
 import React, { useState } from "react";
 import { Modal, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
-import { AppProps } from "../../interfaces/Props";
 import { SupplementObject } from "../../interfaces/Supplement";
 import useClientStore from "../../zustand/clientStore";
 
 // Not being used currently
-export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }: {
-    AllProps: AppProps,
+export default function TimeUpdateModal({ supplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[]
 }): JSX.Element {
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const daySelected = useClientStore(state => state.daySelected);
 
     const listOfTimes = Array.from({ length: supplementsToUpdateStatus.length } , () => (""));
     const [time, setTime] = useState<string[]>(listOfTimes);
@@ -28,7 +27,7 @@ export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }:
             <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={[styles.ListName, { textAlign: "center" }]}>{AllProps.daySelected}</Text>
+                        <Text style={[styles.ListName, { textAlign: "center" }]}>{daySelected}</Text>
                         <Text style={[styles.ListName, { textAlign: "center" }]}>{"\nAt What Time(s) did you take each supplement?"}</Text>
                         <FlatList
                             data={supplementsToUpdateStatus}

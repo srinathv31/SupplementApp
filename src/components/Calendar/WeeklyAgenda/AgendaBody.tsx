@@ -16,11 +16,12 @@ import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, setObjDaySelected, setWeek, setMonthText, setSelectedSupplement, week, selectedSupplement  } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
     const updateIndex = useClientStore(state => state.updateIndex);
+    const { updateDaySelected, daySelected } = useClientStore(state => ({ updateDaySelected: state.updateDaySelected, daySelected: state.daySelected }));
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
@@ -56,7 +57,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         updateSwipeAnimation("fadeIn");
 
         setObjDaySelected(weekDayDateData);
-        setDaySelected(getDateString(weekDayDateData));
+        updateDaySelected(getDateString(weekDayDateData));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, weekDayDateData.dateString);
         setUserData(userCopy);

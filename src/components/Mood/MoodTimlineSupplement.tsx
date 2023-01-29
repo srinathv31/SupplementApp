@@ -7,12 +7,14 @@ import { TimeLineObject } from "../../interfaces/TimeLine";
 import MoodObject from "../../interfaces/Mood";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
+import useClientStore from "../../zustand/clientStore";
 
 // Component color select mode: DISABLED
 export default function MoodTimlineSupplement({ timelineData, index }: {
     timelineData: MoodObject, index: number
 }): JSX.Element {
-    const { setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");

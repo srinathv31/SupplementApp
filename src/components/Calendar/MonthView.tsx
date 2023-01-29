@@ -11,17 +11,17 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, setWeek, setMonthText, supplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, setObjDaySelected, objDaySelected, setWeek, setMonthText, supplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-
     const updateIndex = useClientStore(state => state.updateIndex);
+    const updateDaySelected = useClientStore(state => state.updateDaySelected);
 
     function handleDayClick(day: DateData) {
         const userCopy = { ...userData };
 
         setObjDaySelected(day);
-        setDaySelected(getDateString(day));
+        updateDaySelected(getDateString(day));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, day.dateString);
         setUserData(userCopy);

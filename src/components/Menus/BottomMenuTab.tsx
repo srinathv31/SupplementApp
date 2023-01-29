@@ -12,13 +12,14 @@ import MoodSlider from "../Mood/MoodSlider";
 import useClientStore from "../../zustand/clientStore";
 
 export default function BottomMenuTab(): JSX.Element {
-    const { supplementMap, daySelected, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap, selectedSupplement } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [open, setOpen] = useState(false);
     

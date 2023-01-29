@@ -1,7 +1,6 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import CustomToast from "../Toast/customToast";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,9 +9,8 @@ import CustomToast from "../Toast/customToast";
 export default function JournalEntryModal({ children }: {
     children: JSX.Element[]
 }): JSX.Element {
-    const { daySelected } = useContext(allPropsContext);
-
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }));
+    const daySelected = useClientStore(state => state.daySelected);
 
     return(
         <Modal

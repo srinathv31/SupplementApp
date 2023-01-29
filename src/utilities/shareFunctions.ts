@@ -29,7 +29,7 @@ export const shareAchievement = async (item: Achievement, total: number) => {
     }
 };
 
-export const sharePlan = async (supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"]) => {
+export const sharePlan = async (supplementMap: AppProps["supplementMap"], daySelected: string) => {
     try {
         await Share.open({ message: `My ${daySelected}'s Supplement Schedule:\n${grabSupplementPlan(supplementMap, daySelected)}` });
     } catch (e) {
@@ -45,7 +45,7 @@ export const shareEntirePlan = async (supplementMap: AppProps["supplementMap"]) 
     }
 };
 
-function grabSupplementPlan(supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"]){
+function grabSupplementPlan(supplementMap: AppProps["supplementMap"], daySelected: string){
     const supplementList: string[] = [];
     Object.values(supplementMap[daySelected].SupplementSchedule).forEach(item => {
         supplementList.push(`\n${item.time}: ${item.Supplement.name}`);

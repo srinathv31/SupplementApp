@@ -6,11 +6,13 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import CategoryBoxesStyles from "../../styles/CategoryBoxStyles";
 import { countDailySupplements } from "../../utilities/countDailySupplements";
+import useClientStore from "../../zustand/clientStore";
 
 export default function CategoryBoxes({ setCategorySelect }: {
     setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void,
 }) {
-    const { supplementMap, daySelected } = useContext(allPropsContext);
+    const { supplementMap } = useContext(allPropsContext);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const categories1 = [
         { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("Supplement Schedule") },

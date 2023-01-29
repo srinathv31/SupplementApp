@@ -10,9 +10,10 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function PrevDayButton(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected } = useContext(allPropsContext);
+    const { setUserData, userData, setObjDaySelected, objDaySelected } = useContext(allPropsContext);
 
     const modalVisible = useClientStore(state => state.modalVisible);
+    const updateDaySelected = useClientStore(state => state.updateDaySelected);
 
     function grabPrevDay(day: DateData) {
         const userCopy = { ...userData };
@@ -46,7 +47,7 @@ export default function PrevDayButton(): JSX.Element {
     return(
         <>
             <Pressable 
-                onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
+                onPress={() => updateDaySelected(grabPrevDay(objDaySelected))}
                 disabled={modalVisible === "disable-header"}>
                 <Icon
                     style={{ padding: 10,

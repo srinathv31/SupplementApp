@@ -13,9 +13,10 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementDetails(): JSX.Element {
-    const { setSupplementMap, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, selectedSupplement, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";

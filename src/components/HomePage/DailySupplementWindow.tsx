@@ -13,11 +13,12 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+    const { setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, objDaySelected, selectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
     const index = useClientStore(state => state.index);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 

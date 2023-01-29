@@ -9,9 +9,10 @@ import useClientStore from "../../zustand/clientStore";
 export default function JournalButton({ setJournalText }: {
     setJournalText: (j: string) => void
 }): JSX.Element {
-    const { setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
 
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }));
+    const daySelected = useClientStore(state => state.daySelected);
 
     function HandleJournalOpen() {
         const supplementMapCopy = { ...supplementMap };

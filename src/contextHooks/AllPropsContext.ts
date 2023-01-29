@@ -2,15 +2,13 @@ import { createContext } from "react";
 import { ListOfAchievements } from "../interfaces/Achievements";
 import { selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { AppProps } from "../interfaces/Props";
-import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
+import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 
 const weekString = generateWeekList(generateCurrentDateObject());
 
 export const allPropsContext = createContext<AppProps>({
     setUserData: () => userDefaultValue,
     userData: userDefaultValue,
-    setDaySelected: () => getCurrentDate,
-    daySelected: getCurrentDate(),
     setSupplementMap: () => supplementMapDefaultValue,
     supplementMap: supplementMapDefaultValue,
     setObjDaySelected: () => generateCurrentDateObject,

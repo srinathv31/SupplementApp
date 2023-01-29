@@ -21,12 +21,13 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { supplementMap, daySelected, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
+    const daySelected = useClientStore(state => state.daySelected);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);

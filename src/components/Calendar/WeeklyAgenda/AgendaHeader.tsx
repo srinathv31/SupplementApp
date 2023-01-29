@@ -8,9 +8,10 @@ import { generateNextWeek, generatePrevWeek, grabMonth } from "../../../utilitie
 import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaHeader(): JSX.Element {
-    const { setWeek, week, setMonthText, daySelected } = useContext(allPropsContext);
+    const { setWeek, week, setMonthText } = useContext(allPropsContext);
 
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
+    const daySelected = useClientStore(state => state.daySelected);
 
     function switchWeek(direction: string) {
         if (direction === "next") {

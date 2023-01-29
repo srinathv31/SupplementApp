@@ -12,9 +12,11 @@ import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodTimelinePicker(): JSX.Element {
-    const { setSupplementMap, supplementMap, daySelected, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const daySelected = useClientStore(state => state.daySelected);
+
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");

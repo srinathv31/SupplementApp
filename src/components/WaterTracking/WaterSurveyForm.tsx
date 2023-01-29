@@ -55,8 +55,8 @@ export default function WaterSurveyForm({ formType }: {
                     radio_props={radio_props[formType]}
                     buttonColor={"#50C900"}
                     labelColor={"white"}
-                    selectedButtonColor={"#50C900"}
-                    selectedLabelColor={"white"}
+                    // selectedButtonColor={"#50C900"}
+                    // selectedLabelColor={"white"}
                     onPress={(value) => {
                         console.log(radio_props[formType][value].label);
                         setGenderAnswer(radio_props[formType][value].label);

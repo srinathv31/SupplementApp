@@ -20,7 +20,7 @@ import { requestUserPermission } from "../utilities/authentication/notifications
 import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
-import getCurrentDate, { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
+import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 import { DateData } from "react-native-calendars/src/types";
 import { WeekDay } from "../interfaces/WeekDay";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
@@ -48,13 +48,14 @@ export default function MainScreen(): JSX.Element {
     // const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
     // Tracks selected mood for analysis and inputting mood trends
     // const [mood, setMood] = useState<string>("");
+    // Returns string date in format - MM/DD/YYYY
+    // const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
 
     // TODO:
 
     // Data structure that handles supplements and journal entry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
-    // Returns string date in format - MM/DD/YYYY
-    const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
+
     // Returns DateData object of date
     const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
     // Renders the selected day's week for the weekly modal
@@ -69,7 +70,7 @@ export default function MainScreen(): JSX.Element {
     const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
 
     const AllProps: AppProps = {
-        setUserData, userData, setDaySelected, daySelected, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
+        setUserData, userData, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
         setPage, page, setWeek, week, setMonthText, monthText,
         setSelectedSupplement, selectedSupplement, setCompletedAchievements, completedAchievements
     };

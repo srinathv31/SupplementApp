@@ -10,9 +10,10 @@ import useClientStore from "../../zustand/clientStore";
 export default function JournalCloseButton({ journalText }: {
     journalText: string
 }): JSX.Element {
-    const { setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+    const { setUserData, userData, setSupplementMap, supplementMap, objDaySelected, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
     
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const daySelected = useClientStore(state => state.daySelected);
 
     function handleJournalClose() {
         const userCopy = { ...userData };

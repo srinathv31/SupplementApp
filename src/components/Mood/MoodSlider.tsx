@@ -8,10 +8,11 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap, setSupplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const mood = useClientStore(state => state.mood);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [rangeValue, setRangeValue] = useState<number>(0);
     

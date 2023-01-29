@@ -6,8 +6,6 @@ import User from "./User";
 import { WeekDay } from "./WeekDay";
 
 export interface AppProps extends GlobalProps {
-    setDaySelected: (d: string) => void,
-    daySelected: string,
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
     setObjDaySelected: (o: DateData) => void,

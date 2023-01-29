@@ -9,9 +9,10 @@ import useClientStore from "../../zustand/clientStore";
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setUserData, userData, setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
+    const { setUserData, userData, setSupplementMap, supplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const daySelected = useClientStore(state => state.daySelected);
 
     function changeMood() {
         updateModalVisible("hide-modal");

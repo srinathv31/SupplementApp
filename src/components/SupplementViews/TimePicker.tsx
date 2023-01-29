@@ -11,10 +11,11 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function TimePicker(): JSX.Element {
-    const { setUserData, userData, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap, selectedSupplement, setCompletedAchievements, completedAchievements, setSupplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [time, setTime] = useState<Date>(new Date());
 

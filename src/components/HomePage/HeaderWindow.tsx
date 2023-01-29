@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import UserPageButton from "./UserPageButton";
 import NextDayButton from "../Calendar/NextDayButton";
@@ -11,13 +11,13 @@ import MultipleDatePicker from "../SupplementViews/MultipleDatePicker";
 import DosagePickerModal from "../SupplementViews/DosagePickerModal";
 import AchievementScreen from "../../screens/AchievementScreen";
 import EditNameModal from "../User/EditNameModal";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import JournalTextEntry from "../JournalEntry/JournalTextEntry";
 import JournalCloseButton from "../JournalEntry/JournalCloseButton";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function HeaderWindow(): JSX.Element {
-    const { daySelected } = useContext(allPropsContext);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [journalText, setJournalText] = useState<string>("");
 
