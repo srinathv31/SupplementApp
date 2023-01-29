@@ -5,21 +5,24 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import { styles } from "../../../styles/WeekStyles";
 import { generateNextWeek, generatePrevWeek, grabMonth } from "../../../utilities/getCurrentDate";
+import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaHeader(): JSX.Element {
-    const { setWeek, week, setMonthText, setSwipeAnimation, daySelected } = useContext(allPropsContext);
+    const { setWeek, week, setMonthText, daySelected } = useContext(allPropsContext);
+
+    const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
 
     function switchWeek(direction: string) {
         if (direction === "next") {
             const nextWeek = generateNextWeek(week);
             setWeek(nextWeek);
             setMonthText(grabMonth(nextWeek));
-            setSwipeAnimation("slideInRight");
+            updateSwipeAnimation("slideInRight");
         } else if (direction === "prev") {
             const prevWeek = generatePrevWeek(week);
             setWeek(prevWeek);
             setMonthText(grabMonth(prevWeek));
-            setSwipeAnimation("slideInLeft");
+            updateSwipeAnimation("slideInLeft");
         }
     }
 

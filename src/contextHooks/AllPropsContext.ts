@@ -21,8 +21,6 @@ export const allPropsContext = createContext<AppProps>({
     week: weekString,
     setMonthText: () => grabMonth(weekString),
     monthText: grabMonth(weekString),
-    setSwipeAnimation: () => "fadeIn",
-    swipeAnimation: "fadeIn",
     setSelectedSupplement: () => selectedSupplementDefaultValue,
     selectedSupplement: selectedSupplementDefaultValue,
     setMood: () => "",

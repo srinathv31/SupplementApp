@@ -16,8 +16,6 @@ export interface AppProps extends GlobalProps {
     week: WeekDay[],
     setMonthText: (m: string) => void,
     monthText: string,
-    setSwipeAnimation: (s: string) => void,
-    swipeAnimation: string,
     setSelectedSupplement: (s: SupplementObject) => void,
     selectedSupplement: SupplementObject,
     setMood: (m: string) => void,

@@ -16,10 +16,10 @@ import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-
+    const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
     const updateIndex = useClientStore(state => state.updateIndex);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
@@ -53,7 +53,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         const weekDayDateData = convertWeekDayToDateData(weekDay);
         const userCopy = { ...userData };
 
-        setSwipeAnimation("fadeIn");
+        updateSwipeAnimation("fadeIn");
 
         setObjDaySelected(weekDayDateData);
         setDaySelected(getDateString(weekDayDateData));
@@ -105,7 +105,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
     }
 
     function handleStatusToggle(item: SupplementObject) {
-        setSwipeAnimation("fadeIn");
+        updateSwipeAnimation("fadeIn");
         setSelectedSupplement(item);
         setShowStatusButtons(!showStatusButtons);
     }

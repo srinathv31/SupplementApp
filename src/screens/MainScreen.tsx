@@ -44,10 +44,12 @@ export default function MainScreen(): JSX.Element {
     const updateIndex = useClientStore(state => state.updateIndex);
     // Sets app in multipleAdd State mode
     // const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
+    // Sets Animation for Weekly modal
+    // const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
 
     // TODO:
 
-    // Data structure that handles supplements and journal enttry for a given day
+    // Data structure that handles supplements and journal entry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
     const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
@@ -57,8 +59,7 @@ export default function MainScreen(): JSX.Element {
     const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
     // Sets the text for the weekly modal
     const [monthText, setMonthText] = useState<string>(grabMonth(week));
-    // Sets Animation for Weekly modal
-    const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
+
     // Tracks selected supplement for mass adding and time changing features
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
     // Tracks selected mood for analysis and inputting mood trends
@@ -68,7 +69,7 @@ export default function MainScreen(): JSX.Element {
 
     const AllProps: AppProps = {
         setUserData, userData, setDaySelected, daySelected, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
-        setPage, page, setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation,
+        setPage, page, setWeek, week, setMonthText, monthText,
         setSelectedSupplement, selectedSupplement, setMood, mood, setCompletedAchievements, completedAchievements
     };
 

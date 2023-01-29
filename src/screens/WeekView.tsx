@@ -12,8 +12,9 @@ import { allPropsContext } from "../contextHooks/AllPropsContext";
 import useClientStore from "../zustand/clientStore";
 
 export default function WeeklySupplementModal(): JSX.Element {
-    const { setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation } = useContext(allPropsContext);
+    const { setWeek, week, setMonthText, monthText } = useContext(allPropsContext);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { swipeAnimation, updateSwipeAnimation } = useClientStore(state => ({ swipeAnimation: state.swipeAnimation, updateSwipeAnimation: state.updateSwipeAnimation }));
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
@@ -27,12 +28,12 @@ export default function WeeklySupplementModal(): JSX.Element {
             const nextWeek = generateNextWeek(week);
             setWeek(nextWeek);
             setMonthText(grabMonth(nextWeek));
-            setSwipeAnimation("slideInRight");
+            updateSwipeAnimation("slideInRight");
         } else if (direction === "prev") {
             const prevWeek = generatePrevWeek(week);
             setWeek(prevWeek);
             setMonthText(grabMonth(prevWeek));
-            setSwipeAnimation("slideInLeft");
+            updateSwipeAnimation("slideInLeft");
         }
     }
 
@@ -85,7 +86,7 @@ export default function WeeklySupplementModal(): JSX.Element {
                         <AgendaBody {...WeekPropValues}/>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => (updateModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
+                            onPress={() => (updateModalVisible("hide-modal"), updateSwipeAnimation("fadeIn"))}
                         >
                             <Text style={styles.textStyle}>Close</Text>
                         </Pressable>
