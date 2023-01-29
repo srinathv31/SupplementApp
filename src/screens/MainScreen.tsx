@@ -21,8 +21,6 @@ import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject } from "../interfaces/Supplement";
 import { initializeDates } from "../utilities/getCurrentDate";
-import { DateData } from "react-native-calendars/src/types";
-import { WeekDay } from "../interfaces/WeekDay";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
@@ -55,22 +53,22 @@ export default function MainScreen(): JSX.Element {
     // Tracks selected supplement for mass adding and time changing features
     // const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
     // Returns DateData object of date
-    const { weekInit, monthTextInit } = initializeDates();
-
+    const { monthTextInit } = initializeDates();
     // const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
+    // Renders the selected day's week for the weekly modal
+    // const [week, setWeek] = useState<WeekDay[]>(weekInit);
 
     // TODO:
 
     // Data structure that handles supplements and journal entry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
 
-    // Renders the selected day's week for the weekly modal
-    const [week, setWeek] = useState<WeekDay[]>(weekInit);
+
     // Sets the text for the weekly modal
     const [monthText, setMonthText] = useState<string>(monthTextInit);
 
     const AllProps: AppProps = {
-        setUserData, userData, setSupplementMap, supplementMap, setPage, page, setWeek, week, setMonthText, monthText,
+        setUserData, userData, setSupplementMap, supplementMap, setPage, page, setMonthText, monthText,
     };
 
     // UseEffect loads in saved data from phone on App Load once

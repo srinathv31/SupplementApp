@@ -13,9 +13,11 @@ import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function WeeklySupplementModal(): JSX.Element {
-    const { setWeek, week, setMonthText, monthText } = useContext(allPropsContext);
+    const { setMonthText, monthText } = useContext(allPropsContext);
+
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const { swipeAnimation, updateSwipeAnimation } = useClientStore(state => ({ swipeAnimation: state.swipeAnimation, updateSwipeAnimation: state.updateSwipeAnimation }), shallow);
+    const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
@@ -27,12 +29,12 @@ export default function WeeklySupplementModal(): JSX.Element {
     function switchWeek(direction: string) {
         if (direction === "next") {
             const nextWeek = generateNextWeek(week);
-            setWeek(nextWeek);
+            updateWeek(nextWeek);
             setMonthText(grabMonth(nextWeek));
             updateSwipeAnimation("slideInRight");
         } else if (direction === "prev") {
             const prevWeek = generatePrevWeek(week);
-            setWeek(prevWeek);
+            updateWeek(prevWeek);
             setMonthText(grabMonth(prevWeek));
             updateSwipeAnimation("slideInLeft");
         }

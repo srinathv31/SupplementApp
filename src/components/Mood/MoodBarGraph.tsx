@@ -8,9 +8,10 @@ import useClientStore from "../../zustand/clientStore";
 export default function MoodBarGraph({ graphType }: {
     graphType: string,
 }): JSX.Element {
-    const { supplementMap, week } = useContext(allPropsContext);
+    const { supplementMap } = useContext(allPropsContext);
 
     const daySelected = useClientStore(state => state.daySelected);
+    const week = useClientStore(state => state.week);
 
     function grabDailyGraph() {
         const dailyGraph: { quarter: string; earnings: number; }[] = [];

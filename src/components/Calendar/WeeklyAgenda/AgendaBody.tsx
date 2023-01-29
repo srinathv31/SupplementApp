@@ -17,7 +17,7 @@ import useClientStore from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setWeek, setMonthText, week } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, setMonthText } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
@@ -25,6 +25,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
     const { updateDaySelected, daySelected } = useClientStore(state => ({ updateDaySelected: state.updateDaySelected, daySelected: state.daySelected }), shallow);
     const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
     const updateObjDaySelected = useClientStore(state => state.updateObjDaySelected);
+    const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
@@ -65,7 +66,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, weekDayDateData.dateString);
         setUserData(userCopy);
 
-        setWeek(generateWeekList(weekDayDateData));
+        updateWeek(generateWeekList(weekDayDateData));
         setMonthText(grabMonth(generateWeekList(weekDayDateData)));
     }
 

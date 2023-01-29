@@ -12,8 +12,6 @@ export const allPropsContext = createContext<AppProps>({
     supplementMap: supplementMapDefaultValue,
     setPage: () => "login-screen",
     page: "login-screen",
-    setWeek: () => weekString,
-    week: weekString,
     setMonthText: () => grabMonth(weekString),
     monthText: grabMonth(weekString),
 });

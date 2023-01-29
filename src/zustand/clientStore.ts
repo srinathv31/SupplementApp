@@ -2,10 +2,11 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import { ModalType } from "../interfaces/AppTypes";
-import getCurrentDate, { generateCurrentDateObject, grabMonth } from "../utilities/getCurrentDate";
-import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
+import getCurrentDate, { generateCurrentDateObject, initializeWeek } from "../utilities/getCurrentDate";
+import { SupplementObject } from "../interfaces/Supplement";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 import { DateData } from "react-native-calendars/src/types";
+import { WeekDay } from "../interfaces/WeekDay";
 
 export interface ClientState {
     index: number;
@@ -29,7 +30,9 @@ export interface ClientState {
     selectedSupplement: SupplementObject,
     updateSelectedSupplement: (supp: SupplementObject) => void,
     objDaySelected: DateData,
-    updateObjDaySelected: (dateObj: DateData) => void
+    updateObjDaySelected: (dateObj: DateData) => void,
+    week: WeekDay[],
+    updateWeek: (newWeek: WeekDay[]) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -56,7 +59,9 @@ const useClientStore = create<ClientState>()(
             selectedSupplement: selectedSupplementDefaultValue,
             updateSelectedSupplement: (supp) => set({ selectedSupplement: supp }),
             objDaySelected: generateCurrentDateObject(),
-            updateObjDaySelected: (dateObj) => set({ objDaySelected: dateObj })
+            updateObjDaySelected: (dateObj) => set({ objDaySelected: dateObj }),
+            week: initializeWeek(),
+            updateWeek: (newWeek) => set({ week: newWeek })
         }),
         {
             name: "client-storage",

@@ -20,6 +20,11 @@ export function initializeDates() {
     return { dateObjInit, weekInit, monthTextInit };
 }
 
+export function initializeWeek() {
+    const dateObjInit = generateCurrentDateObject();
+    return generateWeekList(dateObjInit);
+}
+
 export function getDateString(day: DateData): string {
     return ""+day.month + "/" + ""+day.day + "/" + ""+day.year;
 }
