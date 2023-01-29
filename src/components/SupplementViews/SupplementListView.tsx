@@ -22,7 +22,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { supplementMap, userData, objDaySelected, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap, userData, objDaySelected, setUserData, setSupplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
@@ -30,6 +30,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
+    const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
@@ -87,7 +88,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
         if (completedAchievements[2].color === "white") {
             achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
-        setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
+        updateSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();
     }
 
@@ -110,7 +111,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
                             <TouchableOpacity
                                 key={item.name}
                                 onPress={ 
-                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), updateModalVisible("time-modal"))
+                                    multipleAddMode ? () => (updateSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), updateModalVisible("time-modal"))
                                         : index === 2 ? () => jumpToWeb(item) : () => addSupplement(item)
                                 }
                             >

@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Divider from "../../components/Design/Divider";
@@ -10,19 +10,16 @@ import ExploreSupplementsFooter from "../../components/Explore/ExploreSupplement
 import WebModal from "../../components/SlidingModals/WebModal";
 import SearchBar from "../../components/SupplementViews/SearchBar";
 import SupplementListView from "../../components/SupplementViews/SupplementListView";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 
 export default function MainExplorePage({ setExpand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void
 }): JSX.Element {
-    const { selectedSupplement } = useContext(allPropsContext);
-
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [query, setQuery] = useState<string>("");
     const [allOpen, setAllOpen] = useState<boolean>(false);

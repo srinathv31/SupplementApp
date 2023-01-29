@@ -1,6 +1,6 @@
 import { DateData } from "react-native-calendars/src/types";
 import { PageType } from "./AppTypes";
-import { SupplementMapObject, SupplementObject } from "./Supplement";
+import { SupplementMapObject } from "./Supplement";
 import User from "./User";
 import { WeekDay } from "./WeekDay";
 
@@ -13,8 +13,6 @@ export interface AppProps extends GlobalProps {
     week: WeekDay[],
     setMonthText: (m: string) => void,
     monthText: string,
-    setSelectedSupplement: (s: SupplementObject) => void,
-    selectedSupplement: SupplementObject,
 }
 
 export interface GlobalProps {

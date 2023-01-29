@@ -15,11 +15,12 @@ import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap, setSupplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 

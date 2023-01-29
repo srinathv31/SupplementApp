@@ -18,12 +18,13 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(): JSX.Element {
-    const { supplementMap, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);

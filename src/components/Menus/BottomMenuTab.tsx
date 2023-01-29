@@ -13,7 +13,7 @@ import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function BottomMenuTab(): JSX.Element {
-    const { supplementMap, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
@@ -21,6 +21,7 @@ export default function BottomMenuTab(): JSX.Element {
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
     const daySelected = useClientStore(state => state.daySelected);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [open, setOpen] = useState(false);
     

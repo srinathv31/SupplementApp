@@ -1,9 +1,10 @@
-import { string } from "prop-types";
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import { ModalType } from "../interfaces/AppTypes";
 import getCurrentDate, { grabMonth } from "../utilities/getCurrentDate";
+import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
+import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 
 export interface ClientState {
     index: number;
@@ -23,7 +24,9 @@ export interface ClientState {
     daySelected: string,
     updateDaySelected: (dayStr: string) => void,
     completedAchievements: Achievement[],
-    updatedCompletedAchievements: (ach: Achievement[]) => void
+    updatedCompletedAchievements: (ach: Achievement[]) => void,
+    selectedSupplement: SupplementObject,
+    updateSelectedSupplement: (supp: SupplementObject) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -46,7 +49,9 @@ const useClientStore = create<ClientState>()(
             daySelected: getCurrentDate(),
             updateDaySelected: (dayStr) => set({ daySelected: dayStr }),
             completedAchievements: ListOfAchievements,
-            updatedCompletedAchievements: (ach) => set({ completedAchievements: ach })
+            updatedCompletedAchievements: (ach) => set({ completedAchievements: ach }),
+            selectedSupplement: selectedSupplementDefaultValue,
+            updateSelectedSupplement: (supp) => set({ selectedSupplement: supp })
         }),
         {
             name: "client-storage",

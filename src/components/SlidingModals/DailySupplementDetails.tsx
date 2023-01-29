@@ -14,11 +14,12 @@ import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function DailySupplementDetails(): JSX.Element {
-    const { setSupplementMap, supplementMap, selectedSupplement } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const daySelected = useClientStore(state => state.daySelected);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";

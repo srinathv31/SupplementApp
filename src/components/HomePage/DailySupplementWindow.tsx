@@ -14,12 +14,13 @@ import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, objDaySelected } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
+    const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
@@ -30,7 +31,7 @@ export default function DailySupplementWindow(): JSX.Element {
     const onOpen = (item: SupplementObject) => {
         updateShowButtons(false);
         updateModalVisible("disable-header");
-        setSelectedSupplement(item);
+        updateSelectedSupplement(item);
         modalizeRef.current?.open();
     };
 
@@ -68,7 +69,7 @@ export default function DailySupplementWindow(): JSX.Element {
     }
 
     function changeTime(item: SupplementObject) {
-        setSelectedSupplement(item);
+        updateSelectedSupplement(item);
         updateModalVisible("time-modal");
     }
 
@@ -108,7 +109,7 @@ export default function DailySupplementWindow(): JSX.Element {
 
     function handleStatusToggle(item: SupplementObject) {
         if (selectedSupplement !== item) {
-            setSelectedSupplement(item);
+            updateSelectedSupplement(item);
             setShowStatusButtons(true);
             return;
         }

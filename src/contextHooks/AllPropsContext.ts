@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
+import { supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { AppProps } from "../interfaces/Props";
 import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 
@@ -18,6 +18,4 @@ export const allPropsContext = createContext<AppProps>({
     week: weekString,
     setMonthText: () => grabMonth(weekString),
     monthText: grabMonth(weekString),
-    setSelectedSupplement: () => selectedSupplementDefaultValue,
-    selectedSupplement: selectedSupplementDefaultValue,
 });

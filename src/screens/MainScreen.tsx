@@ -19,11 +19,10 @@ import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { requestUserPermission } from "../utilities/authentication/notifications";
 import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { AppProps } from "../interfaces/Props";
-import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
+import { SupplementMapObject } from "../interfaces/Supplement";
 import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
 import { DateData } from "react-native-calendars/src/types";
 import { WeekDay } from "../interfaces/WeekDay";
-import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
@@ -53,12 +52,13 @@ export default function MainScreen(): JSX.Element {
     // Updates achievements list throughout app
     // const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
+    // Tracks selected supplement for mass adding and time changing features
+    // const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
 
     // TODO:
 
     // Data structure that handles supplements and journal entry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
-
     // Returns DateData object of date
     const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
     // Renders the selected day's week for the weekly modal
@@ -66,15 +66,9 @@ export default function MainScreen(): JSX.Element {
     // Sets the text for the weekly modal
     const [monthText, setMonthText] = useState<string>(grabMonth(week));
 
-    // Tracks selected supplement for mass adding and time changing features
-    const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
-
-
-
     const AllProps: AppProps = {
         setUserData, userData, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
         setPage, page, setWeek, week, setMonthText, monthText,
-        setSelectedSupplement, selectedSupplement
     };
 
     // UseEffect loads in saved data from phone on App Load once
