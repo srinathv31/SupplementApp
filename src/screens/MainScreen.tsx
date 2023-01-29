@@ -20,7 +20,7 @@ import { requestUserPermission } from "../utilities/authentication/notifications
 import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject } from "../interfaces/Supplement";
-import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
+import { initializeDates } from "../utilities/getCurrentDate";
 import { DateData } from "react-native-calendars/src/types";
 import { WeekDay } from "../interfaces/WeekDay";
 import useClientStore from "../zustand/clientStore";
@@ -55,16 +55,17 @@ export default function MainScreen(): JSX.Element {
     // Tracks selected supplement for mass adding and time changing features
     // const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
 
+    const { dateObjInit, weekInit, monthTextInit } = initializeDates();
     // TODO:
 
     // Data structure that handles supplements and journal entry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns DateData object of date
-    const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
+    const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
     // Renders the selected day's week for the weekly modal
-    const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
+    const [week, setWeek] = useState<WeekDay[]>(weekInit);
     // Sets the text for the weekly modal
-    const [monthText, setMonthText] = useState<string>(grabMonth(week));
+    const [monthText, setMonthText] = useState<string>(monthTextInit);
 
     const AllProps: AppProps = {
         setUserData, userData, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
