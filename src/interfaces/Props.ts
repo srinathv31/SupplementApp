@@ -18,8 +18,6 @@ export interface AppProps extends GlobalProps {
     monthText: string,
     setSelectedSupplement: (s: SupplementObject) => void,
     selectedSupplement: SupplementObject,
-    setMood: (m: string) => void,
-    mood: string,
     setCompletedAchievements: (a: Achievement[]) => void,
     completedAchievements: Achievement[]
 }

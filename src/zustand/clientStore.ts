@@ -15,7 +15,9 @@ export interface ClientState {
     //   monthText: string,
     //   setMonthText: (month: string) => void,
     swipeAnimation: string,
-    updateSwipeAnimation: (anim: string) => void
+    updateSwipeAnimation: (anim: string) => void,
+    mood: string,
+    updateMood: (newMood: string) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -32,7 +34,9 @@ const useClientStore = create<ClientState>()(
             // monthText: grabMonth(week),
             // setMonthText: (month) => set(() => ({ monthText: month })),
             swipeAnimation: "fadeIn",
-            updateSwipeAnimation: (anim) => set({ swipeAnimation: anim })
+            updateSwipeAnimation: (anim) => set({ swipeAnimation: anim }),
+            mood: "",
+            updateMood: (newMood) => set({ mood: newMood })
         }),
         {
             name: "client-storage",

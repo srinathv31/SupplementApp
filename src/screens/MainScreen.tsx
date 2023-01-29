@@ -46,6 +46,8 @@ export default function MainScreen(): JSX.Element {
     // const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     // Sets Animation for Weekly modal
     // const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
+    // Tracks selected mood for analysis and inputting mood trends
+    // const [mood, setMood] = useState<string>("");
 
     // TODO:
 
@@ -62,15 +64,14 @@ export default function MainScreen(): JSX.Element {
 
     // Tracks selected supplement for mass adding and time changing features
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
-    // Tracks selected mood for analysis and inputting mood trends
-    const [mood, setMood] = useState<string>("");
+
     // Updates achievements list throughout app
     const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
 
     const AllProps: AppProps = {
         setUserData, userData, setDaySelected, daySelected, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
         setPage, page, setWeek, week, setMonthText, monthText,
-        setSelectedSupplement, selectedSupplement, setMood, mood, setCompletedAchievements, completedAchievements
+        setSelectedSupplement, selectedSupplement, setCompletedAchievements, completedAchievements
     };
 
     // UseEffect loads in saved data from phone on App Load once

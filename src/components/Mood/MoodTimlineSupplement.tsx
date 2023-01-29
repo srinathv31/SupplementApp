@@ -8,8 +8,9 @@ import MoodObject from "../../interfaces/Mood";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 
-export default function MoodTimlineSupplement({ timelineData }: {
-    timelineData: MoodObject
+// Component color select mode: DISABLED
+export default function MoodTimlineSupplement({ timelineData, index }: {
+    timelineData: MoodObject, index: number
 }): JSX.Element {
     const { setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
 
@@ -17,6 +18,8 @@ export default function MoodTimlineSupplement({ timelineData }: {
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(grabInitialStart);
     const [startSelected, setStartSelected] = useState<boolean>(false);
+
+    const moodColors = ["#28c916", "#2196F3", "orange"];
 
     const radioButtons = [
         { id: 1, name: "radio-button-off-outline" },
@@ -112,7 +115,7 @@ export default function MoodTimlineSupplement({ timelineData }: {
                 {timelineData.mood + ": "}
                 {radioButtons.map(item => {
                     return(
-                        <IconI key={item.id} name={ timelineData.range < +item.id ? item.name : "radio-button-on-outline"} style={{ color: colorString }}></IconI>
+                        <IconI key={item.id} name={ timelineData.range < +item.id ? item.name : "radio-button-on-outline"} style={{ color: moodColors[index] }}></IconI>
                     );
                 })}
             </Text>}

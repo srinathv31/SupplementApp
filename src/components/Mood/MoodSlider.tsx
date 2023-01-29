@@ -8,9 +8,10 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData, mood, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const mood = useClientStore(state => state.mood);
 
     const [rangeValue, setRangeValue] = useState<number>(0);
     
@@ -27,7 +28,7 @@ export default function MoodSlider(): JSX.Element {
         setSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
 
-        updateModalVisible("mood-timeline");
+        updateModalVisible("mood-change-modal");
     }
 
     function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
@@ -39,7 +40,7 @@ export default function MoodSlider(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible === "mood-modal" ? true : false}
+            visible={modalVisible === "mood-modal"}
             onRequestClose={() => {
                 updateModalVisible("hide-modal");
             }}

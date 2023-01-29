@@ -9,7 +9,6 @@ import MoodPicker from "../Mood/MoodPicker";
 import { sharePlan, shareUrl } from "../../utilities/shareFunctions";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import MoodSlider from "../Mood/MoodSlider";
-import MoodTimelinePicker from "../Mood/MoodTimelinePicker";
 import useClientStore from "../../zustand/clientStore";
 
 export default function BottomMenuTab(): JSX.Element {
@@ -72,7 +71,7 @@ export default function BottomMenuTab(): JSX.Element {
                     mode="setting"
                 ></MoodPicker> }
                 <MoodSlider />
-                <MoodTimelinePicker />
+                {/* <MoodTimelinePicker /> */}
                 
                 <View style={{ backgroundColor: "transparent" }}>
                     {showButtons && <Animated.View style={{ opacity: fadeAnim }}>

@@ -23,8 +23,6 @@ export const allPropsContext = createContext<AppProps>({
     monthText: grabMonth(weekString),
     setSelectedSupplement: () => selectedSupplementDefaultValue,
     selectedSupplement: selectedSupplementDefaultValue,
-    setMood: () => "",
-    mood: "",
     setCompletedAchievements: () => ListOfAchievements,
     completedAchievements: ListOfAchievements
 });

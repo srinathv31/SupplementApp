@@ -189,6 +189,7 @@ export default function DailySupplementDetails(): JSX.Element {
                             <MoodTimlineSupplement
                                 key={index}
                                 timelineData={eachMood}
+                                index={index}
                             ></MoodTimlineSupplement>);
                     })}
                     <View style={{ flexDirection: "row" }}>
