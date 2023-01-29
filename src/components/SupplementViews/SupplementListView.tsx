@@ -22,7 +22,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { supplementMap, userData, objDaySelected, setUserData, setSupplementMap } = useContext(allPropsContext);
+    const { supplementMap, userData, setUserData, setSupplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
@@ -31,6 +31,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     const daySelected = useClientStore(state => state.daySelected);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
     const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
+    const objDaySelected = useClientStore(state => state.objDaySelected);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);

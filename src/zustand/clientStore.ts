@@ -2,9 +2,10 @@ import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import { ModalType } from "../interfaces/AppTypes";
-import getCurrentDate, { grabMonth } from "../utilities/getCurrentDate";
+import getCurrentDate, { generateCurrentDateObject, grabMonth } from "../utilities/getCurrentDate";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
+import { DateData } from "react-native-calendars/src/types";
 
 export interface ClientState {
     index: number;
@@ -26,7 +27,9 @@ export interface ClientState {
     completedAchievements: Achievement[],
     updatedCompletedAchievements: (ach: Achievement[]) => void,
     selectedSupplement: SupplementObject,
-    updateSelectedSupplement: (supp: SupplementObject) => void
+    updateSelectedSupplement: (supp: SupplementObject) => void,
+    objDaySelected: DateData,
+    updateObjDaySelected: (dateObj: DateData) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -51,7 +54,9 @@ const useClientStore = create<ClientState>()(
             completedAchievements: ListOfAchievements,
             updatedCompletedAchievements: (ach) => set({ completedAchievements: ach }),
             selectedSupplement: selectedSupplementDefaultValue,
-            updateSelectedSupplement: (supp) => set({ selectedSupplement: supp })
+            updateSelectedSupplement: (supp) => set({ selectedSupplement: supp }),
+            objDaySelected: generateCurrentDateObject(),
+            updateObjDaySelected: (dateObj) => set({ objDaySelected: dateObj })
         }),
         {
             name: "client-storage",

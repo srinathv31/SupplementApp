@@ -14,13 +14,14 @@ import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, objDaySelected } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
     const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
+    const objDaySelected = useClientStore(state => state.objDaySelected);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 

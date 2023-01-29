@@ -17,13 +17,14 @@ import useClientStore from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setObjDaySelected, setWeek, setMonthText, week } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData, setWeek, setMonthText, week } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
     const updateIndex = useClientStore(state => state.updateIndex);
     const { updateDaySelected, daySelected } = useClientStore(state => ({ updateDaySelected: state.updateDaySelected, daySelected: state.daySelected }), shallow);
     const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
+    const updateObjDaySelected = useClientStore(state => state.updateObjDaySelected);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
@@ -58,7 +59,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
 
         updateSwipeAnimation("fadeIn");
 
-        setObjDaySelected(weekDayDateData);
+        updateObjDaySelected(weekDayDateData);
         updateDaySelected(getDateString(weekDayDateData));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, weekDayDateData.dateString);

@@ -10,8 +10,6 @@ export const allPropsContext = createContext<AppProps>({
     userData: userDefaultValue,
     setSupplementMap: () => supplementMapDefaultValue,
     supplementMap: supplementMapDefaultValue,
-    setObjDaySelected: () => generateCurrentDateObject,
-    objDaySelected: generateCurrentDateObject(),
     setPage: () => "login-screen",
     page: "login-screen",
     setWeek: () => weekString,

@@ -54,22 +54,23 @@ export default function MainScreen(): JSX.Element {
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
     // Tracks selected supplement for mass adding and time changing features
     // const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
+    // Returns DateData object of date
+    const { weekInit, monthTextInit } = initializeDates();
 
-    const { dateObjInit, weekInit, monthTextInit } = initializeDates();
+    // const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
+
     // TODO:
 
     // Data structure that handles supplements and journal entry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
-    // Returns DateData object of date
-    const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
+
     // Renders the selected day's week for the weekly modal
     const [week, setWeek] = useState<WeekDay[]>(weekInit);
     // Sets the text for the weekly modal
     const [monthText, setMonthText] = useState<string>(monthTextInit);
 
     const AllProps: AppProps = {
-        setUserData, userData, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
-        setPage, page, setWeek, week, setMonthText, monthText,
+        setUserData, userData, setSupplementMap, supplementMap, setPage, page, setWeek, week, setMonthText, monthText,
     };
 
     // UseEffect loads in saved data from phone on App Load once

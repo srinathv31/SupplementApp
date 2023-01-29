@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
+import shallow from "zustand/shallow";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
@@ -11,16 +12,17 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setWeek, setMonthText, supplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, setWeek, setMonthText, supplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateIndex = useClientStore(state => state.updateIndex);
     const updateDaySelected = useClientStore(state => state.updateDaySelected);
+    const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
 
     function handleDayClick(day: DateData) {
         const userCopy = { ...userData };
 
-        setObjDaySelected(day);
+        updateObjDaySelected(day);
         updateDaySelected(getDateString(day));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, day.dateString);

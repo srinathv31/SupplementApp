@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import shallow from "zustand/shallow";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import generateNextDate from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
@@ -10,10 +11,11 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function NextDayButton(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
     
     const modalVisible = useClientStore(state => state.modalVisible);
     const updateDaySelected = useClientStore(state => state.updateDaySelected);
+    const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
 
     function grabNextDay(day: DateData) {
         const userCopy = { ...userData };
@@ -39,7 +41,7 @@ export default function NextDayButton(): JSX.Element {
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, copyDate.dateString);
         setUserData(userCopy);
 
-        setObjDaySelected(copyDate);
+        updateObjDaySelected(copyDate);
 
         return ""+copyDate.month + "/" + ""+copyDate.day + "/" + ""+copyDate.year;
     }
