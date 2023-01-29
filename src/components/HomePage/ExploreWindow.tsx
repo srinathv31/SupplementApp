@@ -9,6 +9,7 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import analytics from "@react-native-firebase/analytics";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: {
     setModalizeRefStatus: (m: boolean) => void,
@@ -17,7 +18,7 @@ export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: 
     const { setSelectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
 
     const [randomSupplement, setRandomSupplement] = useState<number>(0);
 

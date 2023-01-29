@@ -10,10 +10,11 @@ import ProfilePictureList from "../components/User/ProfilePictureList";
 import CustomToast from "../components/Toast/customToast";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
 import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function UserInfoPage(): JSX.Element {
     const { userData } = useContext(allPropsContext);
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
 

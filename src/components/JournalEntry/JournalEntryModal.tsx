@@ -1,6 +1,7 @@
 // Source Imports
 import React from "react";
 import { Modal, StyleSheet, Text, View } from "react-native";
+import shallow from "zustand/shallow";
 import useClientStore from "../../zustand/clientStore";
 import CustomToast from "../Toast/customToast";
 // import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -9,7 +10,7 @@ import CustomToast from "../Toast/customToast";
 export default function JournalEntryModal({ children }: {
     children: JSX.Element[]
 }): JSX.Element {
-    const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }));
+    const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
     return(

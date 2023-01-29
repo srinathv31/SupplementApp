@@ -10,13 +10,14 @@ import { sharePlan, shareUrl } from "../../utilities/shareFunctions";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import MoodSlider from "../Mood/MoodSlider";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function BottomMenuTab(): JSX.Element {
     const { supplementMap, selectedSupplement } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
-    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
+    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
     const daySelected = useClientStore(state => state.daySelected);

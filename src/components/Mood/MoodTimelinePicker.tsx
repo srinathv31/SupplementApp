@@ -10,13 +10,14 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function MoodTimelinePicker(): JSX.Element {
     const { setSupplementMap, supplementMap } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");

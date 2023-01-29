@@ -2,13 +2,14 @@
 import React, { useContext, useState } from "react";
 import { Modal, Text, Pressable, StyleSheet, View, TextInput } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import shallow from "zustand/shallow";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DosagePickerModal(): JSX.Element {
     const { selectedSupplement } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     const [dosage, setDosage] = useState<string>("0");
 

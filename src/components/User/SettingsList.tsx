@@ -13,12 +13,13 @@ import { shareEntirePlan } from "../../utilities/shareFunctions";
 import { FlatList } from "react-native-gesture-handler";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function SettingsList(): JSX.Element {
     const { setPage, userData, setUserData } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
 
     const SettingButtons = [
         { name: "Achievements", color: "white", function: () => openAchievementPage() },

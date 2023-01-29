@@ -15,6 +15,7 @@ import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 
 export default function SupplementListView({ fontSizeNumber, query }: {
@@ -28,7 +29,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);

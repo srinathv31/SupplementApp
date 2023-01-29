@@ -12,13 +12,14 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function MultipleDatePicker(): JSX.Element {
     const { setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 

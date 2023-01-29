@@ -7,13 +7,14 @@ import IconI from "react-native-vector-icons/Ionicons";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function VerifySupplementStatusModal({ supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void
 }): JSX.Element {
     const { supplementMap, setUserData, userData, setSupplementMap } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
     const ExitButtons = [

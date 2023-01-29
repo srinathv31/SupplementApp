@@ -6,11 +6,12 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function MoodSlider(): JSX.Element {
     const { setUserData, userData, supplementMap, setSupplementMap } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const mood = useClientStore(state => state.mood);
     const daySelected = useClientStore(state => state.daySelected);
 

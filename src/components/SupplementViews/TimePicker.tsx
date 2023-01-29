@@ -8,15 +8,16 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 
 export default function TimePicker(): JSX.Element {
     const { setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
     const daySelected = useClientStore(state => state.daySelected);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     const [time, setTime] = useState<Date>(new Date());
 

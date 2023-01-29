@@ -5,13 +5,14 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
     const { setUserData, userData, setSupplementMap, supplementMap } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
     function changeMood() {

@@ -1,6 +1,7 @@
 // Source Imports
 import React, { useContext } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
+import shallow from "zustand/shallow";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { journalDot } from "../../utilities/calendarDots";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
@@ -14,7 +15,7 @@ export default function JournalCloseButton({ journalText }: {
     
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const daySelected = useClientStore(state => state.daySelected);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
 
     function handleJournalClose() {
         const userCopy = { ...userData };

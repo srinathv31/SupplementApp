@@ -10,11 +10,12 @@ import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 import CustomToast from "../components/Toast/customToast";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
 import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function WeeklySupplementModal(): JSX.Element {
     const { setWeek, week, setMonthText, monthText } = useContext(allPropsContext);
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
-    const { swipeAnimation, updateSwipeAnimation } = useClientStore(state => ({ swipeAnimation: state.swipeAnimation, updateSwipeAnimation: state.updateSwipeAnimation }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const { swipeAnimation, updateSwipeAnimation } = useClientStore(state => ({ swipeAnimation: state.swipeAnimation, updateSwipeAnimation: state.updateSwipeAnimation }), shallow);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     

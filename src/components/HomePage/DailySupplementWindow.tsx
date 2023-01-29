@@ -11,12 +11,13 @@ import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function DailySupplementWindow(): JSX.Element {
     const { setSelectedSupplement, setSupplementMap, supplementMap, setUserData, userData, objDaySelected, selectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }));
+    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
 

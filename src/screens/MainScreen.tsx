@@ -25,6 +25,7 @@ import { DateData } from "react-native-calendars/src/types";
 import { WeekDay } from "../interfaces/WeekDay";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
 import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
@@ -51,7 +52,7 @@ export default function MainScreen(): JSX.Element {
     // const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
     // Updates achievements list throughout app
     // const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }));
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     // TODO:
 

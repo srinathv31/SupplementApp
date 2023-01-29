@@ -7,12 +7,13 @@ import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData"
 import CustomToast from "../Toast/customToast";
 import Icon from "react-native-vector-icons/Ionicons";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function EditNameModal(): JSX.Element {
     const { userData, setUserData } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
-    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");

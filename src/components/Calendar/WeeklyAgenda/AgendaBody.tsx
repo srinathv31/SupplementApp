@@ -14,6 +14,7 @@ import { DateData } from "react-native-calendars/src/types";
 import { AppProps } from "../../../interfaces/Props";
 import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import useClientStore from "../../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
     const { setSupplementMap, supplementMap, setUserData, userData, setObjDaySelected, setWeek, setMonthText, setSelectedSupplement, week, selectedSupplement  } = useContext(allPropsContext);
@@ -21,7 +22,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
     const updateIndex = useClientStore(state => state.updateIndex);
-    const { updateDaySelected, daySelected } = useClientStore(state => ({ updateDaySelected: state.updateDaySelected, daySelected: state.daySelected }));
+    const { updateDaySelected, daySelected } = useClientStore(state => ({ updateDaySelected: state.updateDaySelected, daySelected: state.daySelected }), shallow);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };

@@ -1,6 +1,7 @@
 // Source Imports
 import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import shallow from "zustand/shallow";
 import useClientStore from "../../zustand/clientStore";
 import CustomToast from "../Toast/customToast";
 import SearchBar from "./SearchBar";
@@ -8,7 +9,7 @@ import SupplementListView from "./SupplementListView";
 
 
 export default function SupplementModal(): JSX.Element {
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
 
     const [query, setQuery] = useState<string>("");

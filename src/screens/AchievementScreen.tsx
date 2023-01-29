@@ -8,11 +8,12 @@ import ScoreCard from "../components/Achievements/ScoreCard";
 import CustomToast from "../components/Toast/customToast";
 import { allPropsContext } from "../contextHooks/AllPropsContext";
 import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function AchievementScreen(): JSX.Element {
     const { userData } = useContext(allPropsContext);
 
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     const [numberOfAchievements, setNumberOfAchievements] = useState<number>(0);
 

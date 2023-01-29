@@ -1,6 +1,7 @@
 // Source Imports
 import React, { useState } from "react";
 import { Modal, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
+import shallow from "zustand/shallow";
 import { SupplementObject } from "../../interfaces/Supplement";
 import useClientStore from "../../zustand/clientStore";
 
@@ -8,7 +9,7 @@ import useClientStore from "../../zustand/clientStore";
 export default function TimeUpdateModal({ supplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[]
 }): JSX.Element {
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
     const listOfTimes = Array.from({ length: supplementsToUpdateStatus.length } , () => (""));

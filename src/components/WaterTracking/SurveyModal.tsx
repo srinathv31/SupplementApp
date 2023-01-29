@@ -3,11 +3,12 @@ import React from "react";
 import { Modal, View, StyleSheet, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
+import shallow from "zustand/shallow";
 import useClientStore from "../../zustand/clientStore";
 import WaterSurveyForm from "./WaterSurveyForm";
 
 export default function SurveyModal(): JSX.Element {
-    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     return(
         <Modal
