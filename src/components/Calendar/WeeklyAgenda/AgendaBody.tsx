@@ -17,7 +17,7 @@ import useClientStore from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setMonthText } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, setUserData, userData } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
@@ -26,6 +26,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
     const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
     const updateObjDaySelected = useClientStore(state => state.updateObjDaySelected);
     const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
+    const updateMonthText = useClientStore(state => state.updateMonthText);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
@@ -67,7 +68,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         setUserData(userCopy);
 
         updateWeek(generateWeekList(weekDayDateData));
-        setMonthText(grabMonth(generateWeekList(weekDayDateData)));
+        updateMonthText(grabMonth(generateWeekList(weekDayDateData)));
     }
 
     function changeTime(item: SupplementObject, parentData: WeekDay) {

@@ -5,8 +5,6 @@ import User from "./User";
 export interface AppProps extends GlobalProps {
     setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
-    setMonthText: (m: string) => void,
-    monthText: string,
 }
 
 export interface GlobalProps {

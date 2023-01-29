@@ -1,9 +1,6 @@
 import { createContext } from "react";
 import { supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { AppProps } from "../interfaces/Props";
-import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
-
-const weekString = generateWeekList(generateCurrentDateObject());
 
 export const allPropsContext = createContext<AppProps>({
     setUserData: () => userDefaultValue,
@@ -12,6 +9,4 @@ export const allPropsContext = createContext<AppProps>({
     supplementMap: supplementMapDefaultValue,
     setPage: () => "login-screen",
     page: "login-screen",
-    setMonthText: () => grabMonth(weekString),
-    monthText: grabMonth(weekString),
 });

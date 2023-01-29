@@ -12,12 +12,12 @@ export default function getCurrentDate(): string {
     return ""+month+"/"+day+"/"+year;
 }
 
-export function initializeDates() {
+export function initializeMonth() {
     const dateObjInit = generateCurrentDateObject();
     const weekInit = generateWeekList(dateObjInit);
     const monthTextInit = grabMonth(weekInit);
 
-    return { dateObjInit, weekInit, monthTextInit };
+    return monthTextInit;
 }
 
 export function initializeWeek() {

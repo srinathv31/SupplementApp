@@ -20,7 +20,6 @@ import { requestUserPermission } from "../utilities/authentication/notifications
 import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { AppProps } from "../interfaces/Props";
 import { SupplementMapObject } from "../interfaces/Supplement";
-import { initializeDates } from "../utilities/getCurrentDate";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
@@ -53,10 +52,12 @@ export default function MainScreen(): JSX.Element {
     // Tracks selected supplement for mass adding and time changing features
     // const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
     // Returns DateData object of date
-    const { monthTextInit } = initializeDates();
     // const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
     // Renders the selected day's week for the weekly modal
     // const [week, setWeek] = useState<WeekDay[]>(weekInit);
+
+    // Sets the text for the weekly modal
+    // const [monthText, setMonthText] = useState<string>(monthTextInit);
 
     // TODO:
 
@@ -64,11 +65,9 @@ export default function MainScreen(): JSX.Element {
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
 
 
-    // Sets the text for the weekly modal
-    const [monthText, setMonthText] = useState<string>(monthTextInit);
 
     const AllProps: AppProps = {
-        setUserData, userData, setSupplementMap, supplementMap, setPage, page, setMonthText, monthText,
+        setUserData, userData, setSupplementMap, supplementMap, setPage, page
     };
 
     // UseEffect loads in saved data from phone on App Load once

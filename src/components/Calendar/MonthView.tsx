@@ -12,13 +12,14 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, setMonthText, supplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateIndex = useClientStore(state => state.updateIndex);
     const updateDaySelected = useClientStore(state => state.updateDaySelected);
     const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
     const updateWeek = useClientStore(state => state.updateWeek);
+    const updateMonthText = useClientStore(state => state.updateMonthText);
 
     function handleDayClick(day: DateData) {
         const userCopy = { ...userData };
@@ -31,7 +32,7 @@ export default function MonthView(): JSX.Element {
         saveUserData(userData, setUserData, supplementMap);
 
         updateWeek(generateWeekList(day));
-        setMonthText(grabMonth(generateWeekList(day)));
+        updateMonthText(grabMonth(generateWeekList(day)));
     }
 
     return(

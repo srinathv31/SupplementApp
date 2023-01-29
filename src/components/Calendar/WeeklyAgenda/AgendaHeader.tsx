@@ -1,30 +1,28 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { View, FlatList, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import shallow from "zustand/shallow";
-import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import { styles } from "../../../styles/WeekStyles";
 import { generateNextWeek, generatePrevWeek, grabMonth } from "../../../utilities/getCurrentDate";
 import useClientStore from "../../../zustand/clientStore";
 
 export default function AgendaHeader(): JSX.Element {
-    const { setMonthText } = useContext(allPropsContext);
-
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
     const daySelected = useClientStore(state => state.daySelected);
     const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
+    const updateMonthText = useClientStore(state => state.updateMonthText);
 
     function switchWeek(direction: string) {
         if (direction === "next") {
             const nextWeek = generateNextWeek(week);
             updateWeek(nextWeek);
-            setMonthText(grabMonth(nextWeek));
+            updateMonthText(grabMonth(nextWeek));
             updateSwipeAnimation("slideInRight");
         } else if (direction === "prev") {
             const prevWeek = generatePrevWeek(week);
             updateWeek(prevWeek);
-            setMonthText(grabMonth(prevWeek));
+            updateMonthText(grabMonth(prevWeek));
             updateSwipeAnimation("slideInLeft");
         }
     }

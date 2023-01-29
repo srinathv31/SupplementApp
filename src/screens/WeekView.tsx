@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Animated, PanResponder, Pressable, Text, View } from "react-native";
 import { generateNextWeek, generatePrevWeek, grabMonth } from "../utilities/getCurrentDate";
 import Modal from "react-native-modal";
@@ -8,16 +8,14 @@ import { WeekProps } from "../interfaces/WeekProps";
 import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
 import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 import CustomToast from "../components/Toast/customToast";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function WeeklySupplementModal(): JSX.Element {
-    const { setMonthText, monthText } = useContext(allPropsContext);
-
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const { swipeAnimation, updateSwipeAnimation } = useClientStore(state => ({ swipeAnimation: state.swipeAnimation, updateSwipeAnimation: state.updateSwipeAnimation }), shallow);
     const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
+    const { monthText, updateMonthText } = useClientStore(state => ({ monthText: state.monthText, updateMonthText: state.updateMonthText }), shallow);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
@@ -30,12 +28,12 @@ export default function WeeklySupplementModal(): JSX.Element {
         if (direction === "next") {
             const nextWeek = generateNextWeek(week);
             updateWeek(nextWeek);
-            setMonthText(grabMonth(nextWeek));
+            updateMonthText(grabMonth(nextWeek));
             updateSwipeAnimation("slideInRight");
         } else if (direction === "prev") {
             const prevWeek = generatePrevWeek(week);
             updateWeek(prevWeek);
-            setMonthText(grabMonth(prevWeek));
+            updateMonthText(grabMonth(prevWeek));
             updateSwipeAnimation("slideInLeft");
         }
     }
