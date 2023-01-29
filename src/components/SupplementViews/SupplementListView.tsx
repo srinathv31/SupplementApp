@@ -21,13 +21,14 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { supplementMap, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+    const { supplementMap, userData, objDaySelected, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
@@ -50,7 +51,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
 
         if (completedAchievements[0].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 0);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 0);
         }
 
         saveUserData(userCopy, setUserData, supplementMapCopy);
@@ -83,7 +84,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
 
     function jumpToWeb(item: Supplement) {
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 2);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
         setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();

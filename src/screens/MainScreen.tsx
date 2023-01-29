@@ -24,7 +24,6 @@ import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utili
 import { DateData } from "react-native-calendars/src/types";
 import { WeekDay } from "../interfaces/WeekDay";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
-import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import useClientStore from "../zustand/clientStore";
 LogBox.ignoreLogs(["Sending"]);
 
@@ -50,6 +49,9 @@ export default function MainScreen(): JSX.Element {
     // const [mood, setMood] = useState<string>("");
     // Returns string date in format - MM/DD/YYYY
     // const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
+    // Updates achievements list throughout app
+    // const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }));
 
     // TODO:
 
@@ -66,28 +68,27 @@ export default function MainScreen(): JSX.Element {
     // Tracks selected supplement for mass adding and time changing features
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
 
-    // Updates achievements list throughout app
-    const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
+
 
     const AllProps: AppProps = {
         setUserData, userData, setSupplementMap, supplementMap, setObjDaySelected, objDaySelected,
         setPage, page, setWeek, week, setMonthText, monthText,
-        setSelectedSupplement, selectedSupplement, setCompletedAchievements, completedAchievements
+        setSelectedSupplement, selectedSupplement
     };
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
-        checkForSave(AllProps);
+        checkForSave(AllProps, updateCompletedAchievements);
     }, []);
 
     // Checks login time for achievements
     useEffect(() => {
         const greeting = generateLoginPeriod();
         if (greeting === "Bird" && completedAchievements[12].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 12);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 12);
         }
         if (greeting === "Owl" && completedAchievements[11].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 11);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 11);
         }
     },[]);
 

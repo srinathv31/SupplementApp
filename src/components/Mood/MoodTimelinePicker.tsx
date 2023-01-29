@@ -12,11 +12,11 @@ import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodTimelinePicker(): JSX.Element {
-    const { setSupplementMap, supplementMap, completedAchievements, setCompletedAchievements } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const daySelected = useClientStore(state => state.daySelected);
-
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
@@ -80,7 +80,7 @@ export default function MoodTimelinePicker(): JSX.Element {
         setSupplementMap(supplementMapCopy);
         updateModalVisible("hide-modal");
         if (completedAchievements[10].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 10);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 10);
         }
     }
     

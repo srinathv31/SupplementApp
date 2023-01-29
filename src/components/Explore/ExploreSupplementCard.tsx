@@ -10,16 +10,17 @@ export default function ExploreSupplementCard({ supplementData, setModalizeRefSt
     supplementData: Supplement,
     setModalizeRefStatus: (m: boolean) => void,
 }): JSX.Element {
-    const { setSelectedSupplement, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+    const { setSelectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
     
     const longSupplementNames = ["N-Acetylcysteine", "Scutellaria baicalensis", "Ashwagandha", "Rhodiola Rosea"];
 
     function handleWebOpen() {
         setSelectedSupplement({ Supplement: supplementData, time: "", taken: "not-taken" });
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 2);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
         setModalizeRefStatus(true);
     }

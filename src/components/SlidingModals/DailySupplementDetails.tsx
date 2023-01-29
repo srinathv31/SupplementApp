@@ -13,10 +13,11 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementDetails(): JSX.Element {
-    const { setSupplementMap, supplementMap, selectedSupplement, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+    const { setSupplementMap, supplementMap, selectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
@@ -94,7 +95,7 @@ export default function DailySupplementDetails(): JSX.Element {
         selectedSupplement.note = supplementNotes;
         setSupplementMap(supplementMap);
         if(completedAchievements[9].color === "white"){
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 9);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 9);
         }
     }, [supplementNotes]);
 

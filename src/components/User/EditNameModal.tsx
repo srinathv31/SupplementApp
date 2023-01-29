@@ -9,9 +9,10 @@ import Icon from "react-native-vector-icons/Ionicons";
 import useClientStore from "../../zustand/clientStore";
 
 export default function EditNameModal(): JSX.Element {
-    const { userData, setCompletedAchievements, completedAchievements, setUserData } = useContext(allPropsContext);
+    const { userData, setUserData } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -45,7 +46,7 @@ export default function EditNameModal(): JSX.Element {
     function updateUserObjDetails() {
         const userCopy = { ...userData };
         
-        achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 6);
+        achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 6);
 
         userCopy.name = name;
         userCopy.lastName = lastName;

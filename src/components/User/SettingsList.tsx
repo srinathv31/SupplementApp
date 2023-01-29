@@ -15,9 +15,10 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function SettingsList(): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setPage, userData, setUserData } = useContext(allPropsContext);
+    const { setPage, userData, setUserData } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const SettingButtons = [
         { name: "Achievements", color: "white", function: () => openAchievementPage() },
@@ -56,7 +57,7 @@ export default function SettingsList(): JSX.Element {
                     onPress: () => {
                         setPage("onboarding-screen");
                         if(completedAchievements[4].color === "white"){
-                            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 4);
+                            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 4);
                         }
                     },
                     style: "default"
@@ -71,7 +72,7 @@ export default function SettingsList(): JSX.Element {
 
     const openAchievementPage = () => {
         if (completedAchievements[7].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 7);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 7);
         }
         updateModalVisible("achievements-modal");
     };
@@ -109,7 +110,7 @@ export default function SettingsList(): JSX.Element {
         saveUserToPhone(userCopy);
 
         if (completedAchievements[8].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 8);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 8);
         }
     }
 

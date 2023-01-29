@@ -11,11 +11,12 @@ import useClientStore from "../../zustand/clientStore";
 
 
 export default function TimePicker(): JSX.Element {
-    const { setUserData, userData, supplementMap, selectedSupplement, setCompletedAchievements, completedAchievements, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
     const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const [time, setTime] = useState<Date>(new Date());
 
@@ -41,7 +42,7 @@ export default function TimePicker(): JSX.Element {
         });
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
         if(completedAchievements[13].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 13);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 13);
         }
         setSupplementMap(supplementMapCopy);
         setTime(currentDate);

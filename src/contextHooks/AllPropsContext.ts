@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { ListOfAchievements } from "../interfaces/Achievements";
 import { selectedSupplementDefaultValue, supplementMapDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { AppProps } from "../interfaces/Props";
 import { generateCurrentDateObject, generateWeekList, grabMonth } from "../utilities/getCurrentDate";
@@ -21,6 +20,4 @@ export const allPropsContext = createContext<AppProps>({
     monthText: grabMonth(weekString),
     setSelectedSupplement: () => selectedSupplementDefaultValue,
     selectedSupplement: selectedSupplementDefaultValue,
-    setCompletedAchievements: () => ListOfAchievements,
-    completedAchievements: ListOfAchievements
 });

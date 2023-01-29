@@ -16,12 +16,12 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void,
     expand: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
 }): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
+    const { setSelectedSupplement, selectedSupplement } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
@@ -33,7 +33,7 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
 
     function jumpToWeb(item: Supplement) {
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 2);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
         setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();

@@ -1,5 +1,4 @@
 import { DateData } from "react-native-calendars/src/types";
-import { Achievement } from "./Achievements";
 import { PageType } from "./AppTypes";
 import { SupplementMapObject, SupplementObject } from "./Supplement";
 import User from "./User";
@@ -16,8 +15,6 @@ export interface AppProps extends GlobalProps {
     monthText: string,
     setSelectedSupplement: (s: SupplementObject) => void,
     selectedSupplement: SupplementObject,
-    setCompletedAchievements: (a: Achievement[]) => void,
-    completedAchievements: Achievement[]
 }
 
 export interface GlobalProps {

@@ -14,10 +14,11 @@ import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData, supplementMap, selectedSupplement, setSupplementMap } = useContext(allPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }));
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
@@ -33,7 +34,7 @@ export default function MultipleDatePicker(): JSX.Element {
         supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
 
         if (completedAchievements[0].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 0);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 0);
         }
 
         return supplementMapCopy[dayString].SupplementSchedule;
@@ -80,7 +81,7 @@ export default function MultipleDatePicker(): JSX.Element {
         setSchedule({});
         updateMultipleAddMode(false);
         if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 3);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 3);
         }
     }
 

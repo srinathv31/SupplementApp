@@ -13,9 +13,10 @@ import useClientStore from "../../zustand/clientStore";
 export default function ProfilePictureList({ setChangePictureMode }: {
     setChangePictureMode: (p: boolean) => void,
 }): JSX.Element {
-    const { setUserData, userData, setCompletedAchievements, completedAchievements } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements })); 
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -30,7 +31,7 @@ export default function ProfilePictureList({ setChangePictureMode }: {
         const userCopy = { ...userData };
 
         if (completedAchievements[5].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, updateModalVisible, 5);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 5);
         }
 
         if (item === addPic) {
