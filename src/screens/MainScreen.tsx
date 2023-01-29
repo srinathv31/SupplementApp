@@ -31,24 +31,28 @@ LogBox.ignoreLogs(["Sending"]);
 export default function MainScreen(): JSX.Element {
     const { setUserData, userData, setPage, page } = useContext(globalPropsContext);
 
+    // *** Zustand
+
+    // Boolean that toggles sub menu
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
+    // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
+    // const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const modalVisible = useClientStore(state => state.modalVisible);
+    // Index for page sliding
+    const index = useClientStore(state => state.index);
+    const updateIndex = useClientStore(state => state.updateIndex);
+    // Sets app in multipleAdd State mode
+    // const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
+
+    // TODO:
+
     // Data structure that handles supplements and journal enttry for a given day
     const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
     // Returns string date in format - MM/DD/YYYY
     const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
     // Returns DateData object of date
     const [objDaySelected, setObjDaySelected] = useState<DateData>(generateCurrentDateObject);
-    
-    // Boolean that toggles sub menu
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
-
-    // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
-    // const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
-    const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    const modalVisible = useClientStore(state => state.modalVisible);
-
-    // Index for page sliding
-    const index = useClientStore(state => state.index);
-    const updateIndex = useClientStore(state => state.updateIndex);
     // Renders the selected day's week for the weekly modal
     const [week, setWeek] = useState<WeekDay[]>(generateWeekList(generateCurrentDateObject()));
     // Sets the text for the weekly modal
@@ -57,10 +61,6 @@ export default function MainScreen(): JSX.Element {
     const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
     // Tracks selected supplement for mass adding and time changing features
     const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
-    
-    // Sets app in multipleAdd State mode
-    // const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
-
     // Tracks selected mood for analysis and inputting mood trends
     const [mood, setMood] = useState<string>("");
     // Updates achievements list throughout app
