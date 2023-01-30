@@ -1,17 +1,15 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
@@ -32,9 +30,9 @@ export default function ChangeMoodModal({ setOpen }: {
             delete supplementMapCopy[daySelected];
         }
 
-        setUserData(userCopy);
+        updateUserData(userCopy);
         updateSupplementMap(supplementMapCopy);
-        saveUserData(userCopy, setUserData, supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
 
         updateModalVisible("hide-modal");
         setOpen(false);
@@ -57,9 +55,9 @@ export default function ChangeMoodModal({ setOpen }: {
             updateModalVisible("hide-modal");
         }
 
-        setUserData(userCopy);
+        updateUserData(userCopy);
         updateSupplementMap(supplementMapCopy);
-        saveUserData(userCopy, setUserData, supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
     }
 
     return(

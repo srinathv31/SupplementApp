@@ -1,15 +1,15 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { View } from "react-native";
 import { AppleButton } from "@invertase/react-native-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
 import { handleLoginButton } from "../../utilities/authentication/handleLoginEvent";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function AppleSignIn(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const updatePage = useClientStore(state => state.updatePage);
 
     async function onAppleButtonPress() {
@@ -51,7 +51,7 @@ export default function AppleSignIn(): JSX.Element {
         userCopy.userAuthObj = response?.user;
 
         // Check if uid is stored locally (already signed in before)
-        handleLoginButton(updatePage, userCopy, setUserData);
+        handleLoginButton(updatePage, userCopy, updateUserData);
         // if false => send to account setup => create firestore and local
         // if true => send to loading screen => update firestore with local
     }

@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
@@ -8,12 +8,10 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 
 export default function TimePicker(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
@@ -26,7 +24,7 @@ export default function TimePicker(): JSX.Element {
     function handleJournal() {
         multipleAddMode ? 
             updateModalVisible("dosage-modal") : 
-            (updateModalVisible("hide-modal"), saveUserData(userData, setUserData, supplementMap));
+            (updateModalVisible("hide-modal"), saveUserData(userData, updateUserData, supplementMap));
     }
 	
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,7 +47,7 @@ export default function TimePicker(): JSX.Element {
         }
         updateSupplementMap(supplementMapCopy);
         setTime(currentDate);
-        setUserData(userData);
+        updateUserData(userData);
     };
 
     return(

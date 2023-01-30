@@ -1,16 +1,14 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const mood = useClientStore(state => state.mood);
@@ -29,7 +27,7 @@ export default function MoodSlider(): JSX.Element {
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
         updateSupplementMap(supplementMapCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
 
         updateModalVisible("mood-change-modal");
     }

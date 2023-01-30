@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
@@ -12,11 +12,9 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
@@ -76,8 +74,8 @@ export default function MultipleDatePicker(): JSX.Element {
             });
         }
         userCopy.data.selectedDates = selectedDatesCopy;
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
         
         updateSupplementMap(supplementMapCopy);
         updateModalVisible("hide-modal");

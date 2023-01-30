@@ -4,11 +4,14 @@ import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
 import { ModalType, PageType } from "../interfaces/AppTypes";
 import getCurrentDate, { generateCurrentDateObject, initializeMonth, initializeWeek } from "../utilities/getCurrentDate";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
-import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
+import { selectedSupplementDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
 import { DateData } from "react-native-calendars/src/types";
 import { WeekDay } from "../interfaces/WeekDay";
+import User from "../interfaces/User";
 
 export interface ClientState {
+    userData: User,
+    updateUserData: (newUser: User) => void,
     index: number;
     updateIndex: (newIdx: number) => void;
     showButtons: boolean,
@@ -42,6 +45,8 @@ export interface ClientState {
 const useClientStore = create<ClientState>()(
     devtools(
         set => ({
+            userData: userDefaultValue,
+            updateUserData: (newUser) => set({ userData: newUser }),
             index: 1,
             updateIndex: (newIdx) => set(() => ({ index: newIdx })),
             showButtons: false,

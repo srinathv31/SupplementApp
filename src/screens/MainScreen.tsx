@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LogBox, Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
 import { TabView } from "react-native-tab-view";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
@@ -16,15 +16,13 @@ import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
 import { requestUserPermission } from "../utilities/authentication/notifications";
-import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
     // Client State
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const page = useClientStore(state => state.page);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
@@ -36,7 +34,7 @@ export default function MainScreen(): JSX.Element {
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
-        checkForSave(userData, setUserData, updateCompletedAchievements, updateSupplementMap);
+        checkForSave(userData, updateUserData, updateCompletedAchievements, updateSupplementMap);
     }, []);
 
     // Checks login time for achievements
@@ -58,12 +56,12 @@ export default function MainScreen(): JSX.Element {
     useEffect(() => {
         const userCopy = { ...userData };
         userCopy.achievements = completedAchievements;
-        setUserData(userCopy);
+        updateUserData(userCopy);
         saveUserToPhone(userCopy);
     }, [completedAchievements]);
     
     useEffect(() => {
-        saveUserData(userData, setUserData, supplementMap);
+        saveUserData(userData, updateUserData, supplementMap);
     }, [supplementMap]);
 
     const [routes] = useState([

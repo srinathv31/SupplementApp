@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -10,11 +10,9 @@ import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 import useClientStore, { ClientState } from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
@@ -55,8 +53,8 @@ export default function DailySupplementWindow(): JSX.Element {
         if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
             delete supplementMapCopy[daySelected];
         }
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
         updateSupplementMap(supplementMapCopy);
     }
 
@@ -104,8 +102,8 @@ export default function DailySupplementWindow(): JSX.Element {
         item.taken = taken;
         updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
-        setUserData(userData);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateUserData(userData);
+        saveUserData(userData, updateUserData, supplementMapCopy);
     }
 
     function handleStatusToggle(item: SupplementObject) {

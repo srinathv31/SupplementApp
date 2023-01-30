@@ -1,13 +1,13 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Image, Text, View } from "react-native";
 import * as Progress from "react-native-progress";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function ScoreCard({ numberOfAchievements }: {
     numberOfAchievements: number
 }): JSX.Element {
-    const { userData } = useContext(globalPropsContext);
+    const userData = useClientStore(state => state.userData);
 
     return(
         <View style={{ flexDirection: "row" }}>

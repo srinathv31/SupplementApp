@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
@@ -15,15 +15,13 @@ import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 
 export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { userData, setUserData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
@@ -58,8 +56,8 @@ export default function SupplementListView({ fontSizeNumber, query }: {
             achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 0);
         }
 
-        saveUserData(userCopy, setUserData, supplementMapCopy);
-        setUserData(userCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
+        updateUserData(userCopy);
 
         showAddToast(item, daySelected);
         updateSupplementMap(supplementMapCopy);
@@ -77,7 +75,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
             }
             userCopy.data.selectedDates[stringDate].dots = removeEmptyDotObjects(userCopy.data.selectedDates, stringDate);
         }
-        setUserData(userCopy);
+        updateUserData(userCopy);
         return userCopy;
     }
 

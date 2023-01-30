@@ -1,14 +1,12 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Image, Pressable, View } from "react-native";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 
 export default function UserPageButton(): JSX.Element {
-    const { userData } = useContext(globalPropsContext);
-
+    const userData = useClientStore(state => state.userData);
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }), shallow);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
 

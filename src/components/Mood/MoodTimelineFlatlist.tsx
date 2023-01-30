@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
 import { TimeLineObject } from "../../interfaces/TimeLine";
 import IconI from "react-native-vector-icons/Ionicons";
@@ -7,14 +7,13 @@ import { MoodTimelineFlatlistProps } from "../../interfaces/MoodTimelineProps";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
+import shallow from "zustand/shallow";
 
 export default function MoodTimelineFlatlist({ timelineState, setTimelineState, colorString, setInitialStart, setColorEditMode, startSelected, initialStart, colorEditMode }: MoodTimelineFlatlistProps): JSX.Element {
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
     const fadeAnimSub = useRef(new Animated.Value(0)).current;
 
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const supplementMap = useClientStore(state => state.supplementMap);
 
     useEffect(() => {
@@ -86,7 +85,7 @@ export default function MoodTimelineFlatlist({ timelineState, setTimelineState, 
                 }
             });
             setTimelineState(timelineStateCopy);
-            saveUserData(userData, setUserData, supplementMap);
+            saveUserData(userData, updateUserData, supplementMap);
             return;
         }
 
@@ -112,7 +111,7 @@ export default function MoodTimelineFlatlist({ timelineState, setTimelineState, 
                 });
             }
             setTimelineState(timelineStateCopy);
-            saveUserData(userData, setUserData, supplementMap);
+            saveUserData(userData, updateUserData, supplementMap);
             return;
         }
         
@@ -134,7 +133,7 @@ export default function MoodTimelineFlatlist({ timelineState, setTimelineState, 
                 }
             });
             setTimelineState(timelineStateCopy);
-            saveUserData(userData, setUserData, supplementMap);
+            saveUserData(userData, updateUserData, supplementMap);
             return;
         }
     }

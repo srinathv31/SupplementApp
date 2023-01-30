@@ -1,18 +1,16 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import useClientStore from "../../zustand/clientStore";
 
 
 export default function PrevDayButton(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const modalVisible = useClientStore(state => state.modalVisible);
     const updateDaySelected = useClientStore(state => state.updateDaySelected);
     const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
@@ -39,7 +37,7 @@ export default function PrevDayButton(): JSX.Element {
         copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
         
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, copyDate.dateString);
-        setUserData(userCopy);
+        updateUserData(userCopy);
 
         updateObjDaySelected(copyDate);
 

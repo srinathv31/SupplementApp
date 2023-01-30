@@ -1,14 +1,12 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Animated } from "react-native";
 import Divider from "../components/Design/Divider";
-import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import useClientStore from "../zustand/clientStore";
 
 export default function WelcomePage(): JSX.Element {
-    const { userData } = useContext(globalPropsContext);
-
+    const userData = useClientStore(state => state.userData);
     const updatePage = useClientStore(state => state.updatePage);
 
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { ListOfAchievements } from "../../interfaces/Achievements";
 import User from "../../interfaces/User";
@@ -13,11 +13,9 @@ import { shareEntirePlan } from "../../utilities/shareFunctions";
 import { FlatList } from "react-native-gesture-handler";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function SettingsList(): JSX.Element {
-    const { userData, setUserData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const updatePage = useClientStore(state => state.updatePage);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
@@ -93,7 +91,7 @@ export default function SettingsList(): JSX.Element {
             achievements: ListOfAchievements
         };
         updatePage("login-screen");
-        setUserData(userCopy);
+        updateUserData(userCopy);
         auth().signOut().then(() => console.log("Signed Out!"));
         removeLoggedInKey();
     }
@@ -108,7 +106,7 @@ export default function SettingsList(): JSX.Element {
             delete userCopy.data.selectedDates[date];
         });
 
-        setUserData(userCopy);
+        updateUserData(userCopy);
         saveUserToPhone(userCopy);
 
         if (completedAchievements[8].color === "white") {

@@ -1,18 +1,16 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const supplementMap = useClientStore(state => state.supplementMap);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateIndex = useClientStore(state => state.updateIndex);
@@ -28,8 +26,8 @@ export default function MonthView(): JSX.Element {
         updateDaySelected(getDateString(day));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, day.dateString);
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMap);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMap);
 
         updateWeek(generateWeekList(day));
         updateMonthText(grabMonth(generateWeekList(day)));

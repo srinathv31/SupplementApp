@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Image, Platform, TouchableOpacity, View } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
@@ -9,13 +9,11 @@ import RNFS from "react-native-fs";
 import { addPic, corgiPic, huskyPic, penguinPic } from "../../assets/imageURLs/profilePictureURLs";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function ProfilePictureList({ setChangePictureMode }: {
     setChangePictureMode: (p: boolean) => void,
 }): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
@@ -62,7 +60,7 @@ export default function ProfilePictureList({ setChangePictureMode }: {
             userCopy.picture = item;
         }
 
-        setUserData(userCopy);
+        updateUserData(userCopy);
         saveUserToPhone(userCopy);
         setChangePictureMode(false);
     }

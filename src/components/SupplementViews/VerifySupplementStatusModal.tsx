@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { SupplementObject } from "../../interfaces/Supplement";
@@ -7,13 +7,11 @@ import IconI from "react-native-vector-icons/Ionicons";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function VerifySupplementStatusModal({ supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void
 }): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
@@ -35,8 +33,8 @@ export default function VerifySupplementStatusModal({ supplementsToUpdateStatus,
         });
 
         setSupplementsToUpdateStatus(supplementsToUpdateStatus);
-        saveUserData(userData, setUserData, supplementMapCopy);
-        setUserData(userData);
+        saveUserData(userData, updateUserData, supplementMapCopy);
+        updateUserData(userData);
 
         updateSupplementMap(supplementMapCopy);
     }

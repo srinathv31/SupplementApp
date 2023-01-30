@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { View, FlatList, TouchableHighlight, Pressable, Text } from "react-native";
@@ -13,11 +13,9 @@ import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
 import useClientStore, { ClientState } from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../../contextHooks/GlobalPropsContext";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setUserData, userData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
@@ -40,8 +38,8 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
             delete supplementMapCopy[parentDataMapKey];
         }
         
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
         updateSupplementMap(supplementMapCopy);
         handleDayClick(parentData);
     }
@@ -65,7 +63,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         updateDaySelected(getDateString(weekDayDateData));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, weekDayDateData.dateString);
-        setUserData(userCopy);
+        updateUserData(userCopy);
 
         updateWeek(generateWeekList(weekDayDateData));
         updateMonthText(grabMonth(generateWeekList(weekDayDateData)));

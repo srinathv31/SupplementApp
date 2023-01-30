@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
@@ -7,11 +7,9 @@ import CustomToast from "../Toast/customToast";
 import Icon from "react-native-vector-icons/Ionicons";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function EditNameModal(): JSX.Element {
-    const { userData, setUserData } = useContext(globalPropsContext);
-
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
@@ -53,7 +51,7 @@ export default function EditNameModal(): JSX.Element {
         userCopy.lastName = lastName;
 
         saveUserToPhone(userCopy);
-        setUserData(userCopy);
+        updateUserData(userCopy);
     }
 
     return(
