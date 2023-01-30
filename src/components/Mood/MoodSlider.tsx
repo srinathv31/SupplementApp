@@ -4,12 +4,12 @@ import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);

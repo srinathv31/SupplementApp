@@ -6,13 +6,13 @@ import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 
 export default function TimePicker(): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);

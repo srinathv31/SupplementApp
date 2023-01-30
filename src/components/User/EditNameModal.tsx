@@ -1,16 +1,16 @@
 // Source Imports
 import React, { useContext, useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import CustomToast from "../Toast/customToast";
 import Icon from "react-native-vector-icons/Ionicons";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function EditNameModal(): JSX.Element {
-    const { userData, setUserData } = useContext(allPropsContext);
+    const { userData, setUserData } = useContext(globalPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);

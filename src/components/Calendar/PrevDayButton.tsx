@@ -4,14 +4,14 @@ import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import shallow from "zustand/shallow";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import useClientStore from "../../zustand/clientStore";
 
 
 export default function PrevDayButton(): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const modalVisible = useClientStore(state => state.modalVisible);
     const updateDaySelected = useClientStore(state => state.updateDaySelected);

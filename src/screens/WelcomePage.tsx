@@ -2,11 +2,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { View, Text, Animated } from "react-native";
 import Divider from "../components/Design/Divider";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
+import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 
 export default function WelcomePage(): JSX.Element {
-    const { setPage, userData } = useContext(allPropsContext);
+    const { setPage, userData } = useContext(globalPropsContext);
 
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
 

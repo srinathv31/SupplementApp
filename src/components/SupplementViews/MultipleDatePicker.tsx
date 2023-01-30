@@ -10,12 +10,12 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);

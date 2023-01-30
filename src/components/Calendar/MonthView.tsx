@@ -4,14 +4,14 @@ import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
 import shallow from "zustand/shallow";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const supplementMap = useClientStore(state => state.supplementMap);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);

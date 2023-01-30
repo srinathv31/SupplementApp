@@ -5,14 +5,14 @@ import { FlatList } from "react-native-gesture-handler";
 import { SupplementObject } from "../../interfaces/Supplement";
 import IconI from "react-native-vector-icons/Ionicons";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function VerifySupplementStatusModal({ supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void
 }): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);

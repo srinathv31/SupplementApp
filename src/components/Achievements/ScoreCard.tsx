@@ -2,12 +2,12 @@
 import React, { useContext } from "react";
 import { Image, Text, View } from "react-native";
 import * as Progress from "react-native-progress";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function ScoreCard({ numberOfAchievements }: {
     numberOfAchievements: number
 }): JSX.Element {
-    const { userData } = useContext(allPropsContext);
+    const { userData } = useContext(globalPropsContext);
 
     return(
         <View style={{ flexDirection: "row" }}>

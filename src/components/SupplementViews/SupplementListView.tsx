@@ -13,16 +13,16 @@ import User from "../../interfaces/User";
 import { Modalize } from "react-native-modalize";
 import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 
 export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { userData, setUserData } = useContext(allPropsContext);
+    const { userData, setUserData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const updateModalVisible = useClientStore(state => state.updateModalVisible);

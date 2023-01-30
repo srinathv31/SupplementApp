@@ -1,12 +1,12 @@
 import User from "../../interfaces/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AppProps } from "../../interfaces/Props";
 import CalendarDotObject from "../../interfaces/Calendar";
 import { generateCurrentDateObject } from "../getCurrentDate";
 import { saveDataToCloud } from "./saveDataToCloud";
 import { ClientState } from "../../zustand/clientStore";
+import { GlobalProps } from "../../interfaces/Props";
 
-export const checkForSave = async ({ userData, setUserData }: AppProps, updatedCompletedAchievements: ClientState["updatedCompletedAchievements"], updateSupplementMap: ClientState["updateSupplementMap"]) => {
+export const checkForSave = async (userData: GlobalProps["userData"], setUserData: GlobalProps["setUserData"], updatedCompletedAchievements: ClientState["updatedCompletedAchievements"], updateSupplementMap: ClientState["updateSupplementMap"]) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(""+userCopy.userAuthObj?.uid);

@@ -6,12 +6,12 @@ import Icon from "react-native-vector-icons/Ionicons";
 import AchievementsList from "../components/Achievements/AchievementsList";
 import ScoreCard from "../components/Achievements/ScoreCard";
 import CustomToast from "../components/Toast/customToast";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 
 export default function AchievementScreen(): JSX.Element {
-    const { userData } = useContext(allPropsContext);
+    const { userData } = useContext(globalPropsContext);
 
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 

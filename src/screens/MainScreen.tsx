@@ -15,16 +15,14 @@ import CustomToast from "../components/Toast/customToast";
 import { generateLoginPeriod } from "../utilities/generateTimeGreetings";
 import { achievementUnlocked } from "../utilities/handleAchievementEvents";
 import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/saveUserData";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { requestUserPermission } from "../utilities/authentication/notifications";
 import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
-import { AppProps } from "../interfaces/Props";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
-    const { setUserData, userData, setPage, page } = useContext(globalPropsContext);
+    const { setUserData, userData, page } = useContext(globalPropsContext);
 
     // *** Zustand
 
@@ -62,14 +60,9 @@ export default function MainScreen(): JSX.Element {
 
     // TODO:
 
-    const supplementMap1 = {};
-    const AllProps: AppProps = {
-        setUserData, userData, setPage, page, supplementMap1
-    };
-
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
-        checkForSave(AllProps, updateCompletedAchievements, updateSupplementMap);
+        checkForSave(userData, setUserData, updateCompletedAchievements, updateSupplementMap);
     }, []);
 
     // Checks login time for achievements
@@ -133,26 +126,24 @@ export default function MainScreen(): JSX.Element {
         <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
             <SafeAreaView style={{ flex: 1 }}>
                 <StatusBar barStyle={"light-content"} />
-                <allPropsContext.Provider value={AllProps}>
-                    <View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal" && modalVisible !== "disable-header") ? 0.5 : 1 }}>
-                        <View style={{ flex: 1 }}>
-                            { page === "loading-screen" && <WelcomePage /> }
-                            { page === "app-screen" && <>
-                                <UserInfoPage />
-                                <SupplementModal />
-                                <HeaderWindow />
-                                <TabView
-                                    navigationState={{ index, routes }}
-                                    renderScene={renderScene}
-                                    onIndexChange={updateIndex}
-                                    initialLayout={{ width: layout.width }}
-                                    tabBarPosition="bottom"
-                                    renderTabBar={() => <BottomMenuTab />}
-                                    onSwipeEnd={() => updateShowButtons(false)}
-                                /></> }
-                        </View>
+                <View style={{ flex: 1, opacity: (modalVisible !== "hide-modal" && modalVisible !== "time-modal" && modalVisible !== "disable-header") ? 0.5 : 1 }}>
+                    <View style={{ flex: 1 }}>
+                        { page === "loading-screen" && <WelcomePage /> }
+                        { page === "app-screen" && <>
+                            <UserInfoPage />
+                            <SupplementModal />
+                            <HeaderWindow />
+                            <TabView
+                                navigationState={{ index, routes }}
+                                renderScene={renderScene}
+                                onIndexChange={updateIndex}
+                                initialLayout={{ width: layout.width }}
+                                tabBarPosition="bottom"
+                                renderTabBar={() => <BottomMenuTab />}
+                                onSwipeEnd={() => updateShowButtons(false)}
+                            /></> }
                     </View>
-                </allPropsContext.Provider>
+                </View>
             </SafeAreaView>
             {modalVisible !== "achievements-modal" && modalVisible !== "journal" && modalVisible !== "info-modal" && modalVisible !== "user-modal" && modalVisible !== "edit-name"
                 && modalVisible !== "weekly-modal" && modalVisible !== "supplement-modal"

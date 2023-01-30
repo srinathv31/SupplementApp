@@ -7,14 +7,14 @@ import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData"
 import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
 import RNFS from "react-native-fs";
 import { addPic, corgiPic, huskyPic, penguinPic } from "../../assets/imageURLs/profilePictureURLs";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function ProfilePictureList({ setChangePictureMode }: {
     setChangePictureMode: (p: boolean) => void,
 }): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);

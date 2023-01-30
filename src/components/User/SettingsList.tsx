@@ -11,12 +11,12 @@ import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData"
 import { openComposer } from "react-native-email-link";
 import { shareEntirePlan } from "../../utilities/shareFunctions";
 import { FlatList } from "react-native-gesture-handler";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function SettingsList(): JSX.Element {
-    const { setPage, userData, setUserData } = useContext(allPropsContext);
+    const { setPage, userData, setUserData } = useContext(globalPropsContext);
 
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 

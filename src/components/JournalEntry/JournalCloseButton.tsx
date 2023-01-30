@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 import shallow from "zustand/shallow";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { journalDot } from "../../utilities/calendarDots";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
@@ -11,7 +11,7 @@ import useClientStore from "../../zustand/clientStore";
 export default function JournalCloseButton({ journalText }: {
     journalText: string
 }): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);

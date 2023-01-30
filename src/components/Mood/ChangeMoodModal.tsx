@@ -3,14 +3,14 @@ import React, { useContext } from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);

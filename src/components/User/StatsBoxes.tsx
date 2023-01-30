@@ -1,10 +1,10 @@
 // Source Imports
 import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function StatsBoxes(): JSX.Element {
-    const { userData } = useContext(allPropsContext);
+    const { userData } = useContext(globalPropsContext);
 
     function grabNumberOfDaysTakenSupplement() {
         const supplementMapCopy = { ...userData.data.supplementMap };

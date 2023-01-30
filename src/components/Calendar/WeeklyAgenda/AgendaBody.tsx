@@ -11,12 +11,12 @@ import handleCalendar from "../../../utilities/handleCalendarEvents";
 import { SupplementObject } from "../../../interfaces/Supplement";
 import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
-import { allPropsContext } from "../../../contextHooks/AllPropsContext";
 import useClientStore, { ClientState } from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { globalPropsContext } from "../../../contextHooks/GlobalPropsContext";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
