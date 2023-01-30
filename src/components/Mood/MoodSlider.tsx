@@ -9,8 +9,9 @@ import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData, supplementMap, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const mood = useClientStore(state => state.mood);
     const daySelected = useClientStore(state => state.daySelected);
@@ -27,7 +28,7 @@ export default function MoodSlider(): JSX.Element {
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
 
         updateModalVisible("mood-change-modal");

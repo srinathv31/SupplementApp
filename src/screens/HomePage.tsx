@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -10,7 +10,6 @@ import WebModal from "../components/SlidingModals/WebModal";
 import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
 import SurveyModal from "../components/WaterTracking/SurveyModal";
 import WaterScreen from "../components/WaterTracking/WaterScreen";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { SupplementObject } from "../interfaces/Supplement";
 import { checkUserSupplementStatus } from "../utilities/checkSupplementStatus";
 import useClientStore from "../zustand/clientStore";
@@ -18,8 +17,7 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(): JSX.Element {
-    const { supplementMap } = useContext(allPropsContext);
-
+    const supplementMap = useClientStore(state => state.supplementMap);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);

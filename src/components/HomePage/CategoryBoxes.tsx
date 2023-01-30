@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import CategoryBoxesStyles from "../../styles/CategoryBoxStyles";
 import { countDailySupplements } from "../../utilities/countDailySupplements";
 import useClientStore from "../../zustand/clientStore";
@@ -11,7 +10,7 @@ import useClientStore from "../../zustand/clientStore";
 export default function CategoryBoxes({ setCategorySelect }: {
     setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void,
 }) {
-    const { supplementMap } = useContext(allPropsContext);
+    const supplementMap = useClientStore(state => state.supplementMap);
     const daySelected = useClientStore(state => state.daySelected);
 
     const categories1 = [

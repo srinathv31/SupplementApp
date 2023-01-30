@@ -10,10 +10,10 @@ import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
 
-
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, supplementMap } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const supplementMap = useClientStore(state => state.supplementMap);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateIndex = useClientStore(state => state.updateIndex);
     const updateDaySelected = useClientStore(state => state.updateDaySelected);

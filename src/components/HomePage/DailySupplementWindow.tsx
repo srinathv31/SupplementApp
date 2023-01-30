@@ -5,17 +5,17 @@ import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { DateData } from "react-native-calendars/src/types";
-import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
-import useClientStore from "../../zustand/clientStore";
+import useClientStore, { ClientState } from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
     const index = useClientStore(state => state.index);
@@ -57,10 +57,10 @@ export default function DailySupplementWindow(): JSX.Element {
         }
         setUserData(userCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
     }
 
-    function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
+    function removeDate(day: DateData, supplementMap: ClientState["supplementMap"]){
         const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
@@ -102,7 +102,7 @@ export default function DailySupplementWindow(): JSX.Element {
         const supplementMapCopy = { ... supplementMap };
 
         item.taken = taken;
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
         setUserData(userData);
         saveUserData(userData, setUserData, supplementMapCopy);

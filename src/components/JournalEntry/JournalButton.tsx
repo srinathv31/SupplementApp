@@ -1,17 +1,14 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Pressable } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import shallow from "zustand/shallow";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
-
 
 export default function JournalButton({ setJournalText }: {
     setJournalText: (j: string) => void
 }): JSX.Element {
-    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
-
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
@@ -27,7 +24,7 @@ export default function JournalButton({ setJournalText }: {
             setJournalText(supplementMapCopy[daySelected].JournalEntry);
         }
 		
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         updateModalVisible("journal");
     }
 

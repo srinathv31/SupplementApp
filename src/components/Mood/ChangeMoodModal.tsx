@@ -10,8 +10,9 @@ import shallow from "zustand/shallow";
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setUserData, userData, setSupplementMap, supplementMap } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
@@ -32,7 +33,7 @@ export default function ChangeMoodModal({ setOpen }: {
         }
 
         setUserData(userCopy);
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         saveUserData(userCopy, setUserData, supplementMapCopy);
 
         updateModalVisible("hide-modal");
@@ -57,7 +58,7 @@ export default function ChangeMoodModal({ setOpen }: {
         }
 
         setUserData(userCopy);
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         saveUserData(userCopy, setUserData, supplementMapCopy);
     }
 

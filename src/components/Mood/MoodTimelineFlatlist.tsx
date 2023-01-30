@@ -7,12 +7,15 @@ import { MoodTimelineFlatlistProps } from "../../interfaces/MoodTimelineProps";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodTimelineFlatlist({ timelineState, setTimelineState, colorString, setInitialStart, setColorEditMode, startSelected, initialStart, colorEditMode }: MoodTimelineFlatlistProps): JSX.Element {
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
     const fadeAnimSub = useRef(new Animated.Value(0)).current;
 
-    const { setUserData, userData, supplementMap } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
+
+    const supplementMap = useClientStore(state => state.supplementMap);
 
     useEffect(() => {
         const interval = setInterval(() => {

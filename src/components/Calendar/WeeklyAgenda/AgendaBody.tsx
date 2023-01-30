@@ -11,14 +11,14 @@ import handleCalendar from "../../../utilities/handleCalendarEvents";
 import { SupplementObject } from "../../../interfaces/Supplement";
 import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
-import { AppProps } from "../../../interfaces/Props";
 import { allPropsContext } from "../../../contextHooks/AllPropsContext";
-import useClientStore from "../../../zustand/clientStore";
+import useClientStore, { ClientState } from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
     const updateIndex = useClientStore(state => state.updateIndex);
@@ -42,11 +42,11 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         
         setUserData(userCopy);
         saveUserData(userData, setUserData, supplementMapCopy);
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         handleDayClick(parentData);
     }
 
-    function removeDate(day: DateData, supplementMap: AppProps["supplementMap"], parentDataMapKey: string){
+    function removeDate(day: DateData, supplementMap: ClientState["supplementMap"], parentDataMapKey: string){
         const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[parentDataMapKey].SupplementSchedule).length === 0){
@@ -106,7 +106,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         const supplementMapCopy = { ... supplementMap };
 
         item.taken = taken;
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
     }
 

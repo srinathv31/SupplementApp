@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
@@ -9,13 +9,11 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function DailySupplementDetails(): JSX.Element {
-    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
-
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const daySelected = useClientStore(state => state.daySelected);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
@@ -34,7 +32,7 @@ export default function DailySupplementDetails(): JSX.Element {
         const supplementMapCopy = { ... supplementMap };
 
         item.taken = taken;
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
     }
 
@@ -85,7 +83,7 @@ export default function DailySupplementDetails(): JSX.Element {
                 supplement.takenOffTime = convertedTime;
             }
         });
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setTime(currentDate);
     };
 
@@ -95,7 +93,7 @@ export default function DailySupplementDetails(): JSX.Element {
             return;
         }
         selectedSupplement.note = supplementNotes;
-        setSupplementMap(supplementMap);
+        updateSupplementMap(supplementMap);
         if(completedAchievements[9].color === "white"){
             achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 9);
         }
@@ -107,7 +105,7 @@ export default function DailySupplementDetails(): JSX.Element {
             return;
         }
         selectedSupplement.dosage = dosage;
-        setSupplementMap(supplementMap);
+        updateSupplementMap(supplementMap);
     }, [dosage]);
 
     return(

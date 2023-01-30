@@ -12,8 +12,9 @@ import shallow from "zustand/shallow";
 export default function VerifySupplementStatusModal({ supplementsToUpdateStatus, setSupplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void
 }): JSX.Element {
-    const { supplementMap, setUserData, userData, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
@@ -37,7 +38,7 @@ export default function VerifySupplementStatusModal({ supplementsToUpdateStatus,
         saveUserData(userData, setUserData, supplementMapCopy);
         setUserData(userData);
 
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
     }
 
     function handleSubmit() {

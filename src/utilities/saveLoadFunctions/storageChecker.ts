@@ -6,7 +6,7 @@ import { generateCurrentDateObject } from "../getCurrentDate";
 import { saveDataToCloud } from "./saveDataToCloud";
 import { ClientState } from "../../zustand/clientStore";
 
-export const checkForSave = async ({ userData, setUserData, setSupplementMap }: AppProps, updatedCompletedAchievements: ClientState["updatedCompletedAchievements"]) => {
+export const checkForSave = async ({ userData, setUserData }: AppProps, updatedCompletedAchievements: ClientState["updatedCompletedAchievements"], updateSupplementMap: ClientState["updateSupplementMap"]) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(""+userCopy.userAuthObj?.uid);
@@ -31,7 +31,7 @@ export const checkForSave = async ({ userData, setUserData, setSupplementMap }: 
             saveDataToCloud(userCopy);
 
             updatedCompletedAchievements(parsedJsonValue.achievements);
-            setSupplementMap(parsedJsonValue.data.supplementMap);
+            updateSupplementMap(parsedJsonValue.data.supplementMap);
         }
         return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {

@@ -1,19 +1,19 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MoodTimelineFlatlist from "./MoodTimelineFlatlist";
 import IconI from "react-native-vector-icons/Ionicons";
 import { TimeLineObject } from "../../interfaces/TimeLine";
 import MoodObject from "../../interfaces/Mood";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
 import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 // Component color select mode: DISABLED
 export default function MoodTimlineSupplement({ timelineData, index }: {
     timelineData: MoodObject, index: number
 }): JSX.Element {
-    const { setSupplementMap, supplementMap } = useContext(allPropsContext);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export default function MoodTimlineSupplement({ timelineData, index }: {
         startSelected,
         initialStart,
         colorEditMode,
-        setSupplementMap,
+        updateSupplementMap,
         supplementMap,
         daySelected
     };

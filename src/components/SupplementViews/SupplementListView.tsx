@@ -22,8 +22,9 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { supplementMap, userData, setUserData, setSupplementMap } = useContext(allPropsContext);
+    const { userData, setUserData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
@@ -61,7 +62,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
         setUserData(userCopy);
 
         showAddToast(item, daySelected);
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
     }
 
     function addDate(userData: User, day: DateData, supplementMap: Record<string, SupplementMapObject>) {

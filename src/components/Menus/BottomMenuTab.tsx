@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Animated, KeyboardAvoidingView, Pressable, Text, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
@@ -7,14 +7,12 @@ import BottomMenuTabStyles from "../../styles/BottomMenuTab";
 import ChangeMoodModal from "../Mood/ChangeMoodModal";
 import MoodPicker from "../Mood/MoodPicker";
 import { sharePlan, shareUrl } from "../../utilities/shareFunctions";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import MoodSlider from "../Mood/MoodSlider";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
 
 export default function BottomMenuTab(): JSX.Element {
-    const { supplementMap } = useContext(allPropsContext);
-
+    const supplementMap = useClientStore(state => state.supplementMap);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);

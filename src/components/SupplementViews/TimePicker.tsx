@@ -12,8 +12,9 @@ import shallow from "zustand/shallow";
 
 
 export default function TimePicker(): JSX.Element {
-    const { setUserData, userData, supplementMap, setSupplementMap } = useContext(allPropsContext);
+    const { setUserData, userData } = useContext(allPropsContext);
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
     const daySelected = useClientStore(state => state.daySelected);
@@ -46,7 +47,7 @@ export default function TimePicker(): JSX.Element {
         if(completedAchievements[13].color === "white") {
             achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 13);
         }
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setTime(currentDate);
         setUserData(userData);
     };

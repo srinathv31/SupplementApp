@@ -19,7 +19,6 @@ import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { requestUserPermission } from "../utilities/authentication/notifications";
 import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
 import { AppProps } from "../interfaces/Props";
-import { SupplementMapObject } from "../interfaces/Supplement";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
@@ -29,6 +28,7 @@ export default function MainScreen(): JSX.Element {
 
     // *** Zustand
 
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
     // Boolean that toggles sub menu
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
@@ -55,24 +55,21 @@ export default function MainScreen(): JSX.Element {
     // const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
     // Renders the selected day's week for the weekly modal
     // const [week, setWeek] = useState<WeekDay[]>(weekInit);
-
     // Sets the text for the weekly modal
     // const [monthText, setMonthText] = useState<string>(monthTextInit);
+    // Data structure that handles supplements and journal entry for a given day
+    // const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
 
     // TODO:
 
-    // Data structure that handles supplements and journal entry for a given day
-    const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
-
-
-
+    const supplementMap1 = {};
     const AllProps: AppProps = {
-        setUserData, userData, setSupplementMap, supplementMap, setPage, page
+        setUserData, userData, setPage, page, supplementMap1
     };
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
-        checkForSave(AllProps, updateCompletedAchievements);
+        checkForSave(AllProps, updateCompletedAchievements, updateSupplementMap);
     }, []);
 
     // Checks login time for achievements

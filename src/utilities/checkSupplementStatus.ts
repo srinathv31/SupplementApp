@@ -1,9 +1,8 @@
-import { AppProps } from "../interfaces/Props";
 import { SupplementObject } from "../interfaces/Supplement";
 import { ClientState } from "../zustand/clientStore";
 import { convertStringTimeToDateTime } from "./convertTime";
 
-export function checkUserSupplementStatus(supplementMap: AppProps["supplementMap"], daySelected: string, updateModalVisible: ClientState["updateModalVisible"], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void){
+export function checkUserSupplementStatus(supplementMap: ClientState["supplementMap"], daySelected: string, updateModalVisible: ClientState["updateModalVisible"], setSupplementsToUpdateStatus: (s: SupplementObject[]) => void){
     const dateNow = new Date();
     const supplementToCheck: SupplementObject[] = [];
 

@@ -1,15 +1,13 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from "victory-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodBarGraph({ graphType }: {
     graphType: string,
 }): JSX.Element {
-    const { supplementMap } = useContext(allPropsContext);
-
+    const supplementMap = useClientStore(state => state.supplementMap);
     const daySelected = useClientStore(state => state.daySelected);
     const week = useClientStore(state => state.week);
 

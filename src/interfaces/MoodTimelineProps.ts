@@ -11,7 +11,6 @@ export interface MoodTimelineFlatlistProps {
     colorEditMode: boolean,
     setStartSelected: (b: boolean) => void
     startSelected: boolean,
-    setSupplementMap: (d: Record<string, SupplementMapObject>) => void,
     supplementMap: Record<string, SupplementMapObject>,
     daySelected: string
 }
