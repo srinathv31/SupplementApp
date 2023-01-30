@@ -26,7 +26,7 @@ export default function MainScreen(): JSX.Element {
 
     // *** Zustand
 
-    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }));
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     // Boolean that toggles sub menu
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"

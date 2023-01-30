@@ -1,9 +1,9 @@
-import { AppProps } from "../../interfaces/Props";
+import { GlobalProps } from "../../interfaces/Props";
 import { checkForCloudSave, grabCloudSave } from "../saveLoadFunctions/checkForCloudSave";
 import { checkIfSaveExistsOnLocal } from "../saveLoadFunctions/storageChecker";
 import { saveLoggedInKey } from "../saveLoadFunctions/updateIsLoggedIn";
 
-export async function handleLoginButton(setPage: AppProps["setPage"], userData: AppProps["userData"], setUserData: AppProps["setUserData"]) {
+export async function handleLoginButton(setPage: GlobalProps["setPage"], userData: GlobalProps["userData"], setUserData: GlobalProps["setUserData"]) {
     const saveExists = await checkIfSaveExistsOnLocal(""+userData.userAuthObj?.uid);
     const cloudSaveExists = await checkForCloudSave(""+userData.userAuthObj?.uid);
     setUserData(userData);
