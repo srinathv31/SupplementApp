@@ -4,12 +4,14 @@ import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { GoogleSignin, GoogleSigninButton } from "@react-native-google-signin/google-signin";
 import { handleLoginButton } from "../../utilities/authentication/handleLoginEvent";
 import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
+import useClientStore from "../../zustand/clientStore";
 GoogleSignin.configure({
     webClientId: "628023121641-t2nvq89jpmukfn0ntdiu8cdsfkdmc01d.apps.googleusercontent.com",
 });
 
 export default function GoogleButton(): JSX.Element {
-    const { setUserData, userData, setPage } = useContext(globalPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
+    const updatePage = useClientStore(state => state.updatePage);
 
     async function onGoogleButtonPress() {
         try {
@@ -37,7 +39,7 @@ export default function GoogleButton(): JSX.Element {
         userCopy.userAuthObj = response?.user;
 
         // Check if uid is stored locally (already signed in before)
-        handleLoginButton(setPage, userCopy, setUserData);
+        handleLoginButton(updatePage, userCopy, setUserData);
         // if false => send to account setup => create firestore and local
         // if true => send to loading screen => update firestore with local
     }

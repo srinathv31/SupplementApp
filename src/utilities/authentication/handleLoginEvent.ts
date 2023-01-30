@@ -1,25 +1,26 @@
 import { GlobalProps } from "../../interfaces/Props";
+import { ClientState } from "../../zustand/clientStore";
 import { checkForCloudSave, grabCloudSave } from "../saveLoadFunctions/checkForCloudSave";
 import { checkIfSaveExistsOnLocal } from "../saveLoadFunctions/storageChecker";
 import { saveLoggedInKey } from "../saveLoadFunctions/updateIsLoggedIn";
 
-export async function handleLoginButton(setPage: GlobalProps["setPage"], userData: GlobalProps["userData"], setUserData: GlobalProps["setUserData"]) {
+export async function handleLoginButton(updatePage: ClientState["updatePage"], userData: GlobalProps["userData"], setUserData: GlobalProps["setUserData"]) {
     const saveExists = await checkIfSaveExistsOnLocal(""+userData.userAuthObj?.uid);
     const cloudSaveExists = await checkForCloudSave(""+userData.userAuthObj?.uid);
     setUserData(userData);
     saveLoggedInKey(userData);
 
     if (saveExists === true) {
-        setPage("loading-screen");
+        updatePage("loading-screen");
         return;
     }
 
     if (cloudSaveExists === true) {
         console.log("cloud exists... loading cloud data...");
         grabCloudSave(""+userData.userAuthObj?.uid, userData, setUserData)
-            .then(() => setPage("loading-screen"));
+            .then(() => updatePage("loading-screen"));
         return;
     }
 
-    setPage("form-screen");
+    updatePage("form-screen");
 }

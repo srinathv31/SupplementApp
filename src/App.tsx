@@ -4,7 +4,6 @@ import { StatusBar, View } from "react-native";
 
 import { LogBox } from "react-native";
 import InfoForm from "./components/UserSetup/InfoForm";
-import { PageType } from "./interfaces/AppTypes";
 import { userDefaultValue } from "./interfaces/DefaultValues";
 import User from "./interfaces/User";
 import LoginScreen from "./screens/LoginScreen";
@@ -13,19 +12,22 @@ import OnboardingTour from "./screens/OnboardingTour";
 import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLoggedIn";
 
 import { globalPropsContext } from "./contextHooks/GlobalPropsContext";
+import useClientStore from "./zustand/clientStore";
+import shallow from "zustand/shallow";
 
 LogBox.ignoreLogs(["Sending"]);
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
     const [userData, setUserData] = useState<User>(userDefaultValue);
-    const [page, setPage] = useState<PageType>("login-screen");
 
-    const GlobalProps = { setUserData, userData, setPage, page };
+    const GlobalProps = { setUserData, userData };
+
+    const { page, updatePage } = useClientStore(state => ({ page: state.page, updatePage: state.updatePage }), shallow);
 
     // If User is previously logged in => continue to loading screen with previous account
     useEffect(() => {
-        retrieveLoggedInKey(setPage, setUserData, userData);
+        retrieveLoggedInKey(updatePage, setUserData, userData);
     }, []);
 
     return (

@@ -16,8 +16,9 @@ import shallow from "zustand/shallow";
 import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 
 export default function SettingsList(): JSX.Element {
-    const { setPage, userData, setUserData } = useContext(globalPropsContext);
+    const { userData, setUserData } = useContext(globalPropsContext);
 
+    const updatePage = useClientStore(state => state.updatePage);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
 
@@ -56,7 +57,7 @@ export default function SettingsList(): JSX.Element {
                 {
                     text: "Continue",
                     onPress: () => {
-                        setPage("onboarding-screen");
+                        updatePage("onboarding-screen");
                         if(completedAchievements[4].color === "white"){
                             achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 4);
                         }
@@ -91,7 +92,7 @@ export default function SettingsList(): JSX.Element {
             premiumStatus: true,
             achievements: ListOfAchievements
         };
-        setPage("login-screen");
+        updatePage("login-screen");
         setUserData(userCopy);
         auth().signOut().then(() => console.log("Signed Out!"));
         removeLoggedInKey();

@@ -1,18 +1,18 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Image, SafeAreaView, StyleSheet } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import { addBatchPic, addButtonPic, calendarPic, dailyPic, feedbackGIF, introPic, LogoPic, moodPic, researchPic, sharePic } from "../assets/imageURLs/onboardingURLs";
 import Video from "react-native-video";
-import { globalPropsContext } from "../contextHooks/GlobalPropsContext";
+import useClientStore from "../zustand/clientStore";
 
 export default function OnboardingTour(): JSX.Element {
-    const { setPage } = useContext(globalPropsContext);
+    const updatePage = useClientStore(state => state.updatePage);
 
     return(
         <SafeAreaView style={{ flex: 1 }}>
             <Onboarding
-                onDone={() => setPage("loading-screen")}
+                onDone={() => updatePage("loading-screen")}
                 controlStatusBar={false}
                 showSkip={false}
                 pages={[

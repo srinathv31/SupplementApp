@@ -6,10 +6,13 @@ import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
 import { checkIfValidDate } from "../../utilities/authentication/checkForValidDate";
 import { createUserDataInCloud } from "../../utilities/authentication/writeUserData";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
+import useClientStore from "../../zustand/clientStore";
 import AgeBox from "./AgeBox";
 
 export default function InfoForm(): JSX.Element {
-    const { setUserData, userData, setPage } = useContext(globalPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
+
+    const updatePage = useClientStore(state => state.updatePage);
 
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -43,7 +46,7 @@ export default function InfoForm(): JSX.Element {
         // => create new cloud storage with new user => create new local storage
         // => go to loading screen
         updateUserObjDetails();
-        setPage("onboarding-screen");
+        updatePage("onboarding-screen");
     }
 
     function updateUserObjDetails() {

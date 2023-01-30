@@ -22,9 +22,10 @@ import shallow from "zustand/shallow";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
-    const { setUserData, userData, page } = useContext(globalPropsContext);
+    const { setUserData, userData } = useContext(globalPropsContext);
 
     // Client State
+    const page = useClientStore(state => state.page);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);

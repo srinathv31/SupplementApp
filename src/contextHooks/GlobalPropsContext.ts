@@ -5,6 +5,4 @@ import { GlobalProps } from "../interfaces/Props";
 export const globalPropsContext = createContext<GlobalProps>({
     setUserData: () => userDefaultValue,
     userData: userDefaultValue,
-    setPage: () => "login-screen",
-    page: "login-screen",
 });

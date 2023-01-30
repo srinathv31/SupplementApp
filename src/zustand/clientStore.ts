@@ -1,7 +1,7 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
-import { ModalType } from "../interfaces/AppTypes";
+import { ModalType, PageType } from "../interfaces/AppTypes";
 import getCurrentDate, { generateCurrentDateObject, initializeMonth, initializeWeek } from "../utilities/getCurrentDate";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
 import { selectedSupplementDefaultValue } from "../interfaces/DefaultValues";
@@ -34,7 +34,9 @@ export interface ClientState {
     monthText: string,
     updateMonthText: (newMonth: string) => void,
     supplementMap: Record<string, SupplementMapObject>,
-    updateSupplementMap: (map: Record<string, SupplementMapObject>) => void
+    updateSupplementMap: (map: Record<string, SupplementMapObject>) => void,
+    page: PageType,
+    updatePage: (newPage: PageType) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -67,7 +69,9 @@ const useClientStore = create<ClientState>()(
             monthText: initializeMonth(),
             updateMonthText: (newMonth) => set({ monthText: newMonth }),
             supplementMap: {},
-            updateSupplementMap: (map) => set({ supplementMap: map })
+            updateSupplementMap: (map) => set({ supplementMap: map }),
+            page: "login-screen",
+            updatePage: (newPage) => set({ page: newPage })
         }),
         {
             name: "client-storage",
