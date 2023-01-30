@@ -24,41 +24,14 @@ LogBox.ignoreLogs(["Sending"]);
 export default function MainScreen(): JSX.Element {
     const { setUserData, userData, page } = useContext(globalPropsContext);
 
-    // *** Zustand
-
+    // Client State
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
-    // Boolean that toggles sub menu
     const updateShowButtons = useClientStore(state => state.updateShowButtons);
-    // Sets visibility of modals: "hide-modal", "journal", "weekly-modal", "supplement-modal", "time-modal", "calendar-modal"
-    // const [modalVisible, setModalVisible] = useState<ModalType>("hide-modal");
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const modalVisible = useClientStore(state => state.modalVisible);
-    // Index for page sliding
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
-    // Sets app in multipleAdd State mode
-    // const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
-    // Sets Animation for Weekly modal
-    // const [swipeAnimation, setSwipeAnimation] = useState<string>("fadeIn");
-    // Tracks selected mood for analysis and inputting mood trends
-    // const [mood, setMood] = useState<string>("");
-    // Returns string date in format - MM/DD/YYYY
-    // const [daySelected, setDaySelected] = useState<string>(getCurrentDate);
-    // Updates achievements list throughout app
-    // const [completedAchievements, setCompletedAchievements] = useState<Achievement[]>(ListOfAchievements);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
-    // Tracks selected supplement for mass adding and time changing features
-    // const [selectedSupplement, setSelectedSupplement] = useState<SupplementObject>(selectedSupplementDefaultValue);
-    // Returns DateData object of date
-    // const [objDaySelected, setObjDaySelected] = useState<DateData>(dateObjInit);
-    // Renders the selected day's week for the weekly modal
-    // const [week, setWeek] = useState<WeekDay[]>(weekInit);
-    // Sets the text for the weekly modal
-    // const [monthText, setMonthText] = useState<string>(monthTextInit);
-    // Data structure that handles supplements and journal entry for a given day
-    // const [supplementMap, setSupplementMap] = useState<Record<string, SupplementMapObject>>({});
-
-    // TODO:
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
