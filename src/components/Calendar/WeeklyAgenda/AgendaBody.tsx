@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { View, FlatList, TouchableHighlight, Pressable, Text } from "react-native";
@@ -11,11 +11,20 @@ import handleCalendar from "../../../utilities/handleCalendarEvents";
 import { SupplementObject } from "../../../interfaces/Supplement";
 import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
-import { AppProps } from "../../../interfaces/Props";
-import { allPropsContext } from "../../../contextHooks/AllPropsContext";
+import useClientStore, { ClientState } from "../../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
-    const { setSupplementMap, supplementMap, setUserData, userData, setSwipeAnimation, setObjDaySelected, setDaySelected, setWeek, setMonthText, setSelectedSupplement, setIndex, setModalVisible, week, daySelected, selectedSupplement  } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const updateSwipeAnimation = useClientStore(state => state.updateSwipeAnimation);
+    const updateIndex = useClientStore(state => state.updateIndex);
+    const { updateDaySelected, daySelected } = useClientStore(state => ({ updateDaySelected: state.updateDaySelected, daySelected: state.daySelected }), shallow);
+    const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
+    const updateObjDaySelected = useClientStore(state => state.updateObjDaySelected);
+    const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
+    const updateMonthText = useClientStore(state => state.updateMonthText);
 
     function removeSupplement(item: SupplementObject, parentData: WeekDay) {
         const supplementMapCopy = { ...supplementMap };
@@ -29,13 +38,13 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
             delete supplementMapCopy[parentDataMapKey];
         }
         
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
-        setSupplementMap(supplementMapCopy);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         handleDayClick(parentData);
     }
 
-    function removeDate(day: DateData, supplementMap: AppProps["supplementMap"], parentDataMapKey: string){
+    function removeDate(day: DateData, supplementMap: ClientState["supplementMap"], parentDataMapKey: string){
         const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[parentDataMapKey].SupplementSchedule).length === 0){
@@ -48,23 +57,23 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         const weekDayDateData = convertWeekDayToDateData(weekDay);
         const userCopy = { ...userData };
 
-        setSwipeAnimation("fadeIn");
+        updateSwipeAnimation("fadeIn");
 
-        setObjDaySelected(weekDayDateData);
-        setDaySelected(getDateString(weekDayDateData));
+        updateObjDaySelected(weekDayDateData);
+        updateDaySelected(getDateString(weekDayDateData));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, weekDayDateData.dateString);
-        setUserData(userCopy);
+        updateUserData(userCopy);
 
-        setWeek(generateWeekList(weekDayDateData));
-        setMonthText(grabMonth(generateWeekList(weekDayDateData)));
+        updateWeek(generateWeekList(weekDayDateData));
+        updateMonthText(grabMonth(generateWeekList(weekDayDateData)));
     }
 
     function changeTime(item: SupplementObject, parentData: WeekDay) {
         handleDayClick(parentData);
-        setSelectedSupplement(item);
-        setIndex(1);
-        setModalVisible("time-modal");
+        updateSelectedSupplement(item);
+        updateIndex(1);
+        updateModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -95,13 +104,13 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
         const supplementMapCopy = { ... supplementMap };
 
         item.taken = taken;
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
     }
 
     function handleStatusToggle(item: SupplementObject) {
-        setSwipeAnimation("fadeIn");
-        setSelectedSupplement(item);
+        updateSwipeAnimation("fadeIn");
+        updateSelectedSupplement(item);
         setShowStatusButtons(!showStatusButtons);
     }
 
@@ -116,7 +125,7 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
                     return (
                         <TouchableHighlight key={item.date}>
                             <View style={styles.ListItem}>
-                                <Pressable onPress={() => (handleDayClick(item), setModalVisible("hide-modal"), setIndex(1))}>
+                                <Pressable onPress={() => (handleDayClick(item), updateModalVisible("hide-modal"), updateIndex(1))}>
                                     <Text style={{ fontSize: 24, color: daySelected === item.dateString ? "orange" : "white" }}>{item.date}</Text>
                                 </Pressable>
                                 <Text style={{ fontSize: 18, fontWeight: "600", color: daySelected === item.dateString ? "orange" : "white" }}>{item.day}</Text>

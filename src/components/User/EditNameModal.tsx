@@ -1,14 +1,17 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
 import CustomToast from "../Toast/customToast";
 import Icon from "react-native-vector-icons/Ionicons";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function EditNameModal(): JSX.Element {
-    const { setModalVisible, userData, setCompletedAchievements, completedAchievements, setUserData, modalVisible } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -36,19 +39,19 @@ export default function EditNameModal(): JSX.Element {
         }
         // If details are valid => update local user object
         updateUserObjDetails();
-        setModalVisible("user-modal");
+        updateModalVisible("user-modal");
     }
 
     function updateUserObjDetails() {
         const userCopy = { ...userData };
         
-        achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 6);
+        achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 6);
 
         userCopy.name = name;
         userCopy.lastName = lastName;
 
         saveUserToPhone(userCopy);
-        setUserData(userCopy);
+        updateUserData(userCopy);
     }
 
     return(
@@ -57,12 +60,12 @@ export default function EditNameModal(): JSX.Element {
             transparent={true}
             visible={modalVisible === "edit-name" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Icon onPress={() => setModalVisible("user-modal")} name="close-circle-outline" size={20} color={"white"} style={{ margin: 10 }}></Icon>
+                    <Icon onPress={() => updateModalVisible("user-modal")} name="close-circle-outline" size={20} color={"white"} style={{ margin: 10 }}></Icon>
                     <Text style={{ color: "white", fontSize: 24, textAlign: "center", fontWeight: "300" }}>{"Editing Name..."}</Text>
                     <View style={styles.bar}>
                         <TextInput

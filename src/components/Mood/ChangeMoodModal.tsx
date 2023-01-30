@@ -1,17 +1,21 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import Icon from "react-native-vector-icons/Ionicons";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function ChangeMoodModal({ setOpen }: {
     setOpen: (o: boolean) => void
 }): JSX.Element {
-    const { setModalVisible, modalVisible, setUserData, userData, setSupplementMap, supplementMap, daySelected,  } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const daySelected = useClientStore(state => state.daySelected);
 
     function changeMood() {
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
         setOpen(true);
     }
 
@@ -26,11 +30,11 @@ export default function ChangeMoodModal({ setOpen }: {
             delete supplementMapCopy[daySelected];
         }
 
-        setUserData(userCopy);
-        setSupplementMap(supplementMapCopy);
-        saveUserData(userCopy, setUserData, supplementMapCopy);
+        updateUserData(userCopy);
+        updateSupplementMap(supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
 
-        setModalVisible("hide-modal");
+        updateModalVisible("hide-modal");
         setOpen(false);
     }
 
@@ -48,12 +52,12 @@ export default function ChangeMoodModal({ setOpen }: {
 
         // Close modal if there are no more moods
         if (supplementMapCopy[daySelected] === undefined){
-            setModalVisible("hide-modal");
+            updateModalVisible("hide-modal");
         }
 
-        setUserData(userCopy);
-        setSupplementMap(supplementMapCopy);
-        saveUserData(userCopy, setUserData, supplementMapCopy);
+        updateUserData(userCopy);
+        updateSupplementMap(supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
     }
 
     return(
@@ -62,7 +66,7 @@ export default function ChangeMoodModal({ setOpen }: {
             transparent={true}
             visible={modalVisible === "mood-change-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
@@ -96,7 +100,7 @@ export default function ChangeMoodModal({ setOpen }: {
                         </Pressable>
                         <Pressable
                             style={[styles.button, styles.buttonClose, { backgroundColor: "green" }]}
-                            onPress={() => setModalVisible("hide-modal")}
+                            onPress={() => updateModalVisible("hide-modal")}
                         >
                             <Text style={styles.textStyle}>
                                 {supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length !== 0

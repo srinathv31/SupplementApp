@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Alert, Image, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -8,10 +8,12 @@ import SettingsList from "../components/User/SettingsList";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
 import ProfilePictureList from "../components/User/ProfilePictureList";
 import CustomToast from "../components/Toast/customToast";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
+import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function UserInfoPage(): JSX.Element {
-    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+    const userData = useClientStore(state => state.userData);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
 
@@ -30,7 +32,7 @@ export default function UserInfoPage(): JSX.Element {
                     style: "default"
                 },
                 { 
-                    text: "Change Name", onPress: () => setModalVisible("edit-name"),
+                    text: "Change Name", onPress: () => updateModalVisible("edit-name"),
                     style: "default"
                 },
                 {
@@ -48,7 +50,7 @@ export default function UserInfoPage(): JSX.Element {
             transparent={true}
             visible={modalVisible === "user-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -58,7 +60,7 @@ export default function UserInfoPage(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible("hide-modal")}
+                                onPress={() => updateModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

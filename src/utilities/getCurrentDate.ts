@@ -12,6 +12,19 @@ export default function getCurrentDate(): string {
     return ""+month+"/"+day+"/"+year;
 }
 
+export function initializeMonth() {
+    const dateObjInit = generateCurrentDateObject();
+    const weekInit = generateWeekList(dateObjInit);
+    const monthTextInit = grabMonth(weekInit);
+
+    return monthTextInit;
+}
+
+export function initializeWeek() {
+    const dateObjInit = generateCurrentDateObject();
+    return generateWeekList(dateObjInit);
+}
+
 export function getDateString(day: DateData): string {
     return ""+day.month + "/" + ""+day.day + "/" + ""+day.year;
 }

@@ -1,15 +1,17 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Modal } from "react-native";
 import Divider from "../components/Design/Divider";
 import Icon from "react-native-vector-icons/Ionicons";
 import AchievementsList from "../components/Achievements/AchievementsList";
 import ScoreCard from "../components/Achievements/ScoreCard";
 import CustomToast from "../components/Toast/customToast";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
+import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function AchievementScreen(): JSX.Element {
-    const { setModalVisible, modalVisible, userData } = useContext(allPropsContext);
+    const userData = useClientStore(state => state.userData);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     const [numberOfAchievements, setNumberOfAchievements] = useState<number>(0);
 
@@ -19,7 +21,7 @@ export default function AchievementScreen(): JSX.Element {
             transparent={true}
             visible={modalVisible === "achievements-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
             style={{ flex: 1 }}
         >
@@ -29,7 +31,7 @@ export default function AchievementScreen(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible("hide-modal")}
+                                onPress={() => updateModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

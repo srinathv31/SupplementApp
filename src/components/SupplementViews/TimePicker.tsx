@@ -1,23 +1,30 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import sortDailyList from "../../utilities/sortDailyList";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 
 export default function TimePicker(): JSX.Element {
-    const { multipleAddMode, setModalVisible, setUserData, userData, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setSupplementMap, modalVisible } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const multipleAddMode = useClientStore(state => state.multipleAddMode);
+    const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [time, setTime] = useState<Date>(new Date());
 
     function handleJournal() {
         multipleAddMode ? 
-            setModalVisible("dosage-modal") : 
-            (setModalVisible("hide-modal"), saveUserData(userData, setUserData, supplementMap));
+            updateModalVisible("dosage-modal") : 
+            (updateModalVisible("hide-modal"), saveUserData(userData, updateUserData, supplementMap));
     }
 	
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,11 +43,11 @@ export default function TimePicker(): JSX.Element {
         });
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
         if(completedAchievements[13].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 13);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 13);
         }
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setTime(currentDate);
-        setUserData(userData);
+        updateUserData(userData);
     };
 
     return(
@@ -49,7 +56,7 @@ export default function TimePicker(): JSX.Element {
             transparent={true}
             visible={modalVisible === "time-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

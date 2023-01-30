@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { anxietySleepPic, boneJointPic, brainPic, exercisePic, generalHealthPic } from "../../assets/imageURLs/explorePageURLs";
 import SupplementList from "../../assets/SupplementList.json";
@@ -9,27 +9,32 @@ import WebModal from "../SlidingModals/WebModal";
 import { Modalize } from "react-native-modalize";
 import Supplement from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function ExpandedCategoryPage({ setExpand, expand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void,
     expand: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
 }): JSX.Element {
-    const { setModalVisible, setShowButtons, setCompletedAchievements, completedAchievements, setSelectedSupplement, selectedSupplement, index } = useContext(allPropsContext);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
+    const index = useClientStore(state => state.index);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
+    const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
-        setModalVisible("disable-header");
-        setShowButtons(false);
+        updateModalVisible("disable-header");
+        updateShowButtons(false);
         modalizeRef.current?.open();
     };
 
     function jumpToWeb(item: Supplement) {
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
-        setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
+        updateSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();
     }
 
@@ -103,7 +108,6 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
                 modalizeRef={modalizeRef}
                 url={selectedSupplement.Supplement.url}
                 index={index}
-                setModalVisible={setModalVisible}
             ></WebModal>
         </View>
     );

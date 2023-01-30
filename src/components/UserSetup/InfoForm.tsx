@@ -1,15 +1,17 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { globalPropsContext } from "../../contextHooks/GlobalPropsContext";
+import shallow from "zustand/shallow";
 import { checkIfValidDate } from "../../utilities/authentication/checkForValidDate";
 import { createUserDataInCloud } from "../../utilities/authentication/writeUserData";
 import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData";
+import useClientStore from "../../zustand/clientStore";
 import AgeBox from "./AgeBox";
 
 export default function InfoForm(): JSX.Element {
-    const { setUserData, userData, setPage } = useContext(globalPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const updatePage = useClientStore(state => state.updatePage);
 
     const [name, setName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -43,7 +45,7 @@ export default function InfoForm(): JSX.Element {
         // => create new cloud storage with new user => create new local storage
         // => go to loading screen
         updateUserObjDetails();
-        setPage("onboarding-screen");
+        updatePage("onboarding-screen");
     }
 
     function updateUserObjDetails() {
@@ -55,7 +57,7 @@ export default function InfoForm(): JSX.Element {
 
         createUserDataInCloud(userCopy);
         saveUserToPhone(userCopy);
-        setUserData(userCopy);
+        updateUserData(userCopy);
     }
 
     return (

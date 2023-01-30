@@ -1,16 +1,22 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import shallow from "zustand/shallow";
 import { journalDot } from "../../utilities/calendarDots";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
+import useClientStore from "../../zustand/clientStore";
 
 export default function JournalCloseButton({ journalText }: {
     journalText: string
 }): JSX.Element {
-    const { setUserData, userData, setSupplementMap, supplementMap, daySelected, objDaySelected, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
-    
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
+    const objDaySelected = useClientStore(state => state.objDaySelected);
+
     function handleJournalClose() {
         const userCopy = { ...userData };
         const supplementMapCopy = { ...supplementMap };
@@ -34,7 +40,7 @@ export default function JournalCloseButton({ journalText }: {
         if (!isJournalDotInList && !isTextEmpty){
             selectedDatesCopy[stringDate].dots.push(journalDot);
             if (completedAchievements[1].color === "white"){
-                achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 1);
+                achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 1);
             }
         }
 
@@ -45,9 +51,9 @@ export default function JournalCloseButton({ journalText }: {
         selectedDatesCopy[stringDate].dots = removeEmptyDotObjects(selectedDatesCopy, stringDate);
 
         userCopy.data.selectedDates = selectedDatesCopy;
-        setUserData(userCopy);
-        setSupplementMap(supplementMapCopy);
-        setModalVisible("hide-modal");
+        updateUserData(userCopy);
+        updateSupplementMap(supplementMapCopy);
+        updateModalVisible("hide-modal");
     }
 
     return(

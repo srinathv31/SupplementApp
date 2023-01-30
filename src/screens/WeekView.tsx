@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Animated, PanResponder, Pressable, Text, View } from "react-native";
 import { generateNextWeek, generatePrevWeek, grabMonth } from "../utilities/getCurrentDate";
 import Modal from "react-native-modal";
@@ -8,10 +8,14 @@ import { WeekProps } from "../interfaces/WeekProps";
 import AgendaHeader from "../components/Calendar/WeeklyAgenda/AgendaHeader";
 import AgendaBody from "../components/Calendar/WeeklyAgenda/AgendaBody";
 import CustomToast from "../components/Toast/customToast";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
+import useClientStore from "../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function WeeklySupplementModal(): JSX.Element {
-    const { setWeek, week, setMonthText, monthText, setSwipeAnimation, swipeAnimation, setModalVisible, modalVisible } = useContext(allPropsContext);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const { swipeAnimation, updateSwipeAnimation } = useClientStore(state => ({ swipeAnimation: state.swipeAnimation, updateSwipeAnimation: state.updateSwipeAnimation }), shallow);
+    const { week, updateWeek } = useClientStore(state => ({ week: state.week, updateWeek: state.updateWeek }), shallow);
+    const { monthText, updateMonthText } = useClientStore(state => ({ monthText: state.monthText, updateMonthText: state.updateMonthText }), shallow);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
     
@@ -23,14 +27,14 @@ export default function WeeklySupplementModal(): JSX.Element {
     function switchWeek(direction: string) {
         if (direction === "next") {
             const nextWeek = generateNextWeek(week);
-            setWeek(nextWeek);
-            setMonthText(grabMonth(nextWeek));
-            setSwipeAnimation("slideInRight");
+            updateWeek(nextWeek);
+            updateMonthText(grabMonth(nextWeek));
+            updateSwipeAnimation("slideInRight");
         } else if (direction === "prev") {
             const prevWeek = generatePrevWeek(week);
-            setWeek(prevWeek);
-            setMonthText(grabMonth(prevWeek));
-            setSwipeAnimation("slideInLeft");
+            updateWeek(prevWeek);
+            updateMonthText(grabMonth(prevWeek));
+            updateSwipeAnimation("slideInLeft");
         }
     }
 
@@ -83,7 +87,7 @@ export default function WeeklySupplementModal(): JSX.Element {
                         <AgendaBody {...WeekPropValues}/>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => (setModalVisible("hide-modal"), setSwipeAnimation("fadeIn"))}
+                            onPress={() => (updateModalVisible("hide-modal"), updateSwipeAnimation("fadeIn"))}
                         >
                             <Text style={styles.textStyle}>Close</Text>
                         </Pressable>

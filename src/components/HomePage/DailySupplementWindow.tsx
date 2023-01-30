@@ -1,18 +1,25 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SupplementObject } from "../../interfaces/Supplement";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
 import { DateData } from "react-native-calendars/src/types";
-import { AppProps } from "../../interfaces/Props";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore, { ClientState } from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function DailySupplementWindow(): JSX.Element {
-    const { setModalVisible, setShowButtons, setSelectedSupplement, index, showButtons, setSupplementMap, supplementMap, setUserData, userData, daySelected, objDaySelected, selectedSupplement } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
+    const index = useClientStore(state => state.index);
+    const daySelected = useClientStore(state => state.daySelected);
+    const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
+    const objDaySelected = useClientStore(state => state.objDaySelected);
 
     const [showStatusButtons, setShowStatusButtons] = useState<boolean>(false);
 
@@ -21,9 +28,9 @@ export default function DailySupplementWindow(): JSX.Element {
     const { height: initialHeight } = Dimensions.get("window");
     const height = initialHeight;
     const onOpen = (item: SupplementObject) => {
-        setShowButtons(false);
-        setModalVisible("disable-header");
-        setSelectedSupplement(item);
+        updateShowButtons(false);
+        updateModalVisible("disable-header");
+        updateSelectedSupplement(item);
         modalizeRef.current?.open();
     };
 
@@ -46,12 +53,12 @@ export default function DailySupplementWindow(): JSX.Element {
         if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "") {
             delete supplementMapCopy[daySelected];
         }
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
-        setSupplementMap(supplementMapCopy);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
     }
 
-    function removeDate(day: DateData, supplementMap: AppProps["supplementMap"]){
+    function removeDate(day: DateData, supplementMap: ClientState["supplementMap"]){
         const selectedDatesCopy = { ...userData.data.selectedDates };
         const stringDate = day.dateString;
         if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
@@ -61,8 +68,8 @@ export default function DailySupplementWindow(): JSX.Element {
     }
 
     function changeTime(item: SupplementObject) {
-        setSelectedSupplement(item);
-        setModalVisible("time-modal");
+        updateSelectedSupplement(item);
+        updateModalVisible("time-modal");
     }
 
     function getRadioButtonStatus(taken: SupplementObject["taken"]) {
@@ -93,15 +100,15 @@ export default function DailySupplementWindow(): JSX.Element {
         const supplementMapCopy = { ... supplementMap };
 
         item.taken = taken;
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
-        setUserData(userData);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateUserData(userData);
+        saveUserData(userData, updateUserData, supplementMapCopy);
     }
 
     function handleStatusToggle(item: SupplementObject) {
         if (selectedSupplement !== item) {
-            setSelectedSupplement(item);
+            updateSelectedSupplement(item);
             setShowStatusButtons(true);
             return;
         }
@@ -143,7 +150,7 @@ export default function DailySupplementWindow(): JSX.Element {
                     ></FlatList>
                 </View>
             </View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => setModalVisible("hide-modal")}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => updateModalVisible("hide-modal")}>
                 <DailySupplementDetails />
             </Modalize>
         </>

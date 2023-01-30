@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import IconI from "react-native-vector-icons/Ionicons";
@@ -9,10 +9,15 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
 import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function DailySupplementDetails(): JSX.Element {
-    const { setSupplementMap, supplementMap, selectedSupplement, daySelected, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const grabOffTime = selectedSupplement.takenOffTime !== undefined ? new Date("May 17, 2019 "+ selectedSupplement.takenOffTime) : new Date();
     const grabSupplementNote = selectedSupplement.note !== undefined ? selectedSupplement.note : "";
@@ -27,7 +32,7 @@ export default function DailySupplementDetails(): JSX.Element {
         const supplementMapCopy = { ... supplementMap };
 
         item.taken = taken;
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setShowStatusButtons(false);
     }
 
@@ -78,7 +83,7 @@ export default function DailySupplementDetails(): JSX.Element {
                 supplement.takenOffTime = convertedTime;
             }
         });
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
         setTime(currentDate);
     };
 
@@ -88,9 +93,9 @@ export default function DailySupplementDetails(): JSX.Element {
             return;
         }
         selectedSupplement.note = supplementNotes;
-        setSupplementMap(supplementMap);
+        updateSupplementMap(supplementMap);
         if(completedAchievements[9].color === "white"){
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 9);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 9);
         }
     }, [supplementNotes]);
 
@@ -100,7 +105,7 @@ export default function DailySupplementDetails(): JSX.Element {
             return;
         }
         selectedSupplement.dosage = dosage;
-        setSupplementMap(supplementMap);
+        updateSupplementMap(supplementMap);
     }, [dosage]);
 
     return(
@@ -186,6 +191,7 @@ export default function DailySupplementDetails(): JSX.Element {
                             <MoodTimlineSupplement
                                 key={index}
                                 timelineData={eachMood}
+                                index={index}
                             ></MoodTimlineSupplement>);
                     })}
                     <View style={{ flexDirection: "row" }}>

@@ -1,37 +1,44 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import shallow from "zustand/shallow";
 import { generateWeekList, getDateString, grabMonth } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
-
+import useClientStore from "../../zustand/clientStore";
 
 export default function MonthView(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, setWeek, setMonthText, supplementMap, setModalVisible, setIndex } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const supplementMap = useClientStore(state => state.supplementMap);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const updateIndex = useClientStore(state => state.updateIndex);
+    const updateDaySelected = useClientStore(state => state.updateDaySelected);
+    const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
+    const updateWeek = useClientStore(state => state.updateWeek);
+    const updateMonthText = useClientStore(state => state.updateMonthText);
 
     function handleDayClick(day: DateData) {
         const userCopy = { ...userData };
 
-        setObjDaySelected(day);
-        setDaySelected(getDateString(day));
+        updateObjDaySelected(day);
+        updateDaySelected(getDateString(day));
 
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, day.dateString);
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMap);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMap);
 
-        setWeek(generateWeekList(day));
-        setMonthText(grabMonth(generateWeekList(day)));
+        updateWeek(generateWeekList(day));
+        updateMonthText(grabMonth(generateWeekList(day)));
     }
 
     return(
         <View style={{ flex: 1 }}>
             <CalendarList
                 style={styles.calendar}
-                onDayPress={(day) => (handleDayClick(day), setModalVisible("weekly-modal"))}
-                onDayLongPress={(day) => (handleDayClick(day), setIndex(1))}
+                onDayPress={(day) => (handleDayClick(day), updateModalVisible("weekly-modal"))}
+                onDayLongPress={(day) => (handleDayClick(day), updateIndex(1))}
                 markingType={"multi-dot"}
                 markedDates={userData.data.selectedDates}
                 current={objDaySelected.dateString}

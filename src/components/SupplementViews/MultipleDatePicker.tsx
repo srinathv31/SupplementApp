@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import { DateData } from "react-native-calendars/src/types";
@@ -10,10 +10,16 @@ import { supplementDot } from "../../utilities/calendarDots";
 import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function MultipleDatePicker(): JSX.Element {
-    const { setCompletedAchievements, completedAchievements, setModalVisible, modalVisible, setUserData, userData, supplementMap, selectedSupplement, setSupplementMap, setMultipleAddMode } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [schedule, setSchedule] = useState<{[date: string]: {selected: boolean, day: DateData}}>();
 
@@ -29,7 +35,7 @@ export default function MultipleDatePicker(): JSX.Element {
         supplementMapCopy[dayString].SupplementSchedule = sortDailyList(supplementMapCopy[dayString].SupplementSchedule);
 
         if (completedAchievements[0].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 0);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 0);
         }
 
         return supplementMapCopy[dayString].SupplementSchedule;
@@ -68,15 +74,15 @@ export default function MultipleDatePicker(): JSX.Element {
             });
         }
         userCopy.data.selectedDates = selectedDatesCopy;
-        setUserData(userCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateUserData(userCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
         
-        setSupplementMap(supplementMapCopy);
-        setModalVisible("hide-modal");
+        updateSupplementMap(supplementMapCopy);
+        updateModalVisible("hide-modal");
         setSchedule({});
-        setMultipleAddMode(false);
+        updateMultipleAddMode(false);
         if (completedAchievements[3].color === "white" && schedule !== undefined && Object.keys(schedule).length > 0) {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 3);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 3);
         }
     }
 
@@ -101,7 +107,7 @@ export default function MultipleDatePicker(): JSX.Element {
             transparent={true}
             visible={modalVisible === "calendar-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

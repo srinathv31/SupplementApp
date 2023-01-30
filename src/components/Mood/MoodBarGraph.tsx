@@ -1,13 +1,15 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from "victory-native";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function MoodBarGraph({ graphType }: {
     graphType: string,
 }): JSX.Element {
-    const { supplementMap, daySelected, week } = useContext(allPropsContext);
+    const supplementMap = useClientStore(state => state.supplementMap);
+    const daySelected = useClientStore(state => state.daySelected);
+    const week = useClientStore(state => state.week);
 
     function grabDailyGraph() {
         const dailyGraph: { quarter: string; earnings: number; }[] = [];
@@ -99,7 +101,7 @@ export default function MoodBarGraph({ graphType }: {
 
     return(
         <View style={styles.container}>
-            <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>{supplementMap[daySelected] === undefined ? `No Data To Show for\n${daySelected}` : daySelected}</Text>
+            <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>{daySelected}</Text>
             <VictoryChart
                 // adding the material theme provided with Victory
                 theme={VictoryTheme.material}

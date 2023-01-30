@@ -1,8 +1,8 @@
 import Share from "react-native-share";
 import { Achievement } from "../interfaces/Achievements";
-import { AppProps } from "../interfaces/Props";
 import { SupplementObject } from "../interfaces/Supplement";
 import RNFS from "react-native-fs";
+import { ClientState } from "../zustand/clientStore";
 interface SupplementShareObject {
     name: string,
     time: string,
@@ -29,7 +29,7 @@ export const shareAchievement = async (item: Achievement, total: number) => {
     }
 };
 
-export const sharePlan = async (supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"]) => {
+export const sharePlan = async (supplementMap: ClientState["supplementMap"], daySelected: string) => {
     try {
         await Share.open({ message: `My ${daySelected}'s Supplement Schedule:\n${grabSupplementPlan(supplementMap, daySelected)}` });
     } catch (e) {
@@ -37,7 +37,7 @@ export const sharePlan = async (supplementMap: AppProps["supplementMap"], daySel
     }
 };
 
-export const shareEntirePlan = async (supplementMap: AppProps["supplementMap"]) => {
+export const shareEntirePlan = async (supplementMap: ClientState["supplementMap"]) => {
     try {
         await Share.open({ url: grabEntireSupplementPlan(supplementMap) });
     } catch (e) {
@@ -45,7 +45,7 @@ export const shareEntirePlan = async (supplementMap: AppProps["supplementMap"]) 
     }
 };
 
-function grabSupplementPlan(supplementMap: AppProps["supplementMap"], daySelected: AppProps["daySelected"]){
+function grabSupplementPlan(supplementMap: ClientState["supplementMap"], daySelected: string){
     const supplementList: string[] = [];
     Object.values(supplementMap[daySelected].SupplementSchedule).forEach(item => {
         supplementList.push(`\n${item.time}: ${item.Supplement.name}`);
@@ -53,7 +53,7 @@ function grabSupplementPlan(supplementMap: AppProps["supplementMap"], daySelecte
     return supplementList;
 }
 
-function grabEntireSupplementPlan(supplementMap: AppProps["supplementMap"]){
+function grabEntireSupplementPlan(supplementMap: ClientState["supplementMap"]){
     const supplementPlan: Record<string, SupplementShareObject[]> = {};
     const listOfDates: string[] = []; 
     
@@ -124,7 +124,9 @@ function convertJSONtoCSV(supplementPlan: Record<string, SupplementShareObject[]
 }
 
 function createCSV(convertedCSV: string) {
-    const path = RNFS.DocumentDirectoryPath + "/Supplement-Schedule-from-Vital-App.csv";
+    const date = new Date();
+    const dateString = `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
+    const path = RNFS.DocumentDirectoryPath + `/Supplement-Schedule-from-Vital-App-${dateString}.csv`;
 
     // write the .csv file to the local machine
     RNFS.writeFile(path, convertedCSV, "utf8")

@@ -1,15 +1,15 @@
 // Source Imports
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
 import { shareAchievement } from "../../utilities/shareFunctions";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
 
 export default function AchievementsList({ setNumberOfAchievements, numberOfAchievements }: {
     setNumberOfAchievements: (a: number) => void, numberOfAchievements: number,
 }): JSX.Element {
-    const { completedAchievements } = useContext(allPropsContext);
+    const completedAchievements = useClientStore(state => state.completedAchievements); 
 
     useEffect(() => {
         let count = 0;

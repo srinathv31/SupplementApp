@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Image, Platform, TouchableOpacity, View } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
@@ -7,12 +7,15 @@ import { saveUserToPhone } from "../../utilities/saveLoadFunctions/saveUserData"
 import { saveProfilePictureToCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
 import RNFS from "react-native-fs";
 import { addPic, corgiPic, huskyPic, penguinPic } from "../../assets/imageURLs/profilePictureURLs";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function ProfilePictureList({ setChangePictureMode }: {
     setChangePictureMode: (p: boolean) => void,
 }): JSX.Element {
-    const { setUserData, userData, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -27,7 +30,7 @@ export default function ProfilePictureList({ setChangePictureMode }: {
         const userCopy = { ...userData };
 
         if (completedAchievements[5].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 5);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 5);
         }
 
         if (item === addPic) {
@@ -57,7 +60,7 @@ export default function ProfilePictureList({ setChangePictureMode }: {
             userCopy.picture = item;
         }
 
-        setUserData(userCopy);
+        updateUserData(userCopy);
         saveUserToPhone(userCopy);
         setChangePictureMode(false);
     }

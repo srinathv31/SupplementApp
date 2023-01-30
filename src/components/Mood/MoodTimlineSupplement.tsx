@@ -1,22 +1,27 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MoodTimelineFlatlist from "./MoodTimelineFlatlist";
 import IconI from "react-native-vector-icons/Ionicons";
 import { TimeLineObject } from "../../interfaces/TimeLine";
 import MoodObject from "../../interfaces/Mood";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
 import { generateTimelineObject } from "../../utilities/generateTimelineObject";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
-export default function MoodTimlineSupplement({ timelineData }: {
-    timelineData: MoodObject
+// Component color select mode: DISABLED
+export default function MoodTimlineSupplement({ timelineData, index }: {
+    timelineData: MoodObject, index: number
 }): JSX.Element {
-    const { setSupplementMap, supplementMap, daySelected } = useContext(allPropsContext);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [colorEditMode, setColorEditMode] = useState<boolean>(false);
     const [colorString, setColorString] = useState<"red" | "orange" | "#2196F3" | "#28c916">("red");
     const [initialStart, setInitialStart] = useState<number>(grabInitialStart);
     const [startSelected, setStartSelected] = useState<boolean>(false);
+
+    const moodColors = ["#28c916", "#2196F3", "orange"];
 
     const radioButtons = [
         { id: 1, name: "radio-button-off-outline" },
@@ -27,7 +32,7 @@ export default function MoodTimlineSupplement({ timelineData }: {
     ];
 
     const [timelineState, setTimelineState] = useState<TimeLineObject[]>(
-        timelineData.TimelineData !== [] ? 
+        timelineData.TimelineData.length < 1 ? 
         timelineData.TimelineData as TimeLineObject[] :
             generateTimelineObject()
     );
@@ -42,7 +47,7 @@ export default function MoodTimlineSupplement({ timelineData }: {
         startSelected,
         initialStart,
         colorEditMode,
-        setSupplementMap,
+        updateSupplementMap,
         supplementMap,
         daySelected
     };
@@ -112,7 +117,7 @@ export default function MoodTimlineSupplement({ timelineData }: {
                 {timelineData.mood + ": "}
                 {radioButtons.map(item => {
                     return(
-                        <IconI key={item.id} name={ timelineData.range < +item.id ? item.name : "radio-button-on-outline"} style={{ color: colorString }}></IconI>
+                        <IconI key={item.id} name={ timelineData.range < +item.id ? item.name : "radio-button-on-outline"} style={{ color: moodColors[index] }}></IconI>
                     );
                 })}
             </Text>}

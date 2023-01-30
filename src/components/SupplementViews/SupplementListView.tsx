@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Supplement, { SupplementMapObject } from "../../interfaces/Supplement";
@@ -13,20 +13,30 @@ import User from "../../interfaces/User";
 import { Modalize } from "react-native-modalize";
 import WebModal from "../SlidingModals/WebModal";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 
 export default function SupplementListView({ fontSizeNumber, query }: {
     fontSizeNumber: number,
 	query: string,
 }): JSX.Element {
-    const { setModalVisible, setShowButtons, supplementMap, daySelected, userData, objDaySelected, completedAchievements, setCompletedAchievements, setUserData, setSupplementMap, setSelectedSupplement, selectedSupplement, index, multipleAddMode  } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const multipleAddMode = useClientStore(state => state.multipleAddMode);
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
+    const index = useClientStore(state => state.index);
+    const daySelected = useClientStore(state => state.daySelected);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
+    const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
+    const objDaySelected = useClientStore(state => state.objDaySelected);
 
     // used to open sliding modal
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
-        setModalVisible("disable-header");
-        setShowButtons(false);
+        updateModalVisible("disable-header");
+        updateShowButtons(false);
         modalizeRef.current?.open();
     };
 
@@ -43,14 +53,14 @@ export default function SupplementListView({ fontSizeNumber, query }: {
         supplementMapCopy[daySelected].SupplementSchedule = sortDailyList(supplementMapCopy[daySelected].SupplementSchedule);
 
         if (completedAchievements[0].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 0);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 0);
         }
 
-        saveUserData(userCopy, setUserData, supplementMapCopy);
-        setUserData(userCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
+        updateUserData(userCopy);
 
         showAddToast(item, daySelected);
-        setSupplementMap(supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
     }
 
     function addDate(userData: User, day: DateData, supplementMap: Record<string, SupplementMapObject>) {
@@ -65,20 +75,20 @@ export default function SupplementListView({ fontSizeNumber, query }: {
             }
             userCopy.data.selectedDates[stringDate].dots = removeEmptyDotObjects(userCopy.data.selectedDates, stringDate);
         }
-        setUserData(userCopy);
+        updateUserData(userCopy);
         return userCopy;
     }
 
     // function expandSupplement(item: Supplement) {
     //     setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
-    //     setModalVisible("info-modal");
+    //     updateModalVisible("info-modal");
     // }
 
     function jumpToWeb(item: Supplement) {
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
-        setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
+        updateSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" });
         onOpen();
     }
 
@@ -101,7 +111,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
                             <TouchableOpacity
                                 key={item.name}
                                 onPress={ 
-                                    multipleAddMode ? () => (setSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), setModalVisible("time-modal"))
+                                    multipleAddMode ? () => (updateSelectedSupplement({ Supplement: item, time: "", taken: "not-taken" }), updateModalVisible("time-modal"))
                                         : index === 2 ? () => jumpToWeb(item) : () => addSupplement(item)
                                 }
                             >
@@ -117,7 +127,6 @@ export default function SupplementListView({ fontSizeNumber, query }: {
                 modalizeRef={modalizeRef}
                 url={selectedSupplement.Supplement.url}
                 index={index}
-                setModalVisible={setModalVisible}
             ></WebModal>
         </>
     );

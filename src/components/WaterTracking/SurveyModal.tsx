@@ -1,13 +1,14 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Modal, View, StyleSheet, Text } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Ionicons";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import shallow from "zustand/shallow";
+import useClientStore from "../../zustand/clientStore";
 import WaterSurveyForm from "./WaterSurveyForm";
 
 export default function SurveyModal(): JSX.Element {
-    const { setModalVisible, modalVisible } = useContext(allPropsContext);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
     return(
         <Modal
@@ -15,7 +16,7 @@ export default function SurveyModal(): JSX.Element {
             transparent={true}
             visible={modalVisible === "water-survey-modal" ? true : false}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>
@@ -24,7 +25,7 @@ export default function SurveyModal(): JSX.Element {
                         <View style={{ flexDirection: "row", alignSelf: "flex-start" }}>
                             <Icon
                                 style={{ padding: 5, margin: 0 }}
-                                onPress={() => setModalVisible("hide-modal")}
+                                onPress={() => updateModalVisible("hide-modal")}
                                 name="close-outline" size={30} color="white"
                             />
                         </View>

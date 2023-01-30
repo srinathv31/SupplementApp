@@ -1,13 +1,18 @@
 // Source Imports
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import { SupplementMapObject } from "../../interfaces/Supplement";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function MoodSlider(): JSX.Element {
-    const { setUserData, userData, setModalVisible, modalVisible, mood, supplementMap, setSupplementMap, daySelected } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const mood = useClientStore(state => state.mood);
+    const daySelected = useClientStore(state => state.daySelected);
 
     const [rangeValue, setRangeValue] = useState<number>(0);
     
@@ -21,10 +26,10 @@ export default function MoodSlider(): JSX.Element {
         // Add Mood + Range
         supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
 
-        setSupplementMap(supplementMapCopy);
-        saveUserData(userData, setUserData, supplementMapCopy);
+        updateSupplementMap(supplementMapCopy);
+        saveUserData(userData, updateUserData, supplementMapCopy);
 
-        setModalVisible("mood-timeline");
+        updateModalVisible("mood-change-modal");
     }
 
     function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
@@ -36,9 +41,9 @@ export default function MoodSlider(): JSX.Element {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible === "mood-modal" ? true : false}
+            visible={modalVisible === "mood-modal"}
             onRequestClose={() => {
-                setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <View style={styles.centeredView}>

@@ -1,12 +1,13 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, Animated } from "react-native";
 import Divider from "../components/Design/Divider";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { generateGreeting } from "../utilities/generateTimeGreetings";
+import useClientStore from "../zustand/clientStore";
 
 export default function WelcomePage(): JSX.Element {
-    const { setPage, userData } = useContext(allPropsContext);
+    const userData = useClientStore(state => state.userData);
+    const updatePage = useClientStore(state => state.updatePage);
 
     const [fadeStatus, setFadeStatus] = useState<boolean>(false);
 
@@ -72,7 +73,7 @@ export default function WelcomePage(): JSX.Element {
             </Animated.View>
             <Divider length="small"></Divider>
             <Animated.View style={[{ opacity: fadeAnimSub }]}>
-                <Text onPress={() => setPage("app-screen")} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>Enter</Text>
+                <Text onPress={() => updatePage("app-screen")} style={{ color: "white", fontSize: 23, textAlign: "center", padding: 10 }}>Enter</Text>
             </Animated.View>
         </View>
     );

@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -10,21 +10,26 @@ import WebModal from "../components/SlidingModals/WebModal";
 import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
 import SurveyModal from "../components/WaterTracking/SurveyModal";
 import WaterScreen from "../components/WaterTracking/WaterScreen";
-import { allPropsContext } from "../contextHooks/AllPropsContext";
 import { SupplementObject } from "../interfaces/Supplement";
 import { checkUserSupplementStatus } from "../utilities/checkSupplementStatus";
+import useClientStore from "../zustand/clientStore";
 import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 
 
 export default function HomePage(): JSX.Element {
-    const { supplementMap, daySelected, setModalVisible, selectedSupplement, index, setShowButtons } = useContext(allPropsContext);
+    const supplementMap = useClientStore(state => state.supplementMap);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const updateShowButtons = useClientStore(state => state.updateShowButtons);
+    const index = useClientStore(state => state.index);
+    const daySelected = useClientStore(state => state.daySelected);
+    const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);
 
     // Check if user took supplement if applicable
     useEffect(() => {
-        checkUserSupplementStatus(supplementMap, daySelected, setModalVisible, setSupplementsToUpdateStatus);
+        checkUserSupplementStatus(supplementMap, daySelected, updateModalVisible, setSupplementsToUpdateStatus);
     }, []);
 
     const modalizeRef = useRef<Modalize>(null);
@@ -40,8 +45,8 @@ export default function HomePage(): JSX.Element {
 
     function onOpen() {
         // Removed disable-header only for home web page so status-check-modal can work
-        // setModalVisible("disable-header");
-        setShowButtons(false);
+        // updateModalVisible("disable-header");
+        updateShowButtons(false);
         modalizeRef.current?.open();
     }
     
@@ -75,7 +80,6 @@ export default function HomePage(): JSX.Element {
                 url={selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
                 index={index}
-                setModalVisible={setModalVisible}
             ></WebModal>
         </View>
     );

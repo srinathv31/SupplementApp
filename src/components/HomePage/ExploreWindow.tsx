@@ -1,5 +1,5 @@
 // Source Imports
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import SupplementList from "../../assets/SupplementList.json";
 import LinearGradient from "react-native-linear-gradient";
@@ -7,13 +7,16 @@ import Divider from "../Design/Divider";
 import Supplement from "../../interfaces/Supplement";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import analytics from "@react-native-firebase/analytics";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import useClientStore from "../../zustand/clientStore";
+import shallow from "zustand/shallow";
 
 export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: {
     setModalizeRefStatus: (m: boolean) => void,
     categorySelect: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home"
 }): JSX.Element {
-    const { setSelectedSupplement, setCompletedAchievements, completedAchievements, setModalVisible } = useContext(allPropsContext);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
+    const updateSelectedSupplement = useClientStore(state => state.updateSelectedSupplement);
 
     const [randomSupplement, setRandomSupplement] = useState<number>(0);
 
@@ -32,9 +35,9 @@ export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: 
     }
 
     function handleTouch(supp: Supplement) {
-        setSelectedSupplement({ Supplement: supp, time: "", taken: "not-taken" });
+        updateSelectedSupplement({ Supplement: supp, time: "", taken: "not-taken" });
         if (completedAchievements[2].color === "white") {
-            achievementUnlocked(completedAchievements, setCompletedAchievements, setModalVisible, 2);
+            achievementUnlocked(completedAchievements, updateCompletedAchievements, updateModalVisible, 2);
         }
         setModalizeRefStatus(true);
         exploreAnalytics(supp);

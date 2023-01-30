@@ -1,14 +1,17 @@
 // Source Imports
 import React, { useState } from "react";
 import { Modal, View, Text, FlatList, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView } from "react-native";
-import { AppProps } from "../../interfaces/Props";
+import shallow from "zustand/shallow";
 import { SupplementObject } from "../../interfaces/Supplement";
+import useClientStore from "../../zustand/clientStore";
 
 // Not being used currently
-export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }: {
-    AllProps: AppProps,
+export default function TimeUpdateModal({ supplementsToUpdateStatus }: {
     supplementsToUpdateStatus: SupplementObject[]
 }): JSX.Element {
+    const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
+    const daySelected = useClientStore(state => state.daySelected);
+
     const listOfTimes = Array.from({ length: supplementsToUpdateStatus.length } , () => (""));
     const [time, setTime] = useState<string[]>(listOfTimes);
 
@@ -17,15 +20,15 @@ export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }:
         <Modal
             animationType="slide"
             transparent={true}
-            visible={AllProps.modalVisible === "time-update-modal" ? true : false}
+            visible={modalVisible === "time-update-modal" ? true : false}
             onRequestClose={() => {
-                AllProps.setModalVisible("hide-modal");
+                updateModalVisible("hide-modal");
             }}
         >
             <KeyboardAvoidingView behavior="height" style={{ flex: 1 }}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={[styles.ListName, { textAlign: "center" }]}>{AllProps.daySelected}</Text>
+                        <Text style={[styles.ListName, { textAlign: "center" }]}>{daySelected}</Text>
                         <Text style={[styles.ListName, { textAlign: "center" }]}>{"\nAt What Time(s) did you take each supplement?"}</Text>
                         <FlatList
                             data={supplementsToUpdateStatus}
@@ -53,7 +56,7 @@ export default function TimeUpdateModal({ AllProps, supplementsToUpdateStatus }:
                             )}
                         ></FlatList>
                         <View style={styles.button}>
-                            <TouchableOpacity onPress={() => AllProps.setModalVisible("hide-modal")}>
+                            <TouchableOpacity onPress={() => updateModalVisible("hide-modal")}>
                                 <Text
                                     style={{ color: "white", fontSize: 15, textAlign: "left", padding: 5, marginBottom: 5 }}>{"Update Time"}</Text>
                             </TouchableOpacity>

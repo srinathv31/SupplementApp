@@ -1,15 +1,19 @@
 // Source Imports
-import React, { useContext } from "react";
+import React from "react";
 import { Pressable } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { allPropsContext } from "../../contextHooks/AllPropsContext";
+import shallow from "zustand/shallow";
 import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
+import useClientStore from "../../zustand/clientStore";
 
 
 export default function PrevDayButton(): JSX.Element {
-    const { setUserData, userData, setObjDaySelected, objDaySelected, setDaySelected, modalVisible } = useContext(allPropsContext);
+    const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
+    const modalVisible = useClientStore(state => state.modalVisible);
+    const updateDaySelected = useClientStore(state => state.updateDaySelected);
+    const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
 
     function grabPrevDay(day: DateData) {
         const userCopy = { ...userData };
@@ -33,9 +37,9 @@ export default function PrevDayButton(): JSX.Element {
         copyDate.dateString = ""+copyDate.year + "-" + stringMonth + "-" + stringDay;
         
         userCopy.data.selectedDates = handleCalendar(userData.data.selectedDates, copyDate.dateString);
-        setUserData(userCopy);
+        updateUserData(userCopy);
 
-        setObjDaySelected(copyDate);
+        updateObjDaySelected(copyDate);
 
         return ""+copyDate.month + "/" + ""+copyDate.day + "/" + ""+copyDate.year;
     }
@@ -43,7 +47,7 @@ export default function PrevDayButton(): JSX.Element {
     return(
         <>
             <Pressable 
-                onPress={() => setDaySelected(grabPrevDay(objDaySelected))}
+                onPress={() => updateDaySelected(grabPrevDay(objDaySelected))}
                 disabled={modalVisible === "disable-header"}>
                 <Icon
                     style={{ padding: 10,

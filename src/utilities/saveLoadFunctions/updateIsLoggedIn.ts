@@ -1,7 +1,7 @@
 import User from "../../interfaces/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AppProps } from "../../interfaces/Props";
 import { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { ClientState } from "../../zustand/clientStore";
 
 export const saveLoggedInKey = async (userData: User) => {
     if (userData.userAuthObj !== undefined){
@@ -34,7 +34,7 @@ export const removeLoggedInKey = async () => {
     }
 };
 
-export const retrieveLoggedInKey = async (setPage: AppProps["setPage"], setUserData: AppProps["setUserData"], userData: AppProps["userData"]) => {
+export const retrieveLoggedInKey = async (updatePage: ClientState["updatePage"], setUserData: ClientState["updateUserData"], userData: ClientState["userData"]) => {
     
     try {
         const userCopy = { ...userData };
@@ -48,7 +48,7 @@ export const retrieveLoggedInKey = async (setPage: AppProps["setPage"], setUserD
             if(isLoggedInKey.loggedIn === true) {
                 userCopy.userAuthObj = isLoggedInKey.uid;
                 setUserData(userCopy);
-                setPage("loading-screen");
+                updatePage("loading-screen");
             }
         }
         
