@@ -55,8 +55,6 @@ const useClientStore = create<ClientState>()(
             updateMultipleAddMode: (status) => set(() => ({ multipleAddMode: status })),
             modalVisible: "hide-modal",
             updateModalVisible: (modal) => set(() => ({ modalVisible: modal })),
-            // monthText: grabMonth(week),
-            // setMonthText: (month) => set(() => ({ monthText: month })),
             swipeAnimation: "fadeIn",
             updateSwipeAnimation: (anim) => set({ swipeAnimation: anim }),
             mood: "",
