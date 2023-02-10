@@ -18,6 +18,7 @@ import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/sa
 import { requestUserPermission } from "../utilities/authentication/notifications";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { grabCloudSave } from "../utilities/saveLoadFunctions/checkForCloudSave";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
@@ -34,7 +35,21 @@ export default function MainScreen(): JSX.Element {
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
-        checkForSave(userData, updateUserData, updateCompletedAchievements, updateSupplementMap);
+        checkForSave(userData)
+            .then(loadedUserData => {
+                if (!loadedUserData) {
+                    grabCloudSave(""+userData.userAuthObj?.uid, userData)
+                        .then(user => {
+                            updateUserData({ ...user });
+                            updateSupplementMap({ ...user.data.supplementMap });
+                            updateCompletedAchievements([ ...user.achievements ]);
+                        });
+                    return;
+                }
+                updateUserData({ ...loadedUserData });
+                updateSupplementMap({ ...loadedUserData.data.supplementMap });
+                updateCompletedAchievements([ ...loadedUserData.achievements ]);
+            });
     }, []);
 
     // Checks login time for achievements

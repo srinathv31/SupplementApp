@@ -12,7 +12,7 @@ export function saveDataToCloud(userData: User) {
             picture: userData.picture,
             data: userData.data,
             premiumStatus: userData.premiumStatus,
-            achievements: userData.achievements,
+            achievements: userData.achievements
         })
         .then(() => {
             console.log("User updated!");

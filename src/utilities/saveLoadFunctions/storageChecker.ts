@@ -4,40 +4,40 @@ import CalendarDotObject from "../../interfaces/Calendar";
 import { generateCurrentDateObject } from "../getCurrentDate";
 import { saveDataToCloud } from "./saveDataToCloud";
 import { ClientState } from "../../zustand/clientStore";
+import { grabProfilePictureFromCloud } from "./saveProfilePicture";
 
-export const checkForSave = async (userData: ClientState["userData"], setUserData: ClientState["updateUserData"], updatedCompletedAchievements: ClientState["updatedCompletedAchievements"], updateSupplementMap: ClientState["updateSupplementMap"]) => {
+export const checkForSave = async (userData: ClientState["userData"]) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(""+userCopy.userAuthObj?.uid);
+        const url = await grabProfilePictureFromCloud(userData);
 
-        if (jsonValue != null) {
-            // Parsing saved data
-            const parsedJsonValue = JSON.parse(jsonValue) as User;
-            const adjustedSelectedDates = adjustSelectedDates(parsedJsonValue.data.selectedDates);
-
-            // Setting saved data to User useState
-            userCopy.name = parsedJsonValue.name;
-            userCopy.lastName = parsedJsonValue.lastName;
-            userCopy.age = parsedJsonValue.age;
-            userCopy.premiumStatus = parsedJsonValue.premiumStatus;
-            userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
-            userCopy.data.selectedDates = adjustedSelectedDates;
-            userCopy.picture = parsedJsonValue.picture;
-            userCopy.achievements = parsedJsonValue.achievements;
-
-            setUserData(userCopy);
-
-            saveDataToCloud(userCopy);
-
-            updatedCompletedAchievements(parsedJsonValue.achievements);
-            updateSupplementMap(parsedJsonValue.data.supplementMap);
+        if (!jsonValue) {
+            return null;
         }
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
+
+        console.log("Loading from local save");
+        // Parsing saved data
+        const parsedJsonValue = JSON.parse(jsonValue) as User;
+        const adjustedSelectedDates = adjustSelectedDates(parsedJsonValue.data.selectedDates);
+
+        // Setting saved data to User useState
+        userCopy.name = parsedJsonValue.name;
+        userCopy.lastName = parsedJsonValue.lastName;
+        userCopy.age = parsedJsonValue.age;
+        userCopy.premiumStatus = parsedJsonValue.premiumStatus;
+        userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
+        userCopy.data.selectedDates = adjustedSelectedDates;
+        userCopy.picture = url;
+        userCopy.achievements = parsedJsonValue.achievements;
+
+        saveDataToCloud(userCopy);
+
+        return JSON.parse(jsonValue) as User;
     } catch(e) {
         console.log(e);
+        return null;
     }
-    
-    console.log("Done.");
 };
 
 const adjustSelectedDates = (selectedDates: CalendarDotObject) => {
