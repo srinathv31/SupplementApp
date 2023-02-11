@@ -120,6 +120,18 @@ export default function DailySupplementWindow(): JSX.Element {
             <View style={{ alignSelf: "center", flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     <FlatList
+                        ListFooterComponent={
+                            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                <TouchableOpacity onPress={() => updateModalVisible("supplement-modal")}>
+                                    <View style={[styles.ListItem, { backgroundColor: "#1f3861" }]}>
+                                        <Icon name="pill" style={[styles.IconPadding, { color: "white", margin: 0 }]}></Icon>
+                                        <Text style={styles.ListName}>
+                                            Add
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        }
                         showsVerticalScrollIndicator={false}
                         data={supplementMap[daySelected] === undefined ? [] : supplementMap[daySelected].SupplementSchedule}
                         renderItem={({ item }) => (
@@ -148,6 +160,7 @@ export default function DailySupplementWindow(): JSX.Element {
                             </View>
                         )}
                     ></FlatList>
+                    
                 </View>
             </View>
             <Modalize ref={modalizeRef} modalHeight={height*0.70} onClosed={() => updateModalVisible("hide-modal")}>
@@ -172,7 +185,7 @@ const styles = StyleSheet.create({
     ListName: {
         fontSize: 18,
         fontWeight: "600",
-        color: "#EEE"
+        color: "#EEE",
     },
     IconPadding: {
         padding: 1,

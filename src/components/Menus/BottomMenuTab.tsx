@@ -77,11 +77,6 @@ export default function BottomMenuTab(): JSX.Element {
                     {showButtons && <Animated.View style={{ opacity: fadeAnim }}>
                         <View style={BottomMenuTabStyles.secondaryButtonRow}>
                             <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => updateModalVisible("supplement-modal")}
-                                    name="pill" size={30} color="white" style={{ textAlign: "center" }}/>
-                                <Text style={{ color: "white", fontSize: 12 }}>{"Add Supp"}</Text>
-                            </View>
-                            <View style={{ flexDirection: "column" }}>
                                 <Icon onPress={() => handleMoodOpen()} 
                                     name="emoticon-happy-outline" size={30} color={ supplementMap[daySelected] !== undefined && supplementMap[daySelected].DailyMood.length > 0 ? "lime" : "white" } style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Mood"}</Text>
