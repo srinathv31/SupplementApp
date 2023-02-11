@@ -3,19 +3,21 @@ import { Text, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import IconI from "react-native-vector-icons/Ionicons";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import IconM from "react-native-vector-icons/FontAwesome5";
 import CategoryBoxesStyles from "../../styles/CategoryBoxStyles";
 import { countDailySupplements } from "../../utilities/countDailySupplements";
 import useClientStore from "../../zustand/clientStore";
+import { PageCategory } from "../../interfaces/AppTypes";
 
 export default function CategoryBoxes({ setCategorySelect }: {
-    setCategorySelect: (c: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home") => void,
+    setCategorySelect: (c: PageCategory) => void,
 }) {
     const supplementMap = useClientStore(state => state.supplementMap);
     const daySelected = useClientStore(state => state.daySelected);
 
     const categories1 = [
         { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => setCategorySelect("Supplement Schedule") },
-        { name: "Food", colors: ["#c31432", "#240b36"], icon: "food-variant", function: () => console.log("Food") },
+        { name: "Mood", colors: ["#c31432", "#240b36"], icon: "yin-yang", function: () => setCategorySelect("Mood") },
     ];
 
     const categories2 = [
@@ -32,8 +34,10 @@ export default function CategoryBoxes({ setCategorySelect }: {
                             <TouchableOpacity onPress={item.function}>
                                 {item.name === "Supplements" && <Text style={CategoryBoxesStyles.suppPillCount}>{`${countDailySupplements(supplementMap, daySelected)} Scheduled`}</Text>}
                                 <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{item.name}</Text>
-                                <Icon name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
-                                {item.name === "Food" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
+                                { item.name === "Mood" 
+                                    ? <IconM name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconM>
+                                    : <Icon name={item.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
+                                }
                             </TouchableOpacity>
                         </LinearGradient>
                     );

@@ -9,10 +9,11 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import analytics from "@react-native-firebase/analytics";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { PageCategory } from "../../interfaces/AppTypes";
 
 export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: {
     setModalizeRefStatus: (m: boolean) => void,
-    categorySelect: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home"
+    categorySelect: PageCategory
 }): JSX.Element {
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 

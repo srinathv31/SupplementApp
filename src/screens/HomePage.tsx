@@ -11,10 +11,12 @@ import WebModal from "../components/SlidingModals/WebModal";
 import VerifySupplementStatusModal from "../components/SupplementViews/VerifySupplementStatusModal";
 import SurveyModal from "../components/WaterTracking/SurveyModal";
 import WaterScreen from "../components/WaterTracking/WaterScreen";
+import { PageCategory } from "../interfaces/AppTypes";
 import { SupplementObject } from "../interfaces/Supplement";
 import { checkUserSupplementStatus } from "../utilities/checkSupplementStatus";
 import useClientStore from "../zustand/clientStore";
 import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
+import MoodScreen from "./MoodScreen";
 
 
 export default function HomePage(): JSX.Element {
@@ -26,7 +28,7 @@ export default function HomePage(): JSX.Element {
     const selectedSupplement = useClientStore(state => state.selectedSupplement);
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
 
-    const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
+    const [categorySelect, setCategorySelect] = useState<PageCategory>("Home");
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);
 
     // Check if user took supplement if applicable
@@ -80,6 +82,9 @@ export default function HomePage(): JSX.Element {
             }
             { categorySelect === "Water"
                     && <WaterScreen />
+            }
+            { categorySelect === "Mood"
+                    && <MoodScreen />
             }
             <SurveyModal />
             <WebModal
