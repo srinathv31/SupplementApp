@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Icon from "react-native-vector-icons/Ionicons";
+import IconI from "react-native-vector-icons/MaterialCommunityIcons";
 import Divider from "../components/Design/Divider";
 import DailySupplementWindow from "../components/HomePage/DailySupplementWindow";
 import ExploreWindow from "../components/HomePage/ExploreWindow";
@@ -23,6 +24,7 @@ export default function HomePage(): JSX.Element {
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
     const selectedSupplement = useClientStore(state => state.selectedSupplement);
+    const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
 
     const [categorySelect, setCategorySelect] = useState<"Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home">("Home");
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);
@@ -55,13 +57,18 @@ export default function HomePage(): JSX.Element {
             <VerifySupplementStatusModal supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
             <ExploreWindow setModalizeRefStatus={setModalizeRefStatus} categorySelect={categorySelect}></ExploreWindow>
             <Divider length="full"></Divider>
-            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+            <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", position: "relative" }}>
                 { categorySelect !== "Home" && 
                 <Icon onPress={() => setCategorySelect("Home")}
-                    name="arrow-back-outline" style={{ color: "white", padding: 10 }} size={30}></Icon>}
+                    name="arrow-back-outline" style={{ color: "white", padding: 8, alignSelf: "flex-start", position: "absolute", left: 0 }} size={30}></Icon>
+                }
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
                     <Text style={{ color: "white", fontSize: 20, padding: 10, alignSelf: "center" }}>{categorySelect}</Text>
                 </View>
+                { categorySelect !== "Home" && 
+                <IconI onPress={() => (updateModalVisible("supplement-modal"), updateMultipleAddMode(true))} 
+                    name="clock" size={30} color="white" style={{ color: "white", padding: 8, alignSelf: "flex-start", position: "absolute", right: "3%" }}/>
+                }
             </View>
             
             { categorySelect === "Home" && 

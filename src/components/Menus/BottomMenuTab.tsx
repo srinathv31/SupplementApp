@@ -14,7 +14,6 @@ import shallow from "zustand/shallow";
 export default function BottomMenuTab(): JSX.Element {
     const supplementMap = useClientStore(state => state.supplementMap);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
-    const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const { showButtons, updateShowButtons } = useClientStore(state => ({ showButtons: state.showButtons, updateShowButtons: state.updateShowButtons }), shallow);
     const index = useClientStore(state => state.index);
     const updateIndex = useClientStore(state => state.updateIndex);
@@ -91,11 +90,6 @@ export default function BottomMenuTab(): JSX.Element {
                                 <IconI onPress={() => sharePlan(supplementMap, daySelected)}
                                     name="share-outline" size={30} color="white" style={{ textAlign: "center" }}/>
                                 <Text style={{ color: "white", fontSize: 12 }}>{"Share"}</Text>
-                            </View>
-                            <View style={{ flexDirection: "column" }}>
-                                <Icon onPress={() => (updateModalVisible("supplement-modal"), updateMultipleAddMode(true))} 
-                                    name="clock" size={30} color="white" style={{ textAlign: "center" }}/>
-                                <Text style={{ color: "white", fontSize: 12 }}>{"Schedule"}</Text>
                             </View>
                         </View>
                     </Animated.View>}
