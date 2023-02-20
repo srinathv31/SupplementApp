@@ -30,7 +30,7 @@ export default function MoodSlider(): JSX.Element {
         }
 
         // Add Mood + Range
-        supplementMapCopy[daySelected].DailyMood[mood] = { mood: mood, range: rangeValue, TimelineData: [] };
+        supplementMapCopy[daySelected].DailyMood[mood] = { mood: mood, range: rangeValue };
 
         // update calendar
         const userCopy = addDate(userData, objDaySelected, supplementMapCopy);

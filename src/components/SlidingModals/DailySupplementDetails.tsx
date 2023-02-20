@@ -7,7 +7,7 @@ import Divider from "../Design/Divider";
 import { SupplementObject } from "../../interfaces/Supplement";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import convertDateTimeToStringTime from "../../utilities/convertTime";
-import MoodTimlineSupplement from "../Mood/MoodTimlineSupplement";
+import MoodRangeDetails from "../Mood/MoodRangeDetails";
 import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
@@ -188,11 +188,11 @@ export default function DailySupplementDetails(): JSX.Element {
                     }
                     {Object.values(supplementMap[daySelected].DailyMood).map((eachMood, index) => {
                         return (
-                            <MoodTimlineSupplement
+                            <MoodRangeDetails
                                 key={index}
-                                timelineData={eachMood}
+                                mood={eachMood}
                                 index={index}
-                            ></MoodTimlineSupplement>);
+                            ></MoodRangeDetails>);
                     })}
                     <View style={{ flexDirection: "row" }}>
                         <Icon name="pencil" style={styles.IconPadding}/>

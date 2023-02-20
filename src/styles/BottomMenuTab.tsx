@@ -9,13 +9,6 @@ const BottomMenuTabStyles = StyleSheet.create({
         padding: 10,
         alignItems: "center"
     },
-    secondaryButtonRow: {
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        padding: 5,
-        margin: 5,
-        alignItems: "center"
-    }
 });
 
 export default BottomMenuTabStyles;

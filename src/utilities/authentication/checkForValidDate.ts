@@ -9,7 +9,10 @@ export function checkIfValidDate(birthday: string) {
 
     flag = checkEachMonth(month, day, isLeapYear);
 
-    if (birthday.length !== 10 || year > "2021") {
+    const present = new Date();
+    const presentYear = present.getFullYear();
+    const validYear = presentYear - 1;
+    if (birthday.length !== 10 || year > ""+validYear) {
         flag = false;
     }
     

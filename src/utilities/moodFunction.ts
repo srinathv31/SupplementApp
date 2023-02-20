@@ -53,8 +53,8 @@ function clearAllMood({ userData, supplementMap, daySelected, updateUserData, up
 function removeDate(userData: User, day: DateData, supplementMap: ClientState["supplementMap"], daySelected: string){
     const selectedDatesCopy = { ...userData.data.selectedDates };
     const stringDate = day.dateString;
-    if (Object.values(supplementMap[daySelected].SupplementSchedule).length === 0){
-        selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "moodCheck") as [{key: string, color: string}];
+    if (Object.values(supplementMap[daySelected].DailyMood).length === 0){
+        selectedDatesCopy[stringDate].dots = selectedDatesCopy[stringDate].dots.filter(item => item.key !== "moodCheck");
     }
     return selectedDatesCopy;
 }
