@@ -2,16 +2,15 @@
 import React, { useState } from "react";
 import { Dimensions } from "react-native";
 import DropDownPicker, { ItemType, DropDownDirectionType } from "react-native-dropdown-picker";
-import { MoodProps } from "../../interfaces/MoodProps";
+import shallow from "zustand/shallow";
 import useClientStore from "../../zustand/clientStore";
 
-export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
-    open: MoodProps["open"], setOpen: MoodProps["setOpen"],
+export default function MoodPicker({ dropDirection, mode }: {
     dropDirection: DropDownDirectionType, mode: "analysis" | "setting"
 }): JSX.Element {
     const updateMood = useClientStore(state => state.updateMood);
-
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { openMoodPicker, updateOpenMoodPicker } = useClientStore(state => ({ openMoodPicker: state.openMoodPicker, updateOpenMoodPicker: state.updateOpenMoodPicker }), shallow);
 
     const { height: initialHeight } = Dimensions.get("window");
 
@@ -48,10 +47,10 @@ export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
     
     return(
         <DropDownPicker
-            open={open}
+            open={openMoodPicker}
             value={value}
             items={items}
-            setOpen={() => setOpen(!open)}
+            setOpen={() => updateOpenMoodPicker(!openMoodPicker)}
             setItems={setItems}
             setValue={() => setValue}
             theme="DARK"

@@ -1,13 +1,11 @@
 // Source Imports
 import React from "react";
-import { Pressable } from "react-native";
-import { DateData } from "react-native-calendars/src/types";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import shallow from "zustand/shallow";
 import { generatePrevDate } from "../../utilities/generateNextDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
 import useClientStore from "../../zustand/clientStore";
-
 
 export default function PrevDayButton(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
@@ -15,7 +13,8 @@ export default function PrevDayButton(): JSX.Element {
     const updateDaySelected = useClientStore(state => state.updateDaySelected);
     const { objDaySelected, updateObjDaySelected } = useClientStore(state => ({ objDaySelected: state.objDaySelected, updateObjDaySelected: state.updateObjDaySelected }), shallow);
 
-    function grabPrevDay(day: DateData) {
+    function grabPrevDay() {
+        const day = { ...objDaySelected };
         const userCopy = { ...userData };
         let copyDate = day;
 
@@ -41,22 +40,32 @@ export default function PrevDayButton(): JSX.Element {
 
         updateObjDaySelected(copyDate);
 
-        return ""+copyDate.month + "/" + ""+copyDate.day + "/" + ""+copyDate.year;
+        const prevDate = ""+copyDate.month + "/" + ""+copyDate.day + "/" + ""+copyDate.year;
+        updateDaySelected(prevDate);
     }
     
     return(
-        <>
-            <Pressable 
-                onPress={() => updateDaySelected(grabPrevDay(objDaySelected))}
-                disabled={modalVisible === "disable-header"}>
-                <Icon
-                    style={{ padding: 10,
-                        margin: 15,
-                        marginRight: 0,
-                        marginLeft: 0 }}
-                    name="chevron-left-circle" size={25} color="white"
-                />
-            </Pressable>
-        </>
+        <TouchableOpacity 
+            style={styles.buttonContainer} 
+            onPress={() => grabPrevDay()}
+            disabled={modalVisible === "disable-header"}
+        >
+            <Text style={styles.buttonText}>
+                <Icon name="chevron-left" style={{ color: "white", alignSelf: "center" }} size={20}/>
+            </Text>
+        </TouchableOpacity>
     );
 }
+
+const styles = StyleSheet.create({
+    buttonContainer: {
+        backgroundColor: "#31425c",
+        borderRadius: 8,
+        padding: 8,
+    },
+    buttonText: {
+        color: "#fff",
+        fontSize: 14,
+        fontWeight: "bold",
+    },
+});

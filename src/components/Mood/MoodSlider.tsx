@@ -3,9 +3,14 @@ import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
-import { SupplementMapObject } from "../../interfaces/Supplement";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
+import { moodDot } from "../../utilities/calendarDots";
+import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
+import { SupplementMapObject } from "../../interfaces/Supplement";
+import User from "../../interfaces/User";
+import { DateData } from "react-native-calendars/src/types";
 
 export default function MoodSlider(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
@@ -13,29 +18,53 @@ export default function MoodSlider(): JSX.Element {
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const mood = useClientStore(state => state.mood);
     const daySelected = useClientStore(state => state.daySelected);
+    const objDaySelected = useClientStore(state => state.objDaySelected);
 
-    const [rangeValue, setRangeValue] = useState<number>(0);
+    const [rangeValue, setRangeValue] = useState<number>(1);
     
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
 
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {} };
         }
 
         // Add Mood + Range
-        supplementMapCopy[daySelected].DailyMood = setMoodInDailyMoodObj(supplementMapCopy);
+        supplementMapCopy[daySelected].DailyMood[mood] = { mood: mood, range: rangeValue, TimelineData: [] };
+
+        // update calendar
+        const userCopy = addDate(userData, objDaySelected, supplementMapCopy);
 
         updateSupplementMap(supplementMapCopy);
-        saveUserData(userData, updateUserData, supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
+        updateUserData(userCopy);
 
-        updateModalVisible("mood-change-modal");
+        updateModalVisible("hide-modal");
     }
 
-    function setMoodInDailyMoodObj(supplementMapCopy: Record<string, SupplementMapObject>) {
-        supplementMapCopy[daySelected].DailyMood.push({ mood: mood, range: rangeValue, TimelineData: [] });
-        return supplementMapCopy[daySelected].DailyMood;
+    function addDate(userData: User, day: DateData, supplementMap: Record<string, SupplementMapObject>) {
+        const userCopy: User = { ...userData };
+        const stringDate = day.dateString;
+        
+        if (Object.values(supplementMap[daySelected].DailyMood).length > 0){
+            if (userCopy.data.selectedDates[stringDate] === undefined) {
+                userCopy.data.selectedDates[stringDate] = { dots:[], selected: false };
+            }
+            if (userCopy.data.selectedDates[stringDate].dots.length === 0 || !userCopy.data.selectedDates[stringDate].dots.find(dot => dot.key === "moodCheck")){
+                userCopy.data.selectedDates[stringDate].dots.push(moodDot);
+            }
+            userCopy.data.selectedDates[stringDate].dots = removeEmptyDotObjects(userCopy.data.selectedDates, stringDate);
+        }
+        return userCopy;
     }
+
+    const ratingColorMap: Record<number, string> = {
+        1: "orange",
+        2: "yellow",
+        3: "#00e0ff",
+        4: "#38ef7d",
+        5: "lime"
+    };
 
     return(
         <Modal
@@ -48,11 +77,23 @@ export default function MoodSlider(): JSX.Element {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <Text style={styles.modalText}>Choose Intensity for {mood}</Text>
-                    <Text style={styles.modalText}>Intensity: {rangeValue}</Text>
+                    <View style={styles.graphWrapper}>
+                        <AnimatedCircularProgress
+                            size={70}
+                            width={5}
+                            fill={(rangeValue/5)*100}
+                            tintColor={ratingColorMap[rangeValue]}
+                            backgroundColor="#3d5875" 
+                            arcSweepAngle={250}
+                            rotation={235}
+                        />
+                        <Text style={styles.text}>{rangeValue}</Text>
+                    </View>
+                    <Text style={styles.modalText}>Choose Intensity for</Text>
+                    <Text style={styles.modalText}>{mood}</Text>
                     <Slider
                         style={{ width: "100%", height: 70 }}
-                        minimumValue={0}
+                        minimumValue={1}
                         maximumValue={5}
                         minimumTrackTintColor="#2196F3"
                         maximumTrackTintColor="#FFFFFF"
@@ -113,5 +154,17 @@ const styles = StyleSheet.create({
         fontWeight: "600",
         color: "white",
         textAlign: "center"
-    }
+    },
+    graphWrapper: {
+        alignItems: "center",
+        justifyContent: "center",
+        margin: 10,
+    },
+    text: {
+        position: "absolute",
+        textAlign: "center",
+        fontWeight: "500",
+        fontSize: 14,
+        color: "white",
+    },
 });

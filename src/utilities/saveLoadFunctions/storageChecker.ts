@@ -27,13 +27,13 @@ export const checkForSave = async (userData: ClientState["userData"]) => {
         userCopy.age = parsedJsonValue.age;
         userCopy.premiumStatus = parsedJsonValue.premiumStatus;
         userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
-        userCopy.data.selectedDates = adjustedSelectedDates;
+        userCopy.data.selectedDates = { ...adjustedSelectedDates };
         userCopy.picture = url;
         userCopy.achievements = parsedJsonValue.achievements;
 
         saveDataToCloud(userCopy);
 
-        return JSON.parse(jsonValue) as User;
+        return userCopy as User;
     } catch(e) {
         console.log(e);
         return null;
@@ -52,10 +52,9 @@ const adjustSelectedDates = (selectedDates: CalendarDotObject) => {
     Object.keys(selectedDatesCopy).forEach(date => {
         if (date !== todayDate.dateString) {
             selectedDatesCopy[date].selected = false;
-        } else {
-            selectedDatesCopy[date].selected = true;
         }
     });
+    selectedDatesCopy[todayDate.dateString].selected = true;
     return selectedDatesCopy;
 
 };

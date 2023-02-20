@@ -26,7 +26,6 @@ export default function MainScreen(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const page = useClientStore(state => state.page);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const modalVisible = useClientStore(state => state.modalVisible);
     const index = useClientStore(state => state.index);
@@ -127,7 +126,6 @@ export default function MainScreen(): JSX.Element {
                                 initialLayout={{ width: layout.width }}
                                 tabBarPosition="bottom"
                                 renderTabBar={() => <BottomMenuTab />}
-                                onSwipeEnd={() => updateShowButtons(false)}
                             /></> }
                     </View>
                 </View>

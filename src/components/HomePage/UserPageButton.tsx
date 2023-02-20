@@ -8,10 +8,8 @@ import useClientStore from "../../zustand/clientStore";
 export default function UserPageButton(): JSX.Element {
     const userData = useClientStore(state => state.userData);
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }), shallow);
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
 
     function buttonHandle(){
-        updateShowButtons(false);
         updateModalVisible("user-modal");
     }
 

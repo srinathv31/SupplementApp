@@ -22,7 +22,7 @@ export interface SupplementObject {
 export interface SupplementMapObject {
     SupplementSchedule: SupplementObject[], 
     JournalEntry: string,
-    DailyMood: MoodObject[],
+    DailyMood: Record<string, MoodObject>,
 }
 
 

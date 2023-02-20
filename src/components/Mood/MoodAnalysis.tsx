@@ -1,23 +1,15 @@
 // Source Imports
 // import { BottomTabBar } from "./BottomTabBar";
-import React, { useEffect } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 // import MoodBarGraph from "./MoodBarGraph";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodAnalysis(): JSX.Element {
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
-    const index = useClientStore(state => state.index);
     const week = useClientStore(state => state.week);
 
     // const [graphType, setGraphType] = useState<string>("data0");
     // const [tabSelect, setTabSelect] = useState<"weekly" | "daily" | "monthly">("weekly");
-
-    useEffect(() => {
-        if (index === 3) {
-            updateShowButtons(false);
-        }
-    }, [index]);
 
     return(
         <View style={{ flex: 1, flexDirection: "column" }}>

@@ -17,7 +17,6 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
     expand: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep",
 }): JSX.Element {
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
     const { selectedSupplement, updateSelectedSupplement } = useClientStore(state => ({ selectedSupplement: state.selectedSupplement, updateSelectedSupplement: state.updateSelectedSupplement }), shallow);
@@ -26,7 +25,6 @@ export default function ExpandedCategoryPage({ setExpand, expand }: {
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
         updateModalVisible("disable-header");
-        updateShowButtons(false);
         modalizeRef.current?.open();
     };
 

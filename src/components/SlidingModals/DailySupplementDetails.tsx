@@ -179,14 +179,14 @@ export default function DailySupplementDetails(): JSX.Element {
                         <Text style={{ color: "white", fontSize: 24, fontWeight: "600", padding: 10 }}>Effects?</Text>
                     </View>
                     <Divider length="full"></Divider>
-                    {supplementMap[daySelected].DailyMood.length === 0 && 
+                    {Object.keys(supplementMap[daySelected].DailyMood).length === 0 && 
                         <Text style={{ color: "silver", fontSize: 15, opacity: 0.8, fontWeight: "600", padding: 10, margin: 10, textAlign: "center" }}>
-                            {"You can add moods from the menu using the "}
-                            <Icon name="emoticon-happy-outline" size={20} color={ "white" }/>
-                            {" Icon"}
+                            {"You can add moods from the "}
+                            <Icon name="yin-yang" size={20} color={ "white" }/>
+                            {" Mood menu"}
                         </Text>
                     }
-                    {(supplementMap[daySelected].DailyMood).map((eachMood, index) => {
+                    {Object.values(supplementMap[daySelected].DailyMood).map((eachMood, index) => {
                         return (
                             <MoodTimlineSupplement
                                 key={index}

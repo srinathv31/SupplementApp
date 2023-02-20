@@ -24,7 +24,7 @@ export default function JournalCloseButton({ journalText }: {
         const stringDate = objDaySelected.dateString;
 
         if (supplementMapCopy[daySelected] === undefined) {
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {} };
         }
 
         supplementMapCopy[daySelected].JournalEntry = journalText;
