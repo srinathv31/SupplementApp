@@ -1,25 +1,14 @@
 // Source Imports
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import Svg, { G, Circle } from "react-native-svg";
 import IconI from "react-native-vector-icons/Ionicons";
 import { fiveHundredMl, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
 import Carousel from "react-native-snap-carousel";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
 
 export default function WaterScreen(): JSX.Element {
     const [waterLevel, setWaterLevel] = useState<number>(0);
-
-    const radius = 70;
-    const circleCircumference = 2 * Math.PI * radius;
-
-    const remainingWaterAmount = 3000 - waterLevel;
-    const targetAmount = 3000;
-
-    const spentAmount = targetAmount - remainingWaterAmount;
-    const percentage = (spentAmount / targetAmount) * 100;
-    const strokeDashoffset =
-    circleCircumference - (circleCircumference * percentage) / 100;
 
     function addWater(ml: number){
         setWaterLevel(waterLevel+ml);
@@ -27,36 +16,22 @@ export default function WaterScreen(): JSX.Element {
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flex: 1, flexDirection: "row" }}>
                 <TouchableOpacity>
                     <View style={[styles.card, { flexDirection: "row", backgroundColor: "#163059", padding: 1, paddingHorizontal: 20, borderRadius: 20, margin: 15 }]}>
                         <View style={styles.graphWrapper}>
-                            <Svg height="90" width="90" viewBox="0 0 180 180">
-                                <G rotation={-90} originX="90" originY="90">
-                                    <Circle
-                                        cx="50%"
-                                        cy="50%"
-                                        r={radius}
-                                        stroke="#F1F6F9"
-                                        fill="transparent"
-                                        strokeWidth="30"
-                                    />
-                                    <Circle
-                                        cx="50%"
-                                        cy="50%"
-                                        r={radius}
-                                        stroke="#016afb"
-                                        fill="transparent"
-                                        strokeWidth="30"
-                                        strokeDasharray={circleCircumference}
-                                        strokeDashoffset={waterLevel > 3000 ? 0 : strokeDashoffset}
-                                        strokeLinecap="butt"
-                                    />
-                                </G>
-                            </Svg>
-                            <Text style={styles.text}>{Math.floor(percentage)}%</Text>
+                            <AnimatedCircularProgress
+                                size={70}
+                                width={5}
+                                fill={(waterLevel/1000)*100}
+                                tintColor={"red"}
+                                backgroundColor="#3d5875" 
+                                arcSweepAngle={250}
+                                rotation={235}
+                            />
+                            <Text style={styles.text}>{1}</Text>
                         </View>
-                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${spentAmount} ml\n`}/{`${targetAmount} ml`}</Text>
+                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${50} ml\n`}/{`${100} ml`}</Text>
                     </View>
                 </TouchableOpacity>
                 <Carousel

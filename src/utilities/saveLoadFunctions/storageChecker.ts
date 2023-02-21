@@ -4,13 +4,11 @@ import CalendarDotObject from "../../interfaces/Calendar";
 import { generateCurrentDateObject } from "../getCurrentDate";
 import { saveDataToCloud } from "./saveDataToCloud";
 import { ClientState } from "../../zustand/clientStore";
-import { grabProfilePictureFromCloud } from "./saveProfilePicture";
 
 export const checkForSave = async (userData: ClientState["userData"]) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(""+userCopy.userAuthObj?.uid);
-        const url = await grabProfilePictureFromCloud(userData);
 
         if (!jsonValue) {
             return null;
@@ -28,7 +26,7 @@ export const checkForSave = async (userData: ClientState["userData"]) => {
         userCopy.premiumStatus = parsedJsonValue.premiumStatus;
         userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
         userCopy.data.selectedDates = { ...adjustedSelectedDates };
-        userCopy.picture = url;
+        userCopy.picture = parsedJsonValue.picture;
         userCopy.achievements = parsedJsonValue.achievements;
 
         saveDataToCloud(userCopy);

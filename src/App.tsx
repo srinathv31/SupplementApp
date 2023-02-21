@@ -8,11 +8,14 @@ import OnboardingTour from "./screens/OnboardingTour";
 import { retrieveLoggedInKey } from "./utilities/saveLoadFunctions/updateIsLoggedIn";
 import useClientStore from "./zustand/clientStore";
 import shallow from "zustand/shallow";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 LogBox.ignoreLogs(["Sending"]);
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 const App = () => {
+    const queryClient = new QueryClient();
+    
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { page, updatePage } = useClientStore(state => ({ page: state.page, updatePage: state.updatePage }), shallow);
 
@@ -22,21 +25,23 @@ const App = () => {
     }, []);
 
     return (
-        <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
-            <StatusBar barStyle={"light-content"} />
-            { page === "login-screen" && 
+        <QueryClientProvider client={queryClient}>
+            <View style={{ flex: 1, backgroundColor: "#0B172A" }}>
+                <StatusBar barStyle={"light-content"} />
+                { page === "login-screen" && 
                     <LoginScreen />
-            }
-            { page === "form-screen" && 
+                }
+                { page === "form-screen" && 
                     <InfoForm />
-            }
-            {page === "onboarding-screen" && 
+                }
+                {page === "onboarding-screen" && 
                     <OnboardingTour />
-            }
-            {(page === "loading-screen" || page === "app-screen") && 
+                }
+                {(page === "loading-screen" || page === "app-screen") && 
                     <MainScreen />
-            }
-        </View>
+                }
+            </View>
+        </QueryClientProvider>
     );
 };
 

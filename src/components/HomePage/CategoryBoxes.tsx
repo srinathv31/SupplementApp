@@ -19,7 +19,7 @@ export default function CategoryBoxes() {
     ];
 
     const categories2 = [
-        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => console.log("Water") },
+        { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => updateCategorySelect("Water") },
         { name: "Mood Analytics", colors: ["#8E2DE2", "#4A00E0"], icon: "analytics", function: () => console.log("Exercise") }
     ];
 
@@ -105,7 +105,7 @@ export default function CategoryBoxes() {
             <View style={{ flex: 1, flexDirection: "row" }}>
                 {categories2.map((box, idx) => {
                     return(
-                        <TouchableOpacity key={idx} style={{ flex: 1 }}>
+                        <TouchableOpacity key={idx} style={{ flex: 1 }} onPress={box.function}>
                             <Animated.View style={[{ flex: 1, margin: 10, borderRadius: 10, overflow: "hidden", opacity: fadeOp, transform: [{ scale: scaleAnim }] }, idx === 0 ? fadeAnimWater.getLayout() : fadeAnimAnalysis.getLayout()]}>
                                 <LinearGradient colors={box.colors} style={{ flex: 1 }}>
                                     <View style={{ flex: 1, padding: 10, justifyContent: "center" }}>
