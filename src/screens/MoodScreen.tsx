@@ -188,6 +188,6 @@ const styles = StyleSheet.create({
         // marginBottom: 4,
         marginLeft: 10,
         color: "#fff",
-        width: "25%"
+        width: "45%"
     },
 });

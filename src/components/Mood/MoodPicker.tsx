@@ -16,24 +16,16 @@ export default function MoodPicker({ dropDirection, mode }: {
 
     const [value, setValue] = useState("");
     const [items, setItems] = useState([
-        { label: "Energetic", value: "Energetic" },
-        { label: "Focused", value: "Focused" },
-        { label: "Motivated", value: "Motivated" },
-        { label: "Peaceful", value: "Peaceful" },
-        { label: "Optimistic", value: "Optimistic" },
+        { label: "Happiness", value: "Happiness" },
+        { label: "Focus", value: "Focus" },
+        { label: "Productivity", value: "Productivity" },
+        { label: "Inner Peace", value: "Inner Peace" },
+        { label: "Energy", value: "Energy" },
         { label: "Calm", value: "Calm" },
-        { label: "Lively", value: "Lively" },
-        { label: "Relaxed", value: "Relaxed" },
-        { label: "Fatigued", value: "Fatigued" },
-        { label: "Unfocused", value: "Unfocused" },
-        { label: "Scatter Brained", value: "Scatter Brained" },
-        { label: "Anxious", value: "Anxious" },
-        { label: "Cynical", value: "Cynical" },
-        { label: "Discontented", value: "Discontented" },
-        { label: "Irritability", value: "Irritability" },
-        { label: "Difficulty Sleeping", value: "Difficulty Sleeping" },
-        { label: "Unmotivated", value: "Unmotivated" },
-        { label: "Depressed", value: "Depressed" },
+        { label: "Patience", value: "Patience" },
+        { label: "Optimism", value: "Optimism" },
+        { label: "Emotional Stability", value: "Emotional Stability" },
+        { label: "Creativity", value: "Creativity" },
     ]);
 
     function addMood(item: ItemType) {
