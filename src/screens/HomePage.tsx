@@ -1,6 +1,6 @@
 // Source Imports
 import React, { useEffect, useRef, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Modalize } from "react-native-modalize";
 import Icon from "react-native-vector-icons/Ionicons";
 import IconI from "react-native-vector-icons/MaterialCommunityIcons";
@@ -66,27 +66,37 @@ export default function HomePage(): JSX.Element {
         "Exercise": <CategoryBoxes />
     };
 
+    const rightIconMap: Record<PageCategory, JSX.Element | null> = {
+        "Home": null,
+        "Supplement Schedule": <IconI name="clock" onPress={() => (updateModalVisible("supplement-modal"), updateMultipleAddMode(true))} size={30} color="white" />,
+        "Mood": <IconI name="cancel" onPress={() => clearMoods({ userData, supplementMap, daySelected, updateUserData, updateSupplementMap, updateModalVisible, objDaySelected })} size={30} color="red" />,
+        "Water": <IconI name="water-off" onPress={() => updateModalVisible("water-reset-modal")} size={30} color="orangered" />,
+        "Exercise": null
+    };
+
+    const leftIconMap: Record<PageCategory, JSX.Element | null> = {
+        "Home": null,
+        "Supplement Schedule": <Icon onPress={() => sharePlan(supplementMap, daySelected)} name="share-outline" size={30} color="white" />,
+        "Mood": null,
+        "Water": <IconI onPress={() => updateModalVisible("water-goal-modal")} name="cup-water" size={30} color="white" />,
+        "Exercise": null
+    };
+
     return(
         <View style={{ flex: 1 }}>
             <VerifySupplementStatusModal supplementsToUpdateStatus={supplementsToUpdateStatus} setSupplementsToUpdateStatus={setSupplementsToUpdateStatus}></VerifySupplementStatusModal>
             <ExploreWindow setModalizeRefStatus={setModalizeRefStatus} categorySelect={categorySelect}></ExploreWindow>
             <Divider length="full"></Divider>
             <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", position: "relative" }}>
-                { categorySelect === "Supplement Schedule" && 
-                <Icon onPress={() => sharePlan(supplementMap, daySelected)}
-                    name="share-outline" size={30} color="white" style={{ padding: 8, alignSelf: "flex-start", position: "absolute", left: "3%" }}/>
-                }
+                <TouchableOpacity style={{ padding: 8, alignSelf: "flex-start", position: "absolute", left: "3%" }}>
+                    {leftIconMap[categorySelect]}
+                </TouchableOpacity>
                 <View style={{ alignItems: "center", justifyContent: "center" }}>
                     <Text style={{ color: "white", fontSize: 20, padding: 10, alignSelf: "center" }}>{categorySelect}</Text>
                 </View>
-                { categorySelect === "Supplement Schedule" && 
-                <IconI onPress={() => (updateModalVisible("supplement-modal"), updateMultipleAddMode(true))} 
-                    name="clock" size={30} color="white" style={{ padding: 8, alignSelf: "flex-start", position: "absolute", right: "3%" }}/>
-                }
-                { categorySelect === "Mood" && 
-                <IconI onPress={() => clearMoods({ userData, supplementMap, daySelected, updateUserData, updateSupplementMap, updateModalVisible, objDaySelected })} 
-                    name="cancel" size={30} color="red" style={{ padding: 8, alignSelf: "flex-start", position: "absolute", right: "3%" }}/>
-                }
+                <TouchableOpacity style={{ padding: 8, alignSelf: "flex-start", position: "absolute", right: "3%" }}>
+                    {rightIconMap[categorySelect]}
+                </TouchableOpacity>
             </View>
             {pageMap[categorySelect]}
             <WebModal

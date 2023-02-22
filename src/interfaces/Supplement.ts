@@ -1,4 +1,6 @@
 import MoodObject from "./Mood";
+import { WaterStatus } from "./Water";
+
 interface Supplement {
     name: string,
     smallDescription: string,
@@ -23,6 +25,7 @@ export interface SupplementMapObject {
     SupplementSchedule: SupplementObject[], 
     JournalEntry: string,
     DailyMood: Record<string, MoodObject>,
+    DailyWater: Record<WaterStatus, number> 
 }
 
 

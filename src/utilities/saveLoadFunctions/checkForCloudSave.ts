@@ -19,7 +19,8 @@ export async function grabCloudSave(uid: string, userData: User) {
         picture: cloudData.picture,
         data: {
             supplementMap: cloudData.data.supplementMap,
-            selectedDates: cloudData.data.selectedDates
+            selectedDates: cloudData.data.selectedDates,
+            waterGoal: !cloudData.data.waterGoal ? 2000 : cloudData.data.waterGoal
         },
         premiumStatus: cloudData.premiumStatus,
         achievements: cloudData.achievements,

@@ -16,6 +16,9 @@ import JournalCloseButton from "../JournalEntry/JournalCloseButton";
 import useClientStore from "../../zustand/clientStore";
 import getCurrentDate, { generateCurrentDateObject } from "../../utilities/getCurrentDate";
 import handleCalendar from "../../utilities/handleCalendarEvents";
+import WaterAdder from "../WaterTracking/WaterAdder";
+import WaterResetter from "../WaterTracking/WaterResetter";
+import WaterGoalSetter from "../WaterTracking/WaterGoalSetter";
 
 export default function HeaderWindow(): JSX.Element {
     const daySelected = useClientStore(state => state.daySelected);
@@ -66,6 +69,9 @@ export default function HeaderWindow(): JSX.Element {
             <MultipleDatePicker />
             <AchievementScreen />
             <EditNameModal />
+            <WaterAdder />
+            <WaterResetter />
+            <WaterGoalSetter />
         </View>
     );
 }

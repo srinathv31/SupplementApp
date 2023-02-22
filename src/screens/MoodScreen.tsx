@@ -5,6 +5,7 @@ import { AnimatedCircularProgress } from "react-native-circular-progress";
 import Icon from "react-native-vector-icons/Ionicons";
 import shallow from "zustand/shallow";
 import MoodObject from "../interfaces/Mood";
+import deleteSupplementMapDate from "../utilities/handleSupplementMap";
 import saveUserData from "../utilities/saveLoadFunctions/saveUserData";
 import useClientStore, { ClientState } from "../zustand/clientStore";
 
@@ -36,9 +37,7 @@ export default function MoodScreen(): JSX.Element {
 
         // Deleting Empty Date
         userCopy.data.selectedDates = removeDate(objDaySelected, supplementMapCopy);
-        if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && Object.keys(supplementMapCopy[daySelected].DailyMood).length === 0 ){
-            delete supplementMapCopy[daySelected];
-        }
+        deleteSupplementMapDate(supplementMapCopy, daySelected);
 
         updateUserData(userCopy);
         updateSupplementMap(supplementMapCopy);

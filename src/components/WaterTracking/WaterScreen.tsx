@@ -1,37 +1,65 @@
 // Source Imports
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import IconI from "react-native-vector-icons/Ionicons";
 import { fiveHundredMl, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
 import Carousel from "react-native-snap-carousel";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import useClientStore from "../../zustand/clientStore";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 export default function WaterScreen(): JSX.Element {
-    const [waterLevel, setWaterLevel] = useState<number>(0);
+    const updateUserData = useClientStore(state => state.updateUserData);
+    const userData = useClientStore(state => state.userData);
+    const updateSupplementMap = useClientStore(state => state.updateSupplementMap);
+    const supplementMap = useClientStore(state => state.supplementMap);
+    const daySelected = useClientStore(state => state.daySelected);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
+
+    const waterCompleted = !supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed;
+    const waterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
+
 
     function addWater(ml: number){
-        setWaterLevel(waterLevel+ml);
+        const supplementMapCopy = { ...supplementMap };
+        const userCopy = { ...userData };
+
+        if (supplementMapCopy[daySelected] === undefined){
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
+        }
+
+        // Add Water to SupplementMap
+        supplementMapCopy[daySelected].DailyWater.completed = supplementMapCopy[daySelected].DailyWater.completed + ml;
+        userCopy.data.supplementMap = { ...supplementMapCopy };
+
+        updateSupplementMap(supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
+        updateUserData(userCopy);
+    }
+
+    function getWaterPercent() {
+        return Math.floor((waterCompleted/waterGoal)*100);
     }
 
     return (
         <View style={styles.container}>
             <View style={{ flex: 1, flexDirection: "row" }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => updateModalVisible("water-modal")}>
                     <View style={[styles.card, { flexDirection: "row", backgroundColor: "#163059", padding: 1, paddingHorizontal: 20, borderRadius: 20, margin: 15 }]}>
                         <View style={styles.graphWrapper}>
                             <AnimatedCircularProgress
                                 size={70}
                                 width={5}
-                                fill={(waterLevel/1000)*100}
-                                tintColor={"red"}
+                                fill={(waterCompleted/waterGoal)*100}
+                                tintColor={"#36D1DC"}
                                 backgroundColor="#3d5875" 
                                 arcSweepAngle={250}
                                 rotation={235}
                             />
-                            <Text style={styles.text}>{1}</Text>
+                            <Text style={styles.text}>{getWaterPercent()}%</Text>
                         </View>
-                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${50} ml\n`}/{`${100} ml`}</Text>
+                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${waterCompleted} ml\n`}/{`${waterGoal} ml`}</Text>
                     </View>
                 </TouchableOpacity>
                 <Carousel

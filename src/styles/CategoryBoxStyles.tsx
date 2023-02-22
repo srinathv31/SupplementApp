@@ -6,21 +6,34 @@ const CategoryBoxesStyles = StyleSheet.create({
         fontSize: 20,
         textAlign: "center",
         marginTop: 5,
-        backgroundColor: "white",
+        backgroundColor: "#eee",
         padding: 1,
-        borderRadius: 12,
-        overflow: "hidden"
+        borderRadius: 5,
+        overflow: "hidden",
     },
     waterIntakeCount: {
-        color: "black",
+        color: "white",
         fontSize: 20,
         textAlign: "center",
         marginTop: 5,
-        backgroundColor: "white",
+        // backgroundColor: "#eee",
         padding: 1,
-        borderRadius: 12,
-        overflow: "hidden"
+        borderRadius: 5,
+        overflow: "hidden",
     },
+    cardText: {
+        color: "white",
+        fontSize: 23,
+        textAlign: "center",
+        fontWeight: "600",
+    },
+    label: { 
+        color: "white", 
+        fontSize: 20, 
+        textAlign: "center", 
+        padding: 5, 
+        marginBottom: 5 
+    }
 });
 
 export default CategoryBoxesStyles;

@@ -13,6 +13,7 @@ import saveUserData from "../../../utilities/saveLoadFunctions/saveUserData";
 import { DateData } from "react-native-calendars/src/types";
 import useClientStore, { ClientState } from "../../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import deleteSupplementMapDate from "../../../utilities/handleSupplementMap";
 
 export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: WeekProps): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
@@ -34,9 +35,8 @@ export default function AgendaBody({ setShowStatusButtons, showStatusButtons }: 
 
         supplementMapCopy[parentDataMapKey].SupplementSchedule = supplementMapCopy[parentDataMapKey].SupplementSchedule.filter(listItem => listItem !== item);
         userCopy.data.selectedDates = removeDate(parentDayDateData, supplementMapCopy, parentDataMapKey);
-        if (Object.values(supplementMapCopy[parentDataMapKey].SupplementSchedule).length === 0 && supplementMapCopy[parentDataMapKey].JournalEntry === "") {
-            delete supplementMapCopy[parentDataMapKey];
-        }
+        
+        deleteSupplementMapDate(supplementMapCopy, parentDataMapKey);
         
         updateUserData(userCopy);
         saveUserData(userData, updateUserData, supplementMapCopy);

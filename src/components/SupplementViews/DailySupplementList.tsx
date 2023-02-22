@@ -11,6 +11,7 @@ import { Modalize } from "react-native-modalize";
 import DailySupplementDetails from "../SlidingModals/DailySupplementDetails";
 import ScrollButton from "../HomePage/ScrollButton";
 import DailySupplementDosageInput from "./DailySupplementDosageInput";
+import deleteSupplementMapDate from "../../utilities/handleSupplementMap";
 
 export default function DailySupplementList() {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
@@ -50,9 +51,9 @@ export default function DailySupplementList() {
 
         supplementMapCopy[daySelected].SupplementSchedule = supplementMapCopy[daySelected].SupplementSchedule.filter(listItem => listItem !== item);
         userCopy.data.selectedDates = removeDate(objDaySelected, supplementMapCopy);
-        if (Object.values(supplementMapCopy[daySelected].SupplementSchedule).length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && Object.keys(supplementMapCopy[daySelected].DailyMood).length === 0) {
-            delete supplementMapCopy[daySelected];
-        }
+
+        deleteSupplementMapDate(supplementMapCopy, daySelected);
+        
         updateUserData(userCopy);
         saveUserData(userData, updateUserData, supplementMapCopy);
         updateSupplementMap(supplementMapCopy);

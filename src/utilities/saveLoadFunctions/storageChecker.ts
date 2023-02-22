@@ -26,6 +26,7 @@ export const checkForSave = async (userData: ClientState["userData"]) => {
         userCopy.premiumStatus = parsedJsonValue.premiumStatus;
         userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
         userCopy.data.selectedDates = { ...adjustedSelectedDates };
+        userCopy.data.waterGoal = !parsedJsonValue.data.waterGoal ? 2000 : parsedJsonValue.data.waterGoal;
         userCopy.picture = parsedJsonValue.picture;
         userCopy.achievements = parsedJsonValue.achievements;
 

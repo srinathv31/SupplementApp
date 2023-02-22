@@ -29,7 +29,7 @@ export default function UserPageButton(): JSX.Element {
             disabled={modalVisible === "disable-header"}
         >
             <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>
-                <Image source={{ uri: data }} style={{ width: 40, height: 40 }}></Image>
+                <Image source={{ uri: data }} style={{ width: 40, height: 40 }} />
             </View>
         </Pressable>
     );

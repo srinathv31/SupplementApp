@@ -27,7 +27,7 @@ export default function MultipleDatePicker(): JSX.Element {
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[dayString] === undefined){
-            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {} };
+            supplementMapCopy[dayString] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
         }
         
         supplementMapCopy[dayString].SupplementSchedule.push({ Supplement: item, time: selectedSupplement.time, taken: "not-taken", dosage: selectedSupplement.dosage });
@@ -64,7 +64,7 @@ export default function MultipleDatePicker(): JSX.Element {
             Object.values(schedule).forEach(item => {
                 const strDate = getDateString(item.day);
                 if (supplementMapCopy[strDate] === undefined) {
-                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {} };
+                    supplementMapCopy[strDate] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
                 }
                 supplementMapCopy[strDate].SupplementSchedule = addSupplement(selectedSupplement.Supplement, strDate);
                 if (selectedDatesCopy[item.day.dateString] === undefined) {

@@ -2,6 +2,7 @@ import { Alert } from "react-native";
 import { DateData } from "react-native-calendars/src/types";
 import User from "../interfaces/User";
 import { ClientState } from "../zustand/clientStore";
+import deleteSupplementMapDate from "./handleSupplementMap";
 import saveUserData from "./saveLoadFunctions/saveUserData";
 
 export function clearMoods({ userData, supplementMap, daySelected, updateUserData, updateSupplementMap, updateModalVisible, objDaySelected }: Partial<ClientState>) {
@@ -39,9 +40,8 @@ function clearAllMood({ userData, supplementMap, daySelected, updateUserData, up
 
     // Deleting Empty Date
     userCopy.data.selectedDates = removeDate(userData, objDaySelected, supplementMapCopy, daySelected);
-    if (supplementMapCopy[daySelected].SupplementSchedule.length === 0 && supplementMapCopy[daySelected].JournalEntry === "" && Object.keys(supplementMapCopy[daySelected].DailyMood).length === 0 ){
-        delete supplementMapCopy[daySelected];
-    }
+    deleteSupplementMapDate(supplementMapCopy, daySelected);
+
 
     updateUserData(userCopy);
     updateSupplementMap(supplementMapCopy);

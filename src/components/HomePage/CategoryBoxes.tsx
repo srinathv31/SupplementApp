@@ -9,6 +9,7 @@ import { countDailySupplements } from "../../utilities/countDailySupplements";
 import useClientStore from "../../zustand/clientStore";
 
 export default function CategoryBoxes() {
+    const userData = useClientStore(state => state.userData);
     const supplementMap = useClientStore(state => state.supplementMap);
     const daySelected = useClientStore(state => state.daySelected);
     const updateCategorySelect = useClientStore(state => state.updateCategorySelect);
@@ -80,6 +81,11 @@ export default function CategoryBoxes() {
         ]).start();
     }, []);
 
+    const dailyWaterCompleted = !supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed;
+    const dailyWaterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
+
+    const moodCount = !supplementMap[daySelected] ? 0 : Object.keys(supplementMap[daySelected].DailyMood).length;
+
     return(
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1, flexDirection: "row" }}>
@@ -89,12 +95,13 @@ export default function CategoryBoxes() {
                             <Animated.View style={[{ flex: 1, margin: 10, borderRadius: 10, overflow: "hidden", opacity: fadeOp, transform:[{ scale:scaleAnim }] }, idx === 0 ? fadeAnimTop.getLayout() : fadeAnimMood.getLayout()]}>
                                 <LinearGradient colors={box.colors} style={{ flex: 1 }}>
                                     <View style={{ flex: 1, padding: 10, justifyContent: "center" }}>
-                                        {box.name === "Supplements" && <Text style={CategoryBoxesStyles.suppPillCount}>{`${countDailySupplements(supplementMap, daySelected)} Scheduled`}</Text>}
-                                        <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{box.name}</Text>
+                                        <Text style={CategoryBoxesStyles.label}>{box.name}</Text>
                                         {box.name === "Mood" 
                                             ? <IconM name={box.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconM>
                                             : <Icon name={box.icon} style={{ color: "white", alignSelf: "center" }} size={70}></Icon>
                                         }
+                                        {box.name === "Supplements" && <Text style={CategoryBoxesStyles.label}>{`${countDailySupplements(supplementMap, daySelected)} Scheduled`}</Text>}
+                                        {box.name === "Mood" && <Text style={CategoryBoxesStyles.label}>{`${moodCount} Tracked`}</Text>}
                                     </View>
                                 </LinearGradient>
                             </Animated.View>
@@ -109,10 +116,10 @@ export default function CategoryBoxes() {
                             <Animated.View style={[{ flex: 1, margin: 10, borderRadius: 10, overflow: "hidden", opacity: fadeOp, transform: [{ scale: scaleAnim }] }, idx === 0 ? fadeAnimWater.getLayout() : fadeAnimAnalysis.getLayout()]}>
                                 <LinearGradient colors={box.colors} style={{ flex: 1 }}>
                                     <View style={{ flex: 1, padding: 10, justifyContent: "center" }}>
-                                        {box.name === "Water" && <Text style={CategoryBoxesStyles.waterIntakeCount}>{"700/1000 ml"}</Text>}
-                                        <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{box.name}</Text>
+                                        <Text style={CategoryBoxesStyles.label}>{box.name}</Text>
                                         <IconI name={box.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
-                                        {box.name !== "Water" && <Text style={{ color: "white", fontSize: 20, textAlign: "center", padding: 5, marginBottom: 5 }}>{"Coming Soon"}</Text>}
+                                        {box.name !== "Water" && <Text style={CategoryBoxesStyles.label}>{"Coming Soon"}</Text>}
+                                        {box.name === "Water" && <Text style={CategoryBoxesStyles.label}>{`${dailyWaterCompleted}/${dailyWaterGoal} ml`}</Text>}
                                     </View>
                                 </LinearGradient>
                             </Animated.View>
