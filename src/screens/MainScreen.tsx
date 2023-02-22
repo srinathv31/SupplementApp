@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { LogBox, Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
 import { TabView } from "react-native-tab-view";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
-import MoodAnalysis from "../components/Mood/MoodAnalysis";
 import SupplementModal from "../components/SupplementViews/SupplementModal";
 import BottomMenuTab from "../components/Menus/BottomMenuTab";
 import { checkForSave } from "../utilities/saveLoadFunctions/storageChecker";
@@ -82,7 +81,6 @@ export default function MainScreen(): JSX.Element {
         { key: "cal", title: "Calendar" },
         { key: "home", title: "Home" },
         { key: "supp", title: "Supplements" },
-        { key: "work", title: "Workouts" },
     ]);
     const layout = useWindowDimensions();
 
@@ -101,8 +99,6 @@ export default function MainScreen(): JSX.Element {
             return <CalendarRoute />;
         case "supp":
             return <SupplementInfoPage />;
-        case "work":
-            return <MoodAnalysis />;
         default:
             return null;
         }
