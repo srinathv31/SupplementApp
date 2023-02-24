@@ -21,7 +21,7 @@ export default function CategoryBoxes() {
 
     const categories2 = [
         { name: "Water", colors: ["#36D1DC", "#5B86E5"], icon: "water", function: () => updateCategorySelect("Water") },
-        { name: "Analytics", colors: ["#8E2DE2", "#4A00E0"], icon: "analytics", function: () => console.log("Exercise") }
+        { name: "Analytics", colors: ["#8E2DE2", "#4A00E0"], icon: "analytics", function: () => updateCategorySelect("Analysis") }
     ];
 
     // const coords = { x: Math.floor(Math.random() * 201)-100, y: Math.floor(Math.random() * 201)-100 };

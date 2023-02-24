@@ -2,4 +2,4 @@ export type ModalType = "hide-modal" | "journal" | "time-modal" | "calendar-moda
 
 export type PageType = "login-screen" | "loading-screen" | "app-screen" | "onboarding-screen" | "form-screen";
 
-export type PageCategory = "Supplement Schedule"|"Mood"|"Water"|"Exercise"|"Home";
+export type PageCategory = "Supplement Schedule"|"Mood"|"Water"|"Analysis"|"Home";

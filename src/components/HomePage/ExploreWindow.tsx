@@ -57,7 +57,7 @@ export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: 
         "Supplement Schedule": ["#ee0979", "#ff6a00"],
         "Mood": ["#0AB1A2", "#38ef7d"],
         "Water": ["#36D1DC", "#5B86E5"],
-        "Exercise": ["#8E2DE2", "#4A00E0"]
+        "Analysis": ["#8E2DE2", "#4A00E0"]
     };
 
     return(

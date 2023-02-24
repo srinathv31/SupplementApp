@@ -18,6 +18,7 @@ import CategoryBoxes from "./../components/HomePage/CategoryBoxes";
 import MoodScreen from "./MoodScreen";
 import DailySupplementsList from "../components/SupplementViews/DailySupplementList";
 import { PageCategory } from "../interfaces/AppTypes";
+import MoodAnalysis from "../components/Mood/MoodAnalysis";
 
 export default function HomePage(): JSX.Element {
     const userData = useClientStore(state => state.userData);
@@ -63,7 +64,7 @@ export default function HomePage(): JSX.Element {
         "Supplement Schedule": <DailySupplementsList />,
         "Mood": <MoodScreen />,
         "Water": <WaterScreen />,
-        "Exercise": <CategoryBoxes />
+        "Analysis": <MoodAnalysis />
     };
 
     const rightIconMap: Record<PageCategory, JSX.Element | null> = {
@@ -71,7 +72,7 @@ export default function HomePage(): JSX.Element {
         "Supplement Schedule": <IconI name="clock" onPress={() => (updateModalVisible("supplement-modal"), updateMultipleAddMode(true))} size={30} color="white" />,
         "Mood": <IconI name="cancel" onPress={() => clearMoods({ userData, supplementMap, daySelected, updateUserData, updateSupplementMap, updateModalVisible, objDaySelected })} size={30} color="red" />,
         "Water": <IconI name="water-off" onPress={() => updateModalVisible("water-reset-modal")} size={30} color="orangered" />,
-        "Exercise": null
+        "Analysis": null
     };
 
     const leftIconMap: Record<PageCategory, JSX.Element | null> = {
@@ -79,7 +80,7 @@ export default function HomePage(): JSX.Element {
         "Supplement Schedule": <Icon onPress={() => sharePlan(supplementMap, daySelected)} name="share-outline" size={30} color="white" />,
         "Mood": null,
         "Water": <IconI onPress={() => updateModalVisible("water-goal-modal")} name="cup-water" size={30} color="white" />,
-        "Exercise": null
+        "Analysis": null
     };
 
     return(
