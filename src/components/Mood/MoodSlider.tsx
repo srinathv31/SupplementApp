@@ -1,6 +1,7 @@
 // Source Imports
 import React, { useState } from "react";
-import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
+import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import IconM from "react-native-vector-icons/MaterialIcons";
 import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
@@ -77,6 +78,9 @@ export default function MoodSlider(): JSX.Element {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
+                    <TouchableOpacity onPress={() => updateModalVisible("hide-modal")} style={styles.icon}>
+                        <IconM name="info-outline" size={20} color="white" />
+                    </TouchableOpacity>
                     <View style={styles.graphWrapper}>
                         <AnimatedCircularProgress
                             size={70}
@@ -166,5 +170,9 @@ const styles = StyleSheet.create({
         fontWeight: "500",
         fontSize: 14,
         color: "white",
+    },
+    icon: {
+        position: "absolute",
+        margin: "5%",
     },
 });
