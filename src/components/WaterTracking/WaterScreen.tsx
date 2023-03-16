@@ -2,7 +2,7 @@
 import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import IconI from "react-native-vector-icons/Ionicons";
-import { fiveHundredMl, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
+import { fiveHundredMl, stageEight, stageFive, stageFour, stageOne, stageSeven, stageSix, stageThree, stageTwo, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
 import Carousel from "react-native-snap-carousel";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
@@ -40,6 +40,32 @@ export default function WaterScreen(): JSX.Element {
 
     function getWaterPercent() {
         return Math.floor((waterCompleted/waterGoal)*100);
+    }
+
+    const treeMap: Record<number, string> = {
+        0: stageOne,
+        12: stageTwo,
+        25: stageThree,
+        37: stageFour,
+        55: stageFive,
+        70: stageSix,
+        85: stageSeven,
+        100: stageEight
+    };
+
+    function getTreeImg() {
+        const waterPercent = getWaterPercent();
+        const treeImgs = Object.keys(treeMap).map(level => {
+            if (+level < waterPercent || +level === waterPercent) {
+                return +level;
+            }
+        });
+        const filteredTrees = treeImgs.filter(tree => tree);
+        const lastElement = filteredTrees[filteredTrees.length-1];
+        if (!lastElement) {
+            return treeMap[0];
+        }
+        return treeMap[lastElement];
     }
 
     return (
@@ -84,7 +110,7 @@ export default function WaterScreen(): JSX.Element {
                     layoutCardOffset={9}
                 />
             </View>
-            <Image source={{ uri: "https://i.imgur.com/uBj2FiH.png" }} style={{ height: 200, width: 200 }} />
+            <Image source={{ uri: getTreeImg() }} style={{ height: 200, width: 200 }} />
         </View>
     );
 }
