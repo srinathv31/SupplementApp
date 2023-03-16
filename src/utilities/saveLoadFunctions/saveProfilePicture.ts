@@ -19,14 +19,18 @@ export function saveProfilePictureToCloud(userData: User, uploadUri: string, loc
 export async function grabProfilePictureFromCloud(userData: User) {
     const userCopy = { ...userData };
     
-    firebase
+    const url = firebase
         .storage()
         .ref(`profilePictures/${userData.userAuthObj?.uid}-profile-pic.png`)
         .getDownloadURL()
         .then((url) => {
             userCopy.picture = url;
-            console.log(`${url} has been successfully downloaded.`);
-            saveDataToCloud(userCopy);
+            console.log("pic has been successfully downloaded.");
+            return url;
         })
-        .catch((e) => console.log("downloading image error => ", e));
+        .catch((e) => {
+            console.log("downloading image error => ", e);
+            return "";
+        });
+    return url;
 }

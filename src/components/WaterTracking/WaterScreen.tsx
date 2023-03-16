@@ -1,62 +1,91 @@
 // Source Imports
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
-import Svg, { G, Circle } from "react-native-svg";
 import IconI from "react-native-vector-icons/Ionicons";
-import { fiveHundredMl, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
+import { fiveHundredMl, stageEight, stageFive, stageFour, stageOne, stageSeven, stageSix, stageThree, stageTwo, thousandMl, twoHundredMl } from "../../assets/imageURLs/waterURLs";
 import Carousel from "react-native-snap-carousel";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
+import useClientStore from "../../zustand/clientStore";
+import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 
 export default function WaterScreen(): JSX.Element {
-    const [waterLevel, setWaterLevel] = useState<number>(0);
+    const updateUserData = useClientStore(state => state.updateUserData);
+    const userData = useClientStore(state => state.userData);
+    const updateSupplementMap = useClientStore(state => state.updateSupplementMap);
+    const supplementMap = useClientStore(state => state.supplementMap);
+    const daySelected = useClientStore(state => state.daySelected);
+    const updateModalVisible = useClientStore(state => state.updateModalVisible);
 
-    const radius = 70;
-    const circleCircumference = 2 * Math.PI * radius;
+    const waterCompleted = !supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed;
+    const waterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
 
-    const remainingWaterAmount = 3000 - waterLevel;
-    const targetAmount = 3000;
-
-    const spentAmount = targetAmount - remainingWaterAmount;
-    const percentage = (spentAmount / targetAmount) * 100;
-    const strokeDashoffset =
-    circleCircumference - (circleCircumference * percentage) / 100;
 
     function addWater(ml: number){
-        setWaterLevel(waterLevel+ml);
+        const supplementMapCopy = { ...supplementMap };
+        const userCopy = { ...userData };
+
+        if (supplementMapCopy[daySelected] === undefined){
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
+        }
+
+        // Add Water to SupplementMap
+        supplementMapCopy[daySelected].DailyWater.completed = supplementMapCopy[daySelected].DailyWater.completed + ml;
+        userCopy.data.supplementMap = { ...supplementMapCopy };
+
+        updateSupplementMap(supplementMapCopy);
+        saveUserData(userCopy, updateUserData, supplementMapCopy);
+        updateUserData(userCopy);
+    }
+
+    function getWaterPercent() {
+        return Math.floor((waterCompleted/waterGoal)*100);
+    }
+
+    const treeMap: Record<number, string> = {
+        0: stageOne,
+        12: stageTwo,
+        25: stageThree,
+        37: stageFour,
+        55: stageFive,
+        70: stageSix,
+        85: stageSeven,
+        100: stageEight
+    };
+
+    function getTreeImg() {
+        const waterPercent = getWaterPercent();
+        const treeImgs = Object.keys(treeMap).map(level => {
+            if (+level < waterPercent || +level === waterPercent) {
+                return +level;
+            }
+        });
+        const filteredTrees = treeImgs.filter(tree => tree);
+        const lastElement = filteredTrees[filteredTrees.length-1];
+        if (!lastElement) {
+            return treeMap[0];
+        }
+        return treeMap[lastElement];
     }
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity>
+            <View style={{ flex: 1, flexDirection: "row" }}>
+                <TouchableOpacity onPress={() => updateModalVisible("water-modal")}>
                     <View style={[styles.card, { flexDirection: "row", backgroundColor: "#163059", padding: 1, paddingHorizontal: 20, borderRadius: 20, margin: 15 }]}>
                         <View style={styles.graphWrapper}>
-                            <Svg height="90" width="90" viewBox="0 0 180 180">
-                                <G rotation={-90} originX="90" originY="90">
-                                    <Circle
-                                        cx="50%"
-                                        cy="50%"
-                                        r={radius}
-                                        stroke="#F1F6F9"
-                                        fill="transparent"
-                                        strokeWidth="30"
-                                    />
-                                    <Circle
-                                        cx="50%"
-                                        cy="50%"
-                                        r={radius}
-                                        stroke="#016afb"
-                                        fill="transparent"
-                                        strokeWidth="30"
-                                        strokeDasharray={circleCircumference}
-                                        strokeDashoffset={waterLevel > 3000 ? 0 : strokeDashoffset}
-                                        strokeLinecap="butt"
-                                    />
-                                </G>
-                            </Svg>
-                            <Text style={styles.text}>{Math.floor(percentage)}%</Text>
+                            <AnimatedCircularProgress
+                                size={70}
+                                width={5}
+                                fill={(waterCompleted/waterGoal)*100}
+                                tintColor={"#36D1DC"}
+                                backgroundColor="#3d5875" 
+                                arcSweepAngle={250}
+                                rotation={235}
+                            />
+                            <Text style={styles.text}>{getWaterPercent()}%</Text>
                         </View>
-                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${spentAmount} ml\n`}/{`${targetAmount} ml`}</Text>
+                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${waterCompleted} ml\n`}/{`${waterGoal} ml`}</Text>
                     </View>
                 </TouchableOpacity>
                 <Carousel
@@ -81,7 +110,7 @@ export default function WaterScreen(): JSX.Element {
                     layoutCardOffset={9}
                 />
             </View>
-            <Image source={{ uri: "https://i.imgur.com/uBj2FiH.png" }} style={{ height: 200, width: 200 }} />
+            <Image source={{ uri: getTreeImg() }} style={{ height: 200, width: 200 }} />
         </View>
     );
 }

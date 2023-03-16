@@ -17,7 +17,6 @@ export default function MainExplorePage({ setExpand }: {
     setExpand: (e: "none" | "Exercise" | "General Health" | "Brain Health" | "Bone and Joint" | "Anxiety/Sleep") => void
 }): JSX.Element {
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
     const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
@@ -39,7 +38,6 @@ export default function MainExplorePage({ setExpand }: {
 
     function onOpen() {
         updateModalVisible("disable-header");
-        updateShowButtons(false);
         modalizeRef.current?.open();
     }
 

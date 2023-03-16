@@ -85,7 +85,8 @@ export default function SettingsList(): JSX.Element {
             picture: penguinPic,
             data: {
                 supplementMap: {},
-                selectedDates: {}
+                selectedDates: {},
+                waterGoal: 2000
             },
             premiumStatus: true,
             achievements: ListOfAchievements
@@ -105,6 +106,8 @@ export default function SettingsList(): JSX.Element {
         Object.keys(userCopy.data.selectedDates).forEach(date => {
             delete userCopy.data.selectedDates[date];
         });
+
+        userCopy.data.waterGoal = 2000;
 
         updateUserData(userCopy);
         saveUserToPhone(userCopy);

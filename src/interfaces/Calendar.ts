@@ -1,8 +1,13 @@
 
 interface CalendarDotObject {
     [date: string]: {
-        dots: [{key: string, color: string}], selected: boolean
+        dots: Dot[], selected: boolean
     }
+}
+
+interface Dot {
+    key: string, 
+    color: string
 }
 
 export default CalendarDotObject;

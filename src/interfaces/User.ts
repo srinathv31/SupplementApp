@@ -11,6 +11,7 @@ interface User {
     data: {
         supplementMap: Record<string, SupplementMapObject>,
         selectedDates: CalendarDotObject,
+        waterGoal: number
     },
     premiumStatus: boolean,
     achievements: Achievement[],

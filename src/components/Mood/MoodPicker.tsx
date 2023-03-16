@@ -2,39 +2,30 @@
 import React, { useState } from "react";
 import { Dimensions } from "react-native";
 import DropDownPicker, { ItemType, DropDownDirectionType } from "react-native-dropdown-picker";
-import { MoodProps } from "../../interfaces/MoodProps";
+import shallow from "zustand/shallow";
 import useClientStore from "../../zustand/clientStore";
 
-export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
-    open: MoodProps["open"], setOpen: MoodProps["setOpen"],
+export default function MoodPicker({ dropDirection, mode }: {
     dropDirection: DropDownDirectionType, mode: "analysis" | "setting"
 }): JSX.Element {
     const updateMood = useClientStore(state => state.updateMood);
-
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const { openMoodPicker, updateOpenMoodPicker } = useClientStore(state => ({ openMoodPicker: state.openMoodPicker, updateOpenMoodPicker: state.updateOpenMoodPicker }), shallow);
 
     const { height: initialHeight } = Dimensions.get("window");
 
     const [value, setValue] = useState("");
     const [items, setItems] = useState([
-        { label: "Energetic", value: "Energetic" },
-        { label: "Focused", value: "Focused" },
-        { label: "Motivated", value: "Motivated" },
-        { label: "Peaceful", value: "Peaceful" },
-        { label: "Optimistic", value: "Optimistic" },
+        { label: "Happiness", value: "Happiness" },
+        { label: "Focus", value: "Focus" },
+        { label: "Productivity", value: "Productivity" },
+        { label: "Inner Peace", value: "Inner Peace" },
+        { label: "Energy", value: "Energy" },
         { label: "Calm", value: "Calm" },
-        { label: "Lively", value: "Lively" },
-        { label: "Relaxed", value: "Relaxed" },
-        { label: "Fatigued", value: "Fatigued" },
-        { label: "Unfocused", value: "Unfocused" },
-        { label: "Scatter Brained", value: "Scatter Brained" },
-        { label: "Anxious", value: "Anxious" },
-        { label: "Cynical", value: "Cynical" },
-        { label: "Discontented", value: "Discontented" },
-        { label: "Irritability", value: "Irritability" },
-        { label: "Difficulty Sleeping", value: "Difficulty Sleeping" },
-        { label: "Unmotivated", value: "Unmotivated" },
-        { label: "Depressed", value: "Depressed" },
+        { label: "Patience", value: "Patience" },
+        { label: "Optimism", value: "Optimism" },
+        { label: "Emotional Stability", value: "Emotional Stability" },
+        { label: "Creativity", value: "Creativity" },
     ]);
 
     function addMood(item: ItemType) {
@@ -48,10 +39,10 @@ export default function MoodPicker({ open, setOpen, dropDirection, mode }: {
     
     return(
         <DropDownPicker
-            open={open}
+            open={openMoodPicker}
             value={value}
             items={items}
-            setOpen={() => setOpen(!open)}
+            setOpen={() => updateOpenMoodPicker(!openMoodPicker)}
             setItems={setItems}
             setValue={() => setValue}
             theme="DARK"

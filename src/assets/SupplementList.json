@@ -324,7 +324,18 @@
     "benefits": "",
     "safe": "",
     "sideEffects": "",
-    "url": "https://www.webmd.com/diet/health-benefits-nac#1",
+    "url": "https://examine.com/supplements/n-acetylcysteine/",
+    "dosageMetric": "mg",
+    "categories": []
+},
+{
+    "name": "Green Tea Extract",
+    "smallDescription": "Green tea extract contains phytochemicals, especially catechins like epigallocatechin gallate(EGCG) and caffeine. EGCG and caffeine have been shown to synergistically influence health indices.",
+    "description": "",
+    "benefits": "",
+    "safe": "",
+    "sideEffects": "",
+    "url": "https://examine.com/supplements/green-tea-extract/",
     "dosageMetric": "mg",
     "categories": []
 }

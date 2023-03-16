@@ -1,5 +1,6 @@
 import firestore from "@react-native-firebase/firestore";
 import User from "../../interfaces/User";
+import { grabProfilePictureFromCloud } from "./saveProfilePicture";
 import { saveUserToPhone } from "./saveUserData";
 
 export async function checkForCloudSave(uid: string) {
@@ -7,7 +8,7 @@ export async function checkForCloudSave(uid: string) {
     return doesExist;
 }
 
-export async function grabCloudSave(uid: string, userData: User, setUserData: (u: User) => void) {
+export async function grabCloudSave(uid: string, userData: User) {
 
     const cloudData = (await firestore().collection("alpha-users").doc(uid).get()).data() as User;
     
@@ -18,13 +19,16 @@ export async function grabCloudSave(uid: string, userData: User, setUserData: (u
         picture: cloudData.picture,
         data: {
             supplementMap: cloudData.data.supplementMap,
-            selectedDates: cloudData.data.selectedDates
+            selectedDates: cloudData.data.selectedDates,
+            waterGoal: !cloudData.data.waterGoal ? 2000 : cloudData.data.waterGoal
         },
         premiumStatus: cloudData.premiumStatus,
         achievements: cloudData.achievements,
         userAuthObj: userData.userAuthObj
     };
     console.log("GRABBING FROM CLOUD...");
+    const url = await grabProfilePictureFromCloud(userToLoad);
+    userToLoad.picture = url;
     saveUserToPhone(userToLoad);
-    setUserData(userToLoad);
+    return userToLoad;
 }

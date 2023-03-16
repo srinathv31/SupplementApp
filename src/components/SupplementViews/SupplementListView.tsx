@@ -25,7 +25,6 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const multipleAddMode = useClientStore(state => state.multipleAddMode);
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const index = useClientStore(state => state.index);
     const daySelected = useClientStore(state => state.daySelected);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow);
@@ -36,7 +35,6 @@ export default function SupplementListView({ fontSizeNumber, query }: {
     const modalizeRef = useRef<Modalize>(null);
     const onOpen = () => {
         updateModalVisible("disable-header");
-        updateShowButtons(false);
         modalizeRef.current?.open();
     };
 
@@ -44,7 +42,7 @@ export default function SupplementListView({ fontSizeNumber, query }: {
         const supplementMapCopy = { ...supplementMap };
         
         if (supplementMapCopy[daySelected] === undefined){
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
         }
         
         supplementMapCopy[daySelected].SupplementSchedule.push({ Supplement: item, time: "", taken: "not-taken" });

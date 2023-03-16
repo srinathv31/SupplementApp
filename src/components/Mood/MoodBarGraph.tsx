@@ -1,7 +1,7 @@
 // Source Imports
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar } from "victory-native";
+import { VictoryChart, VictoryTheme, VictoryAxis, VictoryBar, VictoryLine } from "victory-native";
 import useClientStore from "../../zustand/clientStore";
 
 export default function MoodBarGraph({ graphType }: {
@@ -99,6 +99,15 @@ export default function MoodBarGraph({ graphType }: {
         return tickFormatList;
     }
 
+    function grabMoodForEachDay() {
+        const dataList: { time: string, intensity: number }[] = [];
+        week.forEach(day => {
+            const moodValue = !supplementMap[day.dateString] ? 0 : supplementMap[day.dateString].DailyMood["Focus"].range;
+            dataList.push({ time: day.dateString, intensity: moodValue });
+        });
+        return dataList;
+    }
+
     return(
         <View style={styles.container}>
             <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>{daySelected}</Text>
@@ -119,11 +128,24 @@ export default function MoodBarGraph({ graphType }: {
                     tickFormat={(x) => (`${x}`)}
                     style={{ grid : { stroke: "silver" }, axis: { stroke: "white" }, tickLabels: { fill: "white" } }}
                 />
+                {/* <VictoryLine
+                    style={{
+                        data: { stroke: "#c43a31" },
+                        parent: { border: "1px solid #ccc" }
+                    }}
+                    data={[
+                        { x: "2/20/2023", y: 1 },
+                        { x: "2/20/2023", y: 4 },
+                        { x: "2/20/2023", y: 2 },
+                        { x: "2/20/2023", y: "2/23/2023" },
+                        { x: "2/20/2023", y: "2/24/2023" }
+                    ]}
+                /> */}
                 <VictoryBar
                     animate={{ duration: 500 }}
-                    data={grabGraph()}
-                    x="quarter"
-                    y="earnings"
+                    data={grabMoodForEachDay()}
+                    x="time"
+                    y="intensity"
                     style={{ data: { fill: "#04d9ff" } }}
                     cornerRadius={10}
                 />

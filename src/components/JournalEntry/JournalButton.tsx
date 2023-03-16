@@ -8,6 +8,7 @@ import useClientStore from "../../zustand/clientStore";
 export default function JournalButton({ setJournalText }: {
     setJournalText: (j: string) => void
 }): JSX.Element {
+    const userData = useClientStore(state => state.userData);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
@@ -16,7 +17,7 @@ export default function JournalButton({ setJournalText }: {
         const supplementMapCopy = { ...supplementMap };
 
         if (supplementMapCopy[daySelected] === undefined) {
-            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: [] };
+            supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
         }
         if (supplementMapCopy[daySelected].JournalEntry === "") {
             setJournalText("");

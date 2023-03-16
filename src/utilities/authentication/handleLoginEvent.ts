@@ -16,7 +16,7 @@ export async function handleLoginButton(updatePage: ClientState["updatePage"], u
 
     if (cloudSaveExists === true) {
         console.log("cloud exists... loading cloud data...");
-        grabCloudSave(""+userData.userAuthObj?.uid, userData, setUserData)
+        grabCloudSave(""+userData.userAuthObj?.uid, userData)
             .then(() => updatePage("loading-screen"));
         return;
     }

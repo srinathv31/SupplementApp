@@ -56,7 +56,7 @@ export default function StatsBoxes(): JSX.Element {
         let count = 0;
 
         Object.keys(supplementMapCopy).forEach(day => {
-            if(supplementMapCopy[day].DailyMood.length > 0){
+            if(Object.keys(supplementMapCopy[day].DailyMood).length > 0){
                 count++;
             }
         });

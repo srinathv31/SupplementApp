@@ -1,7 +1,7 @@
 import create from "zustand";
 import { devtools } from "zustand/middleware";
 import { Achievement, ListOfAchievements } from "../interfaces/Achievements";
-import { ModalType, PageType } from "../interfaces/AppTypes";
+import { ModalType, PageCategory, PageType } from "../interfaces/AppTypes";
 import getCurrentDate, { generateCurrentDateObject, initializeMonth, initializeWeek } from "../utilities/getCurrentDate";
 import { SupplementMapObject, SupplementObject } from "../interfaces/Supplement";
 import { selectedSupplementDefaultValue, userDefaultValue } from "../interfaces/DefaultValues";
@@ -14,8 +14,6 @@ export interface ClientState {
     updateUserData: (newUser: User) => void,
     index: number;
     updateIndex: (newIdx: number) => void;
-    showButtons: boolean,
-    updateShowButtons: (status: boolean) => void,
     multipleAddMode: boolean,
     updateMultipleAddMode: (status: boolean) => void,
     modalVisible: ModalType,
@@ -39,7 +37,11 @@ export interface ClientState {
     supplementMap: Record<string, SupplementMapObject>,
     updateSupplementMap: (map: Record<string, SupplementMapObject>) => void,
     page: PageType,
-    updatePage: (newPage: PageType) => void
+    updatePage: (newPage: PageType) => void,
+    openMoodPicker: boolean,
+    updateOpenMoodPicker: (status: boolean) => void,
+    categorySelect: PageCategory,
+    updateCategorySelect: (page: PageCategory) => void
 }
 
 const useClientStore = create<ClientState>()(
@@ -49,14 +51,10 @@ const useClientStore = create<ClientState>()(
             updateUserData: (newUser) => set({ userData: newUser }),
             index: 1,
             updateIndex: (newIdx) => set(() => ({ index: newIdx })),
-            showButtons: false,
-            updateShowButtons: (status) => set(() => ({ showButtons: status })),
             multipleAddMode: false,
             updateMultipleAddMode: (status) => set(() => ({ multipleAddMode: status })),
             modalVisible: "hide-modal",
             updateModalVisible: (modal) => set(() => ({ modalVisible: modal })),
-            // monthText: grabMonth(week),
-            // setMonthText: (month) => set(() => ({ monthText: month })),
             swipeAnimation: "fadeIn",
             updateSwipeAnimation: (anim) => set({ swipeAnimation: anim }),
             mood: "",
@@ -76,7 +74,11 @@ const useClientStore = create<ClientState>()(
             supplementMap: {},
             updateSupplementMap: (map) => set({ supplementMap: map }),
             page: "login-screen",
-            updatePage: (newPage) => set({ page: newPage })
+            updatePage: (newPage) => set({ page: newPage }),
+            openMoodPicker: false,
+            updateOpenMoodPicker: (status) => set({ openMoodPicker: status }),
+            categorySelect: "Home",
+            updateCategorySelect: (page) => set({ categorySelect: page })
         }),
         {
             name: "client-storage",

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { LogBox, Route, SafeAreaView, StatusBar, useWindowDimensions, View } from "react-native";
 import { TabView } from "react-native-tab-view";
 import HeaderWindow from "../components/HomePage/HeaderWindow";
-import MoodAnalysis from "../components/Mood/MoodAnalysis";
 import SupplementModal from "../components/SupplementViews/SupplementModal";
 import BottomMenuTab from "../components/Menus/BottomMenuTab";
 import { checkForSave } from "../utilities/saveLoadFunctions/storageChecker";
@@ -18,6 +17,7 @@ import saveUserData, { saveUserToPhone } from "../utilities/saveLoadFunctions/sa
 import { requestUserPermission } from "../utilities/authentication/notifications";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { grabCloudSave } from "../utilities/saveLoadFunctions/checkForCloudSave";
 LogBox.ignoreLogs(["Sending"]);
 
 export default function MainScreen(): JSX.Element {
@@ -25,7 +25,6 @@ export default function MainScreen(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const page = useClientStore(state => state.page);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
-    const updateShowButtons = useClientStore(state => state.updateShowButtons);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const modalVisible = useClientStore(state => state.modalVisible);
     const index = useClientStore(state => state.index);
@@ -34,7 +33,21 @@ export default function MainScreen(): JSX.Element {
 
     // UseEffect loads in saved data from phone on App Load once
     useEffect(() => {
-        checkForSave(userData, updateUserData, updateCompletedAchievements, updateSupplementMap);
+        checkForSave(userData)
+            .then(loadedUserData => {
+                if (!loadedUserData) {
+                    grabCloudSave(""+userData.userAuthObj?.uid, userData)
+                        .then(user => {
+                            updateUserData({ ...user });
+                            updateSupplementMap({ ...user.data.supplementMap });
+                            updateCompletedAchievements([ ...user.achievements ]);
+                        });
+                    return;
+                }
+                updateUserData({ ...loadedUserData });
+                updateSupplementMap({ ...loadedUserData.data.supplementMap });
+                updateCompletedAchievements([ ...loadedUserData.achievements ]);
+            });
     }, []);
 
     // Checks login time for achievements
@@ -68,7 +81,6 @@ export default function MainScreen(): JSX.Element {
         { key: "cal", title: "Calendar" },
         { key: "home", title: "Home" },
         { key: "supp", title: "Supplements" },
-        { key: "work", title: "Workouts" },
     ]);
     const layout = useWindowDimensions();
 
@@ -87,8 +99,6 @@ export default function MainScreen(): JSX.Element {
             return <CalendarRoute />;
         case "supp":
             return <SupplementInfoPage />;
-        case "work":
-            return <MoodAnalysis />;
         default:
             return null;
         }
@@ -112,7 +122,6 @@ export default function MainScreen(): JSX.Element {
                                 initialLayout={{ width: layout.width }}
                                 tabBarPosition="bottom"
                                 renderTabBar={() => <BottomMenuTab />}
-                                onSwipeEnd={() => updateShowButtons(false)}
                             /></> }
                     </View>
                 </View>

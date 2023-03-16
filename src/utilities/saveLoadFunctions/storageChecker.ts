@@ -5,39 +5,38 @@ import { generateCurrentDateObject } from "../getCurrentDate";
 import { saveDataToCloud } from "./saveDataToCloud";
 import { ClientState } from "../../zustand/clientStore";
 
-export const checkForSave = async (userData: ClientState["userData"], setUserData: ClientState["updateUserData"], updatedCompletedAchievements: ClientState["updatedCompletedAchievements"], updateSupplementMap: ClientState["updateSupplementMap"]) => {
+export const checkForSave = async (userData: ClientState["userData"]) => {
     const userCopy = { ...userData };
     try {
         const jsonValue = await AsyncStorage.getItem(""+userCopy.userAuthObj?.uid);
 
-        if (jsonValue != null) {
-            // Parsing saved data
-            const parsedJsonValue = JSON.parse(jsonValue) as User;
-            const adjustedSelectedDates = adjustSelectedDates(parsedJsonValue.data.selectedDates);
-
-            // Setting saved data to User useState
-            userCopy.name = parsedJsonValue.name;
-            userCopy.lastName = parsedJsonValue.lastName;
-            userCopy.age = parsedJsonValue.age;
-            userCopy.premiumStatus = parsedJsonValue.premiumStatus;
-            userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
-            userCopy.data.selectedDates = adjustedSelectedDates;
-            userCopy.picture = parsedJsonValue.picture;
-            userCopy.achievements = parsedJsonValue.achievements;
-
-            setUserData(userCopy);
-
-            saveDataToCloud(userCopy);
-
-            updatedCompletedAchievements(parsedJsonValue.achievements);
-            updateSupplementMap(parsedJsonValue.data.supplementMap);
+        if (!jsonValue) {
+            return null;
         }
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
+
+        console.log("Loading from local save");
+        // Parsing saved data
+        const parsedJsonValue = JSON.parse(jsonValue) as User;
+        const adjustedSelectedDates = adjustSelectedDates(parsedJsonValue.data.selectedDates);
+
+        // Setting saved data to User useState
+        userCopy.name = parsedJsonValue.name;
+        userCopy.lastName = parsedJsonValue.lastName;
+        userCopy.age = parsedJsonValue.age;
+        userCopy.premiumStatus = parsedJsonValue.premiumStatus;
+        userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
+        userCopy.data.selectedDates = { ...adjustedSelectedDates };
+        userCopy.data.waterGoal = !parsedJsonValue.data.waterGoal ? 2000 : parsedJsonValue.data.waterGoal;
+        userCopy.picture = parsedJsonValue.picture;
+        userCopy.achievements = parsedJsonValue.achievements;
+
+        saveDataToCloud(userCopy);
+
+        return userCopy as User;
     } catch(e) {
         console.log(e);
+        return null;
     }
-    
-    console.log("Done.");
 };
 
 const adjustSelectedDates = (selectedDates: CalendarDotObject) => {
@@ -52,10 +51,9 @@ const adjustSelectedDates = (selectedDates: CalendarDotObject) => {
     Object.keys(selectedDatesCopy).forEach(date => {
         if (date !== todayDate.dateString) {
             selectedDatesCopy[date].selected = false;
-        } else {
-            selectedDatesCopy[date].selected = true;
         }
     });
+    selectedDatesCopy[todayDate.dateString].selected = true;
     return selectedDatesCopy;
 
 };

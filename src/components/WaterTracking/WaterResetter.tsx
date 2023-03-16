@@ -1,40 +1,34 @@
 // Source Imports
 import React, { useState } from "react";
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import IconM from "react-native-vector-icons/MaterialIcons";
 import Slider from "@react-native-community/slider";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
+import IconM from "react-native-vector-icons/MaterialIcons";
 import shallow from "zustand/shallow";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { moodDot } from "../../utilities/calendarDots";
-import removeEmptyDotObjects from "../../utilities/removeEmptyDotObjects";
-import { SupplementMapObject } from "../../interfaces/Supplement";
-import User from "../../interfaces/User";
-import { DateData } from "react-native-calendars/src/types";
 
-export default function MoodSlider(): JSX.Element {
+export default function WaterResetter(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
-    const mood = useClientStore(state => state.mood);
     const daySelected = useClientStore(state => state.daySelected);
-    const objDaySelected = useClientStore(state => state.objDaySelected);
 
-    const [rangeValue, setRangeValue] = useState<number>(1);
+    const [rangeValue, setRangeValue] = useState<number>(!supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed);
     
+    const waterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
+
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
+        const userCopy = { ...userData };
 
         if (supplementMapCopy[daySelected] === undefined){
             supplementMapCopy[daySelected] = { SupplementSchedule: [], JournalEntry: "", DailyMood: {}, DailyWater: { completed: 0, goal: userData.data.waterGoal } };
         }
 
-        // Add Mood + Range
-        supplementMapCopy[daySelected].DailyMood[mood] = { mood: mood, range: rangeValue };
-
-        // update calendar
-        const userCopy = addDate(userData, objDaySelected, supplementMapCopy);
+        // Add Water to SupplementMap
+        supplementMapCopy[daySelected].DailyWater.completed = rangeValue;
+        userCopy.data.supplementMap = { ...supplementMapCopy };
 
         updateSupplementMap(supplementMapCopy);
         saveUserData(userCopy, updateUserData, supplementMapCopy);
@@ -43,74 +37,50 @@ export default function MoodSlider(): JSX.Element {
         updateModalVisible("hide-modal");
     }
 
-    function addDate(userData: User, day: DateData, supplementMap: Record<string, SupplementMapObject>) {
-        const userCopy: User = { ...userData };
-        const stringDate = day.dateString;
-        
-        if (Object.values(supplementMap[daySelected].DailyMood).length > 0){
-            if (userCopy.data.selectedDates[stringDate] === undefined) {
-                userCopy.data.selectedDates[stringDate] = { dots:[], selected: false };
-            }
-            if (userCopy.data.selectedDates[stringDate].dots.length === 0 || !userCopy.data.selectedDates[stringDate].dots.find(dot => dot.key === "moodCheck")){
-                userCopy.data.selectedDates[stringDate].dots.push(moodDot);
-            }
-            userCopy.data.selectedDates[stringDate].dots = removeEmptyDotObjects(userCopy.data.selectedDates, stringDate);
-        }
-        return userCopy;
-    }
-
-    const ratingColorMap: Record<number, string> = {
-        1: "orange",
-        2: "yellow",
-        3: "#00e0ff",
-        4: "#38ef7d",
-        5: "lime"
-    };
-
     return(
         <Modal
             animationType="slide"
             transparent={true}
-            visible={modalVisible === "mood-modal"}
+            visible={modalVisible === "water-reset-modal"}
             onRequestClose={() => {
                 updateModalVisible("hide-modal");
             }}
+            onDismiss={() => setRangeValue(0)}
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <TouchableOpacity onPress={() => updateModalVisible("hide-modal")} style={styles.icon}>
-                        <IconM name="info-outline" size={20} color="white" />
+                        <IconM name="cancel" size={20} color="white" />
                     </TouchableOpacity>
                     <View style={styles.graphWrapper}>
                         <AnimatedCircularProgress
-                            size={70}
-                            width={5}
-                            fill={(rangeValue/5)*100}
-                            tintColor={ratingColorMap[rangeValue]}
-                            backgroundColor="#3d5875" 
-                            arcSweepAngle={250}
-                            rotation={235}
-                        />
-                        <Text style={styles.text}>{rangeValue}</Text>
+                            size={200}
+                            width={3}
+                            backgroundWidth={30}
+                            fill={(rangeValue/waterGoal)*100}
+                            tintColor="#00e0ff"
+                            backgroundColor="#3d5875"
+                        >
+                            {fill => <Text style={styles.points}>{Math.round((waterGoal * fill) / 100)}ml</Text>}
+                        </AnimatedCircularProgress>
                     </View>
-                    <Text style={styles.modalText}>Choose Intensity for</Text>
-                    <Text style={styles.modalText}>{mood}</Text>
                     <Slider
                         style={{ width: "100%", height: 70 }}
-                        minimumValue={1}
-                        maximumValue={5}
+                        minimumValue={0}
+                        maximumValue={waterGoal}
                         minimumTrackTintColor="#2196F3"
                         maximumTrackTintColor="#FFFFFF"
                         tapToSeek
                         onValueChange={setRangeValue}
                         value={rangeValue}
-                        step={1}
+                        step={10}
+                        vertical={true}
                     />
                     <Pressable
                         style={[styles.button, styles.buttonClose]}
                         onPress={() => handleSlider()}
                     >
-                        <Text style={styles.textStyle}>Set Mood</Text>
+                        <Text style={styles.textStyle}>Reset Water Level</Text>
                     </Pressable>
                 </View>
             </View>
@@ -171,8 +141,14 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "white",
     },
+    points: {
+        textAlign: "center",
+        color: "#eee",
+        fontSize: 40,
+        fontWeight: "100",
+    },
     icon: {
         position: "absolute",
-        margin: "5%",
-    },
+        margin: "5%"
+    }
 });

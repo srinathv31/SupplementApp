@@ -9,10 +9,11 @@ import { achievementUnlocked } from "../../utilities/handleAchievementEvents";
 import analytics from "@react-native-firebase/analytics";
 import useClientStore from "../../zustand/clientStore";
 import shallow from "zustand/shallow";
+import { PageCategory } from "../../interfaces/AppTypes";
 
 export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: {
     setModalizeRefStatus: (m: boolean) => void,
-    categorySelect: "Supplement Schedule"|"Food"|"Water"|"Exercise"|"Home"
+    categorySelect: PageCategory
 }): JSX.Element {
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
     const { completedAchievements, updateCompletedAchievements } = useClientStore(state => ({ completedAchievements: state.completedAchievements, updateCompletedAchievements: state.updatedCompletedAchievements }), shallow); 
@@ -51,28 +52,24 @@ export default function ExploreWindow({ setModalizeRefStatus, categorySelect }: 
         });
     }
 
-    function getColors(): string[] {
-        switch (categorySelect){
-        case "Home":
-        case "Supplement Schedule":
-            return ["#ee0979", "#ff6a00"];
-        case "Water":
-            return ["#36D1DC", "#5B86E5"];
-        }
-        return ["#ee0979", "#ff6a00"];
-    }
+    const colorMap: Record<PageCategory, string[]> = {
+        "Home": ["#ee0979", "#ff6a00"],
+        "Supplement Schedule": ["#ee0979", "#ff6a00"],
+        "Mood": ["#0AB1A2", "#38ef7d"],
+        "Water": ["#36D1DC", "#5B86E5"],
+        "Analysis": ["#8E2DE2", "#4A00E0"]
+    };
 
     return(
         <View style={{ flexDirection: "column", height: "25%",  margin: 10 }}>
             <TouchableOpacity onPress={() => handleTouch(SupplementList[randomSupplement])}>
-                <LinearGradient colors={getColors()} style={{ justifyContent: "space-evenly", borderRadius: 10, padding: 10, alignItems: "center", height: "100%" }} >
+                <LinearGradient colors={colorMap[categorySelect]} style={{ justifyContent: "space-evenly", borderRadius: 10, padding: 10, alignItems: "center", height: "100%" }} >
                     <Text style={{ fontSize: 26, fontWeight: "600" }}>Explore</Text>
                     <Text style={{ fontSize: 20, fontWeight: "500" }}>{SupplementList[randomSupplement].name}</Text>
                     <Divider length="small" color="black"></Divider>
-                    <Text style={{ fontSize: 18, textAlign: "center" }}>{SupplementList[randomSupplement].smallDescription}</Text>
+                    <Text style={{ fontSize: 18, textAlign: "center" }}>{SupplementList[randomSupplement].smallDescription.length > 100 ? SupplementList[randomSupplement].smallDescription.substring(0,100) + "..." : SupplementList[randomSupplement].smallDescription }</Text>
                 </LinearGradient>
             </TouchableOpacity>
         </View>
-
     );
 }
