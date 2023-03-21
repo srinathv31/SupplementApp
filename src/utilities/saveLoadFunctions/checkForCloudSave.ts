@@ -1,6 +1,5 @@
 import firestore from "@react-native-firebase/firestore";
 import User from "../../interfaces/User";
-import { grabProfilePictureFromCloud } from "./saveProfilePicture";
 import { saveUserToPhone } from "./saveUserData";
 
 export async function checkForCloudSave(uid: string) {
@@ -16,7 +15,7 @@ export async function grabCloudSave(uid: string, userData: User) {
         name: cloudData.name,
         lastName: cloudData.lastName,
         age: cloudData.age,
-        picture: cloudData.picture,
+        picture: !["dog", "mountain", "skyline" ].includes(cloudData.picture) ? "dog" : cloudData.picture,
         data: {
             supplementMap: cloudData.data.supplementMap,
             selectedDates: cloudData.data.selectedDates,
@@ -27,8 +26,8 @@ export async function grabCloudSave(uid: string, userData: User) {
         userAuthObj: userData.userAuthObj
     };
     console.log("GRABBING FROM CLOUD...");
-    const url = await grabProfilePictureFromCloud(userToLoad);
-    userToLoad.picture = url;
+    // const url = await grabProfilePictureFromCloud(userToLoad);
+    // userToLoad.picture = url;
     saveUserToPhone(userToLoad);
     return userToLoad;
 }

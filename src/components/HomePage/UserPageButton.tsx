@@ -1,9 +1,8 @@
 // Source Imports
 import React from "react";
-import { ActivityIndicator, Image, Pressable, View } from "react-native";
-import { useQuery } from "react-query";
+import { Image, Pressable, View } from "react-native";
 import shallow from "zustand/shallow";
-import { grabProfilePictureFromCloud } from "../../utilities/saveLoadFunctions/saveProfilePicture";
+import profileImages from "../../assets/profilePics/profilePics";
 import useClientStore from "../../zustand/clientStore";
 
 
@@ -11,16 +10,10 @@ export default function UserPageButton(): JSX.Element {
     const userData = useClientStore(state => state.userData);
     const { updateModalVisible, modalVisible } = useClientStore(state => ({ updateModalVisible: state.updateModalVisible, modalVisible: state.modalVisible }), shallow);
 
-    const { data } = useQuery(["profile-pic"], () => grabProfilePictureFromCloud(userData));
+    // const { data } = useQuery(["profile-pic"], () => grabProfilePictureFromCloud(userData));
 
     function buttonHandle(){
         updateModalVisible("user-modal");
-    }
-
-    if (!data) {
-        return (
-            <ActivityIndicator />
-        );
     }
 
     return(
@@ -29,7 +22,7 @@ export default function UserPageButton(): JSX.Element {
             disabled={modalVisible === "disable-header"}
         >
             <View style={{ borderRadius: 30, overflow: "hidden", margin: 20 }}>
-                <Image source={{ uri: data }} style={{ width: 40, height: 40 }} />
+                <Image source={profileImages[userData.picture]} style={{ width: 40, height: 40 }} />
             </View>
         </Pressable>
     );
