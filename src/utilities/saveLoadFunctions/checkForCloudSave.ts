@@ -1,7 +1,6 @@
 import firestore from "@react-native-firebase/firestore";
 import User from "../../interfaces/User";
 import { saveUserToPhone } from "./saveUserData";
-import { produce } from "immer";
 
 export async function checkForCloudSave(uid: string) {
     const doesExist = (await firestore().collection("alpha-users").doc(uid).get()).exists;
