@@ -86,7 +86,8 @@ export default function SettingsList(): JSX.Element {
             data: {
                 supplementMap: {},
                 selectedDates: {},
-                waterGoal: 2000
+                waterGoal: 2000,
+                selectedUnits: "ml"
             },
             premiumStatus: true,
             achievements: ListOfAchievements

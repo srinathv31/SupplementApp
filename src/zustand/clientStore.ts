@@ -41,7 +41,9 @@ export interface ClientState {
     openMoodPicker: boolean,
     updateOpenMoodPicker: (status: boolean) => void,
     categorySelect: PageCategory,
-    updateCategorySelect: (page: PageCategory) => void
+    updateCategorySelect: (page: PageCategory) => void,
+    selectedUnits: "ml" | "oz",
+    updateSelectedUnits: (units: "ml" | "oz") => void,
 }
 
 const useClientStore = create<ClientState>()(
@@ -78,7 +80,16 @@ const useClientStore = create<ClientState>()(
             openMoodPicker: false,
             updateOpenMoodPicker: (status) => set({ openMoodPicker: status }),
             categorySelect: "Home",
-            updateCategorySelect: (page) => set({ categorySelect: page })
+            updateCategorySelect: (page) => set({ categorySelect: page }),
+            selectedUnits: "ml",
+            // updateSelectedUnits: (unit) => set(produce((state: ClientState) => { 
+            //     state.userData.data.selectedUnits = unit;
+            //     state.selectedUnits = unit; 
+            // })),
+            updateSelectedUnits: (unit) => set((state) => ({
+                userData: { ...state.userData, data:{ ...state.userData.data, selectedUnits: unit } },
+                selectedUnits: unit
+            })),
         }),
         {
             name: "client-storage",

@@ -32,6 +32,8 @@ export default function HomePage(): JSX.Element {
     const updateMultipleAddMode = useClientStore(state => state.updateMultipleAddMode);
     const objDaySelected = useClientStore(state => state.objDaySelected);
     const categorySelect = useClientStore(state => state.categorySelect);
+    const updateSelectedUnits = useClientStore(state => state.updateSelectedUnits);
+    const selectedUnits = useClientStore(state => state.selectedUnits);
 
     const [supplementsToUpdateStatus, setSupplementsToUpdateStatus] = useState<SupplementObject[]>([]);
 
@@ -57,6 +59,16 @@ export default function HomePage(): JSX.Element {
         // Removed disable-header only for home web page so status-check-modal can work
         // updateModalVisible("disable-header");
         modalizeRef.current?.open();
+    }
+
+    function toggleUnits() {
+        if (categorySelect !== "Water") {
+            return;
+        }
+
+        selectedUnits === "ml" 
+            ? updateSelectedUnits("oz")
+            : updateSelectedUnits("ml");
     }
     
     const pageMap: Record<PageCategory, JSX.Element> = {
@@ -92,9 +104,11 @@ export default function HomePage(): JSX.Element {
                 <TouchableOpacity style={{ padding: 8, alignSelf: "flex-start", position: "absolute", left: "3%" }}>
                     {leftIconMap[categorySelect]}
                 </TouchableOpacity>
-                <View style={{ alignItems: "center", justifyContent: "center" }}>
-                    <Text style={{ color: "white", fontSize: 20, padding: 10, alignSelf: "center" }}>{categorySelect}</Text>
-                </View>
+                <TouchableOpacity onPress={() => toggleUnits()} style={{ alignItems: "center", justifyContent: "center" }}>
+                    <Text style={{ color: "white", fontSize: 20, padding: 10, alignSelf: "center" }}>{
+                        categorySelect === "Water" ? `Water (${selectedUnits})` : categorySelect
+                    }</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={{ padding: 8, alignSelf: "flex-start", position: "absolute", right: "3%" }}>
                     {rightIconMap[categorySelect]}
                 </TouchableOpacity>

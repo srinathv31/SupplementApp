@@ -7,12 +7,14 @@ import IconM from "react-native-vector-icons/FontAwesome5";
 import CategoryBoxesStyles from "../../styles/CategoryBoxStyles";
 import { countDailySupplements } from "../../utilities/countDailySupplements";
 import useClientStore from "../../zustand/clientStore";
+import unitsConversion from "../../utilities/unitsConversion";
 
 export default function CategoryBoxes() {
     const userData = useClientStore(state => state.userData);
     const supplementMap = useClientStore(state => state.supplementMap);
     const daySelected = useClientStore(state => state.daySelected);
     const updateCategorySelect = useClientStore(state => state.updateCategorySelect);
+    const selectedUnits = useClientStore(state => state.selectedUnits);
 
     const categories1 = [
         { name: "Supplements", colors: ["#ee0979", "#ff6a00"], icon: "lightning-bolt", function: () => updateCategorySelect("Supplement Schedule") },
@@ -84,6 +86,9 @@ export default function CategoryBoxes() {
     const dailyWaterCompleted = !supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed;
     const dailyWaterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
 
+    const renderedWaterCompleted = unitsConversion(selectedUnits, dailyWaterCompleted);
+    const renderedWaterGoal = unitsConversion(selectedUnits, dailyWaterGoal);
+
     const moodCount = !supplementMap[daySelected] ? 0 : Object.keys(supplementMap[daySelected].DailyMood).length;
 
     return(
@@ -119,7 +124,7 @@ export default function CategoryBoxes() {
                                         <Text style={CategoryBoxesStyles.label}>{box.name}</Text>
                                         <IconI name={box.icon} style={{ color: "white", alignSelf: "center" }} size={70}></IconI>
                                         {box.name !== "Water" && <Text style={CategoryBoxesStyles.label}>{"Coming Soon"}</Text>}
-                                        {box.name === "Water" && <Text style={CategoryBoxesStyles.label}>{`${dailyWaterCompleted}/${dailyWaterGoal} ml`}</Text>}
+                                        {box.name === "Water" && <Text style={CategoryBoxesStyles.label}>{`${renderedWaterCompleted}/${renderedWaterGoal} ${selectedUnits}`}</Text>}
                                     </View>
                                 </LinearGradient>
                             </Animated.View>

@@ -7,16 +7,21 @@ import useClientStore from "../../zustand/clientStore";
 import IconM from "react-native-vector-icons/MaterialIcons";
 import shallow from "zustand/shallow";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import unitsConversion from "../../utilities/unitsConversion";
 
 export default function WaterResetter(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
-
+    const selectedUnits = useClientStore(state => state.selectedUnits);
+    
     const [rangeValue, setRangeValue] = useState<number>(!supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed);
     
     const waterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
+
+    const renderedRangeValue = unitsConversion(selectedUnits, rangeValue);
+    const renderedWaterGoal = unitsConversion(selectedUnits, waterGoal);
 
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
@@ -57,11 +62,11 @@ export default function WaterResetter(): JSX.Element {
                             size={200}
                             width={3}
                             backgroundWidth={30}
-                            fill={(rangeValue/waterGoal)*100}
+                            fill={(renderedRangeValue/renderedWaterGoal)*100}
                             tintColor="#00e0ff"
                             backgroundColor="#3d5875"
                         >
-                            {fill => <Text style={styles.points}>{Math.round((waterGoal * fill) / 100)}ml</Text>}
+                            {fill => <Text style={styles.points}>{Math.round((renderedWaterGoal * fill) / 100)}{selectedUnits}</Text>}
                         </AnimatedCircularProgress>
                     </View>
                     <Slider

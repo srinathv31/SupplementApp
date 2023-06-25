@@ -7,15 +7,20 @@ import useClientStore from "../../zustand/clientStore";
 import IconM from "react-native-vector-icons/MaterialIcons";
 import shallow from "zustand/shallow";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import unitsConversion from "../../utilities/unitsConversion";
 
 export default function WaterAdder(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
     const { supplementMap, updateSupplementMap } = useClientStore(state => ({ supplementMap: state.supplementMap, updateSupplementMap: state.updateSupplementMap }), shallow);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
     const daySelected = useClientStore(state => state.daySelected);
+    const selectedUnits = useClientStore(state => state.selectedUnits);
 
     const [rangeValue, setRangeValue] = useState<number>(10);
     
+    const renderedRangeValue = unitsConversion(selectedUnits, rangeValue);
+    const renderedMaxValue = unitsConversion(selectedUnits, 1000);
+
     function handleSlider() {
         const supplementMapCopy = { ...supplementMap };
         const userCopy = { ...userData };
@@ -54,11 +59,11 @@ export default function WaterAdder(): JSX.Element {
                             size={200}
                             width={3}
                             backgroundWidth={30}
-                            fill={(rangeValue/1000)*100}
+                            fill={(renderedRangeValue/renderedMaxValue)*100}
                             tintColor="#00e0ff"
                             backgroundColor="#3d5875"
                         >
-                            {fill => <Text style={styles.points}>{Math.round((1000 * fill) / 100)}ml</Text>}
+                            {fill => <Text style={styles.points}>{Math.round((renderedMaxValue * fill) / 100)}{selectedUnits}</Text>}
                         </AnimatedCircularProgress>
                     </View>
                     <Slider
