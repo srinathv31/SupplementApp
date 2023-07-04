@@ -12,14 +12,14 @@ import LoadingWebModal from "./LoadingWebModal";
 /**
  * info? - if true, shows about supplements. if false, shows web page of supplement
  */
-export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index, info }: WebModalProps): JSX.Element {
-    const [infoMode, setInfoMode] = useState<boolean>(!info ? false : true);
-
+export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index }: WebModalProps): JSX.Element {
     const webViewRef = useRef<WebView>(null);
     const { height: initialHeight } = Dimensions.get("window");
     const height = initialHeight;
     
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+
+    const [infoMode, setInfoMode] = useState<boolean>(true);
 
     function webModalClose() {
         if(setModalizeRefStatus !== undefined) {
@@ -38,7 +38,7 @@ export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index
 
     return(
         <View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.69} onClosed={() => webModalClose()} onClose={resetInfoState}>
+            <Modalize ref={modalizeRef} modalHeight={height*0.69} onClosed={() => webModalClose()} onClose={resetInfoState} >
                 {infoMode ? <AboutSupplementDetails setInfoMode={setInfoMode} /> : 
                     <View style={styles.webContainer}>
                         <WebView

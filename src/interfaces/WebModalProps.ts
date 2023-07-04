@@ -6,5 +6,4 @@ export interface WebModalProps {
     modalHeight?: number,
     setModalizeRefStatus?: (m: boolean) => void,
     index: number,
-    info?: boolean
 }

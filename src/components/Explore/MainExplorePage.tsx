@@ -72,7 +72,6 @@ export default function MainExplorePage({ setExpand }: {
                 url={selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
                 index={index}
-                info
             ></WebModal>
         </>
     );
