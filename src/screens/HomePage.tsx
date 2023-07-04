@@ -119,6 +119,7 @@ export default function HomePage(): JSX.Element {
                 url={selectedSupplement.Supplement.url}
                 setModalizeRefStatus={setModalizeRefStatus}
                 index={index}
+                info={true}
             ></WebModal>
         </View>
     );

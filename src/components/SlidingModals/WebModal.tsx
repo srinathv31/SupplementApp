@@ -1,13 +1,20 @@
 // Source Imports
-import React, { useRef } from "react";
-import { Dimensions, View } from "react-native";
+import React, { useRef, useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 
 import WebView from "react-native-webview";
 import { WebModalProps } from "../../interfaces/WebModalProps";
 import useClientStore from "../../zustand/clientStore";
+import AboutSupplementDetails from "./AboutSupplementDetails";
+import LoadingWebModal from "./LoadingWebModal";
 
-export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index }: WebModalProps): JSX.Element {
+/**
+ * info? - if true, shows about supplements. if false, shows web page of supplement
+ */
+export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index, info }: WebModalProps): JSX.Element {
+    const [infoMode, setInfoMode] = useState<boolean>(!info ? false : true);
+
     const webViewRef = useRef<WebView>(null);
     const { height: initialHeight } = Dimensions.get("window");
     const height = initialHeight;
@@ -23,16 +30,32 @@ export default function WebModal({ modalizeRef, url, setModalizeRefStatus, index
             updateModalVisible("hide-modal");            
         }
     }
+    
+    // Resetting infoMode whenever a new supplement is selected
+    const resetInfoState = () => {
+        setInfoMode(true);
+    };
 
     return(
         <View>
-            <Modalize ref={modalizeRef} modalHeight={height*0.65} onClosed={() => webModalClose()} >
-                <WebView
-                    ref={webViewRef}
-                    source={{ uri: url }}
-                    style={{ height }}
-                />
+            <Modalize ref={modalizeRef} modalHeight={height*0.69} onClosed={() => webModalClose()} onClose={resetInfoState}>
+                {infoMode ? <AboutSupplementDetails setInfoMode={setInfoMode} /> : 
+                    <View style={styles.webContainer}>
+                        <WebView
+                            ref={webViewRef}
+                            source={{ uri: url }}
+                            style={{ flex: 1 }}
+                            startInLoadingState={true}
+                            renderLoading={() => <LoadingWebModal />}
+                        />
+                    </View>}
             </Modalize>
         </View>
     );
 }
+
+const styles = StyleSheet.create({
+    webContainer: {
+        minHeight: "100%",
+    },
+});
