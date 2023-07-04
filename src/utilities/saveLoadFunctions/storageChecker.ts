@@ -17,18 +17,32 @@ export const checkForSave = async (userData: ClientState["userData"]) => {
         console.log("Loading from local save");
         // Parsing saved data
         const parsedJsonValue = JSON.parse(jsonValue) as User;
-        const adjustedSelectedDates = adjustSelectedDates(parsedJsonValue.data.selectedDates);
+
+        // TODO: Use immer method
+        // * Converting the mood object from the legacy to new mood object
+        const fixedLocalData = { ...parsedJsonValue };
+        Object.entries(fixedLocalData.data.supplementMap).forEach(([key, supplementObj]) => {
+        // If DailyWater object doesn't exist, that means we have to set the new water object manually
+            if (!supplementObj.DailyWater) {
+                fixedLocalData.data.supplementMap[key].DailyWater = { completed: 0, goal: 2000 };
+            }
+            if (Object.keys(supplementObj.DailyMood).some(moodKey => ["1", "2", "3"].includes(moodKey))) {
+                fixedLocalData.data.supplementMap[key].DailyMood = {};
+            }
+        });
+
+        const adjustedSelectedDates = adjustSelectedDates(fixedLocalData.data.selectedDates);
 
         // Setting saved data to User useState
-        userCopy.name = parsedJsonValue.name;
-        userCopy.lastName = parsedJsonValue.lastName;
-        userCopy.age = parsedJsonValue.age;
-        userCopy.premiumStatus = parsedJsonValue.premiumStatus;
-        userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
+        userCopy.name = fixedLocalData.name;
+        userCopy.lastName = fixedLocalData.lastName;
+        userCopy.age = fixedLocalData.age;
+        userCopy.premiumStatus = fixedLocalData.premiumStatus;
+        userCopy.data.supplementMap = fixedLocalData.data.supplementMap;
         userCopy.data.selectedDates = { ...adjustedSelectedDates };
-        userCopy.data.waterGoal = !parsedJsonValue.data.waterGoal ? 2000 : parsedJsonValue.data.waterGoal;
-        userCopy.picture = !["dog", "mountain", "skyline" ].includes(parsedJsonValue.picture) ? "dog" : parsedJsonValue.picture;
-        userCopy.achievements = parsedJsonValue.achievements;
+        userCopy.data.waterGoal = !fixedLocalData.data.waterGoal ? 2000 : fixedLocalData.data.waterGoal;
+        userCopy.picture = !["dog", "mountain", "skyline" ].includes(fixedLocalData.picture) ? "dog" : fixedLocalData.picture;
+        userCopy.achievements = fixedLocalData.achievements;
 
         saveDataToCloud(userCopy);
 

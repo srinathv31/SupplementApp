@@ -11,6 +11,7 @@ export async function grabCloudSave(uid: string, userData: User) {
 
     const cloudData = (await firestore().collection("alpha-users").doc(uid).get()).data() as User;
     
+    // TODO: use immer method
     // Checking for Water + Resetting moods from legacy Mood Object
     // const fixedCloudData = produce(cloudData, draft => {
     //     Object.entries(cloudData.data.supplementMap).forEach(([key, supplementObj]) => {
@@ -23,19 +24,31 @@ export async function grabCloudSave(uid: string, userData: User) {
     //     });
     // });
 
+    // * Converting the mood object from the legacy to new mood object
+    const fixedCloudData = { ...cloudData };
+    Object.entries(fixedCloudData.data.supplementMap).forEach(([key, supplementObj]) => {
+        // If DailyWater object doesn't exist, that means we have to set the new water object manually
+        if (!supplementObj.DailyWater) {
+            fixedCloudData.data.supplementMap[key].DailyWater = { completed: 0, goal: 2000 };
+        }
+        if (Object.keys(supplementObj.DailyMood).some(moodKey => ["1", "2", "3"].includes(moodKey))) {
+            fixedCloudData.data.supplementMap[key].DailyMood = {};
+        }
+    });
+
     const userToLoad: User = {
-        name: cloudData.name,
-        lastName: cloudData.lastName,
-        age: cloudData.age,
-        picture: !["dog", "mountain", "skyline" ].includes(cloudData.picture) ? "dog" : cloudData.picture,
+        name: fixedCloudData.name,
+        lastName: fixedCloudData.lastName,
+        age: fixedCloudData.age,
+        picture: !["dog", "mountain", "skyline" ].includes(fixedCloudData.picture) ? "dog" : fixedCloudData.picture,
         data: {
-            supplementMap: cloudData.data.supplementMap,
-            selectedDates: cloudData.data.selectedDates,
-            waterGoal: !cloudData.data.waterGoal ? 2000 : cloudData.data.waterGoal,
-            selectedUnits: !cloudData.data.selectedUnits ? "ml" : cloudData.data.selectedUnits
+            supplementMap: fixedCloudData.data.supplementMap,
+            selectedDates: fixedCloudData.data.selectedDates,
+            waterGoal: !fixedCloudData.data.waterGoal ? 2000 : fixedCloudData.data.waterGoal,
+            selectedUnits: !fixedCloudData.data.selectedUnits ? "ml" : fixedCloudData.data.selectedUnits
         },
-        premiumStatus: cloudData.premiumStatus,
-        achievements: cloudData.achievements,
+        premiumStatus: fixedCloudData.premiumStatus,
+        achievements: fixedCloudData.achievements,
         userAuthObj: userData.userAuthObj
     };
     console.log("GRABBING FROM CLOUD...");
