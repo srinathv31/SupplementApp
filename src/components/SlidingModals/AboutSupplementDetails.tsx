@@ -5,14 +5,12 @@ import Divider from "../Design/Divider";
 import useClientStore from "../../zustand/clientStore";
 
 export default function DailySupplementDetails({ setInfoMode }: {
-    setInfoMode?: React.Dispatch<React.SetStateAction<boolean>>
+    setInfoMode: React.Dispatch<React.SetStateAction<boolean>>
 }): JSX.Element {
     const selectedSupplement = useClientStore(state => state.selectedSupplement);
 
     const handleMoreInfo = () => {
-        if (setInfoMode) {
-            setInfoMode(false);
-        }
+        setInfoMode(false);
     };
 
     return(
