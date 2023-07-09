@@ -4,11 +4,11 @@ import { KeyboardAvoidingView, TouchableOpacity, StyleSheet, Text, View } from "
 import Divider from "../Design/Divider";
 import useClientStore from "../../zustand/clientStore";
 import IconI from "react-native-vector-icons/Ionicons";
-import IconE from "react-native-vector-icons/Entypo";
 import IconF from "react-native-vector-icons/FontAwesome";
 
 import { SupplementDetails, SupplementDetailsMap } from "../../interfaces/SupplementDetails";
 import SupplementDetailsJSON from "../../assets/SupplementDetails.json";
+import FoodRDAGraph from "./AboutSupplementView/FoodRDAGraph";
 const supplementDetailsMap: SupplementDetailsMap = SupplementDetailsJSON;
 
 export default function AboutSupplementDetails({ setInfoMode }: {
@@ -51,7 +51,7 @@ export default function AboutSupplementDetails({ setInfoMode }: {
             { "food": selectedSupplementDetails["Food 3"], "amt": selectedSupplementDetails["Food 3 Amount"] },
             { "food": selectedSupplementDetails["Food 4"], "amt": selectedSupplementDetails["Food 4 Amount"] },
             { "food": selectedSupplementDetails["Food 5"], "amt": selectedSupplementDetails["Food 5 Amount"] },
-        ] : [];
+        ].sort((item0, item1) => (+item1.amt)-(+item0.amt)) : [];
 
     return(
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
@@ -80,7 +80,9 @@ export default function AboutSupplementDetails({ setInfoMode }: {
                                 <Text style={{ color: "white", fontSize: 14, fontWeight: "bold" }}>{item.food}</Text>
                                 <Text style={{ color: "white", fontSize: 12, fontWeight: "300" }}>{item.amt} {selectedSupplementDetails.UOM}</Text>
                             </View>
-                            <IconE name="circular-graph" style={{ color: "white", width: "20%", textAlign: "right" }} size={23} />
+                            <View style={{ width: "20%" }}>
+                                <FoodRDAGraph foodRDA={+item.amt} totalRDA={+selectedSupplementDetails.RDA} />
+                            </View>
                         </View>
                     );
                 })}
