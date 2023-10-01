@@ -27,7 +27,7 @@ export const checkForSave = async (userData: ClientState["userData"]) => {
         userCopy.data.supplementMap = parsedJsonValue.data.supplementMap;
         userCopy.data.selectedDates = { ...adjustedSelectedDates };
         userCopy.data.waterGoal = !parsedJsonValue.data.waterGoal ? 2000 : parsedJsonValue.data.waterGoal;
-        userCopy.picture = parsedJsonValue.picture;
+        userCopy.picture = !["dog", "mountain", "skyline" ].includes(parsedJsonValue.picture) ? "dog" : parsedJsonValue.picture;
         userCopy.achievements = parsedJsonValue.achievements;
 
         saveDataToCloud(userCopy);

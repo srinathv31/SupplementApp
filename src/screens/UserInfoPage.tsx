@@ -10,14 +10,13 @@ import ProfilePictureList from "../components/User/ProfilePictureList";
 import CustomToast from "../components/Toast/customToast";
 import useClientStore from "../zustand/clientStore";
 import shallow from "zustand/shallow";
-import { useQuery } from "react-query";
-import { grabProfilePictureFromCloud } from "../utilities/saveLoadFunctions/saveProfilePicture";
+import profileImages from "../assets/profilePics/profilePics";
 
 export default function UserInfoPage(): JSX.Element {
     const userData = useClientStore(state => state.userData);
     const { modalVisible, updateModalVisible } = useClientStore(state => ({ modalVisible: state.modalVisible, updateModalVisible: state.updateModalVisible }), shallow);
 
-    const { data } = useQuery(["profile-pic"], () => grabProfilePictureFromCloud(userData));
+    // const { data } = useQuery(["profile-pic"], () => grabProfilePictureFromCloud(userData));
 
     const [changePictureMode, setChangePictureMode] = useState<boolean>(false);
 
@@ -71,7 +70,7 @@ export default function UserInfoPage(): JSX.Element {
                         <Text style={{ color: "white", fontSize: 28, textAlign: "center", padding: 10 }}>{`${generateGreeting()}${userData.name}`}</Text>
                         {!changePictureMode ? 
                             <View style={{ borderRadius: 30, overflow: "hidden" }}>
-                                <Image source={{ uri: data }} style={{ width: 80, height: 80 }}></Image>
+                                <Image source={profileImages[userData.picture]} style={{ width: 80, height: 80 }}></Image>
                             </View> :
                             <ProfilePictureList setChangePictureMode={setChangePictureMode} />}
                         <Icon onPress={() => createSettingsButtonAlert()}

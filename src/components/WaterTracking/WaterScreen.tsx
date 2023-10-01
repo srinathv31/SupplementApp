@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import useClientStore from "../../zustand/clientStore";
 import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
+import unitsConversion from "../../utilities/unitsConversion";
 
 export default function WaterScreen(): JSX.Element {
     const updateUserData = useClientStore(state => state.updateUserData);
@@ -16,10 +17,13 @@ export default function WaterScreen(): JSX.Element {
     const supplementMap = useClientStore(state => state.supplementMap);
     const daySelected = useClientStore(state => state.daySelected);
     const updateModalVisible = useClientStore(state => state.updateModalVisible);
+    const selectedUnits = useClientStore(state => state.selectedUnits);
 
     const waterCompleted = !supplementMap[daySelected] ? 0 : supplementMap[daySelected].DailyWater.completed;
     const waterGoal = !supplementMap[daySelected] ? userData.data.waterGoal : supplementMap[daySelected].DailyWater.goal;
 
+    const renderedWaterCompleted = unitsConversion(selectedUnits, waterCompleted);
+    const renderedWaterGoal = unitsConversion(selectedUnits, waterGoal);
 
     function addWater(ml: number){
         const supplementMapCopy = { ...supplementMap };
@@ -68,6 +72,8 @@ export default function WaterScreen(): JSX.Element {
         return treeMap[lastElement];
     }
 
+    const waterAddingUnits = [ { name: fiveHundredMl, ml: 500 }, { name: thousandMl, ml: 1000 }, { name: twoHundredMl, ml: 200 } ];
+
     return (
         <View style={styles.container}>
             <View style={{ flex: 1, flexDirection: "row" }}>
@@ -85,16 +91,16 @@ export default function WaterScreen(): JSX.Element {
                             />
                             <Text style={styles.text}>{getWaterPercent()}%</Text>
                         </View>
-                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${waterCompleted} ml\n`}/{`${waterGoal} ml`}</Text>
+                        <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${renderedWaterCompleted} ${selectedUnits}\n`}/{`${renderedWaterGoal} ${selectedUnits}`}</Text>
                     </View>
                 </TouchableOpacity>
                 <Carousel
-                    data={[ { name: fiveHundredMl, ml: 500 }, { name: thousandMl, ml: 1000 }, { name: twoHundredMl, ml: 200 } ]}
+                    data={waterAddingUnits}
                     renderItem= {({ item, index }) => {
                         return (
                             <View key={index} style={[styles.card, { flexDirection: "column", backgroundColor: "#163059", padding: 5, paddingHorizontal: 10, borderRadius: 20, marginRight: 25, justifyContent: "center" }]}>
                                 <TouchableOpacity onPress={() => (console.log(item.ml), addWater(item.ml))}>
-                                    <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${item.ml}ml+`}</Text>
+                                    <Text style={[styles.text, { position: "relative", alignSelf: "center" }]}>{`${unitsConversion(selectedUnits, item.ml)}${selectedUnits}+`}</Text>
                                     {item.name !== "cafe" ? 
                                         <Image source={{ uri: item.name }} style={{ height: 100, width: 50, alignSelf: "center", resizeMode: "cover" }}></Image> :
                                         <IconI name={item.name} size={55} style={{ height: 100, width: 50, color: "skyblue" }}></IconI>

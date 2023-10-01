@@ -5,6 +5,7 @@ import saveUserData from "../../utilities/saveLoadFunctions/saveUserData";
 import useClientStore from "../../zustand/clientStore";
 import IconM from "react-native-vector-icons/MaterialIcons";
 import shallow from "zustand/shallow";
+import unitsConversion, { ozToMl } from "../../utilities/unitsConversion";
 
 export default function WaterResetter(): JSX.Element {
     const { userData, updateUserData } = useClientStore(state => ({ userData: state.userData, updateUserData: state.updateUserData }), shallow);
@@ -13,6 +14,8 @@ export default function WaterResetter(): JSX.Element {
     const daySelected = useClientStore(state => state.daySelected);
 
     const [waterGoalInput, setWaterGoalInput] = useState<string>("");
+
+    const renderedWaterGoalInput = unitsConversion("oz", +waterGoalInput);
 
     function handleSubmit() {
         const supplementMapCopy = { ...supplementMap };
@@ -34,6 +37,11 @@ export default function WaterResetter(): JSX.Element {
         updateUserData(userCopy);
 
         updateModalVisible("hide-modal");
+    }
+
+    function updateRenderedInput(input: string) {
+        const mlInput = ozToMl(+input);
+        setWaterGoalInput(""+mlInput);
     }
 
     useEffect(() => {
@@ -59,16 +67,29 @@ export default function WaterResetter(): JSX.Element {
                         <IconM name="cancel" size={20} color="white" />
                     </TouchableOpacity>
                     <Text style={{ color: "white", fontSize: 24, textAlign: "center", fontWeight: "300" }}>{"Set Daily Water Goal"}</Text>
-                    <View style={styles.bar}>
-                        <TextInput
-                            style={[styles.input, { borderBottomColor: "#36D1DC" }]}
-                            onChangeText={setWaterGoalInput}
-                            value={waterGoalInput}
-                            placeholder="Goal (ml)"
-                            placeholderTextColor={"gray"}
-                            keyboardType="number-pad"
-                            returnKeyType="next"
-                        />
+                    <View style={{ flex: 1, flexDirection: "row", marginVertical: 50, width: "50%" }}>
+                        <View style={styles.bar}>
+                            <TextInput
+                                style={[styles.input, { borderBottomColor: "#36D1DC" }]}
+                                onChangeText={setWaterGoalInput}
+                                value={waterGoalInput}
+                                placeholder="Goal (ml)"
+                                placeholderTextColor={"gray"}
+                                keyboardType="number-pad"
+                                returnKeyType="next"
+                            />
+                        </View>
+                        <View style={styles.bar}>
+                            <TextInput
+                                style={[styles.input, { borderBottomColor: "#36D1DC" }]}
+                                onChangeText={updateRenderedInput}
+                                value={renderedWaterGoalInput !== 0 ? ""+renderedWaterGoalInput : ""}
+                                placeholder="Goal (oz)"
+                                placeholderTextColor={"gray"}
+                                keyboardType="number-pad"
+                                returnKeyType="next"
+                            />
+                        </View>
                     </View>
                     <Pressable
                         style={[styles.button, styles.buttonClose]}

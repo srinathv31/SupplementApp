@@ -48,7 +48,7 @@ export default function HeaderWindow(): JSX.Element {
     }
 
     return(
-        <View style={{ flexDirection: "row", justifyContent: "space-around", alignItems: "center" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
             <UserPageButton />
             <PrevDayButton />
             <TouchableOpacity onPress={() => goToPresentDay()} style={{ padding: 10 }}>
