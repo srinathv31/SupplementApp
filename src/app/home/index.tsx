@@ -24,6 +24,7 @@ export default function HomeScreen(): JSX.Element {
       <Pressable onPress={signOut}>
         <Text>Sign Out</Text>
       </Pressable>
+      <Link href="/(modals)/help">Help Modal</Link>
     </View>
   );
 }

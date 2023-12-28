@@ -54,11 +54,11 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen
           name="login/index"
-          options={{ headerShown: false, animation: "none" }}
+          options={{ headerShown: false, animation: "fade" }}
         />
         <Stack.Screen
           name="home/index"
-          options={{ headerShown: false, animation: "none" }}
+          options={{ headerShown: false, animation: "fade" }}
         />
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
