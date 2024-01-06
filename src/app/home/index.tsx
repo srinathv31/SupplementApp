@@ -1,38 +1,52 @@
-import { Pressable, StyleSheet } from "react-native";
-import { Text, View } from "../../components/Themed";
-import auth from "@react-native-firebase/auth";
-import { Link, router } from "expo-router";
+import { SafeAreaView, useWindowDimensions } from "react-native";
+import { TabView, SceneMap } from "react-native-tab-view";
+import { View } from "../../components/Themed";
+import { useState } from "react";
+import { useClientStore } from "../../zustand/store";
+import BottomMenuTab from "../../components/BottomMenuTab";
 
-export default function HomeScreen(): JSX.Element {
-  function signOut() {
-    auth()
-      .signOut()
-      .then(() => {
-        router.replace("/login/");
-      });
-  }
+const FirstRoute = () => (
+  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
+);
 
-  const username = auth().currentUser?.displayName;
-  const email = auth().currentUser?.email;
+const SecondRoute = () => (
+  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
+);
+
+const ThirdRoute = () => (
+  <View style={{ flex: 1, backgroundColor: "skyblue" }} />
+);
+
+const renderScene = SceneMap({
+  first: FirstRoute,
+  second: SecondRoute,
+  third: ThirdRoute,
+});
+
+export default function TabViewExample() {
+  const layout = useWindowDimensions();
+
+  const index = useClientStore((state) => state.index);
+  const updateIndex = useClientStore((state) => state.updateIndex);
+
+  const [routes] = useState([
+    { key: "first", title: "First" },
+    { key: "second", title: "Second" },
+    { key: "third", title: "Third" },
+  ]);
 
   return (
-    <View style={styles.container}>
-      <Text>HOME SCREEN</Text>
-      <Text>USER: {username}</Text>
-      <Text>Email: {email}</Text>
-      <Link href="/(modals)/user">User setting</Link>
-      <Pressable onPress={signOut}>
-        <Text>Sign Out</Text>
-      </Pressable>
-      <Link href="/(modals)/help">Help Modal</Link>
+    <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TabView
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={updateIndex}
+          initialLayout={{ width: layout.width }}
+          renderTabBar={() => <BottomMenuTab />}
+          tabBarPosition="bottom"
+        />
+      </SafeAreaView>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

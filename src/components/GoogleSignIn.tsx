@@ -4,7 +4,7 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from "@react-native-google-signin/google-signin";
-import { useBearStore } from "../zustand/store";
+import { useClientStore } from "../zustand/store";
 import { router } from "expo-router";
 
 GoogleSignin.configure({
@@ -13,7 +13,7 @@ GoogleSignin.configure({
 });
 
 export default function GoogleButton(): JSX.Element {
-  const updateUser = useBearStore((state) => state.updateUser);
+  const updateUser = useClientStore((state) => state.updateUser);
 
   async function onGoogleButtonPress() {
     try {

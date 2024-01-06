@@ -6,12 +6,12 @@ import {
 } from "@invertase/react-native-apple-authentication";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
-import { useBearStore } from "../zustand/store";
+import { useClientStore } from "../zustand/store";
 import { router } from "expo-router";
 import { v4 as uuid } from "uuid";
 
 export default function AppleSignIn(): JSX.Element {
-  const updateUser = useBearStore((state) => state.updateUser);
+  const updateUser = useClientStore((state) => state.updateUser);
 
   function buttonPress() {
     if (Platform.OS === "ios") {

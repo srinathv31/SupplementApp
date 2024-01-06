@@ -6,8 +6,9 @@ import {
 } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Platform, useColorScheme } from "react-native";
+import { Platform } from "react-native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,10 +48,12 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  //   const colorScheme = useColorScheme();
+  const colorScheme = "dark";
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <StatusBar style="light" />
       <Stack>
         <Stack.Screen
           name="login/index"
@@ -71,22 +74,6 @@ function RootLayoutNav() {
           }}
         />
       </Stack>
-      {/* <Stack>
-        <Stack.Screen
-          name="index"
-          options={{
-            // Hide the header for all other routes.
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="modal"
-          options={{
-            // Set the presentation mode to modal for our modal route.
-            presentation: "modal",
-          }}
-        />
-      </Stack> */}
     </ThemeProvider>
   );
 }
