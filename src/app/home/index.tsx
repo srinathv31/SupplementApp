@@ -4,14 +4,12 @@ import { View } from "../../components/Themed";
 import { useState } from "react";
 import { useClientStore } from "../../zustand/store";
 import BottomMenuTab from "../../components/BottomMenuTab";
+import Calendar from "../../components/Calendar";
+import HomePage from "../../components/HomePage";
 
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
-);
+const FirstRoute = () => <Calendar />;
 
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
-);
+const SecondRoute = () => <HomePage />;
 
 const ThirdRoute = () => (
   <View style={{ flex: 1, backgroundColor: "skyblue" }} />

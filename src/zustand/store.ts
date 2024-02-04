@@ -9,6 +9,8 @@ interface ClientState {
   }) => void;
   index: number;
   updateIndex: (idx: number) => void;
+  selectedDate: string;
+  updateSelectedDate: (dateStr: string) => void;
 }
 
 export const useClientStore = create<ClientState>()((set) => ({
@@ -16,4 +18,6 @@ export const useClientStore = create<ClientState>()((set) => ({
   updateUser: (uid) => set(() => ({ user: { ...uid } })),
   index: 1,
   updateIndex: (idx) => set({ index: idx }),
+  selectedDate: new Date().toISOString().split("T")[0],
+  updateSelectedDate: (dateStr) => set({ selectedDate: dateStr }),
 }));
